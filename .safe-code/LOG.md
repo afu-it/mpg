@@ -1,6 +1,10 @@
 # LOG — safe diary (append above)
 
 ## 2026-06-24 · type: feat
+Deep fee-sourcing pass + provenance system. Compare "Other methods" cell → 2-per-row grid with `+N more` toggle; dropped redundant "FPX online banking" from methods (Banks row covers it). Filled many "Contact sales" fees from provider rate cards/docs (CHIP, BCL, Stripe T+7, Fiuu & iPay88 fee PDFs, RinggitPay, ManagePay, Riipay, senangPay BNPL); third-party/indicative figures (eGHL, Revenue Monster, Gkash, Atome, Grab, myIOU, AsiaPay, Curlec settlement) carry a `*` marker + legend on table/compare/detail. toyyibPay RM100 setup/yearly downgraded to Contact sales (cited source was a 404). Remaining all-quote gateways (OxPay/RevPay/Paydee/M1Pay/CommercePay) left as Contact sales — no data anywhere. astro check 0 errors; build 42 pages; tests pass.
+plain: Cari harga sebenar setiap gateway dari laman rasmi; yang dari blog ditanda bintang (*); yang memang rahsia kekal "hubungi sales".
+
+## 2026-06-24 · type: feat
 Default table order now ranks by value (mean of published FPX/card/e-wallet rates; unknowns sink) instead of alphabetical. Removed the favourites feature at owner's request — deleted /functions, D1 schema, FavButton, favourites client, /favourites page, save-comparison form; uninstalled @clerk/backend + @cloudflare/workers-types; reverted D1 binding + root tsconfig (Clerk sign-in/up kept). Force-fetched logos for 9 logo-less gateways (Google favicon). Cleaned a stray node_modules/.astro left under src/content/gateways. astro check 0 errors; build 42 pages; vitest 11/11.
 plain: Susun gateway paling berbaloi di atas, buang fungsi "simpan kegemaran" yang tak dipakai, dan dapatkan logo untuk semua gateway.
 

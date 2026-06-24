@@ -1,6 +1,6 @@
 # Progress Tracker — MPG
 
-last_synced_commit: 049d08f
+last_synced_commit: 4e29c7a
 context_synced_at: 2026-06-24
 context_selftest: skipped (not first-run)
 
@@ -13,6 +13,8 @@ was built then **removed** at the owner's request — no server/DB in the repo.
 - Landing `/`, `/gateways` (sidebar filter + sortable/searchable table, **value-ranked by default**), `/compare` (side-by-side, shareable `?ids=`), `/gateway/<slug>` detail, custom `404`.
 - 38 entries (incl. 8 BNPL + PayNet infrastructure) with sourced fees; every entry has a logo (favicon-grade PNG; monogram fallback).
 - Per-gateway **Other payment methods** (e-wallets) + **Supported banks (via FPX)** on detail + compare (spec 03, done). Recent adds: M1Pay, CardBizPay, Airwallex, PayNet.
+- Compare "Other methods" cell: 2 chips/row grid + `+N more` toggle. "FPX online banking" dropped from methods (Banks row covers it).
+- Fees deep-sourced: filled many from provider rate cards/docs; third-party/indicative values carry a `*` marker with a legend (table/compare/detail). Genuinely-private gateways stay "Contact sales".
 - Auto-deploy: push master → GitHub Actions → Cloudflare Pages.
 - Clerk sign up / sign in / UserButton (CDN) — **kept** (owner's call); currently gates no feature, reserved for a future account feature. Switch to `pk_live` at real deploy.
 
@@ -23,7 +25,8 @@ was built then **removed** at the owner's request — no server/DB in the repo.
 
 ## Open Questions
 - Add **Payex** (payex.io, Maybank-owned) and/or **2C2P** (regional PSP)? Surfaced in the listicle rescan; awaiting AFU's go-ahead before sourcing + adding (spec 04).
-- Backfill `methods` for the remaining gateways (asiapay, payhalal, xendit, bayarcash, etc.) once specific e-wallet lists are sourced (current sources were too generic).
+- Backfill `methods` for the remaining gateways (asiapay, payhalal, xendit, bayarcash, etc.) once specific e-wallet lists are sourced.
+- Remaining all-"Contact sales" gateways (OxPay, RevPay, Paydee, M1Pay MDR, CommercePay MDR, AsiaPay rates) are genuinely quote-only — no official OR third-party figures exist. Leave unless they publish later.
 - Whether to upgrade favicon-grade logos to real SVG wordmarks.
 
 ## Decisions (safe summary)
@@ -31,6 +34,6 @@ was built then **removed** at the owner's request — no server/DB in the repo.
 - Favourites (Phase 2: Pages Functions + D1 + Clerk) was built then **removed** at the owner's request — keep the site pure static. Spec 01 = rejected; do not re-suggest.
 - Default table order = **value rank** (mean of published FPX/card/e-wallet rates; unknowns sink), not alphabetical.
 - Removed Split & Pace BNPL (defunct in MY).
-- Fees never fabricated — `Contact sales` / `—` where unknown/not offered.
+- Fees never fabricated — `Contact sales` / `—` where unknown/not offered. **Third-party/indicative values are allowed but MUST carry a trailing `*`** (e.g. `"6% *"`); official values have no marker. `parseFee` ignores the `*`, so sorting still works. Legend explains it on table/compare/detail.
 - FPX banks stored ONCE (`src/lib/fpx-banks.ts`, PayNet-sourced) and shown for any `fpx` gateway — not duplicated per file (national standard set).
 - OnPay excluded from the directory — it's a sales-page SaaS that plugs in other gateways, not an acquirer. PayNet added as `category: infrastructure` (rails, not a merchant gateway).

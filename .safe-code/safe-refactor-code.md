@@ -1,6 +1,6 @@
 # safe-refactor-code — flagged candidates
 
-_2026-06-24 (rev 3)_
+_2026-06-24 (rev 4)_
 
 ## Resolved
 - Removed unused dependency `@clerk/clerk-js` (auth loads Clerk from CDN via `window.Clerk`).
@@ -13,3 +13,4 @@ _2026-06-24 (rev 3)_
 - Do not "optimize" by re-adding `@clerk/astro` / `@astrojs/cloudflare` (Astro 7 incompatible).
 - Keep `parseFee()` the single source of fee→number logic (used by `valueScore`, `data-sort-value`, compare).
 - Keep `src/lib/fpx-banks.ts` as the single FPX bank source — never inline/duplicate the list in a gateway `.md` or component.
+- Never strip the trailing ` *` from a fee value as "cleanup" — it marks third-party/indicative data and is explained by a legend. Removing it would misrepresent unofficial rates as official.

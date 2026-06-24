@@ -1,6 +1,6 @@
 # BACKLOG — operational queue
 
-_2026-06-24_
+_2026-06-24 (rev 2)_
 
 - [ ] Real deploy: owner bought a domain → connect it to the CF Pages project and switch Clerk to `pk_live` (production instance) when going live.
 - [ ] Phase 3: public submit-a-gateway, moderated (would need server + DB → curated `.md`). Spec: `context/feature-specs/02-submit-gateway.md`.

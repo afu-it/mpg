@@ -8,6 +8,12 @@ _2026-06-24_
 - **Working combo:** Astro 7 static + `@clerk/clerk-js` via CDN hotload + Tailwind v4 (`@tailwindcss/vite`). No SSR adapter.
 - Dev gotcha: `astro dev` daemonizes → stale daemons serve old code; use `CHOKIDAR_USEPOLLING=true` on the NTFS mount; hard-refresh after client-script edits.
 
+## Fee provenance + `*` marker (2026-06-24)
+- Fee values may be official (no marker) or third-party/indicative (trailing ` *`, e.g. `"6% *"`). Legend on table/compare/detail; detail shows it only when a fee contains `*`. `parseFee` regex ignores the `*` so sorting/valueScore unaffected.
+- Gateways WITH a usable rate card/fee PDF: Fiuu (booster.fiuu.com base-rate PDF), iPay88 (SME fee-structure PDF, mirrored on reseller domains), RinggitPay (ringgitpay.biz/sp1), ManagePay (info.mpay.my/faq), Curlec/CHIP/BCL/Stripe/Billplz/Xendit/Bizappay/Kiple/Gkash/Paydibs/Revenue-Monster (partial, on own sites), Riipay (T&C PDF), senangPay (senangpay.my/fee-costing-features).
+- Genuinely quote-only (no official OR third-party figures anywhere): OxPay, RevPay, Paydee, M1Pay (MDR), CommercePay (MDR), AsiaPay (rates). Don't keep re-researching these.
+- toyyibPay: official site publishes no pricing page (the /pricing-plans URL 404s); only FPX RM1.00 + T+1 are dependable.
+
 ## Banks + methods dimension (2026-06-24)
 - FPX participating banks are a national PayNet standard → stored ONCE in `src/lib/fpx-banks.ts` (B2C list, sourced PayNet KB + FI-code PDF), shown for any `fpx` gateway. Do NOT duplicate per-gateway bank lists.
 - `methods` (e-wallets/other rails) DO differ per gateway → sourced per file. Generic "e-wallets" mentions (asiapay/payhalal/xendit in listicles) were too vague to map to brands → left empty rather than guessed.
