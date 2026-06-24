@@ -10,8 +10,8 @@ completed:
   - Cleaned stray node_modules/.astro under src/content/gateways
   - Verified astro check 0 / build 42 pages / vitest 11/11; commits local-only (up to 049d08f + docs); NOT pushed
 pending:
-  - Decide: keep or remove Clerk sign-in/up (favourites was its only consumer)
+  - Real deploy: connect owner's purchased domain to CF Pages + switch Clerk to pk_live (Clerk kept)
   - Decide: add Payex (Maybank-owned) + 2C2P? (spec 04)
   - Backfill methods for remaining gateways when specific e-wallet sources found
   - Phase 3: public submit-a-gateway (would need server + DB)
-next_action: Ask AFU — keep Clerk auth? add Payex + 2C2P? Then optionally push to deploy.
+next_action: When domain ready, wire it to CF Pages + Clerk pk_live for the real deploy. Meanwhile ask AFU re Payex/2C2P.

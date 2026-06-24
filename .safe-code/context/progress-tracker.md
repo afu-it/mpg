@@ -14,17 +14,16 @@ was built then **removed** at the owner's request — no server/DB in the repo.
 - 38 entries (incl. 8 BNPL + PayNet infrastructure) with sourced fees; every entry has a logo (favicon-grade PNG; monogram fallback).
 - Per-gateway **Other payment methods** (e-wallets) + **Supported banks (via FPX)** on detail + compare (spec 03, done). Recent adds: M1Pay, CardBizPay, Airwallex, PayNet.
 - Auto-deploy: push master → GitHub Actions → Cloudflare Pages.
-- Clerk sign up / sign in / UserButton (CDN) — kept, but currently gates no feature.
+- Clerk sign up / sign in / UserButton (CDN) — **kept** (owner's call); currently gates no feature, reserved for a future account feature. Switch to `pk_live` at real deploy.
 
 ## Current Goal / Next Up
-- Decide whether Clerk auth stays (favourites, its only consumer, was removed).
+- Real deploy: owner bought a domain → wire it to the CF Pages project + switch Clerk to `pk_live` (production instance) when going live.
 - Decide whether to add Payex + 2C2P (spec 04).
 - Phase 3: Public "submit a gateway" (would need a server + DB; revisit then).
 
 ## Open Questions
 - Add **Payex** (payex.io, Maybank-owned) and/or **2C2P** (regional PSP)? Surfaced in the listicle rescan; awaiting AFU's go-ahead before sourcing + adding (spec 04).
 - Backfill `methods` for the remaining gateways (asiapay, payhalal, xendit, bayarcash, etc.) once specific e-wallet lists are sourced (current sources were too generic).
-- Keep or remove Clerk sign-in/up now that favourites is gone?
 - Whether to upgrade favicon-grade logos to real SVG wordmarks.
 
 ## Decisions (safe summary)

@@ -7,7 +7,7 @@ _2026-06-24 (rev 3)_
 - Removed favourites feature + its deps (`@clerk/backend`, `@cloudflare/workers-types`) and the whole `/functions` tree — owner's call. Repo is pure static again.
 
 ## Open candidates
-- Clerk sign-in/up now gates no feature (its only consumer, favourites, was removed) → candidate for removal if no account feature is planned. Decision pending (BACKLOG).
+- (none) — Clerk sign-in/up is intentionally kept (owner's call) for a future account feature, even though favourites was removed. Do NOT flag it as dead.
 
 ## Guardrails
 - Do not "optimize" by re-adding `@clerk/astro` / `@astrojs/cloudflare` (Astro 7 incompatible).
