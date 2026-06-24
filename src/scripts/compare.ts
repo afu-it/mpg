@@ -212,16 +212,28 @@ if (dataEl && root) {
             td.textContent = "—";
             td.classList.add("text-muted");
           } else {
+            const LIMIT = 2;
             const wrap = el("div", "flex flex-wrap justify-center gap-1");
-            items.forEach((m) =>
-              wrap.appendChild(
-                el(
-                  "span",
-                  "rounded-full border border-line bg-raised px-2 py-0.5 text-[11px] text-fg",
-                  m,
-                ),
-              ),
-            );
+            const chip = (m: string) =>
+              el("span", "rounded-full border border-line bg-raised px-2 py-0.5 text-[11px] text-fg", m);
+            let expanded = false;
+            const draw = () => {
+              wrap.innerHTML = "";
+              (expanded ? items : items.slice(0, LIMIT)).forEach((m) => wrap.appendChild(chip(m)));
+              if (items.length > LIMIT) {
+                const btn = el(
+                  "button",
+                  "rounded-full border border-line bg-panel px-2 py-0.5 text-[11px] text-muted hover:border-accent hover:text-accent",
+                  expanded ? "show less" : `+${items.length - LIMIT} more`,
+                );
+                btn.addEventListener("click", () => {
+                  expanded = !expanded;
+                  draw();
+                });
+                wrap.appendChild(btn);
+              }
+            };
+            draw();
             td.appendChild(wrap);
           }
         } else {
