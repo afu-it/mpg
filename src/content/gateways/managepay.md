@@ -5,12 +5,12 @@ tagline: "Malaysian e-payment gateway with POS and e-wallet"
 logo: /logos/managepay.svg
 fees:
   fpx: "Contact sales"
-  card: "Contact sales"
+  card: "2.5%–3.0%"
   ewallet: "Contact sales"
   duitnowqr: "Contact sales"
   setup: "RM399 (ECPOS, +8% SST)"
-  monthly: "RM10 (ECPOS)"
-settlement: "Contact sales"
+  monthly: "RM10–RM30"
+settlement: "T+1"
 min_txn: "—"
 category: gateway
 channels: [fpx, card, ewallet, duitnowqr]

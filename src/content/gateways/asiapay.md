@@ -12,7 +12,7 @@ fees:
   bnpl: "Contact sales"
   setup: "Contact sales"
   monthly: "Contact sales"
-settlement: "Contact sales"
+settlement: "T+1–T+2 *"
 min_txn: "—"
 category: gateway
 channels: [fpx, card, ewallet, duitnowqr, bnpl]

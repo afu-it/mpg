@@ -8,8 +8,8 @@ fees:
   card: "From 1.80% (min RM0.60)"
   ewallet: "From 1.00%"
   duitnowqr: "Contact sales"
-  setup: "Contact sales"
-  monthly: "Contact sales"
+  setup: "RM200 *"
+  monthly: "RM100/year *"
 settlement: "T+2"
 min_txn: "—"
 category: gateway

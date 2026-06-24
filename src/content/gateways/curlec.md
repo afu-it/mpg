@@ -10,9 +10,9 @@ fees:
   ewallet: "1.50%"
   duitnowqr: "Contact sales"
   bnpl: "6.00%"
-  setup: "Contact sales"
+  setup: "RM0–RM999"
   monthly: "RM0"
-settlement: "Contact sales"
+settlement: "T+2 *"
 min_txn: "—"
 channels: [fpx, card, ewallet, bnpl]
 features:

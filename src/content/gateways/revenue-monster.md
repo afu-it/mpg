@@ -6,8 +6,8 @@ logo: /logos/revenue-monster.svg
 fees:
   fpx: "Contact sales"
   card: "Contact sales"
-  ewallet: "Contact sales"
-  duitnowqr: "Contact sales"
+  ewallet: "from 0.8% *"
+  duitnowqr: "from 0.8% *"
   bnpl: "Contact sales"
   setup: "RM499 (one-time)"
   monthly: "—"

@@ -8,7 +8,7 @@ fees:
   card: "—"
   ewallet: "—"
   duitnowqr: "—"
-  bnpl: "Contact sales"
+  bnpl: "5% *"
   setup: "RM0"
   monthly: "Contact sales"
 settlement: "Weekly"

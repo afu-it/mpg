@@ -4,12 +4,13 @@ website: https://ringgitpay.biz
 tagline: "All-in-one payment platform for Malaysian businesses"
 logo: /logos/ringgitpay.svg
 fees:
-  fpx: "Contact sales"
-  card: "Contact sales"
-  ewallet: "Contact sales"
+  fpx: "RM1.20 (B2C) / RM2.20 (B2B)"
+  card: "1.5%"
+  card_intl: "2.0%"
+  ewallet: "1.5%"
   duitnowqr: "Contact sales"
   setup: "RM0"
-  monthly: "Contact sales"
+  monthly: "RM0–RM1,000/year"
 settlement: "T+2 (approx. 2 days)"
 min_txn: "—"
 category: gateway

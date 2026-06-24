@@ -8,10 +8,10 @@ fees:
   card: "—"
   ewallet: "—"
   duitnowqr: "—"
-  bnpl: "Contact sales"
+  bnpl: "3.5%–4.5% *"
   setup: "RM0"
   monthly: "Contact sales"
-settlement: "Contact sales"
+settlement: "T+2–T+3 *"
 min_txn: "—"
 category: bnpl
 channels: [bnpl]
