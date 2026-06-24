@@ -1,0 +1,38 @@
+import { defineCollection } from "astro:content";
+import { glob } from "astro/loaders";
+import { z } from "zod";
+
+const gateways = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/gateways" }),
+  schema: z.object({
+    name: z.string(),
+    // optional: routing uses entry.id (filename); kept for documentation/override
+    slug: z.string().optional(),
+    logo: z.string().optional(),
+    website: z.string().url(),
+    tagline: z.string(),
+    fees: z.object({
+      fpx: z.string(), // online banking
+      card: z.string(), // local credit/debit
+      card_intl: z.string().optional(), // international card
+      ewallet: z.string(), // GrabPay / TNG / Boost / ShopeePay
+      duitnowqr: z.string(),
+      setup: z.string(), // one-time setup fee
+      monthly: z.string(), // monthly/annual platform fee
+    }),
+    settlement: z.string(), // e.g. "T+1"
+    min_txn: z.string(),
+    channels: z.array(z.enum(["fpx", "card", "ewallet", "duitnowqr"])),
+    features: z.object({
+      no_code: z.boolean(), // payment links / no-code checkout
+      api: z.boolean(), // developer API
+      recurring: z.boolean(), // recurring / subscription billing
+    }),
+    skill: z.string().optional(), // related setup-* integration skill
+    verified_date: z.string(),
+    source: z.string().url(),
+    notes: z.string().optional(),
+  }),
+});
+
+export const collections = { gateways };
