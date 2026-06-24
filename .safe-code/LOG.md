@@ -1,6 +1,10 @@
 # LOG — safe diary (append above)
 
 ## 2026-06-24 · type: feat
+Default ranking switched from value → **popularity** (curated `popularity` field; most-used MY gateways first, value as tiebreaker): iPay88, Billplz, toyyibPay, senangPay, Stripe, Fiuu, eGHL, Curlec… Also reviewed the owner's agent-skills repo (github.com/afu-it/malaysia-payment-gateway) and drafted spec 06 (`/learn` section for devs/vibe-coders — PLAN ONLY per owner) built around those skills + their ready agent prompts + security/production checklist. astro check 0 errors; build 42 pages.
+plain: Tukar susunan default jadi ikut gateway paling popular dulu, dan plan satu "Learn" section untuk developer (belum bina).
+
+## 2026-06-24 · type: feat
 Developer-experience dimension (spec 05, done) — sparked by a Threads thread on MCP/AI-agent support. New schema fields `mcp` (official/community/none, default none), `webhooks`, `plugins[]`, `dev_docs`; data for ~24 gateways via 5 research agents. MCP official = Stripe, Curlec, HitPay, Airwallex; community = Xendit, Bayarcash; rest none. UI: detail Developer-experience section (MCP badge + API-docs link + plugin chips), table MCP badge, compare Webhooks/MCP/Plugins rows. astro check 0 errors; build 42 pages; tests pass.
 plain: Tambah info "gateway mana AI-agent/developer friendly" (MCP, webhook, plugin WooCommerce/Shopify, link docs) untuk setiap gateway.
 

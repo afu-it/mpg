@@ -8,7 +8,7 @@
 - GitHub Actions auto-deploy to Cloudflare Pages.
 - safe-code project brain (`.safe-code/`).
 - Supported-banks (via FPX) + Other-payment-methods (e-wallets) on detail + `/compare`.
-- Default gateway table ranked by value (lowest core fees) instead of alphabetical.
+- Default gateway table ranked by popularity (most-used in Malaysia first), then best value.
 - More gateways: M1Pay, CardBizPay, Airwallex; PayNet as infrastructure. Logos for all entries.
 - Deeper fee data sourced from provider rate cards/docs; third-party/indicative rates marked with `*` (legend on table/compare/detail).
 - Compare "Other methods" cell shows 2 chips with a `+N more` toggle.

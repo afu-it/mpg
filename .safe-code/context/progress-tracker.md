@@ -1,6 +1,6 @@
 # Progress Tracker — MPG
 
-last_synced_commit: fd55ce9
+last_synced_commit: 24f513f
 context_synced_at: 2026-06-24
 context_selftest: skipped (not first-run)
 
@@ -22,6 +22,7 @@ was built then **removed** at the owner's request — no server/DB in the repo.
 ## Current Goal / Next Up
 - Real deploy: owner bought a domain → wire it to the CF Pages project + switch Clerk to `pk_live` (production instance) when going live.
 - Decide whether to add Payex + 2C2P (spec 04).
+- Build the `/learn` section for devs/vibe-coders (spec 06, planned — owner said plan only for now): glossary, safe integration flow, AFU's skills + copy-paste agent prompts, MCP/API explainer, production checklist.
 - Phase 3: Public "submit a gateway" (would need a server + DB; revisit then).
 
 ## Open Questions
@@ -30,10 +31,13 @@ was built then **removed** at the owner's request — no server/DB in the repo.
 - Remaining all-"Contact sales" gateways (OxPay, RevPay, Paydee, M1Pay MDR, CommercePay MDR, AsiaPay rates) are genuinely quote-only — no official OR third-party figures exist. Leave unless they publish later.
 - Whether to upgrade favicon-grade logos to real SVG wordmarks.
 
+## Reference
+- Owner's agent-skills repo: https://github.com/afu-it/malaysia-payment-gateway — gateway-agnostic `malaysia-payment-gateway` skill + `setup-<gateway>` skills (chip, curlec, xendit, bayarcash, bcl, toyyibpay, billplz, fiuu, senangpay, hitpay, stripe-malaysia). Maps to our `skill:` field. Has ready agent prompts + security rules + production checklist → backbone for the planned `/learn` section (spec 06).
+
 ## Decisions (safe summary)
 - Stay on **Astro 7 static**; auth via Clerk **browser SDK (CDN)**, not `@clerk/astro` (incompatible with Astro 7). No SSR adapter.
 - Favourites (Phase 2: Pages Functions + D1 + Clerk) was built then **removed** at the owner's request — keep the site pure static. Spec 01 = rejected; do not re-suggest.
-- Default table order = **value rank** (mean of published FPX/card/e-wallet rates; unknowns sink), not alphabetical.
+- Default table order = **popularity** (curated `popularity` field, most-used in MY first), then best value, then name. (Superseded the earlier value-first default at the owner's request.) Top: iPay88, Billplz, toyyibPay, senangPay, Stripe, Fiuu, eGHL, Curlec, CHIP, Xendit. Editorial — tweak the numbers freely.
 - Removed Split & Pace BNPL (defunct in MY).
 - Fees never fabricated — `Contact sales` / `—` where unknown/not offered. **Third-party/indicative values are allowed but MUST carry a trailing `*`** (e.g. `"6% *"`); official values have no marker. `parseFee` ignores the `*`, so sorting still works. Legend explains it on table/compare/detail.
 - FPX banks stored ONCE (`src/lib/fpx-banks.ts`, PayNet-sourced) and shown for any `fpx` gateway — not duplicated per file (national standard set).
