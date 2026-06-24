@@ -213,9 +213,9 @@ if (dataEl && root) {
             td.classList.add("text-muted");
           } else {
             const LIMIT = 2;
-            const wrap = el("div", "flex flex-wrap justify-center gap-1");
+            const wrap = el("div", "flex flex-col items-center gap-1");
             const chip = (m: string) =>
-              el("span", "rounded-full border border-line bg-raised px-2 py-0.5 text-[11px] text-fg", m);
+              el("span", "whitespace-nowrap rounded-full border border-line bg-raised px-2 py-0.5 text-[11px] text-fg", m);
             let expanded = false;
             const draw = () => {
               wrap.innerHTML = "";
