@@ -9,12 +9,18 @@ interface Props {
 }
 const { slug, name, size = 22 } = Astro.props;
 
-const logos = import.meta.glob("/src/assets/logos/*.svg", {
+const logos = import.meta.glob("/src/assets/logos/*.{svg,png,webp}", {
   eager: true,
   query: "?url",
   import: "default",
 });
-const logoUrl = logos[`/src/assets/logos/${slug}.svg`] as string | undefined;
+// map slug -> url, preferring .svg when both an svg and a raster exist
+const bySlug: Record<string, string> = {};
+for (const [path, url] of Object.entries(logos)) {
+  const key = path.split("/").pop()!.replace(/\.\w+$/, "");
+  if (!bySlug[key] || path.endsWith(".svg")) bySlug[key] = url as string;
+}
+const logoUrl = bySlug[slug];
 
 const initial = (name.trim().charAt(0) || "?").toUpperCase();
 ---
