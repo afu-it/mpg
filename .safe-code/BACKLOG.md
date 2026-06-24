@@ -1,7 +1,9 @@
 # BACKLOG — operational queue
 
-_2026-06-24 (rev 2)_
+_2026-06-24 (rev 3)_
 
+- [ ] Build `/learn` section for devs/vibe-coders (spec 06; planned — owner said plan only). Smallest high-value first: per-gateway "copy prompt for your AI agent" button (auto-generated from `skill:`).
+- [ ] Tune `popularity` numbers if owner wants a different #1 (currently iPay88 → Billplz → toyyibPay → senangPay → Stripe…).
 - [ ] Real deploy: owner bought a domain → connect it to the CF Pages project and switch Clerk to `pk_live` (production instance) when going live.
 - [ ] Phase 3: public submit-a-gateway, moderated (would need server + DB → curated `.md`). Spec: `context/feature-specs/02-submit-gateway.md`.
 - [ ] Decide: add **Payex** (payex.io, Maybank-owned) + **2C2P** (regional PSP)? Surfaced in listicle rescan; awaiting AFU before sourcing + adding (spec 04). StoreHub = POS (skip); crypto/NOWPayments not selected.

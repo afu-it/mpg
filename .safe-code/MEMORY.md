@@ -8,6 +8,12 @@ _2026-06-24_
 - **Working combo:** Astro 7 static + `@clerk/clerk-js` via CDN hotload + Tailwind v4 (`@tailwindcss/vite`). No SSR adapter.
 - Dev gotcha: `astro dev` daemonizes → stale daemons serve old code; use `CHOKIDAR_USEPOLLING=true` on the NTFS mount; hard-refresh after client-script edits.
 
+## Developer-experience + ranking (2026-06-24)
+- Schema additions: `popularity` (number, default 0 — default sort key, DESC; value is tiebreaker), `mcp` (official/community/none, default none), `webhooks` (bool), `plugins[]`, `dev_docs` (url).
+- MCP official: Stripe, Curlec (Razorpay), HitPay, Airwallex. Community: Xendit, Bayarcash. All others none.
+- `popularity` is editorial (market presence), set on ~21 gateways; the rest default 0. iPay88=100 down to airwallex=40; BNPL atome=75/spaylater=70/grab=66. Tweak freely.
+- Owner's agent-skills repo (github.com/afu-it/malaysia-payment-gateway) maps 1:1 to our `skill:` field and is the backbone for the planned `/learn` section (spec 06): ready agent prompts, security rules (verify signatures, idempotent settlement, no redirect-unlock), production checklist.
+
 ## Fee provenance + `*` marker (2026-06-24)
 - Fee values may be official (no marker) or third-party/indicative (trailing ` *`, e.g. `"6% *"`). Legend on table/compare/detail; detail shows it only when a fee contains `*`. `parseFee` regex ignores the `*` so sorting/valueScore unaffected.
 - Gateways WITH a usable rate card/fee PDF: Fiuu (booster.fiuu.com base-rate PDF), iPay88 (SME fee-structure PDF, mirrored on reseller domains), RinggitPay (ringgitpay.biz/sp1), ManagePay (info.mpay.my/faq), Curlec/CHIP/BCL/Stripe/Billplz/Xendit/Bizappay/Kiple/Gkash/Paydibs/Revenue-Monster (partial, on own sites), Riipay (T&C PDF), senangPay (senangpay.my/fee-costing-features).
