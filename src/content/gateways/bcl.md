@@ -9,7 +9,7 @@ fees:
   ewallet: "—"
   duitnowqr: "Contact sales"
   setup: "RM0"
-  monthly: "Contact sales"
+  monthly: "RM0"
 settlement: "T+1"
 min_txn: "—"
 channels: [fpx, duitnowqr]

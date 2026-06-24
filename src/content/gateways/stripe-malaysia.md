@@ -11,7 +11,7 @@ fees:
   duitnowqr: "—"
   setup: "RM0"
   monthly: "RM0"
-settlement: "Contact sales"
+settlement: "T+7"
 min_txn: "—"
 channels: [fpx, card, ewallet]
 methods:

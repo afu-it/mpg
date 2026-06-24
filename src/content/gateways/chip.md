@@ -6,8 +6,8 @@ logo: /logos/chip.svg
 fees:
   fpx: "RM1.00"
   card: "2%"
-  card_intl: "Contact sales"
-  ewallet: "Contact sales"
+  card_intl: "3%"
+  ewallet: "1.40%"
   duitnowqr: "1.6%"
   setup: "RM0"
   monthly: "RM0"
