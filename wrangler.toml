@@ -3,16 +3,3 @@
 name = "mpg"
 pages_build_output_dir = "dist"
 compatibility_date = "2026-06-24"
-
-# Phase 2 (favourites) — Pages Functions in /functions read this D1 binding as `env.DB`.
-# INERT until you provision the DB; the Functions degrade to HTTP 503 when DB is absent,
-# so committing/deploying this stays safe even before setup. To enable:
-#   1. npx wrangler d1 create mpg-db        → paste the printed database_id below
-#   2. npx wrangler d1 execute mpg-db --remote --file=schema.sql
-#   3. Uncomment the block below, AND mirror the binding in CF dashboard
-#      (Pages → mpg → Settings → Functions → D1 bindings: DB → mpg-db),
-#      then add secret CLERK_SECRET_KEY (Settings → Environment variables, encrypted).
-# [[d1_databases]]
-# binding = "DB"
-# database_name = "mpg-db"
-# database_id = "REPLACE_WITH_database_id_FROM_STEP_1"

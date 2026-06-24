@@ -5,11 +5,23 @@ import { splitName } from "../lib/name";
 import Logo from "./Logo.astro";
 import FeeCell from "./FeeCell.astro";
 import FeatureBadge from "./FeatureBadge.astro";
-import FavButton from "./FavButton.astro";
 
-const gateways = (await getCollection("gateways")).sort((a, b) =>
-  a.data.name.localeCompare(b.data.name),
-);
+// "Value" proxy: mean of the published core rates (FPX / card / e-wallet); lower = better
+// value. Gateways with no published rate ("Contact sales"/"—") sink to the bottom.
+function valueScore(g: { data: { fees: Record<string, string | undefined> } }): number {
+  const vals = [g.data.fees.fpx, g.data.fees.card, g.data.fees.ewallet]
+    .map((v) => parseFee(v ?? ""))
+    .filter((n) => Number.isFinite(n));
+  return vals.length ? vals.reduce((a, b) => a + b, 0) / vals.length : Infinity;
+}
+
+// Default order = most worthwhile first (value rank), tie-broken alphabetically.
+const gateways = (await getCollection("gateways")).sort((a, b) => {
+  const sa = valueScore(a);
+  const sb = valueScore(b);
+  if (sa !== sb) return sa - sb;
+  return a.data.name.localeCompare(b.data.name);
+});
 const total = gateways.length;
 
 // header cells: label + whether sortable + sort type
@@ -82,29 +94,26 @@ const td = "whitespace-nowrap px-3 py-3 align-middle";
             data-href={`/gateway/${g.id}`}
           >
             <td class={`${td} sticky left-0 bg-surface`} data-sort-value={g.data.name.toLowerCase()}>
-              <div class="flex items-center gap-1.5">
-                <FavButton slug={g.id} name={g.data.name} size={16} />
-                <a
-                  href={`/gateway/${g.id}`}
-                  class="flex items-center gap-2.5 font-medium text-fg hover:text-accent"
-                >
-                  <Logo slug={g.id} name={g.data.name} />
-                  {(() => {
-                    const { base, note } = splitName(g.data.name);
-                    return (
-                      <span>
-                        {base}
-                        {note && <span class="ml-1 text-xs font-normal text-muted">{note}</span>}
-                      </span>
-                    );
-                  })()}
-                  {g.data.category === "bnpl" && (
-                    <span class="rounded-full border border-line bg-raised px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wide text-accent">
-                      BNPL
+              <a
+                href={`/gateway/${g.id}`}
+                class="flex items-center gap-2.5 font-medium text-fg hover:text-accent"
+              >
+                <Logo slug={g.id} name={g.data.name} />
+                {(() => {
+                  const { base, note } = splitName(g.data.name);
+                  return (
+                    <span>
+                      {base}
+                      {note && <span class="ml-1 text-xs font-normal text-muted">{note}</span>}
                     </span>
-                  )}
-                </a>
-              </div>
+                  );
+                })()}
+                {g.data.category === "bnpl" && (
+                  <span class="rounded-full border border-line bg-raised px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wide text-accent">
+                    BNPL
+                  </span>
+                )}
+              </a>
             </td>
             {feeCols.map((c) => {
               const v = g.data.fees[c.key] ?? "—";

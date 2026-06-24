@@ -7,7 +7,6 @@ import Base from "../../layouts/Base.astro";
 import Logo from "../../components/Logo.astro";
 import FeeCell from "../../components/FeeCell.astro";
 import FeatureBadge from "../../components/FeatureBadge.astro";
-import FavButton from "../../components/FavButton.astro";
 import { FPX_BANKS, FPX_BANKS_SOURCE } from "../../lib/fpx-banks";
 
 export async function getStaticPaths() {
@@ -60,7 +59,6 @@ const features = [
             {nameBase}
             {nameNote && <span class="ml-2 text-base font-normal text-muted">{nameNote}</span>}
           </h1>
-          <FavButton slug={entry.id} name={d.name} size={20} />
           {d.category === "bnpl" && (
             <span class="rounded-full border border-line bg-raised px-2 py-0.5 text-xs font-medium uppercase tracking-wide text-accent">
               BNPL
