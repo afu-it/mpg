@@ -85,6 +85,11 @@ const td = "whitespace-nowrap px-3 py-3 align-middle";
               >
                 <Logo slug={g.id} name={g.data.name} />
                 {g.data.name}
+                {g.data.category === "bnpl" && (
+                  <span class="rounded-full border border-line bg-raised px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wide text-accent">
+                    BNPL
+                  </span>
+                )}
               </a>
             </td>
             {feeCols.map((c) => {

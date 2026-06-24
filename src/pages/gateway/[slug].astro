@@ -49,7 +49,14 @@ const features = [
     <div class="flex items-center gap-3">
       <Logo slug={entry.id} name={d.name} size={36} />
       <div>
-        <h1 class="text-2xl font-semibold tracking-tight text-fg">{d.name}</h1>
+        <div class="flex items-center gap-2">
+          <h1 class="text-2xl font-semibold tracking-tight text-fg">{d.name}</h1>
+          {d.category === "bnpl" && (
+            <span class="rounded-full border border-line bg-raised px-2 py-0.5 text-xs font-medium uppercase tracking-wide text-accent">
+              BNPL
+            </span>
+          )}
+        </div>
         <p class="text-muted">{d.tagline}</p>
       </div>
     </div>
