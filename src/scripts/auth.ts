@@ -1,0 +1,89 @@
+// Client-side Clerk auth via CDN hotloading (full build WITH UI components).
+// Single "Sign up" button when signed out (the modal links to sign-in),
+// a UserButton when signed in. Dark-themed to match the site.
+
+const pk = import.meta.env.PUBLIC_CLERK_PUBLISHABLE_KEY as string | undefined;
+const mount = document.getElementById("clerk-auth");
+
+const appearance = {
+  variables: {
+    colorPrimary: "#818df8",
+    colorTextOnPrimaryBackground: "#000000",
+    colorBackground: "#212025",
+    colorText: "#dfe1e2",
+    colorTextSecondary: "#a1a1aa",
+    colorInputBackground: "#18181b",
+    colorInputText: "#dfe1e2",
+    colorNeutral: "#ffffff",
+    colorShimmer: "rgba(129,141,248,0.16)",
+    borderRadius: "8px",
+    fontFamily: '"Inter Variable", Inter, ui-sans-serif, system-ui, sans-serif',
+  },
+  elements: {
+    cardBox: { border: "1px solid #3d3d42", boxShadow: "none" },
+    card: { backgroundColor: "#212025" },
+    headerTitle: { color: "#fafafa" },
+    footer: { backgroundColor: "#212025", borderTop: "1px solid #3d3d42" },
+    footerActionLink: { color: "#818df8" },
+    socialButtonsIconButton: {
+      backgroundColor: "#18181b",
+      border: "1px solid #3d3d42",
+    },
+    formFieldInput: { backgroundColor: "#18181b", borderColor: "#3d3d42" },
+    dividerLine: { backgroundColor: "#3d3d42" },
+    formButtonPrimary: { color: "#000000" },
+    userButtonPopoverCard: { backgroundColor: "#212025", border: "1px solid #3d3d42" },
+  },
+};
+
+if (pk && mount) {
+  // The publishable key base64-encodes the frontend API host (…clerk.accounts.dev$).
+  let host = "";
+  try {
+    host = atob(pk.split("_")[2] || "").replace(/\$+$/, "");
+  } catch {
+    host = "";
+  }
+
+  if (host) {
+    const script = document.createElement("script");
+    script.async = true;
+    script.crossOrigin = "anonymous";
+    script.setAttribute("data-clerk-publishable-key", pk);
+    script.src = `https://${host}/npm/@clerk/clerk-js@latest/dist/clerk.browser.js`;
+
+    script.addEventListener("load", async () => {
+      const Clerk = (window as any).Clerk;
+      if (!Clerk) return;
+      await Clerk.load({ appearance });
+
+      let signedIn: boolean | null = null;
+      const render = () => {
+        const isIn = !!Clerk.user;
+        if (isIn === signedIn) return; // re-render only on state flip
+        signedIn = isIn;
+        mount.innerHTML = "";
+
+        if (isIn) {
+          const el = document.createElement("div");
+          mount.appendChild(el);
+          Clerk.mountUserButton(el, { afterSignOutUrl: "/" });
+        } else {
+          const btn = document.createElement("button");
+          btn.textContent = "Sign up";
+          btn.className =
+            "rounded-md bg-accent px-3 py-1.5 font-medium text-black hover:opacity-90";
+          btn.addEventListener("click", () =>
+            Clerk.openSignUp({ afterSignUpUrl: "/", afterSignInUrl: "/" }),
+          );
+          mount.appendChild(btn);
+        }
+      };
+
+      render();
+      Clerk.addListener(render);
+    });
+
+    document.head.appendChild(script);
+  }
+}

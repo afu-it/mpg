@@ -54,3 +54,15 @@
     border-radius: 2px;
   }
 }
+
+/* Clerk widgets: lift low-contrast text to meet WCAG AA on dark surfaces */
+.cl-userButtonPopoverFooter p,
+.cl-userButtonPopoverFooter a,
+.cl-userPreviewSecondaryIdentifier,
+.cl-headerSubtitle,
+.cl-dividerText,
+.cl-footerActionText,
+.cl-formFieldHintText {
+  color: #a1a1aa !important;
+}
+

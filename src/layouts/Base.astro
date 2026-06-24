@@ -35,9 +35,10 @@ const updated = "2026-06-24";
         <a href="/" class="font-semibold tracking-tight text-fg">
           MPG <span class="hidden font-normal text-muted sm:inline">· Malaysia Payment Gateways</span>
         </a>
-        <nav class="ml-auto flex items-center gap-1 text-sm">
-          <a href="/" class="rounded-md px-2.5 py-1.5 text-muted hover:bg-panel hover:text-fg">Gateways</a>
+        <nav class="ml-auto flex items-center gap-2 text-sm">
+          <a href="/gateways" class="rounded-md px-2.5 py-1.5 text-muted hover:bg-panel hover:text-fg">Gateways</a>
           <a href="/compare" class="rounded-md px-2.5 py-1.5 text-muted hover:bg-panel hover:text-fg">Compare</a>
+          <div id="clerk-auth" class="flex items-center gap-2"></div>
         </nav>
       </div>
     </header>
@@ -63,5 +64,9 @@ const updated = "2026-06-24";
         <p>Last updated {updated}. MPG is an independent directory, not affiliated with any provider.</p>
       </div>
     </footer>
+
+    <script>
+      import "../scripts/auth.ts";
+    </script>
   </body>
 </html>
