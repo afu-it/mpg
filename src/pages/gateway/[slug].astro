@@ -1,0 +1,132 @@
+---
+import { getCollection, render } from "astro:content";
+import Base from "../../layouts/Base.astro";
+import Logo from "../../components/Logo.astro";
+import FeeCell from "../../components/FeeCell.astro";
+import FeatureBadge from "../../components/FeatureBadge.astro";
+
+export async function getStaticPaths() {
+  const gateways = await getCollection("gateways");
+  return gateways.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const d = entry.data;
+
+const channelLabels: Record<string, string> = {
+  fpx: "FPX",
+  card: "Card",
+  ewallet: "E-wallet",
+  duitnowqr: "DuitNow QR",
+};
+
+const feeRows = [
+  { label: "FPX (online banking)", value: d.fees.fpx },
+  { label: "Card (local credit/debit)", value: d.fees.card },
+  ...(d.fees.card_intl ? [{ label: "International card", value: d.fees.card_intl }] : []),
+  { label: "E-wallet", value: d.fees.ewallet },
+  { label: "DuitNow QR", value: d.fees.duitnowqr },
+  { label: "Setup fee", value: d.fees.setup },
+  { label: "Monthly / annual fee", value: d.fees.monthly },
+  { label: "Minimum transaction", value: d.min_txn },
+  { label: "Settlement", value: d.settlement },
+];
+
+const features = [
+  { label: "No-code (links/forms)", on: d.features.no_code },
+  { label: "Developer API", on: d.features.api },
+  { label: "Recurring / subscription", on: d.features.recurring },
+];
+---
+
+<Base title={`${d.name} — fees & features | MPG`} description={d.tagline}>
+  <a href="/" class="text-sm text-muted hover:text-fg">← All gateways</a>
+
+  <header class="mt-4 flex flex-wrap items-start justify-between gap-4">
+    <div class="flex items-center gap-3">
+      <Logo slug={entry.id} name={d.name} size={36} />
+      <div>
+        <h1 class="text-2xl font-semibold tracking-tight text-fg">{d.name}</h1>
+        <p class="text-muted">{d.tagline}</p>
+      </div>
+    </div>
+    <a
+      href={d.website}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="rounded-md bg-accent px-4 py-2 text-sm font-medium text-black hover:opacity-90"
+    >
+      Visit website →
+    </a>
+  </header>
+
+  <!-- supported channels -->
+  <div class="mt-6 flex flex-wrap gap-2">
+    {
+      d.channels.map((c) => (
+        <span class="rounded-full border border-line bg-raised px-3 py-1 text-xs text-fg">
+          {channelLabels[c] ?? c}
+        </span>
+      ))
+    }
+  </div>
+
+  <div class="mt-8 grid gap-8 md:grid-cols-2">
+    <!-- fees -->
+    <section>
+      <h2 class="mb-3 text-sm font-medium uppercase tracking-wide text-muted">Fees</h2>
+      <div class="overflow-hidden rounded-md border border-line">
+        <table class="w-full text-sm">
+          <tbody>
+            {
+              feeRows.map((row, i) => (
+                <tr class={i % 2 ? "bg-panel" : ""}>
+                  <th scope="row" class="px-3 py-2 text-left font-normal text-muted">
+                    {row.label}
+                  </th>
+                  <td class="px-3 py-2 text-right">
+                    <FeeCell value={row.value} />
+                  </td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- features -->
+    <section>
+      <h2 class="mb-3 text-sm font-medium uppercase tracking-wide text-muted">Features</h2>
+      <ul class="space-y-2 rounded-md border border-line p-4">
+        {
+          features.map((f) => (
+            <li class="flex items-center justify-between">
+              <span class="text-fg">{f.label}</span>
+              <FeatureBadge on={f.on} label={f.label} />
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+  </div>
+
+  <!-- long-form body -->
+  <section class="prose-mpg mt-8 max-w-2xl space-y-4 leading-relaxed text-fg">
+    <Content />
+  </section>
+
+  <!-- meta / provenance -->
+  <footer class="mt-10 border-t border-line pt-4 text-xs text-muted">
+    {d.skill && <p>Integration skill: <code class="text-fg">{d.skill}</code></p>}
+    <p class="mt-1">
+      Source:
+      <a href={d.source} target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">
+        {d.source}
+      </a>
+    </p>
+    <p class="mt-1">Last verified {d.verified_date}.</p>
+    {d.notes && <p class="mt-2 max-w-2xl">{d.notes}</p>}
+  </footer>
+</Base>
