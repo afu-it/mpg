@@ -1,0 +1,17 @@
+---
+// ✓ (accent) when supported, — (muted) when not. Accessible label included.
+interface Props {
+  on: boolean;
+  label?: string;
+}
+const { on, label } = Astro.props;
+const state = on ? "yes" : "no";
+---
+
+<span
+  class={on ? "text-accent" : "text-muted"}
+  title={label}
+  aria-label={label ? `${label}: ${state}` : state}
+>
+  {on ? "✓" : "—"}
+</span>

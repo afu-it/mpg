@@ -1,8 +1,24 @@
 ---
 import Base from "../layouts/Base.astro";
+import TableControls from "../components/TableControls.astro";
+import GatewayTable from "../components/GatewayTable.astro";
 ---
 
 <Base>
-  <h1 class="text-2xl font-semibold text-fg">Malaysia Payment Gateways</h1>
-  <p class="mt-2 text-muted">Comparison table coming next.</p>
+  <section class="mb-8">
+    <h1 class="text-2xl font-semibold tracking-tight text-fg sm:text-3xl">
+      Malaysia Payment Gateways
+    </h1>
+    <p class="mt-2 max-w-2xl text-muted">
+      Compare fees and features across Malaysian payment gateways — FPX, cards,
+      e-wallets and DuitNow QR — in one place. Click a column to sort, or filter
+      by channel and feature.
+    </p>
+  </section>
+
+  <div class="mb-6">
+    <TableControls />
+  </div>
+
+  <GatewayTable />
 </Base>

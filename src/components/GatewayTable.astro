@@ -1,0 +1,129 @@
+---
+import { getCollection } from "astro:content";
+import { parseFee } from "../lib/fees";
+import Logo from "./Logo.astro";
+import FeeCell from "./FeeCell.astro";
+import FeatureBadge from "./FeatureBadge.astro";
+
+const gateways = (await getCollection("gateways")).sort((a, b) =>
+  a.data.name.localeCompare(b.data.name),
+);
+const total = gateways.length;
+
+// header cells: label + whether sortable + sort type
+const feeCols = [
+  { key: "fpx", label: "FPX" },
+  { key: "card", label: "Card" },
+  { key: "ewallet", label: "E-wallet" },
+  { key: "duitnowqr", label: "DuitNow QR" },
+] as const;
+
+const th =
+  "whitespace-nowrap px-3 py-2 text-left align-bottom font-medium text-muted";
+const sortBtn =
+  "group inline-flex items-center gap-1 hover:text-fg aria-[sort]:text-fg";
+const td = "whitespace-nowrap px-3 py-3 align-middle";
+---
+
+<p class="mb-3 text-sm text-muted">
+  Showing <span id="gw-count" class="text-fg">{total}</span> of {total} gateways
+</p>
+
+<div class="overflow-x-auto rounded-md border border-line">
+  <table id="gw-table" class="w-full border-collapse text-sm">
+    <thead class="border-b border-line bg-panel">
+      <tr>
+        <th scope="col" class={`${th} sticky left-0 z-10 bg-panel`} aria-sort="none">
+          <button type="button" class={sortBtn} data-sort-type="text">
+            Gateway <span class="sort-arrow text-accent" aria-hidden="true"></span>
+          </button>
+        </th>
+        {
+          feeCols.map((c) => (
+            <th scope="col" class={th} aria-sort="none">
+              <button type="button" class={sortBtn} data-sort-type="num">
+                {c.label} <span class="sort-arrow text-accent" aria-hidden="true" />
+              </button>
+            </th>
+          ))
+        }
+        <th scope="col" class={th} aria-sort="none">
+          <button type="button" class={sortBtn} data-sort-type="text">
+            Settlement <span class="sort-arrow text-accent" aria-hidden="true"></span>
+          </button>
+        </th>
+        <th scope="col" class={th} aria-sort="none">
+          <button type="button" class={sortBtn} data-sort-type="num" title="Setup / recurring">
+            Fixed fee <span class="sort-arrow text-accent" aria-hidden="true"></span>
+          </button>
+        </th>
+        <th scope="col" class={th} aria-sort="none">
+          <button type="button" class={sortBtn} data-sort-type="num">
+            Recurring <span class="sort-arrow text-accent" aria-hidden="true"></span>
+          </button>
+        </th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {
+        gateways.map((g) => (
+          <tr
+            class="cursor-pointer border-b border-line/60 last:border-0 hover:bg-panel"
+            data-name={g.data.name.toLowerCase()}
+            data-channels={g.data.channels.join(" ")}
+            data-no_code={String(g.data.features.no_code)}
+            data-api={String(g.data.features.api)}
+            data-recurring={String(g.data.features.recurring)}
+            data-href={`/gateway/${g.id}`}
+          >
+            <td class={`${td} sticky left-0 bg-surface`} data-sort-value={g.data.name.toLowerCase()}>
+              <a
+                href={`/gateway/${g.id}`}
+                class="flex items-center gap-2.5 font-medium text-fg hover:text-accent"
+              >
+                <Logo slug={g.id} name={g.data.name} />
+                {g.data.name}
+              </a>
+            </td>
+            {feeCols.map((c) => (
+              <td class={td} data-sort-value={String(parseFee(g.data.fees[c.key]))}>
+                <FeeCell value={g.data.fees[c.key]} />
+              </td>
+            ))}
+            <td class={td} data-sort-value={g.data.settlement.toLowerCase()}>
+              <FeeCell value={g.data.settlement} />
+            </td>
+            <td class={td} data-sort-value={String(parseFee(g.data.fees.monthly))}>
+              <FeeCell value={g.data.fees.setup} />
+              {g.data.fees.monthly !== g.data.fees.setup && (
+                <span class="ml-1 text-xs text-muted">/ {g.data.fees.monthly}</span>
+              )}
+            </td>
+            <td class={td} data-sort-value={g.data.features.recurring ? "0" : "1"}>
+              <FeatureBadge on={g.data.features.recurring} label="Recurring" />
+            </td>
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+
+  <p id="gw-empty" hidden class="px-3 py-8 text-center text-muted">
+    No gateways match your filters.
+  </p>
+</div>
+
+<style>
+  /* sort direction arrow driven by aria-sort on the parent <th> */
+  th[aria-sort="ascending"] .sort-arrow::after {
+    content: "↑";
+  }
+  th[aria-sort="descending"] .sort-arrow::after {
+    content: "↓";
+  }
+</style>
+
+<script>
+  import "../scripts/table.ts";
+</script>

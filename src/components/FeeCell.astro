@@ -1,0 +1,11 @@
+---
+// Renders a fee value; mutes non-numeric placeholders so real rates stand out.
+interface Props {
+  value: string;
+}
+const { value } = Astro.props;
+const display = value && value.trim() ? value : "—";
+const muted = display === "—" || display === "Contact sales";
+---
+
+<span class={muted ? "text-muted" : "text-fg"}>{display}</span>
