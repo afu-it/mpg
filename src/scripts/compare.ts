@@ -213,7 +213,7 @@ if (dataEl && root) {
             td.classList.add("text-muted");
           } else {
             const LIMIT = 2;
-            const wrap = el("div", "flex flex-col items-center gap-1");
+            const wrap = el("div", "grid grid-cols-2 gap-1 justify-items-center");
             const chip = (m: string) =>
               el("span", "whitespace-nowrap rounded-full border border-line bg-raised px-2 py-0.5 text-[11px] text-fg", m);
             let expanded = false;
@@ -223,7 +223,7 @@ if (dataEl && root) {
               if (items.length > LIMIT) {
                 const btn = el(
                   "button",
-                  "rounded-full border border-line bg-panel px-2 py-0.5 text-[11px] text-muted hover:border-accent hover:text-accent",
+                  "col-span-2 justify-self-center rounded-full border border-line bg-panel px-2 py-0.5 text-[11px] text-muted hover:border-accent hover:text-accent",
                   expanded ? "show less" : `+${items.length - LIMIT} more`,
                 );
                 btn.addEventListener("click", () => {
