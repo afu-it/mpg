@@ -1,6 +1,10 @@
 # LOG — safe diary (append above)
 
 ## 2026-06-24 · type: feat
+Developer-experience dimension (spec 05, done) — sparked by a Threads thread on MCP/AI-agent support. New schema fields `mcp` (official/community/none, default none), `webhooks`, `plugins[]`, `dev_docs`; data for ~24 gateways via 5 research agents. MCP official = Stripe, Curlec, HitPay, Airwallex; community = Xendit, Bayarcash; rest none. UI: detail Developer-experience section (MCP badge + API-docs link + plugin chips), table MCP badge, compare Webhooks/MCP/Plugins rows. astro check 0 errors; build 42 pages; tests pass.
+plain: Tambah info "gateway mana AI-agent/developer friendly" (MCP, webhook, plugin WooCommerce/Shopify, link docs) untuk setiap gateway.
+
+## 2026-06-24 · type: feat
 Deep fee-sourcing pass + provenance system. Compare "Other methods" cell → 2-per-row grid with `+N more` toggle; dropped redundant "FPX online banking" from methods (Banks row covers it). Filled many "Contact sales" fees from provider rate cards/docs (CHIP, BCL, Stripe T+7, Fiuu & iPay88 fee PDFs, RinggitPay, ManagePay, Riipay, senangPay BNPL); third-party/indicative figures (eGHL, Revenue Monster, Gkash, Atome, Grab, myIOU, AsiaPay, Curlec settlement) carry a `*` marker + legend on table/compare/detail. toyyibPay RM100 setup/yearly downgraded to Contact sales (cited source was a 404). Remaining all-quote gateways (OxPay/RevPay/Paydee/M1Pay/CommercePay) left as Contact sales — no data anywhere. astro check 0 errors; build 42 pages; tests pass.
 plain: Cari harga sebenar setiap gateway dari laman rasmi; yang dari blog ditanda bintang (*); yang memang rahsia kekal "hubungi sales".
 

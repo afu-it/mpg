@@ -1,6 +1,6 @@
 # Progress Tracker — MPG
 
-last_synced_commit: 4e29c7a
+last_synced_commit: fd55ce9
 context_synced_at: 2026-06-24
 context_selftest: skipped (not first-run)
 
@@ -15,6 +15,7 @@ was built then **removed** at the owner's request — no server/DB in the repo.
 - Per-gateway **Other payment methods** (e-wallets) + **Supported banks (via FPX)** on detail + compare (spec 03, done). Recent adds: M1Pay, CardBizPay, Airwallex, PayNet.
 - Compare "Other methods" cell: 2 chips/row grid + `+N more` toggle. "FPX online banking" dropped from methods (Banks row covers it).
 - Fees deep-sourced: filled many from provider rate cards/docs; third-party/indicative values carry a `*` marker with a legend (table/compare/detail). Genuinely-private gateways stay "Contact sales".
+- **Developer experience** dimension (spec 05, done): schema `mcp`/`webhooks`/`plugins`/`dev_docs`. MCP official = Stripe, Curlec, HitPay, Airwallex; community = Xendit, Bayarcash. Detail section + table MCP badge + compare rows.
 - Auto-deploy: push master → GitHub Actions → Cloudflare Pages.
 - Clerk sign up / sign in / UserButton (CDN) — **kept** (owner's call); currently gates no feature, reserved for a future account feature. Switch to `pk_live` at real deploy.
 
