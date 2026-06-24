@@ -8,8 +8,8 @@ fees:
   card: "Contact sales"
   ewallet: "—"
   duitnowqr: "Contact sales"
-  setup: "RM100"
-  monthly: "RM100/year"
+  setup: "Contact sales"
+  monthly: "Contact sales"
 settlement: "T+1"
 min_txn: "RM1.00"
 channels: [fpx, duitnowqr]
@@ -19,8 +19,8 @@ features:
   recurring: false
 skill: setup-toyyibpay
 verified_date: "2026-06-24"
-source: "https://www.toyyibpay.com/pricing-plans/"
-notes: "B2C FPX RM1.00, B2B FPX RM2.00. Onboarding RM100 + RM100/year (from year 2). Free 'Santai' plan for registered NGOs (B2C FPX waived). Card & DuitNow QR are available but rates are not publicly listed — confirm with toyyibPay. Excludes SST."
+source: "https://toyyibpay.com"
+notes: "Famous for a flat RM1.00 per FPX transaction (B2C). Auto-settlement the next business day (T+1). Card & DuitNow QR are offered but rates aren't published. Onboarding/annual fees are not published on the current official site (older RM100 figures were unverifiable) — confirm with toyyibPay. Excludes SST."
 ---
 
 toyyibPay is one of Malaysia's most popular low-cost payment gateways, known for a

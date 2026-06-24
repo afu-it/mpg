@@ -9,17 +9,21 @@ fees:
   card_intl: "Contact sales"
   ewallet: "1.5% / RM0.65"
   duitnowqr: "Contact sales"
+  bnpl: "2.0%–6.0%"
   setup: "RM0"
   monthly: "from RM199/year"
 settlement: "Contact sales"
 min_txn: "—"
-channels: [fpx, card, ewallet]
+channels: [fpx, card, ewallet, bnpl]
 methods:
   - Credit / debit card
   - ShopeePay
   - Touch 'n Go eWallet
   - GrabPay
   - Boost
+  - SPayLater
+  - PayLater by Grab
+  - Atome
   - MyIOU (BNPL)
 features:
   no_code: true
