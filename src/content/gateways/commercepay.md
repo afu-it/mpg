@@ -16,6 +16,18 @@ settlement: "T+1 to T+2 (1-2 business days)"
 min_txn: "—"
 category: gateway
 channels: [fpx, card, ewallet, duitnowqr, bnpl]
+methods:
+  - FPX online banking
+  - Credit / debit card
+  - Touch 'n Go eWallet
+  - GrabPay
+  - Boost
+  - ShopeePay
+  - Alipay
+  - WeChat Pay
+  - DuitNow QR
+  - Atome
+  - GrabPay Later
 features:
   no_code: true
   api: true

@@ -16,6 +16,18 @@ settlement: "Weekly (W+4 business days)"
 min_txn: "—"
 category: gateway
 channels: [fpx, card, ewallet, duitnowqr, bnpl]
+methods:
+  - FPX online banking
+  - Credit / debit card
+  - GrabPay
+  - Touch 'n Go eWallet
+  - Boost
+  - MCash
+  - ShopeePay
+  - Maybank2u QR
+  - DuitNow QR
+  - Atome
+  - Pay Later by Grab
 features:
   no_code: true
   api: true

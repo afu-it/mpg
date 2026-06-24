@@ -16,6 +16,18 @@ settlement: "Weekly (approx. 5 working days after cut-off)"
 min_txn: "—"
 category: gateway
 channels: [fpx, card, ewallet, duitnowqr, bnpl]
+methods:
+  - FPX online banking
+  - Credit / debit card
+  - Boost
+  - GrabPay
+  - Touch 'n Go eWallet
+  - KiplePay
+  - VCash
+  - DuitNow QR
+  - Pay Later by Grab
+  - Atome
+  - MobyPAY
 features:
   no_code: true
   api: true

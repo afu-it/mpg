@@ -15,6 +15,14 @@ fees:
 settlement: "T+1"
 min_txn: "—"
 channels: [fpx, card, ewallet, bnpl]
+methods:
+  - FPX online banking
+  - Credit / debit card
+  - Maybank QRPay
+  - ShopeePay
+  - Touch 'n Go eWallet
+  - GrabPay
+  - Boost
 features:
   no_code: true
   api: true

@@ -14,6 +14,14 @@ fees:
 settlement: "Contact sales"
 min_txn: "—"
 channels: [fpx, card, ewallet]
+methods:
+  - FPX online banking
+  - Credit / debit card
+  - ShopeePay
+  - Touch 'n Go eWallet
+  - GrabPay
+  - Boost
+  - MyIOU (BNPL)
 features:
   no_code: true
   api: true

@@ -14,6 +14,13 @@ fees:
 settlement: "T+1"
 min_txn: "—"
 channels: [fpx, card, ewallet, duitnowqr]
+methods:
+  - FPX online banking
+  - Visa
+  - Mastercard
+  - Apple Pay
+  - Google Pay
+  - DuitNow QR
 features:
   no_code: true
   api: true

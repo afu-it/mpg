@@ -15,6 +15,19 @@ fees:
 settlement: "Contact sales"
 min_txn: "—"
 channels: [fpx, card, ewallet, duitnowqr, bnpl]
+methods:
+  - FPX online banking
+  - Credit / debit card
+  - Touch 'n Go eWallet
+  - GrabPay
+  - Maybank QRPay
+  - Boost
+  - ShopeePay
+  - WeChat Pay
+  - Alipay
+  - DuitNow QR
+  - Atome
+  - GrabPay Later
 features:
   no_code: true
   api: true
