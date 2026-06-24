@@ -23,9 +23,13 @@ const gateways = defineCollection({
     }),
     settlement: z.string(), // e.g. "T+1"
     min_txn: z.string(),
-    // "gateway" (default) or "bnpl" for buy-now-pay-later providers
-    category: z.enum(["gateway", "bnpl"]).default("gateway"),
+    // "gateway" (default), "bnpl", or "infrastructure" (national rails operator, not a merchant gateway)
+    category: z.enum(["gateway", "bnpl", "infrastructure"]).default("gateway"),
     channels: z.array(z.enum(["fpx", "card", "ewallet", "duitnowqr", "bnpl"])),
+    // online-banking banks supported beyond the standard FPX set (FPX banks come from src/lib/fpx-banks.ts)
+    banks: z.array(z.string()).optional(),
+    // other payment methods / e-wallets (Boost, TNG eWallet, GrabPay, ShopeePay, Apple Pay, …)
+    methods: z.array(z.string()).optional(),
     features: z.object({
       no_code: z.boolean(), // payment links / no-code checkout
       api: z.boolean(), // developer API
