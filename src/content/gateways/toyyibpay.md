@@ -1,0 +1,39 @@
+---
+name: toyyibPay
+website: https://toyyibpay.com
+tagline: "Shariah-compliant FPX & DuitNow QR for SMEs, NGOs & government"
+logo: /logos/toyyibpay.svg
+fees:
+  fpx: "RM1.00"
+  card: "Contact sales"
+  ewallet: "—"
+  duitnowqr: "Contact sales"
+  setup: "RM100"
+  monthly: "RM100/year"
+settlement: "T+1"
+min_txn: "RM1.00"
+channels: [fpx, duitnowqr]
+features:
+  no_code: true
+  api: true
+  recurring: false
+skill: setup-toyyibpay
+verified_date: "2026-06-24"
+source: "https://www.toyyibpay.com/pricing-plans/"
+notes: "B2C FPX RM1.00, B2B FPX RM2.00. Onboarding RM100 + RM100/year (from year 2). Free 'Santai' plan for registered NGOs (B2C FPX waived). Card & DuitNow QR are available but rates are not publicly listed — confirm with toyyibPay. Excludes SST."
+---
+
+toyyibPay is one of Malaysia's most popular low-cost payment gateways, known for a
+flat **RM1.00 per FPX transaction** regardless of amount. It rebranded around a
+Shariah-compliant, transparent positioning and is widely used by SMEs, NGOs and
+government agencies.
+
+Its strength is simple FPX collection and DuitNow QR, with payment links and QR
+codes that need no website, daily auto-settlement (funds the next business day),
+split payments and a clear dashboard. Plugins and an API are available for
+common platforms.
+
+Pricing is FPX-centric: **RM1.00 (B2C)** / RM2.00 (B2B), with an RM100 onboarding
+fee and RM100/year from the second year. Registered NGOs can use the free
+"Santai" plan (B2C FPX waived). Card and DuitNow QR acceptance is offered but the
+rates are not published publicly — confirm before committing.
