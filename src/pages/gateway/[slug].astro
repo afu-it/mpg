@@ -8,6 +8,7 @@ import Logo from "../../components/Logo.astro";
 import FeeCell from "../../components/FeeCell.astro";
 import FeatureBadge from "../../components/FeatureBadge.astro";
 import FavButton from "../../components/FavButton.astro";
+import { FPX_BANKS, FPX_BANKS_SOURCE } from "../../lib/fpx-banks";
 
 export async function getStaticPaths() {
   const gateways = await getCollection("gateways");
@@ -129,6 +130,57 @@ const features = [
       </ul>
     </section>
   </div>
+
+  <!-- other payment methods -->
+  {
+    d.methods && d.methods.length > 0 && (
+      <section class="mt-8">
+        <h2 class="mb-3 text-sm font-medium uppercase tracking-wide text-muted">
+          Other payment methods
+        </h2>
+        <div class="flex flex-wrap gap-2">
+          {d.methods.map((m) => (
+            <span class="rounded-full border border-line bg-raised px-3 py-1 text-xs text-fg">
+              {m}
+            </span>
+          ))}
+        </div>
+      </section>
+    )
+  }
+
+  <!-- supported banks -->
+  {
+    (d.channels.includes("fpx") || (d.banks && d.banks.length > 0)) && (
+      <section class="mt-8">
+        <h2 class="mb-1 text-sm font-medium uppercase tracking-wide text-muted">
+          Supported banks
+        </h2>
+        {d.channels.includes("fpx") && (
+          <p class="mb-3 text-xs text-muted">
+            Online banking via{" "}
+            <a href={FPX_BANKS_SOURCE} target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">
+              FPX
+            </a>{" "}
+            — the national bank set:
+          </p>
+        )}
+        <div class="flex flex-wrap gap-2">
+          {(d.banks ?? []).map((b) => (
+            <span class="rounded-full border border-line bg-raised px-3 py-1 text-xs text-fg">
+              {b}
+            </span>
+          ))}
+          {d.channels.includes("fpx") &&
+            FPX_BANKS.map((b) => (
+              <span class="rounded-full border border-line bg-raised px-3 py-1 text-xs text-fg">
+                {b}
+              </span>
+            ))}
+        </div>
+      </section>
+    )
+  }
 
   <!-- long-form body -->
   <section class="prose-mpg mt-8 max-w-2xl space-y-4 leading-relaxed text-fg">

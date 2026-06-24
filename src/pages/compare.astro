@@ -30,6 +30,8 @@ const data = gateways.map((g) => ({
   channels: g.data.channels,
   features: g.data.features,
   fees: g.data.fees,
+  methods: g.data.methods ?? [],
+  banks: g.data.banks ?? [],
   logo: logoBySlug[g.id] ?? null,
 }));
 

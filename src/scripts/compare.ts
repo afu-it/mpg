@@ -1,17 +1,20 @@
 // Side-by-side gateway comparison. Fully client-side over embedded JSON.
 import { parseFee } from "../lib/fees";
 import { splitName } from "../lib/name";
+import { FPX_BANKS } from "../lib/fpx-banks";
 
 interface GW {
   id: string;
   name: string;
-  category: "gateway" | "bnpl";
+  category: "gateway" | "bnpl" | "infrastructure";
   website: string;
   settlement: string;
   min_txn: string;
   channels: string[];
   features: { no_code: boolean; api: boolean; recurring: boolean };
   fees: Record<string, string | undefined>;
+  methods: string[];
+  banks: string[];
   logo: string | null;
 }
 
@@ -76,10 +79,14 @@ if (dataEl && root) {
     | { label: string; kind: "fee"; key: string }
     | { label: string; kind: "text"; get: (g: GW) => string }
     | { label: string; kind: "bool"; get: (g: GW) => boolean }
-    | { label: string; kind: "link"; get: (g: GW) => string };
+    | { label: string; kind: "link"; get: (g: GW) => string }
+    | { label: string; kind: "list"; get: (g: GW) => string[] };
+
+  const categoryLabel = (g: GW) =>
+    g.category === "bnpl" ? "BNPL" : g.category === "infrastructure" ? "Infrastructure" : "Gateway";
 
   const ROWS: Row[] = [
-    { label: "Category", kind: "text", get: (g) => (g.category === "bnpl" ? "BNPL" : "Gateway") },
+    { label: "Category", kind: "text", get: categoryLabel },
     { label: "FPX", kind: "fee", key: "fpx" },
     { label: "Card (local)", kind: "fee", key: "card" },
     { label: "International card", kind: "fee", key: "card_intl" },
@@ -93,6 +100,17 @@ if (dataEl && root) {
     { label: "Recurring", kind: "bool", get: (g) => g.features.recurring },
     { label: "No-code", kind: "bool", get: (g) => g.features.no_code },
     { label: "API", kind: "bool", get: (g) => g.features.api },
+    {
+      label: "Banks",
+      kind: "text",
+      get: (g) =>
+        g.channels.includes("fpx")
+          ? `${FPX_BANKS.length + g.banks.length} via FPX`
+          : g.banks.length
+            ? `${g.banks.length} banks`
+            : "—",
+    },
+    { label: "Other methods", kind: "list", get: (g) => g.methods },
     { label: "Website", kind: "link", get: (g) => g.website },
   ];
 
@@ -188,6 +206,24 @@ if (dataEl && root) {
           const on = row.get(g);
           td.textContent = on ? "✓" : "—";
           td.classList.add(on ? "text-accent" : "text-muted");
+        } else if (row.kind === "list") {
+          const items = row.get(g);
+          if (!items.length) {
+            td.textContent = "—";
+            td.classList.add("text-muted");
+          } else {
+            const wrap = el("div", "flex flex-wrap justify-center gap-1");
+            items.forEach((m) =>
+              wrap.appendChild(
+                el(
+                  "span",
+                  "rounded-full border border-line bg-raised px-2 py-0.5 text-[11px] text-fg",
+                  m,
+                ),
+              ),
+            );
+            td.appendChild(wrap);
+          }
         } else {
           const a = document.createElement("a");
           a.href = row.get(g);
