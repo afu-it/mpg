@@ -1,6 +1,10 @@
 # LOG — safe diary (append above)
 
 ## 2026-06-24 · type: feat
+Added "Supported banks" + "Other payment methods" dimension (spec 03, done): `banks`/`methods` schema fields, shared PayNet FPX bank list (`src/lib/fpx-banks.ts`), detail + `/compare` UI. Expanded directory (spec 04): +M1Pay, +CardBizPay, +Airwallex, +PayNet (infrastructure category) — all sourced via 4 parallel research agents; backfilled e-wallet methods for 8 existing gateways. OnPay excluded (sales-page SaaS, not an acquirer). 43 pages build; astro check 0 errors; vitest 11/11. Payex + 2C2P flagged as further candidates pending AFU.
+plain: Tambah maklumat "bank & e-wallet apa yang disokong" dalam perbandingan, dan tambah 4 gateway baru (M1Pay, CardBizPay, Airwallex, PayNet) — semua bersumber, tiada fee direka.
+
+## 2026-06-24 · type: feat
 Phase 2 (save favourites) code-complete: Cloudflare Pages Functions (`/functions/api/favourites`, `/compares`) + D1 schema, Clerk session verified server-side via `@clerk/backend`; client ♥ toggle on table/detail, `/favourites` page, save-comparison on `/compare`. Functions 503 until D1+secret provisioned, so the deploy stays safe. Scoped `functions/tsconfig.json` (Workers types) away from the Astro/DOM root tsconfig. Verified: astro check 0 errors, functions tsc clean, build 39 pages, vitest 11/11. Live activation still needs owner CF account steps (d1 create, run schema.sql, set DB binding + CLERK_SECRET_KEY).
 plain: Built the "save your favourite gateways" feature end-to-end. It's ready in code; going live just needs three setup clicks in the Cloudflare account.
 

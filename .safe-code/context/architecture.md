@@ -13,7 +13,8 @@
 - Pages: `src/pages/index.astro` (landing), `gateways.astro` (table+sidebar), `compare.astro` (side-by-side), `gateway/[slug].astro` (detail), `404.astro`
 - Components: `src/components/` (GatewayTable, Sidebar, FeeCell, FeatureBadge, Logo)
 - Client scripts: `src/scripts/` (`table.ts` sort/filter/search, `compare.ts`, `auth.ts`)
-- Logic: `src/lib/` (`fees.ts` parse/compare, `name.ts` split name+note)
+- Logic: `src/lib/` (`fees.ts` parse/compare, `name.ts` split name+note, `fpx-banks.ts` shared PayNet FPX bank list)
+- Schema extras: `banks`/`methods` (optional string[]), `category: gateway|bnpl|infrastructure`. Methods (e-wallets) + banks shown on detail + `/compare`.
 - Layout: `src/layouts/Base.astro` · Logos: `src/assets/logos/<slug>.{svg,png}`
 - API (Phase 2): `functions/api/favourites.ts`, `functions/api/compares.ts`; shared `functions/_lib/clerk.ts`; D1 schema `schema.sql`
 - Favourites client: `src/scripts/favourites.ts` (loaded in Base) + `src/components/FavButton.astro`; page `src/pages/favourites.astro`
