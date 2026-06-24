@@ -1,5 +1,5 @@
 ---
-status: approved
+status: in-progress
 created: 2026-06-24
 ---
 # Save favourites / comparisons
@@ -22,4 +22,20 @@ across devices.
 - No secret keys in client; D1 writes keyed to verified userId.
 
 ## Notes
-Not started. Decide D1 schema (favourites: userId, slug, created_at; saved_compares: userId, ids[], name).
+Code complete (2026-06-24). Schema decided & shipped in `schema.sql`:
+`favourites(user_id, slug, created_at)` + `saved_compares(id, user_id, name, ids, created_at)`.
+
+Built:
+- `functions/api/favourites.ts` (GET/POST/DELETE) + `functions/api/compares.ts` (GET/POST/DELETE),
+  Clerk token verified server-side in `functions/_lib/clerk.ts` via `@clerk/backend` (`verifyToken`).
+  Functions return 503 when `DB`/`CLERK_SECRET_KEY` are absent → safe to deploy before provisioning.
+- Client: `FavButton.astro` ♥ on table rows + detail; `src/scripts/favourites.ts` (loaded in Base)
+  hydrates state, optimistic toggle, sign-up prompt when signed out.
+- `/favourites` page (saved gateways + saved comparisons); "Save this comparison" form on `/compare`.
+- `functions/tsconfig.json` scopes Workers types away from the Astro/DOM root tsconfig.
+
+Remaining to go live (needs the owner's Cloudflare account — cannot be done from the repo):
+1. `npx wrangler d1 create mpg-db` → put `database_id` in `wrangler.toml` and uncomment the `[[d1_databases]]` block.
+2. `npx wrangler d1 execute mpg-db --remote --file=schema.sql`.
+3. CF Pages → mpg → add D1 binding `DB` + secret `CLERK_SECRET_KEY`.
+→ flip status to `done` once verified on live.

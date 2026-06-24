@@ -8,5 +8,8 @@ _2026-06-24_
 - **Working combo:** Astro 7 static + `@clerk/clerk-js` via CDN hotload + Tailwind v4 (`@tailwindcss/vite`). No SSR adapter.
 - Dev gotcha: `astro dev` daemonizes → stale daemons serve old code; use `CHOKIDAR_USEPOLLING=true` on the NTFS mount; hard-refresh after client-script edits.
 
-## Phase 2/3 backend (planned)
-- Cloudflare **Pages Functions** (`/functions/api/*`) + **D1**, kept separate from the static Astro build. Verify Clerk sessions server-side with `@clerk/backend`.
+## Phase 2/3 backend (Phase 2 built 2026-06-24)
+- Cloudflare **Pages Functions** (`/functions/api/*`) + **D1**, kept separate from the static Astro build. Verify Clerk sessions server-side with `@clerk/backend` (`verifyToken`, networked JWKS via `secretKey`).
+- **Type isolation:** `/functions` needs its own `tsconfig.json` (`lib: ES2022`, `types: @cloudflare/workers-types`, `exclude: []`) and the root tsconfig must `exclude: ["functions"]`. Otherwise the DOM `Request`/`Response`/`Headers` clash with Workers types (`getAll`/`webSocket` errors). Don't add the `WebWorker` lib — it reintroduces conflicting `Response`.
+- **Safe-deploy pattern:** Functions check `env.DB && env.CLERK_SECRET_KEY` → 503 when unset, so committing the inert binding never breaks the live `wrangler pages deploy`.
+- Pages picks up `/functions` at the repo root automatically; `@clerk/backend` is bundled because it's a normal dependency installed by `npm ci`.
