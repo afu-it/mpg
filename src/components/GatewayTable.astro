@@ -1,6 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import { parseFee } from "../lib/fees";
+import { splitName } from "../lib/name";
 import Logo from "./Logo.astro";
 import FeeCell from "./FeeCell.astro";
 import FeatureBadge from "./FeatureBadge.astro";
@@ -85,7 +86,15 @@ const td = "whitespace-nowrap px-3 py-3 align-middle";
                 class="flex items-center gap-2.5 font-medium text-fg hover:text-accent"
               >
                 <Logo slug={g.id} name={g.data.name} />
-                {g.data.name}
+                {(() => {
+                  const { base, note } = splitName(g.data.name);
+                  return (
+                    <span>
+                      {base}
+                      {note && <span class="ml-1 text-xs font-normal text-muted">{note}</span>}
+                    </span>
+                  );
+                })()}
                 {g.data.category === "bnpl" && (
                   <span class="rounded-full border border-line bg-raised px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wide text-accent">
                     BNPL

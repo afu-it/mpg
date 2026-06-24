@@ -1,5 +1,6 @@
 // Side-by-side gateway comparison. Fully client-side over embedded JSON.
 import { parseFee } from "../lib/fees";
+import { splitName } from "../lib/name";
 
 interface GW {
   id: string;
@@ -61,6 +62,13 @@ if (dataEl && root) {
     span.style.width = `${size}px`;
     span.style.height = `${size}px`;
     span.style.fontSize = `${Math.round(size * 0.48)}px`;
+    return span;
+  }
+  function nameNode(name: string, className = ""): HTMLElement {
+    const { base, note } = splitName(name);
+    const span = el("span", className);
+    span.appendChild(document.createTextNode(base));
+    if (note) span.appendChild(el("span", "ml-1 text-xs font-normal text-muted", note));
     return span;
   }
 
@@ -125,7 +133,7 @@ if (dataEl && root) {
       a.href = `/gateway/${g.id}`;
       a.className = "flex flex-col items-center gap-1.5 text-fg hover:text-accent";
       a.appendChild(logoNode(g, 28));
-      a.appendChild(el("span", "text-center font-medium leading-tight", g.name));
+      a.appendChild(nameNode(g.name, "text-center font-medium leading-tight"));
       wrap.appendChild(a);
       const rm = el("button", "text-xs text-muted hover:text-accent", "remove ✕");
       rm.addEventListener("click", () => {
@@ -228,8 +236,7 @@ if (dataEl && root) {
       avail.forEach((g) => {
         const btn = el("button", "flex w-full items-center gap-2.5 rounded-md px-2 py-2 text-left text-sm text-fg hover:bg-panel");
         btn.appendChild(logoNode(g, 20));
-        const nm = el("span", "flex-1", g.name);
-        btn.appendChild(nm);
+        btn.appendChild(nameNode(g.name, "flex-1"));
         if (g.category === "bnpl") btn.appendChild(el("span", "rounded-full border border-line px-1.5 py-0.5 text-[10px] uppercase tracking-wide text-accent", "BNPL"));
         btn.addEventListener("click", () => {
           if (selected.length >= MAX) return;
