@@ -83,6 +83,29 @@ const presets = [
 
     <!-- comparison area (rendered by compare.ts) -->
     <div id="compare-root" class="overflow-x-auto"></div>
+
+    <!-- save the current comparison to your account (Phase 2) -->
+    <form
+      id="save-compare"
+      class="mt-6 flex flex-wrap items-center gap-2 border-t border-line pt-6"
+    >
+      <label for="cmp-name" class="text-sm text-muted">Save this comparison</label>
+      <input
+        id="cmp-name"
+        name="cmp-name"
+        type="text"
+        maxlength="80"
+        placeholder="e.g. Cheapest FPX"
+        class="rounded-md border border-line bg-panel px-3 py-1.5 text-sm text-fg placeholder:text-muted focus:border-accent"
+      />
+      <button
+        type="submit"
+        class="rounded-md bg-accent px-3 py-1.5 text-sm font-medium text-black hover:opacity-90"
+      >
+        Save
+      </button>
+      <span data-cmp-status class="text-xs text-muted" aria-live="polite"></span>
+    </form>
   </div>
 
   <script type="application/json" id="gw-data" set:html={JSON.stringify(data)} />
