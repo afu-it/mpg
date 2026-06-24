@@ -7,7 +7,9 @@
 - Client-side Clerk authentication (sign up / sign in / user button), dark-themed.
 - GitHub Actions auto-deploy to Cloudflare Pages.
 - safe-code project brain (`.safe-code/`).
-- Phase 2 (code complete, pre-provisioning): save favourite gateways and saved comparisons — Cloudflare Pages Functions + D1, Clerk-verified server-side; ♥ on the table/detail, a `/favourites` page, and "save this comparison" on `/compare`.
+- Supported-banks (via FPX) + Other-payment-methods (e-wallets) on detail + `/compare`.
+- Default gateway table ranked by value (lowest core fees) instead of alphabetical.
+- More gateways: M1Pay, CardBizPay, Airwallex; PayNet as infrastructure. Logos for all entries.
 
 ### Removed
 - Split and Pace (BNPL) — defunct in Malaysia.

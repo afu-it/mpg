@@ -1,6 +1,10 @@
 # LOG — safe diary (append above)
 
 ## 2026-06-24 · type: feat
+Default table order now ranks by value (mean of published FPX/card/e-wallet rates; unknowns sink) instead of alphabetical. Removed the favourites feature at owner's request — deleted /functions, D1 schema, FavButton, favourites client, /favourites page, save-comparison form; uninstalled @clerk/backend + @cloudflare/workers-types; reverted D1 binding + root tsconfig (Clerk sign-in/up kept). Force-fetched logos for 9 logo-less gateways (Google favicon). Cleaned a stray node_modules/.astro left under src/content/gateways. astro check 0 errors; build 42 pages; vitest 11/11.
+plain: Susun gateway paling berbaloi di atas, buang fungsi "simpan kegemaran" yang tak dipakai, dan dapatkan logo untuk semua gateway.
+
+## 2026-06-24 · type: feat
 Added "Supported banks" + "Other payment methods" dimension (spec 03, done): `banks`/`methods` schema fields, shared PayNet FPX bank list (`src/lib/fpx-banks.ts`), detail + `/compare` UI. Expanded directory (spec 04): +M1Pay, +CardBizPay, +Airwallex, +PayNet (infrastructure category) — all sourced via 4 parallel research agents; backfilled e-wallet methods for 8 existing gateways. OnPay excluded (sales-page SaaS, not an acquirer). 43 pages build; astro check 0 errors; vitest 11/11. Payex + 2C2P flagged as further candidates pending AFU.
 plain: Tambah maklumat "bank & e-wallet apa yang disokong" dalam perbandingan, dan tambah 4 gateway baru (M1Pay, CardBizPay, Airwallex, PayNet) — semua bersumber, tiada fee direka.
 

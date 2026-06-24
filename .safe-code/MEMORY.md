@@ -13,8 +13,10 @@ _2026-06-24_
 - `methods` (e-wallets/other rails) DO differ per gateway → sourced per file. Generic "e-wallets" mentions (asiapay/payhalal/xendit in listicles) were too vague to map to brands → left empty rather than guessed.
 - Research provenance: sitegiant comparison + easystore + rebrand + justsimple + veecotech (sitegiant 2026 blog was Cloudflare-blocked). CardBizPay + Airwallex publish real rates; M1Pay = contact-sales. OnPay is a sales-page SaaS (not an acquirer) → excluded. PayNet = infrastructure entry.
 
-## Phase 2/3 backend (Phase 2 built 2026-06-24)
-- Cloudflare **Pages Functions** (`/functions/api/*`) + **D1**, kept separate from the static Astro build. Verify Clerk sessions server-side with `@clerk/backend` (`verifyToken`, networked JWKS via `secretKey`).
-- **Type isolation:** `/functions` needs its own `tsconfig.json` (`lib: ES2022`, `types: @cloudflare/workers-types`, `exclude: []`) and the root tsconfig must `exclude: ["functions"]`. Otherwise the DOM `Request`/`Response`/`Headers` clash with Workers types (`getAll`/`webSocket` errors). Don't add the `WebWorker` lib — it reintroduces conflicting `Response`.
-- **Safe-deploy pattern:** Functions check `env.DB && env.CLERK_SECRET_KEY` → 503 when unset, so committing the inert binding never breaks the live `wrangler pages deploy`.
-- Pages picks up `/functions` at the repo root automatically; `@clerk/backend` is bundled because it's a normal dependency installed by `npm ci`.
+## Phase 2/3 backend — ARCHIVED (built then removed 2026-06-24)
+Favourites (Pages Functions + D1 + `@clerk/backend`) was built and removed the same
+day — owner doesn't want it. The repo is back to a pure static site. If Phase 3
+ever needs a server + DB, these lessons from that build still hold:
+- Cloudflare **Pages Functions** (`/functions/api/*`) + **D1**, separate from the Astro build. Verify Clerk server-side with `@clerk/backend` (`verifyToken`, networked JWKS via `secretKey`).
+- **Type isolation:** `/functions` needs its own `tsconfig.json` (`lib: ES2022`, `types: @cloudflare/workers-types`, `exclude: []`) and the root tsconfig must `exclude: ["functions"]`. Otherwise DOM `Request`/`Response`/`Headers` clash with Workers types (`getAll`/`webSocket` errors). Don't add the `WebWorker` lib — it reintroduces a conflicting `Response`.
+- **Safe-deploy pattern:** Functions check `env.DB && env.CLERK_SECRET_KEY` → 503 when unset, so an inert binding never breaks the live `wrangler pages deploy`.

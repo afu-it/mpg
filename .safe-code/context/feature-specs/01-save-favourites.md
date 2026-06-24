@@ -1,7 +1,12 @@
 ---
-status: in-progress
+status: rejected
 created: 2026-06-24
 ---
+> REJECTED 2026-06-24 — owner decided not to use favourites. All code removed
+> (functions/, D1 schema, FavButton, favourites client, /favourites page,
+> save-comparison form; @clerk/backend + @cloudflare/workers-types uninstalled).
+> Kept as history — do not re-suggest. Clerk sign-in/up itself was kept.
+
 # Save favourites / comparisons
 
 ## Goal
