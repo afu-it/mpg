@@ -1,0 +1,5 @@
+# Cloudflare Pages — static site deploy.
+# Dashboard deploy needs none of this; it's here so `wrangler pages deploy` works flag-free.
+name = "mpg"
+pages_build_output_dir = "dist"
+compatibility_date = "2026-06-24"

@@ -1,43 +1,70 @@
-# Astro Starter Kit: Minimal
+# MPG — Malaysia Payment Gateway
 
-```sh
-npm create astro@latest -- --template minimal
+A minimalist, dark-mode website that lists Malaysian payment gateways in one
+**comparison table** (sortable, filterable, searchable), with a **detail page**
+per gateway. Built with Astro + Tailwind, deployed as a static site.
+
+## Stack
+
+- **Astro** (static output) + **Tailwind CSS v4**
+- Data via **Astro Content Collections** (one markdown file per gateway, Zod-validated)
+- **Vitest** for the fee-parsing logic
+- Deploy: **Cloudflare Pages**
+
+## Develop
+
+```bash
+npm install
+npm run dev        # local dev server
+npm run build      # build static site to dist/
+npm run preview    # preview the built site
+npm test           # run unit tests (fee parsing)
+npx astro check    # type + content-schema check
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Add a new gateway
 
-## 🚀 Project Structure
+This is the whole point of the data model — **no code changes needed**:
 
-Inside of your Astro project, you'll see the following folders and files:
+1. Create `src/content/gateways/<slug>.md` (copy an existing one).
+2. Fill the frontmatter (validated against `src/content.config.ts`):
+   - `fees`: `fpx`, `card`, optional `card_intl`, `ewallet`, `duitnowqr`, `setup`, `monthly`
+   - `settlement`, `min_txn`, `channels`, `features` (`no_code`/`api`/`recurring`)
+   - `website`, `source` (URL of where the fees came from), `verified_date`
+   - Use `"Contact sales"` for unpublished/negotiated, `"—"` for not offered.
+3. Write a short overview in the markdown body (shown on the detail page).
+4. (Optional) drop an SVG logo at `src/assets/logos/<slug>.svg` — otherwise a
+   monogram chip is shown automatically.
+5. `npm run build` — the table row and `/gateway/<slug>` page appear automatically.
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+## Data & fees disclaimer
+
+Fees were collected from each provider's **official pricing page** (see each
+gateway's `source` + `verified_date`). They are **indicative** and may change or
+be negotiable by volume — always confirm with the provider before deciding.
+Nothing here is fabricated; unknown values are marked `Contact sales` or `—`.
+
+## Deploy (Cloudflare Pages)
+
+**Dashboard (recommended):** connect the git repo in Cloudflare Pages →
+framework preset **Astro** → build command `npm run build` → output dir `dist`.
+
+**CLI:**
+
+```bash
+npm run build
+npx wrangler pages deploy dist --project-name=mpg
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## Project layout
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+```
+src/
+├── content/gateways/   # one .md per gateway (the data)
+├── content.config.ts   # Zod schema
+├── components/         # GatewayTable, TableControls, FeeCell, FeatureBadge, Logo
+├── scripts/table.ts    # sort / filter / search behaviour
+├── lib/fees.ts         # tested fee parsing
+├── layouts/Base.astro
+└── pages/              # index.astro + gateway/[slug].astro
+```
