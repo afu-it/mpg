@@ -17,6 +17,9 @@ export async function getStaticPaths() {
 const { entry } = Astro.props;
 const { Content } = await render(entry);
 const d = entry.data;
+const hasUnofficial = Object.values(d.fees).some(
+  (v) => typeof v === "string" && v.includes("*"),
+);
 const { base: nameBase, note: nameNote } = splitName(d.name);
 
 const channelLabels: Record<string, string> = {
@@ -196,5 +199,13 @@ const features = [
     </p>
     <p class="mt-1">Last verified {d.verified_date}.</p>
     {d.notes && <p class="mt-2 max-w-2xl">{d.notes}</p>}
+    {
+      hasUnofficial && (
+        <p class="mt-2 max-w-2xl">
+          <span class="text-fg">*</span> Indicative rate from a third-party source — not
+          officially published. Always confirm with the provider.
+        </p>
+      )
+    }
   </footer>
 </Base>
