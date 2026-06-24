@@ -9,11 +9,12 @@ fees:
   card_intl: "3.00%"
   ewallet: "1.30%"
   duitnowqr: "—"
+  bnpl: "1.3%–8%"
   setup: "RM0"
   monthly: "RM0"
 settlement: "Contact sales"
 min_txn: "—"
-channels: [fpx, card, ewallet]
+channels: [fpx, card, ewallet, bnpl]
 features:
   no_code: true
   api: true

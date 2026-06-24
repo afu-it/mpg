@@ -17,12 +17,15 @@ const gateways = defineCollection({
       card_intl: z.string().optional(), // international card
       ewallet: z.string(), // GrabPay / TNG / Boost / ShopeePay
       duitnowqr: z.string(),
+      bnpl: z.string().optional(), // buy-now-pay-later merchant rate
       setup: z.string(), // one-time setup fee
       monthly: z.string(), // monthly/annual platform fee
     }),
     settlement: z.string(), // e.g. "T+1"
     min_txn: z.string(),
-    channels: z.array(z.enum(["fpx", "card", "ewallet", "duitnowqr"])),
+    // "gateway" (default) or "bnpl" for buy-now-pay-later providers
+    category: z.enum(["gateway", "bnpl"]).default("gateway"),
+    channels: z.array(z.enum(["fpx", "card", "ewallet", "duitnowqr", "bnpl"])),
     features: z.object({
       no_code: z.boolean(), // payment links / no-code checkout
       api: z.boolean(), // developer API

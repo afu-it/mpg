@@ -8,11 +8,12 @@ fees:
   card: "RM1.00 + 1%"
   ewallet: "—"
   duitnowqr: "1.60%"
+  bnpl: "1.60%"
   setup: "RM0"
   monthly: "RM0"
 settlement: "T+1"
 min_txn: "—"
-channels: [fpx, card, duitnowqr]
+channels: [fpx, card, duitnowqr, bnpl]
 features:
   no_code: true
   api: true

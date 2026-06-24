@@ -9,11 +9,12 @@ fees:
   card_intl: "Contact sales"
   ewallet: "Contact sales"
   duitnowqr: "Contact sales"
+  bnpl: "Contact sales"
   setup: "Contact sales"
   monthly: "Contact sales"
 settlement: "Contact sales"
 min_txn: "—"
-channels: [fpx, card, ewallet, duitnowqr]
+channels: [fpx, card, ewallet, duitnowqr, bnpl]
 features:
   no_code: true
   api: true

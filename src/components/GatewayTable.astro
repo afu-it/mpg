@@ -16,6 +16,7 @@ const feeCols = [
   { key: "card", label: "Card" },
   { key: "ewallet", label: "E-wallet" },
   { key: "duitnowqr", label: "DuitNow QR" },
+  { key: "bnpl", label: "BNPL" },
 ] as const;
 
 const th =
@@ -86,11 +87,14 @@ const td = "whitespace-nowrap px-3 py-3 align-middle";
                 {g.data.name}
               </a>
             </td>
-            {feeCols.map((c) => (
-              <td class={td} data-sort-value={String(parseFee(g.data.fees[c.key]))}>
-                <FeeCell value={g.data.fees[c.key]} />
-              </td>
-            ))}
+            {feeCols.map((c) => {
+              const v = g.data.fees[c.key] ?? "—";
+              return (
+                <td class={td} data-sort-value={String(parseFee(v))}>
+                  <FeeCell value={v} />
+                </td>
+              );
+            })}
             <td class={td} data-sort-value={g.data.settlement.toLowerCase()}>
               <FeeCell value={g.data.settlement} />
             </td>

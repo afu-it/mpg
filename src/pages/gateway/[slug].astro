@@ -19,6 +19,7 @@ const channelLabels: Record<string, string> = {
   card: "Card",
   ewallet: "E-wallet",
   duitnowqr: "DuitNow QR",
+  bnpl: "BNPL",
 };
 
 const feeRows = [
@@ -27,6 +28,7 @@ const feeRows = [
   ...(d.fees.card_intl ? [{ label: "International card", value: d.fees.card_intl }] : []),
   { label: "E-wallet", value: d.fees.ewallet },
   { label: "DuitNow QR", value: d.fees.duitnowqr },
+  ...(d.fees.bnpl ? [{ label: "BNPL", value: d.fees.bnpl }] : []),
   { label: "Setup fee", value: d.fees.setup },
   { label: "Monthly / annual fee", value: d.fees.monthly },
   { label: "Minimum transaction", value: d.min_txn },
