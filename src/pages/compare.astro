@@ -1,0 +1,90 @@
+---
+import { getCollection } from "astro:content";
+import Base from "../layouts/Base.astro";
+
+const gateways = (await getCollection("gateways")).sort((a, b) =>
+  a.data.name.localeCompare(b.data.name),
+);
+
+// logo url map (same resolution as Logo.astro) so the client can render logos
+const logos = import.meta.glob("/src/assets/logos/*.{svg,png,webp}", {
+  eager: true,
+  query: "?url",
+  import: "default",
+});
+const logoBySlug: Record<string, string> = {};
+for (const [path, url] of Object.entries(logos)) {
+  const key = path.split("/").pop()!.replace(/\.\w+$/, "");
+  if (!logoBySlug[key] || path.endsWith(".svg")) logoBySlug[key] = url as string;
+}
+
+const data = gateways.map((g) => ({
+  id: g.id,
+  name: g.data.name,
+  category: g.data.category,
+  website: g.data.website,
+  settlement: g.data.settlement,
+  min_txn: g.data.min_txn,
+  channels: g.data.channels,
+  features: g.data.features,
+  fees: g.data.fees,
+  logo: logoBySlug[g.id] ?? null,
+}));
+
+const presets = [
+  { title: "Cheap FPX", desc: "Lowest flat FPX rates", ids: ["toyyibpay", "billplz", "bayarcash"] },
+  { title: "Popular gateways", desc: "Widely used in Malaysia", ids: ["stripe-malaysia", "curlec", "ipay88", "fiuu"] },
+  { title: "Best for cards", desc: "Low card processing rates", ids: ["kiple", "xendit", "hitpay"] },
+  { title: "BNPL providers", desc: "Buy now, pay later", ids: ["atome", "spaylater", "ahapay"] },
+];
+---
+
+<Base
+  full
+  title="Compare payment gateways — MPG"
+  description="Compare Malaysian payment gateways side by side — fees, settlement, channels and features."
+>
+  <div class="mx-auto w-full max-w-[1400px] px-4 py-8 sm:px-6">
+    <nav aria-label="Breadcrumb" class="mb-4 flex items-center gap-2 text-sm text-muted">
+      <a href="/" class="hover:text-fg hover:underline">Home</a>
+      <span aria-hidden="true">/</span>
+      <span class="text-fg">Compare</span>
+    </nav>
+
+    <header class="mb-6">
+      <h1 class="text-2xl font-semibold tracking-tight text-fg sm:text-3xl">
+        Compare payment gateways
+      </h1>
+      <p class="mt-2 max-w-2xl text-muted">
+        Pick up to 4 gateways and compare fees, settlement, channels and
+        features side by side. The lowest fee in each row is highlighted.
+      </p>
+    </header>
+
+    <!-- preset shortcuts -->
+    <div class="mb-8 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+      {
+        presets.map((p) => (
+          <a
+            href={`/compare?ids=${p.ids.join(",")}`}
+            class="group flex flex-col gap-1 rounded-lg border border-line bg-panel p-3 transition-colors hover:border-accent"
+          >
+            <h3 class="text-sm font-semibold text-fg">{p.title}</h3>
+            <p class="text-xs text-muted">{p.desc}</p>
+            <p class="mt-1 truncate text-xs text-muted group-hover:text-accent">
+              {p.ids.join(" · ")}
+            </p>
+          </a>
+        ))
+      }
+    </div>
+
+    <!-- comparison area (rendered by compare.ts) -->
+    <div id="compare-root" class="overflow-x-auto"></div>
+  </div>
+
+  <script type="application/json" id="gw-data" set:html={JSON.stringify(data)} />
+  <script>
+    import "../scripts/compare.ts";
+  </script>
+</Base>
