@@ -1,0 +1,40 @@
+---
+// Renders a provider logo from src/assets/logos/<slug>.svg if present,
+// otherwise a clean monogram chip. No broken images, no 404s.
+// Drop a new SVG into src/assets/logos/ named <slug>.svg and it appears automatically.
+interface Props {
+  slug: string;
+  name: string;
+  size?: number;
+}
+const { slug, name, size = 22 } = Astro.props;
+
+const logos = import.meta.glob("/src/assets/logos/*.svg", {
+  eager: true,
+  query: "?url",
+  import: "default",
+});
+const logoUrl = logos[`/src/assets/logos/${slug}.svg`] as string | undefined;
+
+const initial = (name.trim().charAt(0) || "?").toUpperCase();
+---
+
+{
+  logoUrl ? (
+    <img
+      src={logoUrl}
+      alt={`${name} logo`}
+      style={`height:${size}px`}
+      class="w-auto max-w-[120px] object-contain"
+      loading="lazy"
+    />
+  ) : (
+    <span
+      class="grid shrink-0 place-items-center rounded-sm bg-raised font-semibold text-accent"
+      style={`width:${size}px;height:${size}px;font-size:${Math.round(size * 0.48)}px`}
+      aria-hidden="true"
+    >
+      {initial}
+    </span>
+  )
+}
