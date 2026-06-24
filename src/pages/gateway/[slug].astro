@@ -47,7 +47,15 @@ const features = [
   { label: "No-code (links/forms)", on: d.features.no_code },
   { label: "Developer API", on: d.features.api },
   { label: "Recurring / subscription", on: d.features.recurring },
+  ...(d.webhooks !== undefined ? [{ label: "Webhooks", on: d.webhooks }] : []),
 ];
+
+const mcpLabel =
+  d.mcp === "official"
+    ? "MCP · Official"
+    : d.mcp === "community"
+      ? "MCP · Community"
+      : "No MCP server";
 ---
 
 <Base title={`${d.name} — fees & features | MPG`} description={d.tagline}>
@@ -131,6 +139,53 @@ const features = [
       </ul>
     </section>
   </div>
+
+  <!-- developer experience -->
+  <section class="mt-8">
+    <h2 class="mb-3 text-sm font-medium uppercase tracking-wide text-muted">
+      Developer experience
+    </h2>
+    <div class="flex flex-wrap items-center gap-2">
+      <span
+        class={`rounded-full border px-3 py-1 text-xs font-medium ${
+          d.mcp === "official"
+            ? "border-accent text-accent"
+            : d.mcp === "community"
+              ? "border-line text-fg"
+              : "border-line text-muted"
+        }`}
+        title="Model Context Protocol — lets AI agents/tools integrate the API"
+      >
+        {mcpLabel}
+      </span>
+      {
+        d.dev_docs && (
+          <a
+            href={d.dev_docs}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="rounded-full border border-line px-3 py-1 text-xs text-accent hover:underline"
+          >
+            API docs →
+          </a>
+        )
+      }
+    </div>
+    {
+      d.plugins && d.plugins.length > 0 && (
+        <div class="mt-3">
+          <p class="mb-1.5 text-xs text-muted">E-commerce plugins</p>
+          <div class="flex flex-wrap gap-2">
+            {d.plugins.map((p) => (
+              <span class="rounded-full border border-line bg-raised px-3 py-1 text-xs text-fg">
+                {p}
+              </span>
+            ))}
+          </div>
+        </div>
+      )
+    }
+  </section>
 
   <!-- other payment methods -->
   {

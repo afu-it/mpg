@@ -32,6 +32,9 @@ const data = gateways.map((g) => ({
   fees: g.data.fees,
   methods: g.data.methods ?? [],
   banks: g.data.banks ?? [],
+  mcp: g.data.mcp,
+  webhooks: g.data.webhooks ?? null,
+  plugins: g.data.plugins ?? [],
   logo: logoBySlug[g.id] ?? null,
 }));
 

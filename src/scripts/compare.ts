@@ -15,6 +15,9 @@ interface GW {
   fees: Record<string, string | undefined>;
   methods: string[];
   banks: string[];
+  mcp: "official" | "community" | "none";
+  webhooks: boolean | null;
+  plugins: string[];
   logo: string | null;
 }
 
@@ -100,6 +103,18 @@ if (dataEl && root) {
     { label: "Recurring", kind: "bool", get: (g) => g.features.recurring },
     { label: "No-code", kind: "bool", get: (g) => g.features.no_code },
     { label: "API", kind: "bool", get: (g) => g.features.api },
+    {
+      label: "Webhooks",
+      kind: "text",
+      get: (g) => (g.webhooks === true ? "✓" : "—"),
+    },
+    {
+      label: "MCP (AI agent)",
+      kind: "text",
+      get: (g) =>
+        g.mcp === "official" ? "Official" : g.mcp === "community" ? "Community" : "—",
+    },
+    { label: "Plugins", kind: "list", get: (g) => g.plugins },
     {
       label: "Banks",
       kind: "text",
