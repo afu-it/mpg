@@ -19,6 +19,13 @@ features:
   no_code: true
   api: true
   recurring: false
+webhooks: true
+plugins:
+  - WooCommerce
+  - OpenCart
+  - Magento
+  - PrestaShop
+dev_docs: "https://kiplebiz.com/documentation/"
 verified_date: "2026-06-24"
 source: "https://kiple.com/sme/"
 notes: "Official Standard Package rate card. Rates vary by package (Starter/Standard/In-Store); UnionPay 2.80%, multicurrency 3.80%. Settlement period not published."

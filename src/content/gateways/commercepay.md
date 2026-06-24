@@ -31,6 +31,13 @@ features:
   no_code: true
   api: true
   recurring: true
+webhooks: true
+plugins:
+  - WooCommerce
+  - OpenCart
+  - WHMCS
+  - SiteGiant
+dev_docs: "https://docs.commercepay.asia"
 verified_date: "2026-06-24"
 source: "https://www.commercepay.asia/faq"
 notes: "Indicative. Gateway fee is per-transaction (fixed or %) but not published; only the Instalment (IPP) rate of 'as low as 3.5%' + RM500 setup is public."

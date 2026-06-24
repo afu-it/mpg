@@ -20,6 +20,12 @@ features:
   no_code: false
   api: true
   recurring: true
+webhooks: true
+plugins:
+  - WooCommerce
+  - Magento
+  - WHMCS
+dev_docs: "https://developer.asiapay.com/"
 verified_date: "2026-06-24"
 source: "https://www.asiapay.com.my/"
 notes: "Indicative. No public Malaysia rate card; pricing is setup + monthly + per-transaction, quoted on request."

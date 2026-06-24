@@ -30,6 +30,13 @@ features:
   api: true
   recurring: true
 skill: setup-senangpay
+webhooks: true
+plugins:
+  - WooCommerce
+  - OpenCart
+  - PrestaShop
+  - Shopify
+dev_docs: "https://guide.senangpay.com/developer-tools"
 verified_date: "2026-06-24"
 source: "https://senangpay.com/pricing/"
 notes: "Annual subscription from RM199 (up to ~RM299) depending on package. FPX 1.5% or RM1.00 whichever higher; local card 2.5% or RM0.65 whichever higher; e-wallet 1.5% or RM0.65. Foreign card by package. Minimum settlement RM100. Supports recurring & tokenisation."

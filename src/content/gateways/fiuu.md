@@ -32,6 +32,14 @@ features:
   api: true
   recurring: true
 skill: setup-fiuu
+webhooks: true
+plugins:
+  - WooCommerce
+  - Shopify
+  - Magento
+  - OpenCart
+  - WHMCS
+dev_docs: "https://e2payprod.gitbook.io/payment-gateway/"
 verified_date: "2026-06-24"
 source: "https://fiuu.com"
 notes: "Rates shown are from Fiuu's own merchant base-rate card (booster.fiuu.com, Apr 2024) and are a negotiable starting point — actual rates vary by volume/channel. Setup fee is third-party (*). Enterprise gateway since 2005 (formerly Razer Merchant Services / MOLPay); 110+ methods across SEA."

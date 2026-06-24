@@ -31,6 +31,15 @@ features:
   no_code: true
   api: true
   recurring: true
+webhooks: true
+plugins:
+  - WooCommerce
+  - PrestaShop
+  - Magento
+  - OpenCart
+  - Shopify
+  - EasyStore
+dev_docs: "https://bitbucket.org/eghl/merchantapi"
 verified_date: "2026-06-24"
 source: "https://www.eghl.my/"
 notes: "eGHL publishes no official rate card — all rates shown are third-party/indicative (*) and tiered (Standard/Premium/Corporate), so treat as ranges. Only the channels and weekly W+4 settlement are confirmed on eGHL's own site. Confirm current rates with eGHL."

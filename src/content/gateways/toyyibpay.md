@@ -18,6 +18,13 @@ features:
   api: true
   recurring: false
 skill: setup-toyyibpay
+webhooks: true
+plugins:
+  - WooCommerce
+  - OpenCart
+  - PrestaShop
+  - WHMCS
+dev_docs: "https://toyyibpay.com/apireference/"
 verified_date: "2026-06-24"
 source: "https://toyyibpay.com"
 notes: "Famous for a flat RM1.00 per FPX transaction (B2C). Auto-settlement the next business day (T+1). Card & DuitNow QR are offered but rates aren't published. Onboarding/annual fees are not published on the current official site (older RM100 figures were unverifiable) — confirm with toyyibPay. Excludes SST."

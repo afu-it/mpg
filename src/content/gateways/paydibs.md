@@ -19,6 +19,10 @@ features:
   no_code: true
   api: true
   recurring: true
+webhooks: true
+plugins:
+  - WooCommerce
+dev_docs: "https://v3api-docs.paydibs.com/docs/introduction"
 verified_date: "2026-06-24"
 source: "https://paydibs.com/pricing/"
 notes: "Signup fee, RM300/year maintenance fee and T+1/T+2 settlement are confirmed on the official pricing page; per-transaction MDR rates are not publicly published — contact sales."

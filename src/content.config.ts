@@ -30,6 +30,11 @@ const gateways = defineCollection({
     banks: z.array(z.string()).optional(),
     // other payment methods / e-wallets (Boost, TNG eWallet, GrabPay, ShopeePay, Apple Pay, …)
     methods: z.array(z.string()).optional(),
+    // developer experience
+    mcp: z.enum(["official", "community", "none"]).default("none"), // AI-agent MCP server
+    webhooks: z.boolean().optional(), // documents webhooks/callbacks
+    plugins: z.array(z.string()).optional(), // e-commerce plugins (WooCommerce, Shopify, …)
+    dev_docs: z.string().url().optional(), // API documentation URL
     features: z.object({
       no_code: z.boolean(), // payment links / no-code checkout
       api: z.boolean(), // developer API

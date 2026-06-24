@@ -19,6 +19,13 @@ features:
   api: true
   recurring: true
 skill: setup-chip
+webhooks: true
+plugins:
+  - WooCommerce
+  - Magento
+  - OpenCart
+  - PrestaShop
+dev_docs: "https://docs.chip-in.asia/"
 verified_date: "2026-06-24"
 source: "https://www.chip-in.asia/collect"
 notes: "Indicative rates: FPX ~RM1.00, credit card ~2%, debit ~1%, DuitNow QR ~1.6%. No setup or monthly fee, pay-per-use. Settlement 1–2 business days. Supports recurring via saved tokens. Confirm exact rates with CHIP."

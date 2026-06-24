@@ -19,6 +19,8 @@ features:
   no_code: true
   api: true
   recurring: true
+plugins:
+  - WooCommerce
 verified_date: "2026-06-24"
 source: "https://ringgitpay.biz/pricing/"
 notes: "Indicative. Only public claim is 'no-cost setup & transaction fee as low as RM 1.00'; per-method rates are quote-based via an interest form."

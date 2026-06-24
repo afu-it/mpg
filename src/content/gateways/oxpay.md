@@ -20,6 +20,10 @@ features:
   no_code: false
   api: true
   recurring: false
+plugins:
+  - WooCommerce
+  - Magento
+  - PrestaShop
 verified_date: "2026-06-24"
 source: "https://oxpay.com.my/payment/"
 notes: "Indicative. No fees of any kind are published on the site; all pricing is quote-based via sales."

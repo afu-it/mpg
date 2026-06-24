@@ -14,6 +14,15 @@ fees:
   monthly: "RM0"
 settlement: "T+2 *"
 min_txn: "—"
+mcp: "official"
+webhooks: true
+plugins:
+  - WooCommerce
+  - Shopify
+  - Magento
+  - OpenCart
+  - WHMCS
+dev_docs: "https://curlec.com/docs/api/"
 channels: [fpx, card, ewallet, bnpl]
 features:
   no_code: true

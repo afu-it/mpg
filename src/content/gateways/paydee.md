@@ -18,6 +18,8 @@ features:
   no_code: false
   api: true
   recurring: true
+webhooks: true
+dev_docs: "https://developer.paydee.co/"
 verified_date: "2026-06-24"
 source: "https://www.paydee.co/"
 notes: "Indicative. No fees published; site cites only 'competitive processing rates'. Channels confirmed via developer docs (FPX, e-wallet, card)."

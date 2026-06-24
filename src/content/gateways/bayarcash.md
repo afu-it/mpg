@@ -19,6 +19,15 @@ features:
   api: true
   recurring: true
 skill: setup-bayarcash
+mcp: "community"
+webhooks: true
+plugins:
+  - WooCommerce
+  - GiveWP
+  - Fluent Forms
+  - Gravity Forms
+  - EasyStore
+dev_docs: "https://docs.bayarcash.com/"
 verified_date: "2026-06-24"
 source: "https://bayarcash.com"
 notes: "Free 'T+ Plan' shown: FPX B2C RM1.00 / B2B RM2.00, credit card RM1.00 + 1%, direct debit RM1.50, DuitNow QR 1.60% (min RM0.15); T+1 payout (off-day Friday). Paid annual plans (Starter RM189, Lite RM2,899, Enterprise RM12,000) unlock realtime settlement (Public Bank & Bank Islam) and lower online-banking rates (RM1.20 / RM0.70 / RM0.20) plus DuitNow QR RM0.50. Excludes SST 8%."
