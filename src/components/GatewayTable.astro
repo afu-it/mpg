@@ -15,8 +15,9 @@ function valueScore(g: { data: { fees: Record<string, string | undefined> } }): 
   return vals.length ? vals.reduce((a, b) => a + b, 0) / vals.length : Infinity;
 }
 
-// Default order = most worthwhile first (value rank), tie-broken alphabetically.
+// Default order = most widely used first (editorial popularity), then best value, then name.
 const gateways = (await getCollection("gateways")).sort((a, b) => {
+  if (b.data.popularity !== a.data.popularity) return b.data.popularity - a.data.popularity;
   const sa = valueScore(a);
   const sb = valueScore(b);
   if (sa !== sb) return sa - sb;

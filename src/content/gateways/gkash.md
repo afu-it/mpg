@@ -23,6 +23,7 @@ plugins:
   - WooCommerce
   - OpenCart
 dev_docs: "https://doc.gkash.my/"
+popularity: 50
 verified_date: "2026-06-24"
 source: "https://gkash.com/merchant-faq/"
 notes: "Indicative. Published MDR floors (card from 1.80%/min RM0.60; FPX & e-wallet from 1%); exact rates and setup/monthly fees vary by package, quoted on request. Settlement T+2 business days."

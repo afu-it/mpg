@@ -19,6 +19,7 @@ features:
   no_code: true
   api: true
   recurring: false
+popularity: 70
 verified_date: "2026-06-24"
 source: "https://seller.shopee.com.my/edu/article/21112"
 notes: "The bnpl value is the merchant (seller) fee. On Shopee the SPayLater seller fee is 4.5% before SST (rising to 5% for 3-month instalments from 1 Feb 2026), plus 8% SST. For external/offline merchants via a payment gateway, the rate is quoted on request."

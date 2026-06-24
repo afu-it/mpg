@@ -28,6 +28,7 @@ plugins:
   - Magento
   - OpenCart
 dev_docs: "https://developers.xendit.co/"
+popularity: 74
 verified_date: "2026-06-24"
 source: "https://www.xendit.co/en-my/pricing/"
 notes: "Local credit card 2.00%, debit 1.20%, foreign 3.00%. FPX RM1.20 (personal) / RM2.00 (corporate). E-wallets ~1.30% (Alipay 1.50%, Alipay+ 3%). Virtual account 0.50% (min RM1). No sign-up fee; payment links free. Subscriptions add MYR1.50 per active subscription/month."

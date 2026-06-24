@@ -39,6 +39,7 @@ plugins:
   - PrestaShop
   - Shopify
   - WHMCS
+popularity: 100
 verified_date: "2026-06-24"
 source: "https://www.ipay88.com/ecommerce/"
 notes: "Rates from an iPay88 merchant fee structure (SME package, iPay88 (M) Sdn Bhd); negotiable per merchant. iPay88 is now Adaptis (NTT Data); newer packages may differ. DuitNow QR & BNPL are third-party (*). Settlement is weekly, not T+1/T+2."

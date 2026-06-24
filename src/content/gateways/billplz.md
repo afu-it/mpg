@@ -36,6 +36,7 @@ plugins:
   - Shopify
   - WHMCS
 dev_docs: "https://www.billplz.com/api"
+popularity: 96
 verified_date: "2026-06-24"
 source: "https://www.billplz.com/pricing"
 notes: "Basic (free) plan rates: B2C FPX RM1.25, B2B FPX RM3.00. Premium annual membership lowers these to RM0.75 / RM2.00. Card (MYR) 1.8%, non-MYR 3.8% (T+2 payout). E-wallet 1.5%. BNPL 6–6.5%. FPX payout next business day, guaranteed."
