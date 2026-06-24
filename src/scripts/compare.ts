@@ -213,7 +213,7 @@ if (dataEl && root) {
             td.classList.add("text-muted");
           } else {
             const LIMIT = 2;
-            const wrap = el("div", "grid grid-cols-2 gap-1 justify-items-center");
+            const wrap = el("div", "grid grid-cols-[auto_auto] justify-center gap-1");
             const chip = (m: string) =>
               el("span", "whitespace-nowrap rounded-full border border-line bg-raised px-2 py-0.5 text-[11px] text-fg", m);
             let expanded = false;
