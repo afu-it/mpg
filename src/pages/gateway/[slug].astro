@@ -1,4 +1,6 @@
 ---
+export const prerender = true;
+
 import { getCollection, render } from "astro:content";
 import { splitName } from "../../lib/name";
 import Base from "../../layouts/Base.astro";
@@ -45,7 +47,7 @@ const features = [
 ---
 
 <Base title={`${d.name} — fees & features | MPG`} description={d.tagline}>
-  <a href="/" class="text-sm text-muted hover:text-fg">← All gateways</a>
+  <a href="/gateways" class="text-sm text-muted hover:text-fg">← All gateways</a>
 
   <header class="mt-4 flex flex-wrap items-start justify-between gap-4">
     <div class="flex items-center gap-3">

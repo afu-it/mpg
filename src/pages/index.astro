@@ -1,40 +1,138 @@
 ---
+export const prerender = true;
+
+import { getCollection } from "astro:content";
+import { splitName } from "../lib/name";
 import Base from "../layouts/Base.astro";
-import Sidebar from "../components/Sidebar.astro";
-import GatewayTable from "../components/GatewayTable.astro";
+import Logo from "../components/Logo.astro";
+
+const gateways = await getCollection("gateways");
+const total = gateways.length;
+const bnplCount = gateways.filter((g) => g.data.category === "bnpl").length;
+const gatewayCount = total - bnplCount;
+
+const stats = [
+  { value: String(gatewayCount), label: "Payment gateways" },
+  { value: String(bnplCount), label: "BNPL providers" },
+  { value: "5", label: "Channels compared" },
+  { value: "RM0", label: "Free to use" },
+];
+
+const values = [
+  { title: "Fees, side by side", desc: "FPX, card, e-wallet, DuitNow QR and BNPL rates at a glance — sort by any column." },
+  { title: "Every channel", desc: "Online banking, cards, e-wallets, DuitNow QR and Buy-Now-Pay-Later in one table." },
+  { title: "Sourced & dated", desc: "Each fee links to its official source with the date it was verified. No guesses." },
+  { title: "Free & independent", desc: "No login, no fluff, no ads. Not affiliated with any provider." },
+];
+
+const featuredIds = ["toyyibpay", "billplz", "stripe-malaysia", "curlec", "ipay88", "fiuu"];
+const featured = featuredIds
+  .map((id) => gateways.find((g) => g.id === id))
+  .filter((g): g is NonNullable<typeof g> => Boolean(g));
 ---
 
 <Base full>
-  <div class="flex w-full flex-col md:flex-row">
-    <!-- filter sidebar: sticky column on desktop, stacked panel on mobile -->
-    <aside
-      class="shrink-0 border-b border-line px-4 py-5 md:sticky md:top-14 md:h-[calc(100vh-3.5rem)] md:w-60 md:overflow-y-auto md:border-b-0 md:border-r md:py-6"
-    >
-      <Sidebar />
-    </aside>
-
-    <!-- main: full remaining width -->
-    <div class="min-w-0 flex-1 px-4 py-6 sm:px-6">
-      <div class="mb-5 flex flex-wrap items-center gap-3">
-        <div class="mr-auto">
-          <h1 class="text-2xl font-semibold tracking-tight text-fg">
-            Malaysia Payment Gateways
-          </h1>
-          <p class="mt-1 text-sm text-muted">
-            Compare fees across Malaysian gateways — click a column to sort.
-          </p>
-        </div>
-        <input
-          id="gw-search"
-          type="search"
-          placeholder="Search gateway…"
-          autocomplete="off"
-          aria-label="Search payment gateways by name"
-          class="h-9 w-full rounded-md border border-line bg-panel px-3 text-fg placeholder:text-muted focus:border-accent sm:w-72"
-        />
-      </div>
-
-      <GatewayTable />
+  <!-- hero -->
+  <section class="mx-auto max-w-3xl px-4 pb-10 pt-16 text-center sm:px-6 md:pt-24">
+    <h1 class="text-3xl font-bold tracking-tight text-fg sm:text-5xl">
+      Every Malaysian payment gateway, compared.
+    </h1>
+    <p class="mx-auto mt-4 max-w-xl text-base text-muted sm:text-lg">
+      FPX, cards, e-wallets, DuitNow QR and BNPL fees for {gatewayCount} gateways
+      and {bnplCount} BNPL providers — in one place. Free and independent.
+    </p>
+    <div class="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+      <a
+        href="/gateways"
+        class="inline-flex h-11 items-center justify-center rounded-md bg-accent px-8 text-sm font-medium text-black hover:opacity-90"
+      >
+        Browse gateways →
+      </a>
+      <a
+        href="/compare"
+        class="inline-flex h-11 items-center justify-center rounded-md border border-line px-8 text-sm font-medium text-fg hover:border-accent"
+      >
+        Compare side by side
+      </a>
     </div>
-  </div>
+  </section>
+
+  <!-- stats -->
+  <section class="mx-auto max-w-4xl px-4 py-10 sm:px-6">
+    <div class="grid grid-cols-2 gap-4 sm:grid-cols-4">
+      {
+        stats.map((s) => (
+          <div class="text-center">
+            <p class="text-3xl font-bold text-fg sm:text-4xl">{s.value}</p>
+            <p class="mt-1 text-xs text-muted sm:text-sm">{s.label}</p>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- value cards -->
+  <section class="mx-auto max-w-6xl px-4 py-10 sm:px-6">
+    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      {
+        values.map((v, i) => (
+          <div class="rounded-xl border border-line bg-panel p-5">
+            <span class="text-sm font-semibold text-accent">{String(i + 1).padStart(2, "0")}</span>
+            <h3 class="mt-3 font-semibold text-fg">{v.title}</h3>
+            <p class="mt-1.5 text-sm text-muted">{v.desc}</p>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- featured gateways -->
+  <section class="mx-auto max-w-6xl px-4 py-10 sm:px-6">
+    <div class="mb-5 flex items-end justify-between">
+      <h2 class="text-xl font-semibold text-fg">Popular gateways</h2>
+      <a href="/gateways" class="text-sm text-accent hover:underline">View all {total} →</a>
+    </div>
+    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        featured.map((g) => {
+          const { base, note } = splitName(g.data.name);
+          return (
+            <a
+              href={`/gateway/${g.id}`}
+              class="group flex flex-col gap-3 rounded-xl border border-line bg-panel p-5 transition-colors hover:border-accent"
+            >
+              <div class="flex items-center gap-3">
+                <Logo slug={g.id} name={g.data.name} size={28} />
+                <span class="font-medium text-fg group-hover:text-accent">
+                  {base}
+                  {note && <span class="ml-1 text-xs font-normal text-muted">{note}</span>}
+                </span>
+              </div>
+              <p class="text-sm text-muted">{g.data.tagline}</p>
+              <p class="mt-auto text-sm text-muted">
+                FPX from <span class="font-medium text-fg">{g.data.fees.fpx}</span>
+              </p>
+            </a>
+          );
+        })
+      }
+    </div>
+  </section>
+
+  <!-- bottom CTA -->
+  <section class="mx-auto max-w-6xl px-4 pb-20 pt-6 sm:px-6">
+    <div class="flex flex-col items-center gap-4 rounded-2xl border border-line bg-panel px-6 py-12 text-center">
+      <h2 class="text-2xl font-semibold text-fg">Find the cheapest way to get paid</h2>
+      <p class="max-w-md text-muted">
+        Browse all {total} gateways and BNPL providers, filter by channel, and
+        compare fees side by side.
+      </p>
+      <a
+        href="/gateways"
+        class="mt-2 inline-flex h-11 items-center justify-center rounded-md bg-accent px-8 text-sm font-medium text-black hover:opacity-90"
+      >
+        Browse all gateways →
+      </a>
+    </div>
+  </section>
 </Base>
