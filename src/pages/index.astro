@@ -1,24 +1,40 @@
 ---
 import Base from "../layouts/Base.astro";
-import TableControls from "../components/TableControls.astro";
+import Sidebar from "../components/Sidebar.astro";
 import GatewayTable from "../components/GatewayTable.astro";
 ---
 
-<Base>
-  <section class="mb-8">
-    <h1 class="text-2xl font-semibold tracking-tight text-fg sm:text-3xl">
-      Malaysia Payment Gateways
-    </h1>
-    <p class="mt-2 max-w-2xl text-muted">
-      Compare fees and features across Malaysian payment gateways — FPX, cards,
-      e-wallets and DuitNow QR — in one place. Click a column to sort, or filter
-      by channel and feature.
-    </p>
-  </section>
+<Base full>
+  <div class="flex w-full flex-col md:flex-row">
+    <!-- filter sidebar: sticky column on desktop, stacked panel on mobile -->
+    <aside
+      class="shrink-0 border-b border-line px-4 py-5 md:sticky md:top-14 md:h-[calc(100vh-3.5rem)] md:w-60 md:overflow-y-auto md:border-b-0 md:border-r md:py-6"
+    >
+      <Sidebar />
+    </aside>
 
-  <div class="mb-6">
-    <TableControls />
+    <!-- main: full remaining width -->
+    <div class="min-w-0 flex-1 px-4 py-6 sm:px-6">
+      <div class="mb-5 flex flex-wrap items-center gap-3">
+        <div class="mr-auto">
+          <h1 class="text-2xl font-semibold tracking-tight text-fg">
+            Malaysia Payment Gateways
+          </h1>
+          <p class="mt-1 text-sm text-muted">
+            Compare fees across Malaysian gateways — click a column to sort.
+          </p>
+        </div>
+        <input
+          id="gw-search"
+          type="search"
+          placeholder="Search gateway…"
+          autocomplete="off"
+          aria-label="Search payment gateways by name"
+          class="h-9 w-full rounded-md border border-line bg-panel px-3 text-fg placeholder:text-muted focus:border-accent sm:w-72"
+        />
+      </div>
+
+      <GatewayTable />
+    </div>
   </div>
-
-  <GatewayTable />
 </Base>

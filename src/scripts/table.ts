@@ -1,4 +1,4 @@
-// Client behaviour for the gateway comparison table: search, filter, sort.
+// Client behaviour for the gateway comparison table: category, search, filter, sort.
 // Sort values are precomputed server-side into data-sort-value attributes.
 
 const table = document.getElementById("gw-table") as HTMLTableElement | null;
@@ -10,42 +10,38 @@ if (table && table.tBodies[0]) {
   const search = document.getElementById("gw-search") as HTMLInputElement | null;
   const countEl = document.getElementById("gw-count");
   const emptyEl = document.getElementById("gw-empty");
+  const resetBtn = document.getElementById("gw-reset");
 
-  const channelBtns = Array.from(
-    document.querySelectorAll<HTMLButtonElement>("[data-filter-channel]"),
+  const categoryInputs = Array.from(
+    document.querySelectorAll<HTMLInputElement>('input[name="gw-category"]'),
   );
-  const featureBtns = Array.from(
-    document.querySelectorAll<HTMLButtonElement>("[data-filter-feature]"),
+  const channelInputs = Array.from(
+    document.querySelectorAll<HTMLInputElement>("input[data-filter-channel]"),
+  );
+  const featureInputs = Array.from(
+    document.querySelectorAll<HTMLInputElement>("input[data-filter-feature]"),
   );
 
-  const activeChannels = new Set<string>();
-  const activeFeatures = new Set<string>();
+  function activeCategory(): string {
+    return categoryInputs.find((i) => i.checked)?.value ?? "all";
+  }
 
   function applyFilters() {
     const q = (search?.value ?? "").trim().toLowerCase();
-    let visible = 0;
+    const cat = activeCategory();
+    const channels = channelInputs.filter((i) => i.checked).map((i) => i.getAttribute("data-filter-channel")!);
+    const features = featureInputs.filter((i) => i.checked).map((i) => i.getAttribute("data-filter-feature")!);
 
+    let visible = 0;
     for (const row of rows()) {
       const name = row.getAttribute("data-name") ?? "";
-      const channels = (row.getAttribute("data-channels") ?? "").split(" ");
+      const rowCat = row.getAttribute("data-category") ?? "gateway";
+      const rowChannels = (row.getAttribute("data-channels") ?? "").split(" ");
 
-      let ok = !q || name.includes(q);
-      if (ok) {
-        for (const c of activeChannels) {
-          if (!channels.includes(c)) {
-            ok = false;
-            break;
-          }
-        }
-      }
-      if (ok) {
-        for (const f of activeFeatures) {
-          if (row.getAttribute(`data-${f}`) !== "true") {
-            ok = false;
-            break;
-          }
-        }
-      }
+      let ok = cat === "all" || rowCat === cat;
+      if (ok && q) ok = name.includes(q);
+      if (ok) for (const c of channels) if (!rowChannels.includes(c)) { ok = false; break; }
+      if (ok) for (const f of features) if (row.getAttribute(`data-${f}`) !== "true") { ok = false; break; }
 
       row.hidden = !ok;
       if (ok) visible++;
@@ -55,28 +51,19 @@ if (table && table.tBodies[0]) {
     if (emptyEl) emptyEl.hidden = visible !== 0;
   }
 
-  function toggleChip(set: Set<string>, key: string, btn: HTMLButtonElement) {
-    if (set.has(key)) {
-      set.delete(key);
-      btn.setAttribute("aria-pressed", "false");
-    } else {
-      set.add(key);
-      btn.setAttribute("aria-pressed", "true");
-    }
-    applyFilters();
-  }
-
+  categoryInputs.forEach((i) => i.addEventListener("change", applyFilters));
+  channelInputs.forEach((i) => i.addEventListener("change", applyFilters));
+  featureInputs.forEach((i) => i.addEventListener("change", applyFilters));
   search?.addEventListener("input", applyFilters);
-  channelBtns.forEach((btn) =>
-    btn.addEventListener("click", () =>
-      toggleChip(activeChannels, btn.getAttribute("data-filter-channel")!, btn),
-    ),
-  );
-  featureBtns.forEach((btn) =>
-    btn.addEventListener("click", () =>
-      toggleChip(activeFeatures, btn.getAttribute("data-filter-feature")!, btn),
-    ),
-  );
+
+  resetBtn?.addEventListener("click", () => {
+    if (search) search.value = "";
+    channelInputs.forEach((i) => (i.checked = false));
+    featureInputs.forEach((i) => (i.checked = false));
+    const def = categoryInputs.find((i) => i.value === "gateway") ?? categoryInputs[0];
+    if (def) def.checked = true;
+    applyFilters();
+  });
 
   // ---- sorting ----
   const headerCells = Array.from(table.tHead?.rows[0]?.cells ?? []);
@@ -112,10 +99,8 @@ if (table && table.tBodies[0]) {
     btn.addEventListener("click", () => {
       sortDir = sortIndex === index && sortDir === "asc" ? "desc" : "asc";
       sortIndex = index;
-
       headerCells.forEach((cell) => cell.setAttribute("aria-sort", "none"));
       th.setAttribute("aria-sort", sortDir === "asc" ? "ascending" : "descending");
-
       sortRows(index, type, sortDir);
     });
   });
@@ -129,4 +114,7 @@ if (table && table.tBodies[0]) {
       window.location.href = href;
     });
   });
+
+  // apply default category (Gateways) on load
+  applyFilters();
 }

@@ -1,0 +1,77 @@
+---
+// Filter sidebar — wired up by src/scripts/table.ts.
+const categories = [
+  { key: "gateway", label: "Gateways" },
+  { key: "bnpl", label: "BNPL" },
+  { key: "all", label: "All" },
+];
+const channels = [
+  { key: "fpx", label: "FPX" },
+  { key: "card", label: "Card" },
+  { key: "ewallet", label: "E-wallet" },
+  { key: "duitnowqr", label: "DuitNow QR" },
+  { key: "bnpl", label: "BNPL" },
+];
+const features = [
+  { key: "no_code", label: "No-code" },
+  { key: "api", label: "API" },
+  { key: "recurring", label: "Recurring" },
+];
+
+const heading = "mb-2 text-xs font-semibold uppercase tracking-wide text-muted";
+const row =
+  "flex cursor-pointer select-none items-center gap-2.5 rounded-md px-2 py-1.5 text-sm text-fg hover:bg-panel";
+const input = "size-3.5 accent-accent";
+---
+
+<div class="space-y-6">
+  <div>
+    <h3 class={heading}>Category</h3>
+    {
+      categories.map((c) => (
+        <label class={row}>
+          <input
+            type="radio"
+            name="gw-category"
+            value={c.key}
+            checked={c.key === "gateway"}
+            class={input}
+          />
+          {c.label}
+        </label>
+      ))
+    }
+  </div>
+
+  <div>
+    <h3 class={heading}>Channels</h3>
+    {
+      channels.map((c) => (
+        <label class={row}>
+          <input type="checkbox" data-filter-channel={c.key} class={input} />
+          {c.label}
+        </label>
+      ))
+    }
+  </div>
+
+  <div>
+    <h3 class={heading}>Features</h3>
+    {
+      features.map((f) => (
+        <label class={row}>
+          <input type="checkbox" data-filter-feature={f.key} class={input} />
+          {f.label}
+        </label>
+      ))
+    }
+  </div>
+
+  <button
+    id="gw-reset"
+    type="button"
+    class="rounded-md border border-line px-3 py-1.5 text-xs text-muted hover:text-fg"
+  >
+    Reset filters
+  </button>
+</div>

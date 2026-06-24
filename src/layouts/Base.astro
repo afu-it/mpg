@@ -4,11 +4,13 @@ import "../styles/global.css";
 interface Props {
   title?: string;
   description?: string;
+  full?: boolean; // full-bleed layout (index with sidebar)
 }
 
 const {
   title = "MPG — Malaysia Payment Gateways",
-  description = "Compare fees and features of Malaysian payment gateways — FPX, cards, e-wallet, and DuitNow QR — in one place.",
+  description = "Compare fees and features of Malaysian payment gateways — FPX, cards, e-wallets, and DuitNow QR — in one place.",
+  full = false,
 } = Astro.props;
 
 const updated = "2026-06-24";
@@ -27,21 +29,29 @@ const updated = "2026-06-24";
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
   </head>
-  <body class="flex min-h-screen flex-col">
-    <header class="border-b border-line">
-      <div class="mx-auto flex h-14 w-full max-w-6xl items-center justify-between px-4">
+  <body class="flex min-h-screen flex-col tabular-nums">
+    <header class="sticky top-0 z-20 border-b border-line bg-surface">
+      <div class="flex h-14 w-full items-center px-4 sm:px-6">
         <a href="/" class="font-semibold tracking-tight text-fg">
           MPG <span class="font-normal text-muted">· Malaysia Payment Gateways</span>
         </a>
       </div>
     </header>
 
-    <main class="mx-auto w-full max-w-6xl flex-1 px-4 py-8">
-      <slot />
-    </main>
+    {
+      full ? (
+        <main class="w-full flex-1">
+          <slot />
+        </main>
+      ) : (
+        <main class="mx-auto w-full max-w-6xl flex-1 px-4 py-8">
+          <slot />
+        </main>
+      )
+    }
 
-    <footer class="mt-12 border-t border-line">
-      <div class="mx-auto w-full max-w-6xl space-y-1 px-4 py-6 text-xs text-muted">
+    <footer class="border-t border-line">
+      <div class="w-full space-y-1 px-4 py-6 text-xs text-muted sm:px-6">
         <p>
           Fees are indicative and may change or be negotiable by volume —
           always confirm with the provider before deciding.
