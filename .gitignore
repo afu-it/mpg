@@ -17,3 +17,6 @@ Thumbs.db
 
 # cloudflare
 .wrangler/
+
+# safe-code local-only issue tracker
+/.safe-code/context/current-issues.md

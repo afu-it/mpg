@@ -1,0 +1,12 @@
+# Changelog — MPG
+
+## [Unreleased]
+### Added
+- Directory of 34 Malaysian payment gateways (incl. 8 BNPL) with sourced, dated fees.
+- Pages: landing `/`, `/gateways` (sort/filter/search + sidebar), `/compare` (side-by-side, shareable), per-gateway detail, custom 404.
+- Client-side Clerk authentication (sign up / sign in / user button), dark-themed.
+- GitHub Actions auto-deploy to Cloudflare Pages.
+- safe-code project brain (`.safe-code/`).
+
+### Removed
+- Split and Pace (BNPL) — defunct in Malaysia.
