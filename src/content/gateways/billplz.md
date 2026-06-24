@@ -16,7 +16,6 @@ settlement: "T+1"
 min_txn: "—"
 channels: [fpx, card, ewallet, bnpl]
 methods:
-  - FPX online banking
   - Credit / debit card
   - Maybank QRPay
   - ShopeePay

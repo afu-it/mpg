@@ -16,7 +16,6 @@ channels: [fpx, card, ewallet]
 methods:
   - Visa
   - Mastercard
-  - FPX online banking
   - Boost
   - GrabPay
   - ShopeePay

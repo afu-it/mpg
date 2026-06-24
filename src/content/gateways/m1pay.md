@@ -14,7 +14,6 @@ settlement: "T+2"
 min_txn: "—"
 channels: [fpx, card, ewallet, duitnowqr]
 methods:
-  - FPX online banking
   - Credit / debit card
   - MyDebit
   - eM-ONEi wallet

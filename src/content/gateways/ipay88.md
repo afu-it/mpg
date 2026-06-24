@@ -17,7 +17,6 @@ min_txn: "—"
 category: gateway
 channels: [fpx, card, ewallet, duitnowqr, bnpl]
 methods:
-  - FPX online banking
   - Credit / debit card
   - Boost
   - GrabPay

@@ -16,7 +16,6 @@ settlement: "Contact sales"
 min_txn: "—"
 channels: [fpx, card, ewallet, duitnowqr, bnpl]
 methods:
-  - FPX online banking
   - Credit / debit card
   - Touch 'n Go eWallet
   - GrabPay

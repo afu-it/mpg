@@ -15,7 +15,6 @@ settlement: "Contact sales"
 min_txn: "—"
 channels: [fpx, card, ewallet]
 methods:
-  - FPX online banking
   - Visa
   - Mastercard
   - American Express

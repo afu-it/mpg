@@ -20,7 +20,6 @@ methods:
   - UnionPay
   - Apple Pay
   - Google Pay
-  - FPX online banking
   - DuitNow
   - GrabPay
   - Touch 'n Go eWallet
