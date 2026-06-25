@@ -1,44 +1,44 @@
 # Progress Tracker — MPG
 
-last_synced_commit: 599fc87
-context_synced_at: 2026-06-24
+last_synced_commit: 65e192b
+context_synced_at: 2026-06-25
 context_selftest: skipped (not first-run)
 
 ## Current Phase
-Pure static directory, polished. 38 entries with sourced fees + e-wallet methods +
-FPX banks; table defaults to value rank; every entry has a logo. Favourites (Phase 2)
-was built then **removed** at the owner's request — no server/DB in the repo.
+Pure static directory, polished, with a **/learn** section for devs and a
+**Jalur Gemilang (Malaysia flag)** dark theme. 38 entries with sourced fees,
+e-wallet methods, FPX banks, developer-experience dimension; popularity-ranked
+by default. No server/DB. Now deployed (pushed to master → Cloudflare Pages).
 
 ## What works now
-- Landing `/`, `/gateways` (sidebar filter + sortable/searchable table, **value-ranked by default**), `/compare` (side-by-side, shareable `?ids=`), `/gateway/<slug>` detail, custom `404`.
-- 38 entries (incl. 8 BNPL + PayNet infrastructure) with sourced fees; every entry has a logo (favicon-grade PNG; monogram fallback).
-- Per-gateway **Other payment methods** (e-wallets) + **Supported banks (via FPX)** on detail + compare (spec 03, done). Recent adds: M1Pay, CardBizPay, Airwallex, PayNet.
-- Compare "Other methods" cell: 2 chips/row grid + `+N more` toggle. "FPX online banking" dropped from methods (Banks row covers it).
-- Fees deep-sourced: filled many from provider rate cards/docs; third-party/indicative values carry a `*` marker with a legend (table/compare/detail). Genuinely-private gateways stay "Contact sales".
-- **Developer experience** dimension (spec 05, done): schema `mcp`/`webhooks`/`plugins`/`dev_docs`. MCP official = Stripe, Curlec, HitPay, Airwallex; community = Xendit, Bayarcash. Detail section + table MCP badge + compare rows.
-- Auto-deploy: push master → GitHub Actions → Cloudflare Pages.
-- Clerk sign up / sign in / UserButton (CDN) — **kept** (owner's call); currently gates no feature, reserved for a future account feature. Switch to `pk_live` at real deploy.
+- Landing `/`, `/gateways` (sidebar filter + sortable/searchable table, popularity-ranked), `/compare` (shareable `?ids=`), `/gateway/<slug>` detail, custom `404`.
+- **/learn** (spec 06, done): hub + `/learn/glossary`, `/learn/integration-flow` (safe flow + ASCII payment-flow diagram), `/learn/ai-agents` (skills install + MCP/API explainer + ASCII setup-flow diagram), `/learn/checklist`. Per-gateway "Copy prompt" button auto-generated from `skill:` (`src/lib/learn.ts`). "Learn" in nav.
+- 38 entries (incl. 8 BNPL + PayNet infrastructure) with sourced fees; every entry has a logo. Per-gateway e-wallet methods + FPX banks. Developer-experience (MCP/webhooks/plugins/dev_docs).
+- **Jalur Gemilang theme:** blue primary buttons (deep flag blue + white text), lighter flag-blue accent `#4f86f5` for links/focus, brand red/yellow tokens, surface `#0a0a0a` / panel `#141416`. FPX (`#6f83cc`) + DuitNow QR (`#e61f65`) brand-coloured labels. Top NProgress-style loading bar (`#001bcf`). Logo-cycle Browse-gateways button. (See `ui-context.md`.)
+- **Logo system:** square logos rounded corners; `logo_round` crop-to-circle for circular marks (bizappay, payhalal, ringgitpay, myiou, paydee, riipay, senangpay).
+- All prose is em-dash-free (house style).
+- Clerk sign up / sign in / UserButton (CDN), themed blue. Auto-deploy: push master → GitHub Actions → Cloudflare Pages.
 
 ## Current Goal / Next Up
-- Real deploy: owner bought a domain → wire it to the CF Pages project + switch Clerk to `pk_live` (production instance) when going live.
+- Custom domain: owner bought a domain → connect to the CF Pages project + switch Clerk to `pk_live` (production instance) when going live.
 - Decide whether to add Payex + 2C2P (spec 04).
-- Build the `/learn` section for devs/vibe-coders (spec 06, planned — owner said plan only for now): glossary, safe integration flow, AFU's skills + copy-paste agent prompts, MCP/API explainer, production checklist.
-- Phase 3: Public "submit a gateway" (would need a server + DB; revisit then).
+- Phase 3: public "submit a gateway" (would need a server + DB; revisit then).
+- Optional: liveness pass on all gateway websites (iPay88 was found dead → NTT DATA; others may have shifted).
 
 ## Open Questions
-- Add **Payex** (payex.io, Maybank-owned) and/or **2C2P** (regional PSP)? Surfaced in the listicle rescan; awaiting AFU's go-ahead before sourcing + adding (spec 04).
-- Backfill `methods` for the remaining gateways (asiapay, payhalal, xendit, bayarcash, etc.) once specific e-wallet lists are sourced.
-- Remaining all-"Contact sales" gateways (OxPay, RevPay, Paydee, M1Pay MDR, CommercePay MDR, AsiaPay rates) are genuinely quote-only — no official OR third-party figures exist. Leave unless they publish later.
-- Whether to upgrade favicon-grade logos to real SVG wordmarks.
+- Add **Payex** (payex.io, Maybank-owned) and/or **2C2P**? (spec 04, awaiting AFU.)
+- Backfill `methods` for remaining gateways (asiapay, payhalal, xendit, bayarcash, …) once specific e-wallet lists are sourced.
+- Remaining all-"Contact sales" gateways are genuinely quote-only — leave unless they publish.
 
 ## Reference
-- Owner's agent-skills repo: https://github.com/afu-it/malaysia-payment-gateway — gateway-agnostic `malaysia-payment-gateway` skill + `setup-<gateway>` skills (chip, curlec, xendit, bayarcash, bcl, toyyibpay, billplz, fiuu, senangpay, hitpay, stripe-malaysia). Maps to our `skill:` field. Has ready agent prompts + security rules + production checklist → backbone for the planned `/learn` section (spec 06).
+- Owner's agent-skills repo: https://github.com/afu-it/malaysia-payment-gateway — maps 1:1 to our `skill:` field; backbone of the `/learn` section.
+- Brand assets used this session were provided by the owner (NTT DATA, PayHalal, RinggitPay, Bizappay, AsiaPay, Revenue Monster logos).
 
 ## Decisions (safe summary)
-- Stay on **Astro 7 static**; auth via Clerk **browser SDK (CDN)**, not `@clerk/astro` (incompatible with Astro 7). No SSR adapter.
-- Favourites (Phase 2: Pages Functions + D1 + Clerk) was built then **removed** at the owner's request — keep the site pure static. Spec 01 = rejected; do not re-suggest.
-- Default table order = **popularity** (curated `popularity` field, most-used in MY first), then best value, then name. (Superseded the earlier value-first default at the owner's request.) Top: iPay88, Billplz, toyyibPay, senangPay, Stripe, Fiuu, eGHL, Curlec, CHIP, Xendit. Editorial — tweak the numbers freely.
-- Removed Split & Pace BNPL (defunct in MY).
-- Fees never fabricated — `Contact sales` / `—` where unknown/not offered. **Third-party/indicative values are allowed but MUST carry a trailing `*`** (e.g. `"6% *"`); official values have no marker. `parseFee` ignores the `*`, so sorting still works. Legend explains it on table/compare/detail.
-- FPX banks stored ONCE (`src/lib/fpx-banks.ts`, PayNet-sourced) and shown for any `fpx` gateway — not duplicated per file (national standard set).
-- OnPay excluded from the directory — it's a sales-page SaaS that plugs in other gateways, not an acquirer. PayNet added as `category: infrastructure` (rails, not a merchant gateway).
+- Stay on **Astro 7 static**; auth via Clerk **browser SDK (CDN)**. No SSR adapter.
+- `/learn` built as **hub + sub-pages**, **English only**, copy-prompt **auto-generated from `skill:`**.
+- Theme = **Jalur Gemilang on dark**: blue is primary (buttons); accent is a lightened flag-blue (pure `#0031a0` fails text contrast on dark, so deep blue is fills-only); red/yellow are accents; per-brand label colours (FPX, DuitNow) kept readable on dark.
+- **No em-dashes in prose** (AFU: reads as AI). Standalone `"—"` fee placeholder stays (data).
+- **iPay88 retired → NTTDataPay (formerly iPay88):** ipay88.com is down; now NTT DATA Payment Services / ADAPTIS (consolidates iPay88 + eGHL). Kept slug `/gateway/ipay88`. ADAPTIS publishes no rates → all fees "Contact sales" (legacy iPay88 rates NOT reused). eGHL still live under own brand (eghl.my) → kept separate, noted NTT DATA link.
+- Default table order = popularity, then value, then name (unchanged).
+- Fees never fabricated; third-party values carry trailing `*`.

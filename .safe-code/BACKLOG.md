@@ -1,12 +1,13 @@
 # BACKLOG — operational queue
 
-_2026-06-24 (rev 3)_
+_2026-06-25 (rev 4)_
 
-- [ ] Build `/learn` section for devs/vibe-coders (spec 06; planned — owner said plan only). Smallest high-value first: per-gateway "copy prompt for your AI agent" button (auto-generated from `skill:`).
-- [ ] Tune `popularity` numbers if owner wants a different #1 (currently iPay88 → Billplz → toyyibPay → senangPay → Stripe…).
-- [ ] Real deploy: owner bought a domain → connect it to the CF Pages project and switch Clerk to `pk_live` (production instance) when going live.
+- [ ] Custom domain: owner bought a domain → connect to the CF Pages project and switch Clerk to `pk_live` (production instance) when going live.
+- [ ] Decide: add **Payex** (payex.io, Maybank-owned) + **2C2P** (regional PSP)? Awaiting AFU before sourcing + adding (spec 04). StoreHub = POS (skip); crypto/NOWPayments not selected.
 - [ ] Phase 3: public submit-a-gateway, moderated (would need server + DB → curated `.md`). Spec: `context/feature-specs/02-submit-gateway.md`.
-- [ ] Decide: add **Payex** (payex.io, Maybank-owned) + **2C2P** (regional PSP)? Surfaced in listicle rescan; awaiting AFU before sourcing + adding (spec 04). StoreHub = POS (skip); crypto/NOWPayments not selected.
-- [ ] Backfill `methods` for remaining gateways (asiapay, payhalal, xendit, bayarcash, etc.) when specific e-wallet lists are sourced (spec 03 follow-up).
-- [ ] Optional: upgrade favicon-grade logos to real SVG wordmarks (a few are low-res Google favicons).
+- [ ] Liveness pass on all gateway websites — iPay88 was found dead (→ NTT DATA); check the rest for dead/rebranded sites.
+- [ ] Backfill `methods` for remaining gateways (asiapay, payhalal, xendit, bayarcash, …) when specific e-wallet lists are sourced (spec 03 follow-up).
+- [ ] Optional: tune `popularity` numbers if owner wants a different #1.
 - [ ] Optional: collapsible "Filters" sidebar on mobile (currently stacks on top).
+- [x] Build `/learn` section (spec 06) — done 2026-06-25 (commit 65e192b).
+- [x] Upgrade several favicon-grade logos to real brand assets — done for NTT DATA, PayHalal, RinggitPay, Bizappay, AsiaPay, Revenue Monster (2026-06-25).

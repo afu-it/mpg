@@ -1,6 +1,17 @@
 # MEMORY — temporary audit/architecture notes
 
-_2026-06-24_
+_2026-06-25_
+
+## Theme + UI system (2026-06-25)
+- **Jalur Gemilang on dark.** Tokens in `global.css` `@theme`: accent `#4f86f5` (lighter flag-blue, text-safe), brand-blue `#0031a0` (button/badge fills + white text only), brand-red `#cc0000` (large text / fills), brand-yellow `#fed100`, fpx `#6f83cc`, duitnow `#e61f65`. Surface `#0a0a0a`, panel `#141416`. Full design notes in `context/ui-context.md`.
+- **Contrast trap:** pure flag blue `#0031a0` (~1.5:1) and red `#cc0000` (~3.4:1) fail as small text on dark — fills-only / large-text-only. Dark-on-transparent logos go on a white chip.
+- **Top progress bar trap:** Tailwind `scale-x-0` sets the CSS `scale` property, which multiplies with `transform` and collapses the bar to 0 width. Drive `#top-progress` with inline `transform: scaleX()` only.
+- **Astro whitespace trap:** newline between text and an inline tag (`<strong>`/`<a>`/`<em>`) is stripped → words glue. End the wrapping line with `{" "}`.
+- **Logo system:** `Logo.astro` rounds square logos (`rounded-[22%]`); `logo_round: true` frontmatter crops circular marks to a full circle. Logos in `src/assets/logos/<slug>.{svg,png,webp}`.
+
+## iPay88 → NTT DATA (2026-06-25)
+- iPay88 retired: ipay88.com is down (502); now NTT DATA Payment Services / **ADAPTIS** (my.nttdatapay.com), which consolidates **iPay88 + eGHL**. Entry renamed "NTTDataPay (formerly iPay88)", slug kept `/gateway/ipay88`, all fees "Contact sales" (ADAPTIS publishes none; legacy iPay88 rates not reused).
+- eGHL still operates under its own brand (eghl.my live; eghl.com is a parked for-sale domain) → kept as a separate entry with a note it's now under NTT DATA.
 
 ## Astro 7 ecosystem traps (June 2026)
 - `@clerk/astro` peer-deps cap at Astro ≤6 → won't install/run on Astro 7.

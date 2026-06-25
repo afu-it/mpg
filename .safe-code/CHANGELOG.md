@@ -13,6 +13,18 @@
 - Deeper fee data sourced from provider rate cards/docs; third-party/indicative rates marked with `*` (legend on table/compare/detail).
 - Compare "Other methods" cell shows 2 chips with a `+N more` toggle.
 - Developer-experience dimension: MCP/AI-agent support, webhooks, e-commerce plugins, API-docs link (detail section, table MCP badge, compare rows).
+- `/learn` section for devs/vibe-coders: hub + glossary, safe integration flow, build-with-AI-agents (skills install + MCP/API explainer), production checklist; ASCII payment-flow and setup-flow diagrams; per-gateway "Copy prompt" button auto-generated from `skill:`.
+- Top NProgress-style loading bar on page navigation.
+- Logo-cycle animation in the Browse-gateways button.
+- Per-gateway logo shape handling: rounded corners for square logos, circle-crop (`logo_round`) for circular marks.
+
+### Changed
+- Re-themed to a Jalur Gemilang (Malaysia flag) dark palette: blue primary buttons, lighter flag-blue accent, brand red/yellow accents, deeper surface `#0a0a0a` / panel `#141416`. FPX and DuitNow QR labels use their brand colours.
+- Refreshed logos: NTT DATA, PayHalal, RinggitPay, Bizappay, AsiaPay, Revenue Monster.
+- Removed em-dashes from all prose copy (house style).
+
+### Fixed
+- iPay88 corrected to NTTDataPay (formerly iPay88): the iPay88 site is retired, now NTT DATA Payment Services / ADAPTIS. Fees set to quote-only (ADAPTIS publishes none). eGHL noted as now under NTT DATA.
 
 ### Removed
 - Split and Pace (BNPL) — defunct in Malaysia.

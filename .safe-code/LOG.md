@@ -1,5 +1,21 @@
 # LOG — safe diary (append above)
 
+## 2026-06-25 · type: feat
+Built the `/learn` section (spec 06, done): hub + glossary, safe integration-flow, AI-agents (skills install + MCP/API explainer), production checklist. Per-gateway "Copy prompt" button auto-generated from `skill:` (`src/lib/learn.ts`). Two auto-aligned ASCII flow diagrams (`FlowDiagram.astro`) for payment-flow + setup-flow. Top NProgress-style loading bar on navigation (`scripts/progress.ts`). Logo-cycle Browse-gateways button (`LogoCycle.astro`). astro check 0, build 47 pages, vitest 11/11.
+plain: Tambah bahagian "Learn" untuk developer (cara integrate, glossary, prompt AI sedia-salin, checklist), diagram aliran, dan bar loading kat atas.
+
+## 2026-06-25 · type: style
+Re-themed to **Jalur Gemilang on dark**: blue primary buttons (deep flag blue + white text), lighter flag-blue accent `#4f86f5` (links/focus), brand red/yellow tokens, surface `#0a0a0a` / panel `#141416`. FPX (`#6f83cc`) + DuitNow QR (`#e61f65`) brand-coloured labels. Logo system: rounded corners for square logos, `logo_round` circle-crop for circular marks; refreshed bizappay/payhalal/ringgitpay/asiapay/revenue-monster + NTT DATA logo. Removed em-dashes from ALL prose site-wide (house style; standalone `"—"` fee placeholder kept).
+plain: Tukar tema ikut warna bendera Malaysia (biru utama), warnakan label FPX/DuitNow, kemaskan logo (bulat/segi empat), dan buang semua em-dash dalam ayat.
+
+## 2026-06-25 · type: fix
+Corrected iPay88: site is dead (502), now NTT DATA Payment Services / ADAPTIS (consolidates iPay88 + eGHL). Renamed to "NTTDataPay (formerly iPay88)", website → my.nttdatapay.com, kept slug `/gateway/ipay88`. ADAPTIS publishes no rates → all fees set to "Contact sales" (legacy iPay88 rates NOT reused, nothing fabricated). eGHL verified still live (eghl.my) → kept separate, noted as now under NTT DATA.
+plain: Betulkan iPay88 (dah tutup, jadi NTT DATA) — buang harga lama, letak "hubungi sales"; eGHL masih hidup, cuma nota dia bawah NTT DATA sekarang.
+
+## 2026-06-25 · type: chore
+Saved + committed (65e192b code, then docs) and **pushed to master** at AFU's request → GitHub Actions → Cloudflare Pages deploy triggered. Atomic split consolidated to code + docs commits (the session's changes cross-cut many shared files — em-dash + theme + colour + logo edits in the same .astro/.md files — so feature-level hunk splitting wasn't clean).
+plain: Simpan, commit, dan push ke GitHub — website live dikemaskini automatik.
+
 ## 2026-06-24 · type: feat
 Default ranking switched from value → **popularity** (curated `popularity` field; most-used MY gateways first, value as tiebreaker): iPay88, Billplz, toyyibPay, senangPay, Stripe, Fiuu, eGHL, Curlec… Also reviewed the owner's agent-skills repo (github.com/afu-it/malaysia-payment-gateway) and drafted spec 06 (`/learn` section for devs/vibe-coders — PLAN ONLY per owner) built around those skills + their ready agent prompts + security/production checklist. astro check 0 errors; build 42 pages.
 plain: Tukar susunan default jadi ikut gateway paling popular dulu, dan plan satu "Learn" section untuk developer (belum bina).

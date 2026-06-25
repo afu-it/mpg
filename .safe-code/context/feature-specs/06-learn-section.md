@@ -1,10 +1,25 @@
 ---
-status: suggested
+status: done
 created: 2026-06-24
 ---
 # Learn section (for devs & vibe coders)
 
-> PLAN ONLY for now (owner: "kita plan je, nanti bila2 kita sambung"). Do not build yet.
+> SHIPPED 2026-06-25 (commit 65e192b). astro check 0 errors, build 47 pages, vitest 11/11.
+> Built as hub + sub-pages, English only, copy-prompt auto-generated from `skill:`.
+
+## Build decisions (2026-06-25)
+- Structure: **hub + sub-pages** — `/learn` hub linking `/learn/glossary`,
+  `/learn/integration-flow`, `/learn/ai-agents`, `/learn/checklist`.
+- Language: **English only** (matches the rest of the site).
+- Copy-prompt: **auto-generated from `skill:`** via `src/lib/learn.ts` — zero curation.
+
+## Shipped
+- `src/lib/learn.ts` — `SKILLS_REPO`, `skillRepoUrl`, `skillInstallCommand`, `agentPrompt`.
+- `src/scripts/copy.ts` — generic `[data-copy]` clipboard helper (used by detail page + ai-agents install commands).
+- `/learn` hub + 4 sub-pages. ai-agents page derives skill list + MCP official/community groups live from the gateways collection.
+- Detail page (`gateway/[slug].astro`): "Integrate with an AI agent" block (Copy prompt + install command), `skill:` footer now links to its repo folder.
+- "Learn" added to the nav in `Base.astro`.
+- AFU's repo confirmed: skills live at root as `/setup-<gateway>/`; install `npx skills@latest add afu-it/malaysia-payment-gateway --skill setup-<gateway>`.
 
 ## Why
 The directory compares gateways, but a dev / vibe-coder landing here still has to
