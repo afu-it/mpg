@@ -37,7 +37,7 @@ dev_docs: "https://docs.hitpayapp.com/apis/overview"
 popularity: 70
 verified_date: "2026-06-24"
 source: "https://hitpayapp.com/my/pricing"
-notes: "Malaysia online rates: domestic card 1.2% + RM1.00, FPX 1.8% + RM0.40, DuitNow 1.2%, international card 3% + RM1.00 (+2% on foreign-currency). No setup or monthly fee. An extra 0.2% applies when using software tools (payment links, invoicing, online store, POS, recurring billing); Shopify +0.5%. Payout T+1. E-wallet supported — confirm rate."
+notes: "Malaysia online rates: domestic card 1.2% + RM1.00, FPX 1.8% + RM0.40, DuitNow 1.2%, international card 3% + RM1.00 (+2% on foreign-currency). No setup or monthly fee. An extra 0.2% applies when using software tools (payment links, invoicing, online store, POS, recurring billing); Shopify +0.5%. Payout T+1. E-wallet supported; confirm rate."
 ---
 
 HitPay is a Singapore-headquartered, MAS-licensed platform that operates in
@@ -47,7 +47,7 @@ into one account: checkout, payment links, invoicing, online store, POS and
 
 Malaysia online rates: domestic cards **1.2% + RM1.00**, FPX **1.8% + RM0.40**,
 DuitNow **1.2%**, and international cards **3% + RM1.00** (plus 2% on
-foreign-currency transactions). There are no setup or subscription fees — you only
+foreign-currency transactions). There are no setup or subscription fees; you only
 pay on successful payments.
 
 Note a small **+0.2%** surcharge when you use its software tools (payment links,

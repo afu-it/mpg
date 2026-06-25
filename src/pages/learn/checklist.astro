@@ -1,0 +1,83 @@
+---
+export const prerender = true;
+
+import Base from "../../layouts/Base.astro";
+
+const groups = [
+  {
+    title: "Credentials & config",
+    items: [
+      "Live (production) keys set in the server environment, never in the repo or client.",
+      "Sandbox and live keys kept separate; no test key in production.",
+      "All secrets in environment variables / a secret manager (gitignored .env).",
+    ],
+  },
+  {
+    title: "Webhooks",
+    items: [
+      "Webhook/callback URL registered in BOTH sandbox and live dashboards.",
+      "Signature/checksum verification enforced on every callback.",
+      "Endpoint is replay-safe: duplicate events settle the order only once.",
+    ],
+  },
+  {
+    title: "Payment integrity",
+    items: [
+      "Paid access is granted only after a verified webhook + re-fetched provider state, never from a redirect alone.",
+      "Amount, currency, reference and status matched against your pending record before fulfilling.",
+      "A sandbox payment completes end-to-end and unlocks correctly.",
+    ],
+  },
+  {
+    title: "Data & operations",
+    items: [
+      "Database migrations applied (orders/payments tables, indexes on the gateway reference).",
+      "Failed and pending payments are handled and visible, not just successes.",
+      "Refund / reconciliation path understood for the chosen gateway.",
+    ],
+  },
+];
+---
+
+<Base
+  title="Production checklist | MPG Learn"
+  description="What to verify before taking a Malaysian payment gateway live: keys, webhook URLs, replay-safety, separated credentials, and no fake-redirect unlock."
+>
+  <a href="/learn" class="text-sm text-muted hover:text-fg">← Learn</a>
+
+  <header class="mt-4 max-w-2xl">
+    <h1 class="text-2xl font-semibold tracking-tight text-fg">Production checklist</h1>
+    <p class="mt-2 text-muted">
+      Run through this before flipping a gateway to live. Skipping any line is how
+      payments get faked or money goes missing.
+    </p>
+  </header>
+
+  <div class="mt-8 max-w-2xl space-y-6">
+    {
+      groups.map((g) => (
+        <section>
+          <h2 class="mb-2 text-sm font-medium uppercase tracking-wide text-muted">
+            {g.title}
+          </h2>
+          <ul class="divide-y divide-line overflow-hidden rounded-md border border-line">
+            {g.items.map((item) => (
+              <li class="flex gap-3 px-4 py-3 text-sm">
+                <span class="select-none text-accent" aria-hidden="true">☐</span>
+                <span class="text-fg">{item}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))
+    }
+  </div>
+
+  <p class="mt-8 max-w-2xl text-sm text-muted">
+    New to any of these terms? See the{" "}
+    <a href="/learn/glossary" class="text-accent hover:underline">glossary</a>, or
+    let an{" "}
+    <a href="/learn/ai-agents" class="text-accent hover:underline">AI agent</a>{" "}
+    handle the wiring.
+  </p>
+</Base>

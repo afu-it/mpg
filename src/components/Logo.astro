@@ -1,7 +1,10 @@
 ---
-// Renders a provider logo from src/assets/logos/<slug>.svg if present,
+// Renders a provider logo from src/assets/logos/<slug>.{svg,png,webp} if present,
 // otherwise a clean monogram chip. No broken images, no 404s.
-// Drop a new SVG into src/assets/logos/ named <slug>.svg and it appears automatically.
+// Square logos get subtly rounded corners; logos flagged `logo_round` in their
+// frontmatter are cropped to a full circle.
+import { getCollection } from "astro:content";
+
 interface Props {
   slug: string;
   name: string;
@@ -22,18 +25,33 @@ for (const [path, url] of Object.entries(logos)) {
 }
 const logoUrl = bySlug[slug];
 
+const roundSlugs = new Set(
+  (await getCollection("gateways")).filter((g) => g.data.logo_round).map((g) => g.id),
+);
+const isRound = roundSlugs.has(slug);
+
 const initial = (name.trim().charAt(0) || "?").toUpperCase();
 ---
 
 {
   logoUrl ? (
-    <img
-      src={logoUrl}
-      alt={`${name} logo`}
-      style={`height:${size}px`}
-      class="w-auto max-w-[120px] object-contain"
-      loading="lazy"
-    />
+    isRound ? (
+      <img
+        src={logoUrl}
+        alt={`${name} logo`}
+        style={`width:${size}px;height:${size}px`}
+        class="shrink-0 rounded-full object-cover"
+        loading="lazy"
+      />
+    ) : (
+      <img
+        src={logoUrl}
+        alt={`${name} logo`}
+        style={`height:${size}px`}
+        class="w-auto max-w-[120px] rounded-[22%] object-contain"
+        loading="lazy"
+      />
+    )
   ) : (
     <span
       class="grid shrink-0 place-items-center rounded-sm bg-raised font-semibold text-accent"

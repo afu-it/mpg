@@ -8,6 +8,7 @@ import Logo from "../../components/Logo.astro";
 import FeeCell from "../../components/FeeCell.astro";
 import FeatureBadge from "../../components/FeatureBadge.astro";
 import { FPX_BANKS, FPX_BANKS_SOURCE } from "../../lib/fpx-banks";
+import { skillRepoUrl, skillInstallCommand, agentPrompt } from "../../lib/learn";
 
 export async function getStaticPaths() {
   const gateways = await getCollection("gateways");
@@ -56,9 +57,13 @@ const mcpLabel =
     : d.mcp === "community"
       ? "MCP · Community"
       : "No MCP server";
+
+// AI-agent prompt + install command, generated from the gateway's setup-* skill.
+const prompt = d.skill ? agentPrompt(d.name, d.skill) : null;
+const installCmd = d.skill ? skillInstallCommand(d.skill) : null;
 ---
 
-<Base title={`${d.name} — fees & features | MPG`} description={d.tagline}>
+<Base title={`${d.name} fees & features | MPG`} description={d.tagline}>
   <a href="/gateways" class="text-sm text-muted hover:text-fg">← All gateways</a>
 
   <header class="mt-4 flex flex-wrap items-start justify-between gap-4">
@@ -71,7 +76,7 @@ const mcpLabel =
             {nameNote && <span class="ml-2 text-base font-normal text-muted">{nameNote}</span>}
           </h1>
           {d.category === "bnpl" && (
-            <span class="rounded-full border border-line bg-raised px-2 py-0.5 text-xs font-medium uppercase tracking-wide text-accent">
+            <span class="rounded-full bg-brand-red px-2 py-0.5 text-xs font-medium uppercase tracking-wide text-white">
               BNPL
             </span>
           )}
@@ -83,7 +88,7 @@ const mcpLabel =
       href={d.website}
       target="_blank"
       rel="noopener noreferrer"
-      class="rounded-md bg-accent px-4 py-2 text-sm font-medium text-black hover:opacity-90"
+      class="rounded-md bg-brand-blue px-4 py-2 text-sm font-medium text-white hover:opacity-90"
     >
       Visit website →
     </a>
@@ -93,7 +98,7 @@ const mcpLabel =
   <div class="mt-6 flex flex-wrap gap-2">
     {
       d.channels.map((c) => (
-        <span class="rounded-full border border-line bg-raised px-3 py-1 text-xs text-fg">
+        <span class={`rounded-full border border-line bg-raised px-3 py-1 text-xs ${c === "duitnowqr" ? "text-duitnow" : c === "fpx" ? "text-fpx" : "text-fg"}`}>
           {channelLabels[c] ?? c}
         </span>
       ))
@@ -110,7 +115,7 @@ const mcpLabel =
             {
               feeRows.map((row, i) => (
                 <tr class={i % 2 ? "bg-panel" : ""}>
-                  <th scope="row" class="px-3 py-2 text-left font-normal text-muted">
+                  <th scope="row" class={`px-3 py-2 text-left font-normal ${row.label === "DuitNow QR" ? "text-duitnow" : row.label.startsWith("FPX") ? "text-fpx" : "text-muted"}`}>
                     {row.label}
                   </th>
                   <td class="px-3 py-2 text-right">
@@ -154,7 +159,7 @@ const mcpLabel =
               ? "border-line text-fg"
               : "border-line text-muted"
         }`}
-        title="Model Context Protocol — lets AI agents/tools integrate the API"
+        title="Model Context Protocol: lets AI agents/tools integrate the API"
       >
         {mcpLabel}
       </span>
@@ -182,6 +187,53 @@ const mcpLabel =
               </span>
             ))}
           </div>
+        </div>
+      )
+    }
+    {
+      d.skill && (
+        <div class="mt-4 rounded-md border border-line bg-panel p-4">
+          <p class="text-xs font-medium uppercase tracking-wide text-muted">
+            Integrate with an AI agent
+          </p>
+          <p class="mt-1 text-sm text-muted">
+            Paste this into Claude Code, Cursor or Codex. It uses{" "}
+            <a
+              href={skillRepoUrl(d.skill)}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-accent hover:underline"
+            >
+              <code class="text-fg">{d.skill}</code>
+            </a>{" "}
+            and the{" "}
+            <a href="/learn/integration-flow" class="text-accent hover:underline">
+              safe flow
+            </a>
+            .
+          </p>
+          <button
+            type="button"
+            data-copy={prompt}
+            class="mt-3 flex w-full items-start justify-between gap-3 rounded border border-line bg-surface px-3 py-2 text-left hover:border-accent"
+            title="Click to copy"
+          >
+            <span class="text-sm text-fg">{prompt}</span>
+            <span data-copy-label class="shrink-0 text-xs font-medium text-accent">
+              Copy prompt
+            </span>
+          </button>
+          <p class="mt-2 text-xs text-muted">
+            First install it:{" "}
+            <button
+              type="button"
+              data-copy={installCmd}
+              class="font-mono text-muted hover:text-accent"
+              title="Click to copy"
+            >
+              <span data-copy-label>npx skills@latest add … --skill {d.skill}</span>
+            </button>
+          </p>
         </div>
       )
     }
@@ -218,7 +270,7 @@ const mcpLabel =
             <a href={FPX_BANKS_SOURCE} target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">
               FPX
             </a>{" "}
-            — the national bank set:
+            the national bank set:
           </p>
         )}
         <div class="flex flex-wrap gap-2">
@@ -245,7 +297,21 @@ const mcpLabel =
 
   <!-- meta / provenance -->
   <footer class="mt-10 border-t border-line pt-4 text-xs text-muted">
-    {d.skill && <p>Integration skill: <code class="text-fg">{d.skill}</code></p>}
+    {
+      d.skill && (
+        <p>
+          Integration skill:{" "}
+          <a
+            href={skillRepoUrl(d.skill)}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-accent hover:underline"
+          >
+            <code>{d.skill}</code>
+          </a>
+        </p>
+      )
+    }
     <p class="mt-1">
       Source:
       <a href={d.source} target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">
@@ -257,10 +323,14 @@ const mcpLabel =
     {
       hasUnofficial && (
         <p class="mt-2 max-w-2xl">
-          <span class="text-fg">*</span> Indicative rate from a third-party source — not
+          <span class="text-fg">*</span> Indicative rate from a third-party source, not
           officially published. Always confirm with the provider.
         </p>
       )
     }
   </footer>
 </Base>
+
+<script>
+  import "../../scripts/copy.ts";
+</script>

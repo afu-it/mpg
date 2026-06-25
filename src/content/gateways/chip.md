@@ -41,6 +41,6 @@ Indicative collection rates are around **RM1.00 for FPX**, ~2% for credit cards
 payments settle to your bank within 1–2 business days. It supports recurring
 charges via saved tokens, plus payment links and a developer API.
 
-CHIP also offers a wider stack — payouts (Send), expense management, treasury and
-compliance tools — so it suits businesses that want more than just a checkout.
+CHIP also offers a wider stack: payouts (Send), expense management, treasury and
+compliance tools, so it suits businesses that want more than just a checkout.
 Treat the rates here as indicative and confirm the current MDR with CHIP.

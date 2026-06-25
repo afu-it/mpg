@@ -1,0 +1,53 @@
+---
+// Renders a vertical ASCII flow diagram from a list of steps. Box widths and
+// connectors are generated programmatically so every border lines up regardless
+// of the label lengths. Set `emphasis` on a step to draw it as a double-line box
+// (used for the security / trust gate).
+export interface FlowStep {
+  title: string;
+  body?: string[];
+  via?: string; // label on the arrow leading into this step
+  emphasis?: boolean;
+}
+interface Props {
+  steps: FlowStep[];
+  caption?: string;
+  width?: number; // inner width in characters
+}
+const { steps, caption, width = 52 } = Astro.props;
+const W = width;
+const center = Math.floor(W / 2);
+const pad = " ".repeat(center);
+
+function row(text: string, bar: string): string {
+  const inner = " " + text;
+  const padded =
+    inner.length >= W ? inner.slice(0, W) : inner + " ".repeat(W - inner.length);
+  return bar + padded + bar;
+}
+
+const lines: string[] = [];
+steps.forEach((step, i) => {
+  if (i > 0) {
+    lines.push(pad + "│");
+    if (step.via) lines.push(pad + "│   " + step.via);
+    lines.push(pad + "▼");
+  }
+  const e = step.emphasis;
+  const [tl, tr, bl, br, bar, hz] = e
+    ? ["╔", "╗", "╚", "╝", "║", "═"]
+    : ["┌", "┐", "└", "┘", "│", "─"];
+  lines.push(tl + hz.repeat(W) + tr);
+  lines.push(row(step.title, bar));
+  (step.body ?? []).forEach((b) => lines.push(row(b, bar)));
+  lines.push(bl + hz.repeat(W) + br);
+});
+const ascii = lines.join("\n");
+---
+
+<figure class="my-6">
+  <div class="overflow-x-auto rounded-md border border-line bg-panel p-4">
+    <pre class="mx-auto w-max whitespace-pre font-mono text-xs leading-tight text-fg">{ascii}</pre>
+  </div>
+  {caption && <figcaption class="mx-auto mt-2 max-w-2xl text-center text-xs text-muted">{caption}</figcaption>}
+</figure>

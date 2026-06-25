@@ -48,7 +48,7 @@ notes: "Global fintech (HQ Australia) with a BNM-licensed Malaysian entity (Airw
 
 Airwallex is a global payments and financial-platform provider with a
 **Bank Negara Malaysia–licensed** Malaysian entity. Beyond card acceptance it
-offers multi-currency business accounts, FX, transfers and cards — a fit for
+offers multi-currency business accounts, FX, transfers and cards: a fit for
 Malaysian businesses trading across borders.
 
 For local acceptance it supports **FPX** and **DuitNow** alongside local

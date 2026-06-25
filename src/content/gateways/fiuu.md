@@ -43,7 +43,7 @@ dev_docs: "https://e2payprod.gitbook.io/payment-gateway/"
 popularity: 86
 verified_date: "2026-06-24"
 source: "https://fiuu.com"
-notes: "Rates shown are from Fiuu's own merchant base-rate card (booster.fiuu.com, Apr 2024) and are a negotiable starting point — actual rates vary by volume/channel. Setup fee is third-party (*). Enterprise gateway since 2005 (formerly Razer Merchant Services / MOLPay); 110+ methods across SEA."
+notes: "Rates shown are from Fiuu's own merchant base-rate card (booster.fiuu.com, Apr 2024) and are a negotiable starting point; actual rates vary by volume/channel. Setup fee is third-party (*). Enterprise gateway since 2005 (formerly Razer Merchant Services / MOLPay); 110+ methods across SEA."
 ---
 
 Fiuu is an established **enterprise** payment gateway operating since 2005
@@ -56,6 +56,6 @@ payments, instalment plans, marketplace/split payments, mass payouts, payment
 links and a mobile XDK. This makes it a fit for larger or regional businesses.
 
 The fees shown come from Fiuu's own **merchant base-rate card** (April 2024) and
-are a negotiable starting point — actual rates vary by volume and channel, so
+are a negotiable starting point; actual rates vary by volume and channel, so
 confirm a tailored quote with Fiuu. The setup fee (marked *) is from a third-party
 source.

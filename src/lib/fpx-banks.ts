@@ -1,5 +1,5 @@
 // Standard FPX (PayNet) participating banks for B2C / retail online-banking payments.
-// Shown for any gateway that offers the `fpx` channel — the bank set is national and
+// Shown for any gateway that offers the `fpx` channel; the bank set is national and
 // standardised by PayNet, so it is NOT duplicated per gateway.
 //
 // Source: PayNet Knowledge Base "Which banks participate in FPX?" +

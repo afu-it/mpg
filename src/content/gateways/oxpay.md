@@ -31,6 +31,6 @@ notes: "Indicative. No fees of any kind are published on the site; all pricing i
 
 OxPay Malaysia (Oxpay (M) Sdn Bhd), part of Singapore-listed OxPay Financial, is a PCI DSS Level 1, 3DS 2.0-ready payment provider operating across Singapore, Malaysia and Thailand. In Malaysia it accepts card payments (Visa, Mastercard, UnionPay), e-wallets (GrabPay, Touch 'n Go, WeChat Pay, Alipay, ShopeePay), online banking (FPX, DuitNow, Boost) and buy-now-pay-later (Atome, Grab PayLater).
 
-The site is marketing-focused and publishes no transaction, setup, monthly or minimum fees, and gives no settlement timeframe — all pricing must be obtained from sales. Integration is via a unified API plus pre-built e-commerce plugins (WooCommerce, Magento, PrestaShop).
+The site is marketing-focused and publishes no transaction, setup, monthly or minimum fees, and gives no settlement timeframe. All pricing must be obtained from sales. Integration is via a unified API plus pre-built e-commerce plugins (WooCommerce, Magento, PrestaShop).
 
 No public no-code payment-link product or recurring-billing capability is advertised on the site, so those are marked false pending confirmation. Treat all commercial terms as indicative.

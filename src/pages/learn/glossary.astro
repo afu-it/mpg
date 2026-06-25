@@ -1,0 +1,89 @@
+---
+export const prerender = true;
+
+import Base from "../../layouts/Base.astro";
+
+const terms = [
+  {
+    term: "FPX",
+    def: "Financial Process Exchange, Malaysia's online-banking rail. The customer logs into their bank and approves the payment. Run by PayNet; almost every gateway supports it.",
+  },
+  {
+    term: "DuitNow QR",
+    def: "The national interoperable QR standard. One QR code accepts most Malaysian bank apps and e-wallets.",
+  },
+  {
+    term: "E-wallet",
+    def: "Stored-value apps like Touch 'n Go eWallet, GrabPay, Boost and ShopeePay. Gateways usually charge a separate e-wallet rate.",
+  },
+  {
+    term: "BNPL",
+    def: "Buy Now, Pay Later: the customer pays in instalments (Atome, SPayLater, etc.) while you're paid upfront, minus a higher merchant fee.",
+  },
+  {
+    term: "MDR / discount rate",
+    def: "Merchant Discount Rate: the percentage a gateway keeps per successful transaction. The headline 'fee' in the comparison table.",
+  },
+  {
+    term: "Settlement (T+1 / T+2)",
+    def: "How many business days after a payment the money lands in your bank account. T+2 means two working days later.",
+  },
+  {
+    term: "Webhook / callback",
+    def: "A server-to-server message the gateway sends your backend when a payment's status changes. It's the source of truth for whether you were actually paid, not the browser redirect.",
+  },
+  {
+    term: "Signature / checksum verification",
+    def: "A cryptographic stamp (usually HMAC) on each callback proving it really came from the gateway and wasn't tampered with. Always verify it before trusting a webhook.",
+  },
+  {
+    term: "Idempotent settlement",
+    def: "Processing the same paid event twice must not deliver the goods twice or double-count revenue. Key off the gateway's reference and ignore repeats.",
+  },
+  {
+    term: "Sandbox vs live",
+    def: "Sandbox is a test environment with fake money and test keys. Live uses real money and production keys. Build and test in sandbox first; the two have separate credentials.",
+  },
+  {
+    term: "Tokenisation",
+    def: "Replacing card details with a safe token so you can charge again later without ever storing the raw card number.",
+  },
+  {
+    term: "Recurring / subscription",
+    def: "Automatically charging a saved payment method on a schedule (memberships, SaaS plans, instalments).",
+  },
+  {
+    term: "MCP",
+    def: "Model Context Protocol: a standard that lets AI coding tools (Claude, Cursor, Codex) talk to a service's API directly. A gateway with an official MCP server is the easiest to wire up with an agent.",
+  },
+  {
+    term: "Agent skill",
+    def: "A packaged instruction set that teaches an AI coding agent how to integrate a specific gateway correctly and securely. See the setup-* skills in the Build with AI agents section.",
+  },
+];
+---
+
+<Base
+  title="Glossary: payment terms in plain language | MPG"
+  description="Plain-language definitions of Malaysian payment-gateway terms: FPX, DuitNow QR, MDR, settlement, webhooks, idempotency, MCP and more."
+>
+  <a href="/learn" class="text-sm text-muted hover:text-fg">← Learn</a>
+
+  <header class="mt-4 max-w-2xl">
+    <h1 class="text-2xl font-semibold tracking-tight text-fg">Glossary</h1>
+    <p class="mt-2 text-muted">
+      The vocabulary you'll meet integrating a gateway, in plain English.
+    </p>
+  </header>
+
+  <dl class="mt-8 max-w-2xl divide-y divide-line overflow-hidden rounded-md border border-line">
+    {
+      terms.map((t) => (
+        <div class="px-4 py-3">
+          <dt class={`font-medium ${t.term === "DuitNow QR" ? "text-duitnow" : t.term === "FPX" ? "text-fpx" : "text-fg"}`}>{t.term}</dt>
+          <dd class="mt-1 text-sm text-muted">{t.def}</dd>
+        </div>
+      ))
+    }
+  </dl>
+</Base>

@@ -40,5 +40,5 @@ annual-fee waiver.
 It supports FPX online banking, local and international cards, and major
 e-wallets (Boost, GrabPay, ShopeePay, Touch 'n Go), plus Maybank QRPay and
 cross-border Alipay / WeChat Pay. Payment links, API integration and recurring
-billing are available. Card and e-wallet rates are **indicative** — the official
+billing are available. Card and e-wallet rates are **indicative**; the official
 rates page and a separate marketing site differ slightly, so confirm with sales.

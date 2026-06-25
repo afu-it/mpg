@@ -3,6 +3,7 @@ name: senangPay
 website: https://senangpay.com
 tagline: "SME gateway with recurring billing & tokenisation"
 logo: /logos/senangpay.svg
+logo_round: true
 fees:
   fpx: "1.5% / RM1.00"
   card: "2.5% / RM0.65"
@@ -44,7 +45,7 @@ notes: "Annual subscription from RM199 (up to ~RM299) depending on package. FPX 
 ---
 
 senangPay is an SME-focused gateway that combines hosted checkout, payment forms
-and a developer API, with built-in **recurring billing and card tokenisation** —
+and a developer API, with built-in **recurring billing and card tokenisation**,
 useful if you need subscriptions or saved cards.
 
 Transaction pricing is "percentage or flat, whichever is higher": FPX **1.5% or

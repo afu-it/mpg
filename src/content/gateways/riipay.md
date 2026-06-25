@@ -3,6 +3,7 @@ name: Riipay
 website: https://riipay.my
 tagline: "Pay 1/3 at checkout, 3-month interest-free instalments"
 logo: /logos/riipay.svg
+logo_round: true
 fees:
   fpx: "—"
   card: "—"
@@ -21,11 +22,11 @@ features:
   recurring: false
 verified_date: "2026-06-24"
 source: "https://riipay.my/business/"
-notes: "The bnpl value is the merchant fee (MDR), not publicly published — contact sales. Riipay's business page states 'zero cost if no usage' (no setup/monthly commitment), but the per-transaction rate is undisclosed. Merchant gets paid upfront."
+notes: "The bnpl value is the merchant fee (MDR), not publicly published, so contact sales. Riipay's business page states 'zero cost if no usage' (no setup/monthly commitment), but the per-transaction rate is undisclosed. Merchant gets paid upfront."
 ---
 
 Riipay is a Malaysian Buy Now Pay Later provider that lets shoppers split a purchase into 3 monthly instalments at 0% interest, paying just one-third upon checkout via debit or credit card. For merchants, Riipay positions itself as a way to increase cart size, reach new customers, and get paid in full upfront while the customer stretches their payments.
 
-The merchant fee (MDR) Riipay charges per transaction is not published on its website. Riipay advertises "no commitment" with "zero cost to you if no usage", meaning there is no setup or monthly fee — but the actual per-transaction merchant rate requires contacting their sales team.
+The merchant fee (MDR) Riipay charges per transaction is not published on its website. Riipay advertises "no commitment" with "zero cost to you if no usage", meaning there is no setup or monthly fee, but the actual per-transaction merchant rate requires contacting their sales team.
 
 Riipay offers no-code e-commerce plugin integrations (e.g. EasyStore, Shopify) plus API integration, so merchants can add it to checkout without building from scratch. The merchant fee shown is the rate the business pays Riipay, not the consumer's instalment terms (which are interest-free).

@@ -3,6 +3,7 @@ name: RinggitPay
 website: https://ringgitpay.biz
 tagline: "All-in-one payment platform for Malaysian businesses"
 logo: /logos/ringgitpay.svg
+logo_round: true
 fees:
   fpx: "RM1.20 (B2C) / RM2.20 (B2B)"
   card: "1.5%"

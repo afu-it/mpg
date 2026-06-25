@@ -9,7 +9,7 @@ src/assets/logos/billplz.svg
 ```
 
 The `Logo.astro` component picks it up automatically via `import.meta.glob`.
-If no SVG exists for a slug, a clean monogram chip is shown instead — so there
+If no SVG exists for a slug, a clean monogram chip is shown instead, so there
 are never broken images.
 
 **Notes**

@@ -28,4 +28,4 @@ AhaPay is a Malaysian Buy Now Pay Later solution (operated by Aharetail Solution
 
 AhaPay is one of the few Malaysian BNPL providers to publish its merchant fee: it charges a flat 6% per transaction processed, with no hidden fees. AhaPay's own example: on a RM2,000 sale, the 6% fee leaves RM1,880 paid into the merchant's bank account. There is no mention of a setup or monthly fee. Customer spending limits run from RM50 up to RM3,500 and vary by merchant.
 
-No special hardware is required — merchants transact via the AhaPay agent app on any smartphone (generating a QR for the customer), and AhaPay also supports online platforms. The 6% above is the rate the business pays AhaPay, not the consumer's cost (interest-free if paid on time).
+No special hardware is required: merchants transact via the AhaPay agent app on any smartphone (generating a QR for the customer), and AhaPay also supports online platforms. The 6% above is the rate the business pays AhaPay, not the consumer's cost (interest-free if paid on time).

@@ -25,7 +25,7 @@ notes: "No-code platform built on top of Bayarcash. FPX fees 'as low as RM1.00'.
 
 BCL.my is a **no-code payment platform** built on top of Bayarcash. Instead of an
 API-first integration, you create payment forms, payment links, landing pages and
-**dynamic DuitNow QR** terminals — ideal for sellers without a website.
+**dynamic DuitNow QR** terminals, ideal for sellers without a website.
 
 FPX fees start "**as low as RM1.00**". Because payments flow through Bayarcash,
 card/BNPL acceptance and settlement follow Bayarcash's rails (typically T+1).
@@ -34,5 +34,5 @@ affiliate marketing, automation workflows, COD/manual transfer and team
 management.
 
 It sells in annual packages (three tiers), with the MSME Digital Grant MADANI
-offering up to 50% off. Exact package prices and per-channel rates vary — confirm
+offering up to 50% off. Exact package prices and per-channel rates vary; confirm
 on the BCL site before signing up.

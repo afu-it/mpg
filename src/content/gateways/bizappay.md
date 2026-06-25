@@ -3,6 +3,7 @@ name: Bizappay
 website: https://www.bizappay.my
 tagline: "No-fuss Malaysian gateway with payment links"
 logo: /logos/bizappay.svg
+logo_round: true
 fees:
   fpx: "RM1.00"
   card: "1.75% (local debit/credit)"

@@ -1,0 +1,80 @@
+---
+export const prerender = true;
+
+import Base from "../../layouts/Base.astro";
+import { SKILLS_REPO } from "../../lib/learn";
+
+const sections = [
+  {
+    href: "/learn/glossary",
+    title: "Glossary",
+    desc: "Plain-language definitions: FPX, DuitNow QR, MDR, settlement, webhooks, idempotency, MCP and more.",
+  },
+  {
+    href: "/learn/integration-flow",
+    title: "The safe integration flow",
+    desc: "The order to wire a gateway so a payment can never be faked: pending record → checkout → verify webhook → settle once.",
+  },
+  {
+    href: "/learn/ai-agents",
+    title: "Build with AI agents",
+    desc: "Install AFU's setup-* skills, paste a ready prompt, and understand what MCP vs API/webhooks unlocks for AI coding tools.",
+  },
+  {
+    href: "/learn/checklist",
+    title: "Production checklist",
+    desc: "What to verify before going live: env vars, webhook URLs, replay-safety, separated keys, no fake-redirect unlock.",
+  },
+];
+---
+
+<Base
+  title="Learn: integrate a Malaysia payment gateway | MPG"
+  description="Understand and ship Malaysian payment gateways: glossary, the safe integration flow, AI-agent setup, and a production checklist."
+>
+  <header class="max-w-2xl">
+    <h1 class="text-2xl font-semibold tracking-tight text-fg">Learn</h1>
+    <p class="mt-2 text-muted">
+      The directory tells you <em>which</em> gateway to pick. This section tells
+      you <em>how</em> to integrate one safely: the jargon, the correct order to
+      wire things, and how to hand the job to an AI coding agent.
+    </p>
+  </header>
+
+  <div class="mt-8 grid gap-4 sm:grid-cols-2">
+    {
+      sections.map((s) => (
+        <a
+          href={s.href}
+          class="group rounded-md border border-line bg-panel p-5 transition-colors hover:border-accent"
+        >
+          <h2 class="flex items-center justify-between text-base font-medium text-fg">
+            {s.title}
+            <span class="text-muted transition-transform group-hover:translate-x-0.5 group-hover:text-accent">
+              →
+            </span>
+          </h2>
+          <p class="mt-1.5 text-sm text-muted">{s.desc}</p>
+        </a>
+      ))
+    }
+  </div>
+
+  <section class="mt-10 rounded-md border border-line bg-panel p-5">
+    <h2 class="text-base font-medium text-fg">Built for vibe coders</h2>
+    <p class="mt-1.5 max-w-2xl text-sm text-muted">
+      Using Claude Code, Cursor or Codex? Many gateways here map to an open-source{" "}
+      <strong class="text-fg">setup skill</strong> that teaches your agent the
+      correct, secure integration, and every gateway page with one has a{" "}
+      <strong class="text-fg">Copy prompt</strong> button you can paste straight in.
+    </p>
+    <a
+      href={SKILLS_REPO}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="mt-3 inline-block text-sm text-accent hover:underline"
+    >
+      afu-it/malaysia-payment-gateway →
+    </a>
+  </section>
+</Base>

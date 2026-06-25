@@ -8,8 +8,8 @@ interface Props {
 }
 
 const {
-  title = "MPG — Malaysia Payment Gateways",
-  description = "Compare fees and features of Malaysian payment gateways — FPX, cards, e-wallets, and DuitNow QR — in one place.",
+  title = "MPG · Malaysia Payment Gateways",
+  description = "Compare fees and features of Malaysian payment gateways (FPX, cards, e-wallets, and DuitNow QR) in one place.",
   full = false,
 } = Astro.props;
 
@@ -30,6 +30,13 @@ const updated = "2026-06-24";
     <meta property="og:type" content="website" />
   </head>
   <body class="flex min-h-screen flex-col tabular-nums">
+    <div
+      id="top-progress"
+      aria-hidden="true"
+      class="pointer-events-none fixed inset-x-0 top-0 z-50 h-0.5"
+      style="background: #001bcf; transform-origin: left center; transform: scaleX(0); box-shadow: 0 0 10px #001bcf, 0 0 6px #001bcf;"
+    >
+    </div>
     <header class="sticky top-0 z-20 border-b border-line bg-surface">
       <div class="flex h-14 w-full items-center px-4 sm:px-6">
         <a href="/" class="font-semibold tracking-tight text-fg">
@@ -38,6 +45,7 @@ const updated = "2026-06-24";
         <nav class="ml-auto flex items-center gap-2 text-sm">
           <a href="/gateways" class="rounded-md px-2.5 py-1.5 text-muted hover:bg-panel hover:text-fg">Gateways</a>
           <a href="/compare" class="rounded-md px-2.5 py-1.5 text-muted hover:bg-panel hover:text-fg">Compare</a>
+          <a href="/learn" class="rounded-md px-2.5 py-1.5 text-muted hover:bg-panel hover:text-fg">Learn</a>
           <div id="clerk-auth" class="flex items-center gap-2"></div>
         </nav>
       </div>
@@ -58,14 +66,15 @@ const updated = "2026-06-24";
     <footer class="border-t border-line">
       <div class="w-full space-y-1 px-4 py-6 text-xs text-muted sm:px-6">
         <p>
-          Fees are indicative and may change or be negotiable by volume —
-          always confirm with the provider before deciding.
+          Fees are indicative and may change or be negotiable by volume.
+          Always confirm with the provider before deciding.
         </p>
         <p>Last updated {updated}. MPG is an independent directory, not affiliated with any provider.</p>
       </div>
     </footer>
 
     <script>
+      import "../scripts/progress.ts";
       import "../scripts/auth.ts";
     </script>
   </body>

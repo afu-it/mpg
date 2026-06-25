@@ -1,5 +1,5 @@
 ---
-// Filter sidebar — wired up by src/scripts/table.ts.
+// Filter sidebar, wired up by src/scripts/table.ts.
 const categories = [
   { key: "gateway", label: "Gateways" },
   { key: "bnpl", label: "BNPL" },
@@ -50,7 +50,7 @@ const input = "size-3.5 accent-accent";
       channels.map((c) => (
         <label class={row}>
           <input type="checkbox" data-filter-channel={c.key} class={input} />
-          {c.label}
+          {c.key === "duitnowqr" ? <span class="text-duitnow">{c.label}</span> : c.key === "fpx" ? <span class="text-fpx">{c.label}</span> : c.label}
         </label>
       ))
     }

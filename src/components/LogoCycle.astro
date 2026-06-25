@@ -1,0 +1,51 @@
+---
+// A small vertical carousel that cycles through gateway logos inside a 20px box.
+// Pure CSS (keyframes generated from the logo count); respects reduced-motion.
+const logos = import.meta.glob("/src/assets/logos/*.{png,svg,webp}", {
+  eager: true,
+  query: "?url",
+  import: "default",
+});
+const bySlug: Record<string, string> = {};
+for (const [path, url] of Object.entries(logos)) {
+  const key = path.split("/").pop()!.replace(/\.\w+$/, "");
+  if (!bySlug[key] || path.endsWith(".svg")) bySlug[key] = url as string;
+}
+
+const slugs = [
+  "billplz", "toyyibpay", "senangpay", "stripe-malaysia", "fiuu",
+  "eghl", "curlec", "chip", "xendit", "hitpay", "bayarcash",
+];
+const picked = slugs.map((s) => bySlug[s]).filter(Boolean);
+const items = [...picked, picked[0]]; // duplicate first for a seamless loop
+
+const N = picked.length;
+const seg = 100 / N;
+const frames: string[] = [];
+for (let k = 0; k < N; k++) {
+  const start = (k * seg).toFixed(2);
+  const end = (k * seg + 0.7 * seg).toFixed(2);
+  frames.push(`${start}%{transform:translateY(-${(k * 1.25).toFixed(2)}rem)}`);
+  frames.push(`${end}%{transform:translateY(-${(k * 1.25).toFixed(2)}rem)}`);
+}
+frames.push(`100%{transform:translateY(-${(N * 1.25).toFixed(2)}rem)}`);
+const dur = (N * 1.3).toFixed(1);
+const css =
+  `@keyframes mpgLogoCycle{${frames.join("")}}` +
+  `.mpg-logo-cycle{animation:mpgLogoCycle ${dur}s infinite}` +
+  `@media(prefers-reduced-motion:reduce){.mpg-logo-cycle{animation:none}}`;
+---
+
+<span class="relative block h-5 w-5 shrink-0 overflow-hidden" aria-hidden="true">
+  <span class="mpg-logo-cycle flex flex-col">
+    {
+      items.map((url) => (
+        <span class="flex h-5 w-5 shrink-0 items-center justify-center">
+          <img src={url} alt="" width="20" height="20" class="h-5 w-5 rounded-[5px] object-contain" />
+        </span>
+      ))
+    }
+  </span>
+</span>
+
+<style is:global set:html={css}></style>

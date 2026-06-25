@@ -29,4 +29,4 @@ SPayLater is Shopee's Shariah-compliant Buy Now, Pay Later option, built directl
 
 For sellers, the merchant fee is publicly published and structured as a flat SPayLater transaction fee deducted on completed orders: 4.5% before SST across tenures, rising to 5% for 3-month instalments from 1 February 2026, plus 8% SST on top. There is no setup or monthly fee on the marketplace, and the seller receives the sales amount in full regardless of the buyer's tenure.
 
-On the Shopee marketplace, SPayLater is auto-enabled with zero integration (no-code). For external or in-store merchants, SPayLater is accepted through payment gateways that offer no-code plugins and APIs — but in that channel the per-transaction rate is quoted on request rather than published.
+On the Shopee marketplace, SPayLater is auto-enabled with zero integration (no-code). For external or in-store merchants, SPayLater is accepted through payment gateways that offer no-code plugins and APIs, but in that channel the per-transaction rate is quoted on request rather than published.

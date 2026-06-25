@@ -1,18 +1,18 @@
 ---
-name: iPay88
-website: https://www.ipay88.com
-tagline: "Malaysia's pioneer payment gateway for online and retail"
+name: NTTDataPay (formerly iPay88)
+website: https://my.nttdatapay.com/en
+tagline: "Malaysia's pioneer iPay88 gateway, now NTT DATA Payment Services (ADAPTIS)"
 logo: /logos/ipay88.svg
 fees:
-  fpx: "2.7% / RM0.60"
-  card: "2.7% credit / 2.5% debit"
-  card_intl: "2.70%"
-  ewallet: "1.5%"
-  duitnowqr: "1.5% *"
-  bnpl: "6% *"
-  setup: "RM488"
-  monthly: "RM500/year"
-settlement: "Weekly (approx. 5 working days after cut-off)"
+  fpx: "Contact sales"
+  card: "Contact sales"
+  card_intl: "Contact sales"
+  ewallet: "Contact sales"
+  duitnowqr: "Contact sales"
+  bnpl: "Contact sales"
+  setup: "Contact sales"
+  monthly: "Contact sales"
+settlement: "Contact sales"
 min_txn: "—"
 category: gateway
 channels: [fpx, card, ewallet, duitnowqr, bnpl]
@@ -40,13 +40,13 @@ plugins:
   - Shopify
   - WHMCS
 popularity: 100
-verified_date: "2026-06-24"
-source: "https://www.ipay88.com/ecommerce/"
-notes: "Rates from an iPay88 merchant fee structure (SME package, iPay88 (M) Sdn Bhd); negotiable per merchant. iPay88 is now Adaptis (NTT Data); newer packages may differ. DuitNow QR & BNPL are third-party (*). Settlement is weekly, not T+1/T+2."
+verified_date: "2026-06-25"
+source: "https://my.nttdatapay.com/en/payment-services/adaptis-e-commerce"
+notes: "iPay88 has been retired and folded into NTT DATA Payment Services' ADAPTIS platform (which also consolidates eGHL). The old ipay88.com is offline; the site is now my.nttdatapay.com. ADAPTIS does not publish rates, so all fees are quote-only (Contact sales) — confirm directly with NTT DATA. Channels supported: FPX, cards, e-wallets, DuitNow QR and BNPL (37+ payment methods)."
 ---
 
-iPay88 is one of Malaysia's oldest and largest payment gateways, now rebranded as Adaptis under NTT Data Payment Services. It supports a very broad set of local payment channels (37+), including FPX online banking, local and international cards (Visa, Mastercard, Amex, UnionPay), e-wallets, DuitNow QR and BNPL, with ready plugins for major e-commerce platforms.
+Formerly known as iPay88, this is now NTT DATA Payment Services Malaysia, operating under the ADAPTIS platform. ADAPTIS consolidates two of Malaysia's pioneer gateways, iPay88 and eGHL, into one omnichannel suite (the original ipay88.com site has been retired in favour of my.nttdatapay.com). It supports a very broad set of local payment channels including FPX online banking, local and international cards (Visa, Mastercard, Amex, UnionPay), e-wallets, DuitNow QR and BNPL, with ready plugins for major e-commerce platforms.
 
 It is best suited to established SMEs and enterprises that want wide local coverage, recurring billing, cross-border card acceptance and integration support. It is less ideal for micro-merchants wanting instant self-serve onboarding.
 
-The rates shown come from an iPay88 SME merchant fee structure and are negotiable per merchant; DuitNow QR and BNPL figures (marked *) are from third-party sources. iPay88 is now rebranded as Adaptis (NTT Data), and newer packages may differ — confirm current rates before committing. Settlement is weekly (a few working days after the weekly cut-off), not T+1/T+2.
+ADAPTIS does not publish its rates, so every fee here is quote-only (Contact sales); request a quote directly from NTT DATA. Settlement terms are set per merchant.

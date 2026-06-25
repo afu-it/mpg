@@ -35,7 +35,7 @@ source: "https://curlec.com/pricing/"
 notes: "Basic-plan rates shown: FPX 1.50% (or RM1, whichever greater), credit/debit card 2.40%, foreign card 3.30%, e-wallet 1.50%, BNPL 6.00%. Premium plan lowers card to 2.00% / FPX to 1.00%. A one-time setup fee applies; Enterprise (>RM1M/month) is personalised. Applicable taxes (SST) extra."
 ---
 
-Curlec is the Malaysian arm of **Razorpay**, offering a full payments suite —
+Curlec is the Malaysian arm of **Razorpay**, offering a full payments suite:
 hosted checkout, payment links, payment pages/buttons, subscriptions and a
 developer-friendly API.
 
@@ -46,4 +46,4 @@ RM1M/month) is personalised. A one-time setup fee applies.
 
 Because it inherits Razorpay's platform, recurring billing and no-code tools are
 strong. Exact setup fee, settlement timing and DuitNow QR rate aren't published
-on the pricing page — confirm with Curlec sales.
+on the pricing page, so confirm with Curlec sales.

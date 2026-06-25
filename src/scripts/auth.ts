@@ -7,15 +7,15 @@ const mount = document.getElementById("clerk-auth");
 
 const appearance = {
   variables: {
-    colorPrimary: "#818df8",
-    colorTextOnPrimaryBackground: "#000000",
+    colorPrimary: "#0031a0",
+    colorTextOnPrimaryBackground: "#ffffff",
     colorBackground: "#212025",
     colorText: "#dfe1e2",
     colorTextSecondary: "#a1a1aa",
     colorInputBackground: "#18181b",
     colorInputText: "#dfe1e2",
     colorNeutral: "#ffffff",
-    colorShimmer: "rgba(129,141,248,0.16)",
+    colorShimmer: "rgba(0,49,160,0.16)",
     borderRadius: "8px",
     fontFamily: '"Inter Variable", Inter, ui-sans-serif, system-ui, sans-serif',
   },
@@ -24,14 +24,14 @@ const appearance = {
     card: { backgroundColor: "#212025" },
     headerTitle: { color: "#fafafa" },
     footer: { backgroundColor: "#212025", borderTop: "1px solid #3d3d42" },
-    footerActionLink: { color: "#818df8" },
+    footerActionLink: { color: "#4f86f5" },
     socialButtonsIconButton: {
       backgroundColor: "#18181b",
       border: "1px solid #3d3d42",
     },
     formFieldInput: { backgroundColor: "#18181b", borderColor: "#3d3d42" },
     dividerLine: { backgroundColor: "#3d3d42" },
-    formButtonPrimary: { color: "#000000" },
+    formButtonPrimary: { color: "#ffffff" },
     userButtonPopoverCard: { backgroundColor: "#212025", border: "1px solid #3d3d42" },
   },
 };
@@ -72,7 +72,7 @@ if (pk && mount) {
           const btn = document.createElement("button");
           btn.textContent = "Sign up";
           btn.className =
-            "rounded-md bg-accent px-3 py-1.5 font-medium text-black hover:opacity-90";
+            "rounded-md bg-brand-blue px-3 py-1.5 font-medium text-white hover:opacity-90";
           btn.addEventListener("click", () =>
             Clerk.openSignUp({ afterSignUpUrl: "/", afterSignInUrl: "/" }),
           );

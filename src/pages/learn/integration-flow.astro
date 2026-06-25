@@ -1,0 +1,130 @@
+---
+export const prerender = true;
+
+import Base from "../../layouts/Base.astro";
+import FlowDiagram from "../../components/FlowDiagram.astro";
+
+const paymentFlow = [
+  { title: "CUSTOMER", body: ['Clicks "Pay" on your site'] },
+  { via: "create order", title: "YOUR BACKEND", body: ["Writes a PENDING order (unique reference)"] },
+  { via: "request checkout", title: "GATEWAY", body: ["Returns a hosted checkout URL"] },
+  { via: "redirect", title: "CUSTOMER PAYS", body: ["FPX / card / e-wallet / DuitNow QR"] },
+  { via: "bank authorises", title: "GATEWAY", body: ["Sends a SIGNED webhook to your backend"] },
+  {
+    via: "webhook",
+    title: "YOUR BACKEND  (the trust gate)",
+    emphasis: true,
+    body: [
+      "1. verify the signature",
+      "2. re-fetch the real state from the gateway",
+      "3. match reference + amount + status",
+      "4. mark paid ONCE  (idempotent)",
+    ],
+  },
+  { via: "confirmed", title: "UNLOCK ACCESS", body: ["Show success to the customer"] },
+];
+
+const steps = [
+  {
+    n: 1,
+    title: "Create a local pending payment",
+    body: "Before sending the customer anywhere, write your own order/payment row with status pending and a unique reference. This is the record you'll later confirm; never rely on the gateway's memory alone.",
+  },
+  {
+    n: 2,
+    title: "Redirect to checkout (or open the hosted page)",
+    body: "Hand off to the gateway's hosted checkout / payment link with your reference and amount. Let the gateway handle the card/FPX/e-wallet UI, so you collect nothing sensitive.",
+  },
+  {
+    n: 3,
+    title: "Verify the webhook signature",
+    body: "When the gateway calls your backend, verify the signature/checksum (usually HMAC with your secret) before reading anything. An unverified callback is untrusted input, so reject it.",
+  },
+  {
+    n: 4,
+    title: "Re-fetch the state from the provider",
+    body: "Don't trust the webhook body's status at face value. Call the gateway's API to read the authoritative payment state for that reference.",
+  },
+  {
+    n: 5,
+    title: "Match provider + reference + amount + currency + status",
+    body: "Confirm the payment maps to your pending record on every field. A mismatch (wrong amount, wrong currency, unknown reference) means do not fulfil.",
+  },
+  {
+    n: 6,
+    title: "Mark paid, idempotently",
+    body: "Flip your record to paid and unlock access. If the same event arrives again (gateways retry), detect it by reference and do nothing the second time. No double-fulfilment, no double-counting.",
+  },
+];
+
+const tests = [
+  "Invalid signature → rejected, nothing fulfilled.",
+  "Duplicate webhook event → processed once only (idempotent).",
+  "Wrong amount or currency → not marked paid.",
+];
+---
+
+<Base
+  title="The safe integration flow | MPG Learn"
+  description="The correct order to wire a Malaysian payment gateway so a payment can never be faked: pending record, verified webhook, idempotent settlement."
+>
+  <a href="/learn" class="text-sm text-muted hover:text-fg">← Learn</a>
+
+  <header class="mt-4 max-w-2xl">
+    <h1 class="text-2xl font-semibold tracking-tight text-fg">
+      The safe integration flow
+    </h1>
+    <p class="mt-2 text-muted">
+      Every gateway differs in API, but the secure shape is the same. Follow this
+      order and a payment can't be spoofed.
+    </p>
+  </header>
+
+  <FlowDiagram
+    steps={paymentFlow}
+    caption="How one payment flows. The money is only trusted at the double-lined gate, after the gateway's signed webhook is verified and re-fetched. Never from the browser redirect."
+  />
+
+  <h2 class="mt-8 max-w-2xl text-sm font-medium uppercase tracking-wide text-muted">
+    Step by step
+  </h2>
+  <ol class="mt-3 max-w-2xl space-y-3">
+    {
+      steps.map((s) => (
+        <li class="flex gap-4 rounded-md border border-line bg-panel p-4">
+          <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-line bg-raised text-sm font-medium text-accent">
+            {s.n}
+          </span>
+          <div>
+            <h2 class="font-medium text-fg">{s.title}</h2>
+            <p class="mt-1 text-sm text-muted">{s.body}</p>
+          </div>
+        </li>
+      ))
+    }
+  </ol>
+
+  <section class="mt-8 max-w-2xl rounded-md border border-accent/40 bg-panel p-5">
+    <h2 class="text-base font-medium text-fg">The two rules that matter most</h2>
+    <ul class="mt-2 space-y-1.5 text-sm text-muted">
+      <li>
+        <strong class="text-fg">Never unlock paid access from a redirect alone.</strong>{" "}
+        The browser can be replayed or faked. Only a verified webhook + re-fetched
+        provider state should grant access.
+      </li>
+      <li>
+        <strong class="text-fg">Keep secrets server-side.</strong> Secret keys and
+        signature verification live on your backend, never in client code or the repo.
+      </li>
+    </ul>
+  </section>
+
+  <section class="mt-8 max-w-2xl">
+    <h2 class="mb-3 text-sm font-medium uppercase tracking-wide text-muted">
+      Tests to write
+    </h2>
+    <ul class="space-y-2 rounded-md border border-line p-4 text-sm text-muted">
+      {tests.map((t) => <li>• {t}</li>)}
+    </ul>
+  </section>
+</Base>

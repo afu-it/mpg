@@ -1,12 +1,12 @@
 @import "tailwindcss";
 @import "@fontsource-variable/inter";
 
-/* Design tokens — OpenRouter "models" dark-mode extraction.
+/* Design tokens (OpenRouter "models" dark-mode extraction).
    Tailwind v4 reads these as utilities, e.g. bg-surface / text-fg / text-accent. */
 @theme {
   /* surfaces */
-  --color-surface: #000000; /* page background */
-  --color-panel: #090a0b; /* muted surface */
+  --color-surface: #0a0a0a; /* page background */
+  --color-panel: #141416; /* muted surface */
   --color-raised: #212225; /* raised surface (cards, chips) */
   --color-strong: #27272a; /* strongest surface (hover headers) */
   --color-line: #3d3d42; /* default border */
@@ -14,7 +14,17 @@
   /* text */
   --color-fg: #dfe1e2; /* primary text */
   --color-muted: #a1a1aa; /* secondary text */
-  --color-accent: #818df8; /* indigo accent */
+  /* Jalur Gemilang (Malaysia flag) accent system — dark-mode tuned.
+     accent = a lighter flag-blue (~5.7:1 on surface) for links, focus, small UI.
+     brand-blue (deep flag blue) = primary button/badge FILLS behind white text.
+     brand-red is low contrast as small text (~3.4:1) — use on LARGE text or as a
+     fill behind white text only. brand-yellow is high contrast (use freely). */
+  --color-accent: #4f86f5; /* lighter flag-blue — links, focus, small accents */
+  --color-brand-blue: #0031a0; /* deep flag blue — primary buttons (white text) */
+  --color-brand-red: #cc0000; /* flag red — large text / fill + white text */
+  --color-brand-yellow: #fed100; /* flag yellow — accents / large text */
+  --color-duitnow: #e61f65; /* DuitNow brand magenta — use on DuitNow labels */
+  --color-fpx: #6f83cc; /* FPX navy, lightened for readable contrast on dark (~6:1) */
 
   /* type */
   --font-sans: "Inter Variable", "Inter", ui-sans-serif, system-ui,

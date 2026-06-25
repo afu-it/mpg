@@ -26,11 +26,11 @@ dev_docs: "https://v3api-docs.paydibs.com/docs/introduction"
 popularity: 42
 verified_date: "2026-06-24"
 source: "https://paydibs.com/pricing/"
-notes: "Signup fee, RM300/year maintenance fee and T+1/T+2 settlement are confirmed on the official pricing page; per-transaction MDR rates are not publicly published — contact sales."
+notes: "Signup fee, RM300/year maintenance fee and T+1/T+2 settlement are confirmed on the official pricing page; per-transaction MDR rates are not publicly published, so contact sales."
 ---
 
 Paydibs is a Malaysian payment service provider (Bank Negara-regulated, MSC status, PCI-DSS compliant) offering online and in-store payment acceptance through a single platform. It supports FPX, cards, e-wallets, DuitNow QR, BNPL and a range of international methods, with e-commerce plugins, APIs/SDKs, payment links and physical terminals.
 
 It targets Malaysian businesses from startups and SMEs up to enterprises that want local support, broad local payment coverage and fast settlement.
 
-The official pricing page confirms free signup for local merchants (USD120 for foreign), no monthly fee, a RM300/year maintenance fee (waived above RM360,000 annual sales), and T+1/T+2 settlement. Per-transaction rates for all channels are not publicly published — contact sales.
+The official pricing page confirms free signup for local merchants (USD120 for foreign), no monthly fee, a RM300/year maintenance fee (waived above RM360,000 annual sales), and T+1/T+2 settlement. Per-transaction rates for all channels are not publicly published, so contact sales.

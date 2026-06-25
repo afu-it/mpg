@@ -58,7 +58,7 @@ const td = "whitespace-nowrap px-3 py-3 align-middle";
           feeCols.map((c) => (
             <th scope="col" class={th} aria-sort="none">
               <button type="button" class={sortBtn} data-sort-type="num">
-                {c.label} <span class="sort-arrow text-accent" aria-hidden="true" />
+                {c.key === "duitnowqr" ? <span class="text-duitnow">{c.label}</span> : c.key === "fpx" ? <span class="text-fpx">{c.label}</span> : c.label} <span class="sort-arrow text-accent" aria-hidden="true" />
               </button>
             </th>
           ))
@@ -110,14 +110,14 @@ const td = "whitespace-nowrap px-3 py-3 align-middle";
                   );
                 })()}
                 {g.data.category === "bnpl" && (
-                  <span class="rounded-full border border-line bg-raised px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wide text-accent">
+                  <span class="rounded-full bg-brand-red px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wide text-white">
                     BNPL
                   </span>
                 )}
                 {g.data.mcp === "official" && (
                   <span
-                    class="rounded-full border border-accent px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wide text-accent"
-                    title="Official MCP server — AI-agent ready"
+                    class="rounded-full border border-accent px-1 py-px text-[9px] font-medium uppercase tracking-wide text-accent"
+                    title="Official MCP server: AI-agent ready"
                   >
                     MCP
                   </span>
@@ -156,7 +156,7 @@ const td = "whitespace-nowrap px-3 py-3 align-middle";
 </div>
 
 <p class="mt-2 text-xs text-muted">
-  <span class="text-fg">*</span> Indicative rate from a third-party source — not officially
+  <span class="text-fg">*</span> Indicative rate from a third-party source, not officially
   published. Always confirm with the provider.
 </p>
 

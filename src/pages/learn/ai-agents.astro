@@ -1,0 +1,165 @@
+---
+export const prerender = true;
+
+import { getCollection } from "astro:content";
+import Base from "../../layouts/Base.astro";
+import FlowDiagram from "../../components/FlowDiagram.astro";
+import { SKILLS_REPO, skillRepoUrl, skillInstallCommand } from "../../lib/learn";
+
+const setupFlow = [
+  { title: "1. CHOOSE A GATEWAY", body: ["Compare fees + features here on MPG"] },
+  { via: "sign up", title: "2. CREATE AN ACCOUNT", body: ["Get SANDBOX (test) API keys"] },
+  {
+    via: "optional",
+    title: "3. INSTALL THE AI SKILL",
+    body: ["npx skills@latest add ... --skill setup-<gw>", 'then paste the "Copy prompt" button'],
+  },
+  {
+    via: "build",
+    title: "4. WIRE THE INTEGRATION",
+    body: ["Checkout + signed webhook + settlement", "(your agent follows the safe flow)"],
+  },
+  { via: "configure", title: "5. SET THE WEBHOOK URL", body: ["In the sandbox dashboard"] },
+  { via: "test", title: "6. TEST IN SANDBOX", body: ["Pay end to end; confirm it unlocks once"] },
+  {
+    via: "ship",
+    title: "7. GO LIVE",
+    emphasis: true,
+    body: ["Switch to LIVE keys + live webhook URL", "Keep sandbox and live keys separate"],
+  },
+];
+
+const gateways = await getCollection("gateways");
+
+// Gateways that map to a setup-* skill, sorted by popularity (matches the table default).
+const withSkill = gateways
+  .filter((g) => g.data.skill)
+  .sort((a, b) => b.data.popularity - a.data.popularity)
+  .map((g) => ({ name: g.data.name, slug: g.id, skill: g.data.skill! }));
+
+// MCP groupings, derived live from the data.
+const mcpOfficial = gateways
+  .filter((g) => g.data.mcp === "official")
+  .map((g) => g.data.name)
+  .sort();
+const mcpCommunity = gateways
+  .filter((g) => g.data.mcp === "community")
+  .map((g) => g.data.name)
+  .sort();
+---
+
+<Base
+  title="Build with AI agents | MPG Learn"
+  description="Install AFU's setup-* skills, paste a ready prompt, and understand what MCP vs API/webhooks unlocks for AI coding tools when integrating a Malaysian gateway."
+>
+  <a href="/learn" class="text-sm text-muted hover:text-fg">← Learn</a>
+
+  <header class="mt-4 max-w-2xl">
+    <h1 class="text-2xl font-semibold tracking-tight text-fg">Build with AI agents</h1>
+    <p class="mt-2 text-muted">
+      Using Claude Code, Cursor or Codex? Install the matching{" "}
+      <strong class="text-fg">setup skill</strong>, then paste a prompt, and your agent
+      gets the secure integration steps baked in.
+    </p>
+  </header>
+
+  <!-- setup flow diagram -->
+  <FlowDiagram
+    steps={setupFlow}
+    caption="Setup, from picking a gateway to going live. Step 3 is optional, but installing the skill lets an AI agent do steps 4 to 6 for you."
+  />
+
+  <!-- 1. how it works -->
+  <section class="mt-8 max-w-2xl">
+    <h2 class="mb-3 text-sm font-medium uppercase tracking-wide text-muted">
+      How it works
+    </h2>
+    <ol class="space-y-2 rounded-md border border-line bg-panel p-4 text-sm text-muted">
+      <li>
+        <strong class="text-fg">1.</strong> Install the gateway's skill into your agent
+        (one command, below).
+      </li>
+      <li>
+        <strong class="text-fg">2.</strong> Open the gateway's page here and hit{" "}
+        <strong class="text-fg">Copy prompt</strong>, or write your own.
+      </li>
+      <li>
+        <strong class="text-fg">3.</strong> Paste it to your agent. The skill enforces
+        the <a href="/learn/integration-flow" class="text-accent hover:underline">safe flow</a>
+        : verified webhooks, idempotent settlement, no fake-redirect unlock.
+      </li>
+    </ol>
+  </section>
+
+  <!-- 2. available skills -->
+  <section class="mt-8">
+    <h2 class="mb-1 text-sm font-medium uppercase tracking-wide text-muted">
+      Available setup skills
+    </h2>
+    <p class="mb-3 max-w-2xl text-sm text-muted">
+      From <a href={SKILLS_REPO} target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">afu-it/malaysia-payment-gateway</a>.
+      Click an install command to copy it.
+    </p>
+    <ul class="grid gap-2 sm:grid-cols-2">
+      {
+        withSkill.map((g) => (
+          <li class="rounded-md border border-line bg-panel p-3">
+            <div class="flex items-center justify-between gap-2">
+              <a href={`/gateway/${g.slug}`} class="font-medium text-fg hover:text-accent">
+                {g.name}
+              </a>
+              <a
+                href={skillRepoUrl(g.skill)}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-xs text-muted hover:text-accent"
+              >
+                repo →
+              </a>
+            </div>
+            <button
+              type="button"
+              data-copy={skillInstallCommand(g.skill)}
+              class="mt-2 w-full overflow-hidden rounded border border-line bg-surface px-2.5 py-1.5 text-left font-mono text-xs text-muted hover:border-accent hover:text-fg"
+              title="Click to copy"
+            >
+              <span data-copy-label>$ …add --skill {g.skill}</span>
+            </button>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <!-- 3. MCP / API explainer -->
+  <section class="mt-10 max-w-2xl">
+    <h2 class="mb-3 text-sm font-medium uppercase tracking-wide text-muted">
+      MCP, API & webhooks
+    </h2>
+    <div class="space-y-3 text-sm text-muted">
+      <p>
+        <strong class="text-fg">MCP (Model Context Protocol)</strong> lets an AI tool
+        talk to a gateway's API directly, the smoothest path for agent-driven
+        integration. A gateway either ships an <strong class="text-fg">official</strong>{" "}
+        MCP server, has a <strong class="text-fg">community</strong> one, or none yet.
+      </p>
+      <div class="rounded-md border border-line bg-panel p-4">
+        <p class="text-xs uppercase tracking-wide text-muted">Official MCP</p>
+        <p class="mt-1 text-fg">{mcpOfficial.join(", ") || "—"}</p>
+        <p class="mt-3 text-xs uppercase tracking-wide text-muted">Community MCP</p>
+        <p class="mt-1 text-fg">{mcpCommunity.join(", ") || "—"}</p>
+      </div>
+      <p>
+        No MCP doesn't mean hard to integrate. Most gateways expose a standard{" "}
+        <strong class="text-fg">REST API + webhooks</strong> and e-commerce{" "}
+        <strong class="text-fg">plugins</strong> (WooCommerce, Shopify…). Each
+        gateway page lists its API docs, webhook support and plugins under{" "}
+        <em>Developer experience</em>.
+      </p>
+    </div>
+  </section>
+</Base>
+
+<script>
+  import "../../scripts/copy.ts";
+</script>

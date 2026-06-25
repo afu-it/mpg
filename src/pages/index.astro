@@ -5,6 +5,7 @@ import { getCollection } from "astro:content";
 import { splitName } from "../lib/name";
 import Base from "../layouts/Base.astro";
 import Logo from "../components/Logo.astro";
+import LogoCycle from "../components/LogoCycle.astro";
 
 const gateways = await getCollection("gateways");
 const total = gateways.length;
@@ -19,7 +20,7 @@ const stats = [
 ];
 
 const values = [
-  { title: "Fees, side by side", desc: "FPX, card, e-wallet, DuitNow QR and BNPL rates at a glance — sort by any column." },
+  { title: "Fees, side by side", desc: "FPX, card, e-wallet, DuitNow QR and BNPL rates at a glance. Sort by any column." },
   { title: "Every channel", desc: "Online banking, cards, e-wallets, DuitNow QR and Buy-Now-Pay-Later in one table." },
   { title: "Sourced & dated", desc: "Each fee links to its official source with the date it was verified. No guesses." },
   { title: "Free & independent", desc: "No login, no fluff, no ads. Not affiliated with any provider." },
@@ -33,26 +34,27 @@ const featured = featuredIds
 
 <Base full>
   <!-- hero -->
-  <section class="mx-auto max-w-3xl px-4 pb-10 pt-16 text-center sm:px-6 md:pt-24">
-    <h1 class="text-3xl font-bold tracking-tight text-fg sm:text-5xl">
-      Every Malaysian payment gateway, compared.
+  <section class="mx-auto w-full px-4 pb-10 pt-8 text-center sm:px-6 md:pt-12">
+    <h1 class="text-3xl font-bold leading-tight tracking-tight text-fg md:text-4xl lg:text-5xl xl:text-[3.5rem]">
+      Every Malaysian payment gateway,<br />compared.
     </h1>
     <p class="mx-auto mt-4 max-w-xl text-base text-muted sm:text-lg">
       FPX, cards, e-wallets, DuitNow QR and BNPL fees for {gatewayCount} gateways
-      and {bnplCount} BNPL providers — in one place. Free and independent.
+      and {bnplCount} BNPL providers, all in one place. Free and independent.
     </p>
     <div class="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
       <a
-        href="/gateways"
-        class="inline-flex h-11 items-center justify-center rounded-md bg-accent px-8 text-sm font-medium text-black hover:opacity-90"
-      >
-        Browse gateways →
-      </a>
-      <a
         href="/compare"
-        class="inline-flex h-11 items-center justify-center rounded-md border border-line px-8 text-sm font-medium text-fg hover:border-accent"
+        class="inline-flex h-11 items-center justify-center rounded-md bg-brand-blue px-8 text-sm font-medium text-white hover:opacity-90"
       >
         Compare side by side
+      </a>
+      <a
+        href="/gateways"
+        class="inline-flex h-11 items-center justify-center gap-2.5 rounded-md border border-line px-8 text-sm font-medium text-fg hover:border-accent"
+      >
+        Browse gateways
+        <LogoCycle />
       </a>
     </div>
   </section>
@@ -77,7 +79,9 @@ const featured = featuredIds
       {
         values.map((v, i) => (
           <div class="rounded-xl border border-line bg-panel p-5">
-            <span class="text-sm font-semibold text-accent">{String(i + 1).padStart(2, "0")}</span>
+            <span class={`text-sm font-semibold ${["text-brand-red", "text-white", "text-brand-yellow", "text-accent"][i]}`}>
+              {String(i + 1).padStart(2, "0")}
+            </span>
             <h3 class="mt-3 font-semibold text-fg">{v.title}</h3>
             <p class="mt-1.5 text-sm text-muted">{v.desc}</p>
           </div>
@@ -129,7 +133,7 @@ const featured = featuredIds
       </p>
       <a
         href="/gateways"
-        class="mt-2 inline-flex h-11 items-center justify-center rounded-md bg-accent px-8 text-sm font-medium text-black hover:opacity-90"
+        class="mt-2 inline-flex h-11 items-center justify-center rounded-md bg-brand-blue px-8 text-sm font-medium text-white hover:opacity-90"
       >
         Browse all gateways →
       </a>

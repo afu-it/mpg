@@ -45,6 +45,6 @@ notes: "Indicative. Gateway fee is per-transaction (fixed or %) but not publishe
 
 CommercePay (Commerce DotAsia Payments Sdn Bhd) is licensed by Bank Negara Malaysia for online merchant acquiring. It supports FPX/DuitNow online banking, local and international credit/debit cards, e-wallets, recurring payments and an Instalment Payment Plan (IPP / "InstallmentPay Plus").
 
-The company confirms there are no setup or annual maintenance fees and that it charges only per transaction, offering either a fixed fee or a percentage fee — but the actual gateway rates are not published and require a quote. Earnings are settled within 1-2 business days.
+The company confirms there are no setup or annual maintenance fees and that it charges only per transaction, offering either a fixed fee or a percentage fee, but the actual gateway rates are not published and require a quote. Earnings are settled within 1-2 business days.
 
 The one published rate is for instalments: IPP carries a one-time RM500 setup fee with transaction fees "as low as 3.5%" over 3-36 month tenures. Integration is via ready-made plugins (SiteGiant, WooCommerce, OpenCart, NopCommerce), an API, shareable payment links and integrated forms, with a merchant back-office for reporting.

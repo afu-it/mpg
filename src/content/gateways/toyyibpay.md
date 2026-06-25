@@ -28,7 +28,7 @@ dev_docs: "https://toyyibpay.com/apireference/"
 popularity: 94
 verified_date: "2026-06-24"
 source: "https://toyyibpay.com"
-notes: "Famous for a flat RM1.00 per FPX transaction (B2C). Auto-settlement the next business day (T+1). Card & DuitNow QR are offered but rates aren't published. Onboarding/annual fees are not published on the current official site (older RM100 figures were unverifiable) — confirm with toyyibPay. Excludes SST."
+notes: "Famous for a flat RM1.00 per FPX transaction (B2C). Auto-settlement the next business day (T+1). Card & DuitNow QR are offered but rates aren't published. Onboarding/annual fees are not published on the current official site (older RM100 figures were unverifiable); confirm with toyyibPay. Excludes SST."
 ---
 
 toyyibPay is one of Malaysia's most popular low-cost payment gateways, known for a
@@ -44,4 +44,4 @@ common platforms.
 Pricing is FPX-centric: **RM1.00 (B2C)** / RM2.00 (B2B), with an RM100 onboarding
 fee and RM100/year from the second year. Registered NGOs can use the free
 "Santai" plan (B2C FPX waived). Card and DuitNow QR acceptance is offered but the
-rates are not published publicly — confirm before committing.
+rates are not published publicly, so confirm before committing.

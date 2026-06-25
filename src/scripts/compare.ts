@@ -146,7 +146,7 @@ if (dataEl && root) {
       box.appendChild(el("p", "text-muted", "No gateways selected yet."));
       const hint = el("p", "mt-1 text-sm text-muted", "Choose a preset above, or add gateways to compare.");
       box.appendChild(hint);
-      const add = el("button", "mt-4 rounded-md bg-accent px-4 py-2 text-sm font-medium text-black hover:opacity-90", "+ Add gateway");
+      const add = el("button", "mt-4 rounded-md bg-brand-blue px-4 py-2 text-sm font-medium text-white hover:opacity-90", "+ Add gateway");
       add.addEventListener("click", openPicker);
       box.appendChild(add);
       root!.appendChild(box);
@@ -194,6 +194,8 @@ if (dataEl && root) {
       const tr = el("tr", i % 2 ? "bg-panel" : "");
       const label = el("th", "sticky left-0 z-10 px-3 py-2 text-left font-normal text-muted " + (i % 2 ? "bg-panel" : "bg-surface"));
       label.textContent = row.label;
+      if (row.label === "DuitNow QR") label.style.color = "#e61f65"; // DuitNow brand
+      if (row.label === "FPX") label.style.color = "#6f83cc"; // FPX navy (lightened for dark)
       tr.appendChild(label);
 
       // precompute best (lowest) fee for fee rows

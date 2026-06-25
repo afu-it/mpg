@@ -9,6 +9,8 @@ const gateways = defineCollection({
     // optional: routing uses entry.id (filename); kept for documentation/override
     slug: z.string().optional(),
     logo: z.string().optional(),
+    // logo artwork is a circle -> crop to a full circle instead of a rounded square
+    logo_round: z.boolean().optional(),
     website: z.string().url(),
     tagline: z.string(),
     fees: z.object({
