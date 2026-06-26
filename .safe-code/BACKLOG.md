@@ -1,6 +1,8 @@
 # BACKLOG — operational queue
 
-_2026-06-25 (rev 4)_
+_2026-06-26 (rev 5)_
+
+- [ ] Watch: stray vite deps cache keeps appearing in a source subdir (`src/content/gateways` before, `src/pages/` on 2026-06-26). Caused by `astro dev` + `CHOKIDAR_USEPOLLING` on the NTFS mount writing its cache relative to the wrong cwd. Gitignored so harmless to git, but pollutes the tree. If it recurs, pin vite `cacheDir` to a root path in `astro.config.mjs`.
 
 - [ ] Custom domain: owner bought a domain → connect to the CF Pages project and switch Clerk to `pk_live` (production instance) when going live.
 - [ ] Decide: add **Payex** (payex.io, Maybank-owned) + **2C2P** (regional PSP)? Awaiting AFU before sourcing + adding (spec 04). StoreHub = POS (skip); crypto/NOWPayments not selected.

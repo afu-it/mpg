@@ -1,6 +1,6 @@
 # safe-refactor-code — flagged candidates
 
-_2026-06-25 (rev 6)_
+_2026-06-26 (rev 7)_
 
 ## Resolved
 - Removed unused dependency `@clerk/clerk-js` (auth loads Clerk from CDN via `window.Clerk`).

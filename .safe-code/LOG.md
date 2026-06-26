@@ -1,5 +1,9 @@
 # LOG — safe diary (append above)
 
+## 2026-06-26 · type: chore
+Hygiene pass (safe-code Audit profile). Removed a stray 1.2M vite/astro build cache nested in the source tree at `src/pages/{node_modules,.astro}` (untracked + gitignored, regenerates) — a recurrence of the `src/content/gateways` stray from an earlier session; root cause is `astro dev` + `CHOKIDAR_USEPOLLING` on the NTFS mount writing its vite deps cache relative to the wrong cwd. Dead-code audit clean (all 7 components, 5 scripts, 4 lib files referenced); agent-config trust audit clean (no `.claude/`, no `.mcp.json`; CLAUDE/GEMINI/copilot/cursor bridges are pointer-only; `deploy.yml` uses GitHub secrets; no committed keys; no tracked `.env`); orphan-logo check clean (38 logos ↔ 38 gateways, 1:1). Context brain verified fresh. astro check 0 errors, build 47 pages, vitest 11/11. No tracked files changed by the cleanup → docs commit only.
+plain: Bersihkan sampah cache yang tersilap masuk dalam folder kod, semak tiada kod mati / kunci rahsia bocor, dan pastikan website masih build elok (47 page, semua test lulus).
+
 ## 2026-06-25 · type: feat
 Built the `/learn` section (spec 06, done): hub + glossary, safe integration-flow, AI-agents (skills install + MCP/API explainer), production checklist. Per-gateway "Copy prompt" button auto-generated from `skill:` (`src/lib/learn.ts`). Two auto-aligned ASCII flow diagrams (`FlowDiagram.astro`) for payment-flow + setup-flow. Top NProgress-style loading bar on navigation (`scripts/progress.ts`). Logo-cycle Browse-gateways button (`LogoCycle.astro`). astro check 0, build 47 pages, vitest 11/11.
 plain: Tambah bahagian "Learn" untuk developer (cara integrate, glossary, prompt AI sedia-salin, checklist), diagram aliran, dan bar loading kat atas.

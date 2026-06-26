@@ -1,6 +1,9 @@
 # MEMORY — temporary audit/architecture notes
 
-_2026-06-25_
+_2026-06-26_
+
+## Stray vite cache trap (2026-06-26)
+- `astro dev` with `CHOKIDAR_USEPOLLING=true` on the NTFS mount sometimes writes its vite deps cache + `.astro` types into a source subdir (`src/pages/node_modules/.vite/...`, `src/pages/.astro/`) instead of the root. Both are gitignored + untracked → safe to `rm -rf`, they regenerate. Recurs across sessions; if annoying, pin vite `cacheDir` in `astro.config.mjs`. Not real code — never treat as source or commit it.
 
 ## Theme + UI system (2026-06-25)
 - **Jalur Gemilang on dark.** Tokens in `global.css` `@theme`: accent `#4f86f5` (lighter flag-blue, text-safe), brand-blue `#0031a0` (button/badge fills + white text only), brand-red `#cc0000` (large text / fills), brand-yellow `#fed100`, fpx `#6f83cc`, duitnow `#e61f65`. Surface `#0a0a0a`, panel `#141416`. Full design notes in `context/ui-context.md`.
