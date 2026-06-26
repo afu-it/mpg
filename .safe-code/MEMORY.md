@@ -2,6 +2,23 @@
 
 _2026-06-26_
 
+## Categories + access model (2026-06-26)
+- `category` enum (`content.config.ts`): gateway (default) / bank / ewallet / bnpl / infrastructure. Banks → `bank`, TNG → `ewallet`. Boost kept `gateway` (full multi-channel gateway, not just wallet acceptance).
+- `src/lib/access.ts` `accessInfo(category)` derives the merchant access path: gateway/bnpl → "Integrate", bank/ewallet → "Merchant account", infrastructure → "Infrastructure". Shown on detail (strip under channels) + compare ("Access" row). NO per-entry field — derived, so it stays in sync. Caveat: acquirer gateways (Fiuu, NTT DATA, local acquirers) are really "apply first" but read "Integrate"; add an override field if that matters.
+- /learn hub has a "Which type do you need?" block linking to `/gateways?category=<key>` — `table.ts` reads `?category=` and preselects the sidebar radio.
+- Default category filter is still "Gateways" (banks/ewallet/bnpl/infra one click away).
+
+## Liveness methodology (2026-06-26, AFU rule)
+- A live website is NOT proof of a live business — also check social-media recency / last sign of life. Dormant socials (12-18+ months quiet, like myIOU's ~Jun 2023) = candidate for removal. Done via multi-agent workflows (liveness sweep + social-recency sweep + deep discovery + per-logo visual QA).
+
+## Logo system v2 (2026-06-26)
+- 59 real logos, 0 monograms. For wordmark-only brands, crop the SYMBOL (square) not the wordmark (J&C planet, MPay M-swoosh, CIMB chevron, Public Bank octagon, UOB pillars, HLB swoosh, RHB diamond, Fasspay "P"); for brands with no symbol, build a clean app-icon tile in brand colours (commercepay C, revpay "rev", bcl "bcl").
+- Dark-on-transparent fix = recolour the dark ink to white/silver (NOT a global white plate — keeps the floating aesthetic). SVGs rasterised with `rsvg-convert`. `logo_round: true` on circular marks (billplz, gomobi, hitpay, ipay88, ocbc-malaysia, swif, moby, maybank2u-pay, …).
+- Small favicons (boost 32px) are fine: logos display at ~22px so source ≥22px downscales sharp; only sub-22px (16px) or blank/banner sources needed replacing.
+
+## Compare list-cell layout (2026-06-26)
+- `compare.ts` list cells (methods/plugins/banks): chips ≤10 chars pair 2-per-row (lone last one `col-span-2 justify-self-center`); chips >10 chars drop to a full-width centered row at the bottom. Show-more uses a SHARED `listExpanded` + `listDraws` registry so one toggle expands all provider columns.
+
 ## Stray vite cache trap (2026-06-26)
 - `astro dev` with `CHOKIDAR_USEPOLLING=true` on the NTFS mount sometimes writes its vite deps cache + `.astro` types into a source subdir (`src/pages/node_modules/.vite/...`, `src/pages/.astro/`) instead of the root. Both are gitignored + untracked → safe to `rm -rf`, they regenerate. Recurs across sessions; if annoying, pin vite `cacheDir` in `astro.config.mjs`. Not real code — never treat as source or commit it.
 

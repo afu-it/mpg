@@ -7,6 +7,11 @@ created: 2026-06-24
 > (revisit only if we add a "platform" category). Listicle rescan surfaced two more
 > candidates pending the owner's go-ahead: **Payex** (payex.io, Maybank-owned) and
 > **2C2P** (regional PSP). StoreHub = POS platform → skip. Crypto (NOWPayments) not selected.
+>
+> 2026-06-26: Deep multi-agent discovery + liveness/social sweep (see "Discovery
+> 2026-06-26" below). Removed dormant **myIOU**. Added **22** new gateways across
+> Tier 1 (local acquirers), Tier 3 (TNG eWallet) and Tier 4 (bank gateways). AFU
+> SKIPPED Tier 2 international PSPs. Directory: 38 → 59.
 
 # Expand the gateway directory
 
@@ -38,3 +43,43 @@ Never fabricate a fee. Only publish numbers cited from the provider's own pricin
 - New gateways appear in table/compare with sourced data and a verifiable `source`.
 - PayNet shows as infrastructure with a note; no fake merchant fees.
 - Listicle re-scan results recorded (added or "no new gateways found").
+
+## Discovery 2026-06-26 (multi-agent sweep)
+Method: liveness sweep (38 sites) + social-recency sweep (37) + deep discovery
+(8 search angles, BNM-corroborated, verify + completeness critic). Raw 363 →
+185 fresh after dedup → verified. Fee-verify stage downgraded any unconfirmed
+published number to "Contact sales" (e.g. SecurePay RM1 FPX, Maybank RM0.50).
+
+### Removed
+- **myIOU** — site myiou.com.my is NXDOMAIN; socials dead since ~Jun 2023
+  (operator IOUpay app-first only). Dormant business; AFU said remove. Also
+  dropped "MyIOU (BNPL)" from senangPay methods.
+
+### Added — Tier 1 (local acquirers, 11)
+boost (PUBLISHED rates), ampersand-pay, axaipay, fasspay, paycools, gomobi
+(Mobi Asia, distinct from MOBY BNPL), securepay, swif, bayarlah, jc-pacific,
+finexus. Mostly BNM Registered Merchant Acquirers; mostly quote-only.
+
+### Added — Tier 3 (1)
+tng-ewallet (Touch 'n Go eWallet merchant acceptance, 0.5% MDR published).
+
+### Added — Tier 4 (bank gateways, 10)
+maybank2u-pay, cimb (PUBLISHED card rates 1.50-1.80% / 2.80-3.00%), public-bank,
+rhb, hong-leong-bank, ambank, alliance-bank, uob-malaysia, ocbc-malaysia,
+hsbc-omni-collect. All require a bank business account; mostly quote-only.
+Excluded banks (no distinct online gateway, POS/third-party only): **Affin,
+Bank Islam, Bank Rakyat**.
+
+### Skipped — Tier 2 (international PSPs) — AFU scope choice, kept as history
+2C2P (BNM acquirer, Ant/Antom), Adyen (partial public fees), Omise/Opn (public
+MY fees), Worldpay, Global Payments, Fiserv/First Data MY, Ksher, Nomu Pay
+(ex-Wirecard MY), Pine Labs. Revisit if AFU wants foreign PSPs later.
+
+### Excluded — not online-checkout gateways
+EOS Systems (POS/HLB partner), Infinitium (3DS infra), Sinopay (UnionPay POS),
+Presto Pay (e-wallet, tied to Revenue Monster), Merchantrade (remittance).
+
+### Still pending
+- **Payex** (payex.io, Maybank-owned) — flagged 2026-06-24, not yet sourced.
+- senangPay now "A DOKU Company" (note added; fees unchanged).
+- Logo polish: boost, jc-pacific (favicon-size 32px); public-bank, rhb (monogram).

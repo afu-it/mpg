@@ -4,13 +4,17 @@
 status: completed
 saved_at: 2026-06-26
 completed:
-  - Hygiene pass (Audit profile): repo was already clean. Removed stray 1.2M vite/astro build cache at src/pages/{node_modules,.astro} (untracked+gitignored, regenerates).
-  - Dead-code audit clean (all components/scripts/lib referenced); agent-config trust audit clean; no committed secrets; orphan-logo check clean (38↔38).
-  - Verified context brain fresh; astro check 0 / build 47 pages / vitest 11/11.
-  - Off-repo task (not committed): filled the MYNIC Letter of Undertaking for domain malaysiapg.com.my → /home/user/Downloads/Letter of Undertaking - malaysiapg.com.my (FILLED).docx (built AFU IT ENTERPRISE letterhead from SSM details + logo; justification, signatory AFWAZAN BIN AHMADAN / Proprietor, date 26 Jun 2026). AFU waiting for the domain to become available before submitting.
+  - Liveness + social-recency sweep on all 38 gateways (multi-agent workflows). Removed dormant myIOU. senangPay noted as "A DOKU Company"; ipay88/NTT DATA confirmed.
+  - Deep discovery (363 raw → 185 deduped, BNM-corroborated). Added 22 gateways: Tier 1 local acquirers (11), Tier 3 TNG eWallet (1), Tier 4 bank gateways (10). Directory 38 → 59. Skipped Tier 2 international PSPs per AFU.
+  - New Bank + E-wallet categories (schema, sidebar, badges, compare). Badges shrunk to text-[8px].
+  - Access model (lib/access.ts): per-entry Integrate-vs-Merchant-account indicator (detail + compare) + /learn "Which type do you need?" block + ?category= deep-links.
+  - Sort dropdown on /gateways (Popularity / Lowest fees / Name A-Z / Name Z-A).
+  - Compare list cells: lone-badge centering, long-name chips to full-width row, global show-more across providers.
+  - Logo overhaul: QA'd all 59 on dark; fixed/replaced 30+ (recolour dark-on-transparent, replace tiny favicons, remove banners, square wide wordmarks to symbol marks), 8 circle-crops. Official art for J&C/Fasspay/RHB/Public Bank/HLB. 59 real logos, 0 monograms.
+  - Verified: astro check 0, build 68 pages, vitest 11/11.
 pending:
-  - Custom domain → CF Pages project + Clerk pk_live (production) when going live. Blocked on MYNIC approving malaysiapg.com.my (Letter of Undertaking ready, awaiting domain availability).
-  - Decide: add Payex (Maybank-owned) + 2C2P? (spec 04)
-  - Phase 3: public submit-a-gateway (needs server + DB)
-  - Optional: liveness pass on all gateway websites (catch other dead/rebranded ones like iPay88)
-next_action: When resuming, either wire the purchased/approved domain + Clerk pk_live for production, or decide on Payex/2C2P (spec 04).
+  - Custom domain malaysiapg.com.my (MYNIC Letter of Undertaking ready) → wire to CF Pages + Clerk pk_live when it lands.
+  - Decide: add Payex (payex.io, Maybank-owned)? Still unsourced (spec 04). 2C2P + other international PSPs were deferred (Tier 2 skipped) — revisit if AFU wants foreign PSPs.
+  - Phase 3: public submit-a-gateway (needs server + DB).
+  - Optional: per-entry access override (some acquirer gateways are "apply first" but derive as "Integrate" from category).
+next_action: When resuming, either wire the domain + Clerk pk_live for production, or source Payex / reconsider the Tier 2 international PSPs.

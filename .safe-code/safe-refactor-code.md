@@ -1,6 +1,6 @@
 # safe-refactor-code — flagged candidates
 
-_2026-06-26 (rev 7)_
+_2026-06-26 (rev 8)_
 
 ## Resolved
 - Removed unused dependency `@clerk/clerk-js` (auth loads Clerk from CDN via `window.Clerk`).
@@ -18,4 +18,7 @@ _2026-06-26 (rev 7)_
 - Don't "tidy" the `#top-progress` bar to a Tailwind `scale-*` class — it sets the CSS `scale` property and collapses the bar to 0 width. Keep the inline `transform: scaleX()` JS.
 - Don't strip `{" "}` spacers in `.astro` prose as "noise" — they fix Astro's newline-before-inline-tag whitespace gluing.
 - Don't remove em-dashes' replacement punctuation back to em-dashes; no em-dashes in prose is house style. The standalone `"—"` fee placeholder is data, keep it.
+- Keep `src/lib/access.ts` as the single source for the integrate-vs-account label, derived from `category` — don't inline the mapping in components or add a duplicate field.
+- Logos must stay square (1.0 aspect) symbol-marks for table consistency — don't "restore" wide wordmark logos. `logo_round: true` marks circular logos; don't drop it.
+- `compare.ts` list-cell layout (narrow-pair / wide-to-bottom / shared `listExpanded`) is intentional — don't "simplify" back to a flat per-cell toggle.
 - Don't reuse legacy iPay88 fee numbers for NTTDataPay — ADAPTIS publishes none, so it's "Contact sales".
