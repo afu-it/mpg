@@ -1,6 +1,7 @@
 ---
 name: HitPay
 website: https://www.hitpayapp.com
+logo_round: true
 tagline: "No setup or monthly fee, with built-in recurring billing"
 logo: /logos/hitpay.svg
 fees:

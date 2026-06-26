@@ -1,6 +1,7 @@
 ---
 name: Billplz
 website: https://www.billplz.com
+logo_round: true
 tagline: "Flat-rate FPX collection with fast, guaranteed payouts"
 logo: /logos/billplz.svg
 fees:
