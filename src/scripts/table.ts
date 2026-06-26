@@ -12,6 +12,17 @@ if (table && table.tBodies[0]) {
   const emptyEl = document.getElementById("gw-empty");
   const resetBtn = document.getElementById("gw-reset");
 
+  // sort dropdown (left of the search box)
+  const sortRoot = document.getElementById("gw-sort");
+  const sortTrigger = document.getElementById("gw-sort-trigger");
+  const sortMenu = document.getElementById("gw-sort-menu");
+  const sortLabel = document.getElementById("gw-sort-label");
+  const sortItems = Array.from(
+    sortMenu?.querySelectorAll<HTMLButtonElement>("[data-sort-key]") ?? [],
+  );
+  // initial DOM order = server default (popularity, then value, then name)
+  const defaultOrder = Array.from(tbody.rows);
+
   const categoryInputs = Array.from(
     document.querySelectorAll<HTMLInputElement>('input[name="gw-category"]'),
   );
@@ -102,7 +113,68 @@ if (table && table.tBodies[0]) {
       headerCells.forEach((cell) => cell.setAttribute("aria-sort", "none"));
       th.setAttribute("aria-sort", sortDir === "asc" ? "ascending" : "descending");
       sortRows(index, type, sortDir);
+      // a column header now drives the sort: clear the dropdown's selection
+      sortItems.forEach((i) => i.setAttribute("aria-checked", "false"));
+      if (sortLabel) sortLabel.textContent = "Custom";
     });
+  });
+
+  // ---- sort dropdown (higher-level sort entry point) ----
+  function setMenuOpen(open: boolean) {
+    if (!sortMenu || !sortTrigger) return;
+    sortMenu.hidden = !open;
+    sortTrigger.setAttribute("aria-expanded", String(open));
+  }
+
+  function cmpNum(av: string, bv: string) {
+    const a = parseFloat(av);
+    const b = parseFloat(bv);
+    return a === b ? 0 : a < b ? -1 : 1; // Infinity-safe (unknown fees sink)
+  }
+
+  function applyDropdownSort(key: string) {
+    let sorted: HTMLTableRowElement[];
+    if (key === "value") {
+      sorted = [...defaultOrder].sort((a, b) =>
+        cmpNum(a.dataset.value ?? "Infinity", b.dataset.value ?? "Infinity"),
+      );
+    } else if (key === "name-asc") {
+      sorted = [...defaultOrder].sort((a, b) =>
+        (a.dataset.name ?? "").localeCompare(b.dataset.name ?? ""),
+      );
+    } else if (key === "name-desc") {
+      sorted = [...defaultOrder].sort((a, b) =>
+        (b.dataset.name ?? "").localeCompare(a.dataset.name ?? ""),
+      );
+    } else {
+      sorted = defaultOrder; // popularity = restore server default order
+    }
+    for (const row of sorted) tbody.appendChild(row);
+    // dropdown owns the sort now: clear header arrows
+    headerCells.forEach((cell) => cell.setAttribute("aria-sort", "none"));
+    sortIndex = -1;
+  }
+
+  sortTrigger?.addEventListener("click", (e) => {
+    e.stopPropagation();
+    setMenuOpen(Boolean(sortMenu?.hidden));
+  });
+
+  sortItems.forEach((item) => {
+    item.addEventListener("click", () => {
+      const key = item.dataset.sortKey ?? "popularity";
+      sortItems.forEach((i) => i.setAttribute("aria-checked", String(i === item)));
+      if (sortLabel) sortLabel.textContent = item.dataset.sortLabel ?? "Popularity";
+      applyDropdownSort(key);
+      setMenuOpen(false);
+    });
+  });
+
+  document.addEventListener("click", (e) => {
+    if (sortRoot && !sortRoot.contains(e.target as Node)) setMenuOpen(false);
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") setMenuOpen(false);
   });
 
   // ---- whole-row click → detail page (links still work) ----
@@ -115,6 +187,13 @@ if (table && table.tBodies[0]) {
     });
   });
 
-  // apply default category (Gateways) on load
+  // deep-link support: /gateways?category=bank preselects that filter (used by /learn)
+  const urlCat = new URLSearchParams(location.search).get("category");
+  if (urlCat) {
+    const match = categoryInputs.find((i) => i.value === urlCat);
+    if (match) match.checked = true;
+  }
+
+  // apply default (or deep-linked) category on load
   applyFilters();
 }

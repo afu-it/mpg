@@ -10,7 +10,8 @@ import LogoCycle from "../components/LogoCycle.astro";
 const gateways = await getCollection("gateways");
 const total = gateways.length;
 const bnplCount = gateways.filter((g) => g.data.category === "bnpl").length;
-const gatewayCount = total - bnplCount;
+const infraCount = gateways.filter((g) => g.data.category === "infrastructure").length;
+const gatewayCount = total - bnplCount - infraCount;
 
 const stats = [
   { value: String(gatewayCount), label: "Payment gateways" },

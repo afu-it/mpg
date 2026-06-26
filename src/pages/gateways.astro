@@ -26,6 +26,91 @@ import GatewayTable from "../components/GatewayTable.astro";
             Ranked by popularity (most-used in Malaysia) by default. Click a column to re-sort.
           </p>
         </div>
+        <!-- sort dropdown: sits to the left of the search box -->
+        <div id="gw-sort" class="relative w-full sm:w-auto">
+          <button
+            type="button"
+            id="gw-sort-trigger"
+            aria-haspopup="menu"
+            aria-expanded="false"
+            class="inline-flex h-9 w-full items-center justify-start gap-1.5 rounded-md border border-line bg-panel px-3 text-sm text-muted transition-colors hover:border-accent hover:text-fg focus:border-accent focus:outline-none sm:w-48"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="size-3.5 shrink-0"
+              aria-hidden="true"
+            >
+              <path d="m3 16 4 4 4-4"></path>
+              <path d="M7 20V4"></path>
+              <path d="m21 8-4-4-4 4"></path>
+              <path d="M17 4v16"></path>
+            </svg>
+            <span class="text-muted/80">Sort:</span>
+            <span id="gw-sort-label" class="min-w-0 flex-1 truncate text-left text-fg">Popularity</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              aria-hidden="true"
+              class="size-4 shrink-0"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M11.47 4.72a.75.75 0 0 1 1.06 0l3.75 3.75a.75.75 0 0 1-1.06 1.06L12 6.31 8.78 9.53a.75.75 0 0 1-1.06-1.06l3.75-3.75Zm-3.75 9.75a.75.75 0 0 1 1.06 0L12 17.69l3.22-3.22a.75.75 0 1 1 1.06 1.06l-3.75 3.75a.75.75 0 0 1-1.06 0l-3.75-3.75a.75.75 0 0 1 0-1.06Z"
+                clip-rule="evenodd"></path>
+            </svg>
+          </button>
+          <ul
+            id="gw-sort-menu"
+            role="menu"
+            aria-label="Sort gateways"
+            hidden
+            class="absolute left-0 z-20 mt-1 w-full min-w-[12rem] overflow-hidden rounded-md border border-line bg-panel py-1 shadow-lg"
+          >
+            {
+              [
+                { key: "popularity", label: "Popularity", checked: true },
+                { key: "value", label: "Lowest fees", checked: false },
+                { key: "name-asc", label: "Name A-Z", checked: false },
+                { key: "name-desc", label: "Name Z-A", checked: false },
+              ].map((o) => (
+                <li role="none">
+                  <button
+                    type="button"
+                    role="menuitemradio"
+                    aria-checked={o.checked ? "true" : "false"}
+                    data-sort-key={o.key}
+                    data-sort-label={o.label}
+                    class="group flex w-full items-center gap-2 px-3 py-1.5 text-left text-sm text-muted transition-colors hover:bg-surface hover:text-fg aria-checked:text-fg"
+                  >
+                    <span class="flex-1">{o.label}</span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      aria-hidden="true"
+                      class="size-4 shrink-0 text-accent opacity-0 group-aria-checked:opacity-100"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                  </button>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
         <input
           id="gw-search"
           type="search"

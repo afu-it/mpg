@@ -9,6 +9,7 @@ import FeeCell from "../../components/FeeCell.astro";
 import FeatureBadge from "../../components/FeatureBadge.astro";
 import { FPX_BANKS, FPX_BANKS_SOURCE } from "../../lib/fpx-banks";
 import { skillRepoUrl, skillInstallCommand, agentPrompt } from "../../lib/learn";
+import { accessInfo } from "../../lib/access";
 
 export async function getStaticPaths() {
   const gateways = await getCollection("gateways");
@@ -51,6 +52,8 @@ const features = [
   ...(d.webhooks !== undefined ? [{ label: "Webhooks", on: d.webhooks }] : []),
 ];
 
+const access = accessInfo(d.category);
+
 const mcpLabel =
   d.mcp === "official"
     ? "MCP · Official"
@@ -80,6 +83,16 @@ const installCmd = d.skill ? skillInstallCommand(d.skill) : null;
               BNPL
             </span>
           )}
+          {d.category === "bank" && (
+            <span class="rounded-full border border-line px-2 py-0.5 text-xs font-medium uppercase tracking-wide text-muted">
+              Bank
+            </span>
+          )}
+          {d.category === "ewallet" && (
+            <span class="rounded-full border border-line px-2 py-0.5 text-xs font-medium uppercase tracking-wide text-muted">
+              E-wallet
+            </span>
+          )}
         </div>
         <p class="text-muted">{d.tagline}</p>
       </div>
@@ -103,6 +116,14 @@ const installCmd = d.skill ? skillInstallCommand(d.skill) : null;
         </span>
       ))
     }
+  </div>
+
+  <!-- how you access it: integrate vs apply for a merchant account -->
+  <div class="mt-4 flex items-start gap-3 rounded-md border border-line bg-panel px-4 py-3">
+    <span class="mt-0.5 shrink-0 rounded-full bg-raised px-2 py-0.5 text-xs font-medium text-accent">
+      {access.short}
+    </span>
+    <p class="text-sm text-muted">{access.hint}</p>
   </div>
 
   <div class="mt-8 grid gap-8 md:grid-cols-2">

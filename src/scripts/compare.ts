@@ -2,11 +2,12 @@
 import { parseFee } from "../lib/fees";
 import { splitName } from "../lib/name";
 import { FPX_BANKS } from "../lib/fpx-banks";
+import { accessInfo } from "../lib/access";
 
 interface GW {
   id: string;
   name: string;
-  category: "gateway" | "bnpl" | "infrastructure";
+  category: "gateway" | "bank" | "ewallet" | "bnpl" | "infrastructure";
   website: string;
   settlement: string;
   min_txn: string;
@@ -86,10 +87,19 @@ if (dataEl && root) {
     | { label: string; kind: "list"; get: (g: GW) => string[] };
 
   const categoryLabel = (g: GW) =>
-    g.category === "bnpl" ? "BNPL" : g.category === "infrastructure" ? "Infrastructure" : "Gateway";
+    g.category === "bnpl"
+      ? "BNPL"
+      : g.category === "bank"
+        ? "Bank"
+        : g.category === "ewallet"
+          ? "E-wallet"
+          : g.category === "infrastructure"
+            ? "Infrastructure"
+            : "Gateway";
 
   const ROWS: Row[] = [
     { label: "Category", kind: "text", get: categoryLabel },
+    { label: "Access", kind: "text", get: (g) => accessInfo(g.category).short },
     { label: "FPX", kind: "fee", key: "fpx" },
     { label: "Card (local)", kind: "fee", key: "card" },
     { label: "International card", kind: "fee", key: "card_intl" },
@@ -190,6 +200,9 @@ if (dataEl && root) {
 
     // body
     const tbody = el("tbody");
+    // shared expand state: toggling any list cell expands every provider column at once
+    let listExpanded = false;
+    const listDraws: Array<() => void> = [];
     ROWS.forEach((row, i) => {
       const tr = el("tr", i % 2 ? "bg-panel" : "");
       const label = el("th", "sticky left-0 z-10 px-3 py-2 text-left font-normal text-muted " + (i % 2 ? "bg-panel" : "bg-surface"));
@@ -233,23 +246,41 @@ if (dataEl && root) {
             const wrap = el("div", "grid grid-cols-[auto_auto] justify-center gap-1");
             const chip = (m: string) =>
               el("span", "whitespace-nowrap rounded-full border border-line bg-raised px-2 py-0.5 text-[11px] text-fg", m);
-            let expanded = false;
             const draw = () => {
               wrap.innerHTML = "";
-              (expanded ? items : items.slice(0, LIMIT)).forEach((m) => wrap.appendChild(chip(m)));
+              const displayed = listExpanded ? items : items.slice(0, LIMIT);
+              // long-text chips can't pair in two columns, so they drop to their
+              // own full-width centered row at the bottom (e.g. WooCommerce, American Express)
+              const WIDE = 10;
+              const narrow = displayed.filter((m) => m.length <= WIDE);
+              const wide = displayed.filter((m) => m.length > WIDE);
+              narrow.forEach((m, idx) => {
+                const c = chip(m);
+                // a lone last narrow chip (odd count) spans both columns, centered
+                if (idx === narrow.length - 1 && narrow.length % 2 === 1) {
+                  c.classList.add("col-span-2", "justify-self-center");
+                }
+                wrap.appendChild(c);
+              });
+              wide.forEach((m) => {
+                const c = chip(m);
+                c.classList.add("col-span-2", "justify-self-center");
+                wrap.appendChild(c);
+              });
               if (items.length > LIMIT) {
                 const btn = el(
                   "button",
                   "col-span-2 justify-self-center rounded-full border border-line bg-panel px-2 py-0.5 text-[11px] text-muted hover:border-accent hover:text-accent",
-                  expanded ? "show less" : `+${items.length - LIMIT} more`,
+                  listExpanded ? "show less" : `+${items.length - LIMIT} more`,
                 );
                 btn.addEventListener("click", () => {
-                  expanded = !expanded;
-                  draw();
+                  listExpanded = !listExpanded;
+                  listDraws.forEach((d) => d());
                 });
                 wrap.appendChild(btn);
               }
             };
+            listDraws.push(draw);
             draw();
             td.appendChild(wrap);
           }
@@ -303,6 +334,8 @@ if (dataEl && root) {
         btn.appendChild(logoNode(g, 20));
         btn.appendChild(nameNode(g.name, "flex-1"));
         if (g.category === "bnpl") btn.appendChild(el("span", "rounded-full border border-line px-1.5 py-0.5 text-[10px] uppercase tracking-wide text-accent", "BNPL"));
+        else if (g.category === "bank") btn.appendChild(el("span", "rounded-full border border-line px-1.5 py-0.5 text-[10px] uppercase tracking-wide text-muted", "Bank"));
+        else if (g.category === "ewallet") btn.appendChild(el("span", "rounded-full border border-line px-1.5 py-0.5 text-[10px] uppercase tracking-wide text-muted", "E-wallet"));
         btn.addEventListener("click", () => {
           if (selected.length >= MAX) return;
           selected.push(g.id);

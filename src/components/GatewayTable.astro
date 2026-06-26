@@ -88,6 +88,7 @@ const td = "whitespace-nowrap px-3 py-3 align-middle";
             class="cursor-pointer border-b border-line/60 last:border-0 hover:bg-panel"
             data-name={g.data.name.toLowerCase()}
             data-category={g.data.category}
+            data-value={String(valueScore(g))}
             data-channels={g.data.channels.join(" ")}
             data-no_code={String(g.data.features.no_code)}
             data-api={String(g.data.features.api)}
@@ -110,8 +111,18 @@ const td = "whitespace-nowrap px-3 py-3 align-middle";
                   );
                 })()}
                 {g.data.category === "bnpl" && (
-                  <span class="rounded-full bg-brand-red px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wide text-white">
+                  <span class="rounded-full bg-brand-red px-1 py-px text-[8px] font-medium uppercase tracking-tight text-white">
                     BNPL
+                  </span>
+                )}
+                {g.data.category === "bank" && (
+                  <span class="rounded-full border border-line px-1 py-px text-[8px] font-medium uppercase tracking-tight text-muted">
+                    Bank
+                  </span>
+                )}
+                {g.data.category === "ewallet" && (
+                  <span class="rounded-full border border-line px-1 py-px text-[8px] font-medium uppercase tracking-tight text-muted">
+                    E-wallet
                   </span>
                 )}
                 {g.data.mcp === "official" && (

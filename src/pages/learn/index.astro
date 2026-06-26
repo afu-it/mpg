@@ -41,6 +41,53 @@ const sections = [
     </p>
   </header>
 
+  <!-- which type do you need? gateway (integrate) vs bank/e-wallet (account) -->
+  <section class="mt-8">
+    <h2 class="text-base font-medium text-fg">Which type do you need?</h2>
+    <p class="mt-1.5 max-w-2xl text-sm text-muted">
+      Not every provider works the same way. There are three broad ways to start
+      accepting payments in Malaysia, depending on whether you are integrating code
+      or opening a business account.
+    </p>
+    <div class="mt-4 grid gap-4 sm:grid-cols-3">
+      <div class="rounded-md border border-line bg-panel p-4">
+        <span class="rounded-full bg-raised px-2 py-0.5 text-xs font-medium text-accent">Integrate</span>
+        <h3 class="mt-2 text-sm font-medium text-fg">Payment gateway</h3>
+        <p class="mt-1 text-sm text-muted">
+          For developers. Sign up, get API keys, then call the API or drop in a
+          plugin (WooCommerce, Shopify). You control the code.
+        </p>
+        <p class="mt-2 text-xs text-muted">e.g. CHIP, Billplz, Stripe, Curlec, Fiuu</p>
+        <a href="/gateways?category=gateway" class="mt-2 inline-block text-sm text-accent hover:underline">
+          Browse gateways →
+        </a>
+      </div>
+      <div class="rounded-md border border-line bg-panel p-4">
+        <span class="rounded-full bg-raised px-2 py-0.5 text-xs font-medium text-accent">Merchant account</span>
+        <h3 class="mt-2 text-sm font-medium text-fg">Bank gateway</h3>
+        <p class="mt-1 text-sm text-muted">
+          Apply for a business or merchant account with a Malaysian bank. It runs on
+          the bank's own hosted gateway, usually tied to your business account.
+        </p>
+        <p class="mt-2 text-xs text-muted">e.g. Maybank2u Pay, CIMB, OCBC</p>
+        <a href="/gateways?category=bank" class="mt-2 inline-block text-sm text-accent hover:underline">
+          Browse banks →
+        </a>
+      </div>
+      <div class="rounded-md border border-line bg-panel p-4">
+        <span class="rounded-full bg-raised px-2 py-0.5 text-xs font-medium text-accent">Merchant account</span>
+        <h3 class="mt-2 text-sm font-medium text-fg">E-wallet &amp; BNPL</h3>
+        <p class="mt-1 text-sm text-muted">
+          Register as a merchant to accept e-wallets and DuitNow QR, or to offer
+          Buy-Now-Pay-Later instalments at checkout.
+        </p>
+        <p class="mt-2 text-xs text-muted">e.g. Touch 'n Go eWallet, Atome</p>
+        <a href="/gateways?category=ewallet" class="mt-2 inline-block text-sm text-accent hover:underline">E-wallet →</a>
+        <a href="/gateways?category=bnpl" class="mt-2 ml-4 inline-block text-sm text-accent hover:underline">BNPL →</a>
+      </div>
+    </div>
+  </section>
+
   <div class="mt-8 grid gap-4 sm:grid-cols-2">
     {
       sections.map((s) => (
