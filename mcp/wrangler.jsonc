@@ -1,0 +1,15 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "mpg-mcp",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-06-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "durable_objects": {
+    "bindings": [{ "name": "MPG_MCP", "class_name": "MpgMCP" }]
+  },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["MpgMCP"] }],
+  "vars": {
+    "MPG_API_BASE": "https://mpg-1hw.pages.dev"
+  },
+  "observability": { "enabled": true }
+}
