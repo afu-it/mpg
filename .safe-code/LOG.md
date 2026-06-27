@@ -1,5 +1,9 @@
 # LOG — safe diary (append above)
 
+## 2026-06-27 · type: verify
+Session closed via `/safe-code --save`. Everything this session is committed + pushed + verified live: ranking redesign (spec 07), Payex→Xendit, API + MCP (spec 08, MCP deployed at mpg-mcp.afuitdev.workers.dev/mcp), and the "Help me choose" wizard (spec 09). Tree clean, master 0/0 with origin before this bookkeeping commit. astro check 0, build 70 pages, vitest 42/42. Bumped last_synced_commit to 73c99d9.
+plain: Tutup sesi dengan selamat — semua kerja hari ni (ranking, API, MCP, wizard) dah simpan, push, dan disahkan live.
+
 ## 2026-06-27 · type: feat
 **"Help me choose" wizard (spec 09)** — full brainstorming → writing-plans → executing-plans flow (AFU chose inline execution). New pure `src/lib/recommend.ts` (`recommend()` + `recommendOrClosest()`, 8 vitest TDD): filter by `Needs` (channels all-of, recurring, no-code/developer, access→category) → rank by est_fee then popularity → reasons[]; empty-result relaxation in a fixed order. `/choose` page (`src/pages/choose.astro`, embeds gateway JSON) + 4-step client wizard (`src/scripts/choose.ts`) renders a ranked shortlist with reasons + Compare-these deep link. Entry points: landing CTA, footer, /learn card. `recommend()` is the shared engine the planned SEO pages (Spec B) reuse. astro check 0, build 70 pages, vitest 42/42. Manual browser smoke left to AFU (house rule).
 plain: Tambah "Help me choose" — jawab 4 soalan (cara integrate, channel, recurring, jenis akaun) → website cadang gateway paling padan, termurah dulu, dengan sebab + butang compare. Ada enjin cadangan baru yang boleh guna semula untuk page SEO nanti.
