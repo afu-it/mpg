@@ -2,6 +2,11 @@
 
 _2026-06-27_
 
+## Recommendation engine + /choose wizard (2026-06-27, spec 09)
+- `src/lib/recommend.ts` is the canonical, pure, DOM-free recommendation engine: `recommend(gateways, needs, limit)` filters by `Needs` (channels all-of, recurring, no-code/developer, access→category mapping: integrate=gateway, account=bank|ewallet, bnpl=bnpl; infrastructure always excluded) and ranks by `est_fee_rm100` then `popularity`, attaching `reasons[]`. `recommendOrClosest()` relaxes constraints in a fixed order (access → integration → recurring → channels last-first) when nothing matches.
+- `/choose` (`src/pages/choose.astro`) embeds gateway JSON (compare.astro `gw-data` pattern) + `src/scripts/choose.ts` runs a 4-step wizard calling `recommendOrClosest`. Operates on `ApiGateway` (from api.ts), so it stays consistent with the table/API.
+- **Spec B (programmatic SEO pages) MUST reuse `recommend()`** — do not reimplement filtering. The MCP `recommend_gateway` tool mirrors this intent but `recommend.ts` is the on-site source of truth.
+
 ## Data API + MCP architecture (2026-06-27, spec 08)
 - The site is static, so the "API" is build-time JSON: `src/lib/api.ts` (`toApiGateway`/`buildApiPayload`) + Astro endpoints `src/pages/api/gateways.json.ts` and `src/pages/api/gateways/[slug].json.ts` (`prerender = true`) → `dist/api/*.json`. NO server. `est_fee_rm100`/`rankable` come from `gatewayCost`, so the API mirrors the site ranking. Docs: `src/pages/learn/api.astro`.
 - MCP server is a SEPARATE Cloudflare Worker in `mcp/` (its own package.json/wrangler.jsonc/tsconfig; NOT `@astrojs/cloudflare`). `McpAgent` + `McpServer`, Streamable HTTP `MpgMCP.serve("/mcp")`, DO `MpgMCP` (`new_sqlite_classes` migration), var `MPG_API_BASE`. 4 read-only tools (list/get/compare/recommend) fetch the live JSON API (cached per isolate via module-scope cache, 10-min TTL). Root `tsconfig.json` excludes `mcp/` so astro check doesn't scan the Worker.

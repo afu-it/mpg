@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 ### Added
+- **"Help me choose" wizard** (`/choose`): a 4-question, fit-first flow (integration style, channels, recurring, onboarding type) that returns a ranked shortlist of matching gateways, cheapest first, with reasons and a "Compare these" deep link. Powered by a new pure `recommend()` engine (reused by the planned SEO pages). Linked from the landing page, footer, and `/learn`.
 - **Static JSON API**: `GET /api/gateways.json` (the whole directory, machine-readable, with `est_fee_rm100`, `rankable`, `verified_date`, `source` and a disclaimer) and `GET /api/gateways/<slug>.json` (one gateway). Built at deploy time — no server. Documented at `/learn/api`.
 - **MCP server** (`mcp/`, a standalone Cloudflare Worker — deploy separately) so AI coding agents can query the directory live: `list_gateways`, `get_gateway`, `compare_gateways`, `recommend_gateway`.
 - **Est. fee / RM100** column on the gateway table (a unit-correct blended cost on a RM100 transaction, beside Fixed fee), plus **Lowest FPX / Card / E-wallet** per-channel sort options. Detail pages show the same "Est. fee on a RM100 sale".

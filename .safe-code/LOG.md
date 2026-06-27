@@ -1,5 +1,9 @@
 # LOG — safe diary (append above)
 
+## 2026-06-27 · type: feat
+**"Help me choose" wizard (spec 09)** — full brainstorming → writing-plans → executing-plans flow (AFU chose inline execution). New pure `src/lib/recommend.ts` (`recommend()` + `recommendOrClosest()`, 8 vitest TDD): filter by `Needs` (channels all-of, recurring, no-code/developer, access→category) → rank by est_fee then popularity → reasons[]; empty-result relaxation in a fixed order. `/choose` page (`src/pages/choose.astro`, embeds gateway JSON) + 4-step client wizard (`src/scripts/choose.ts`) renders a ranked shortlist with reasons + Compare-these deep link. Entry points: landing CTA, footer, /learn card. `recommend()` is the shared engine the planned SEO pages (Spec B) reuse. astro check 0, build 70 pages, vitest 42/42. Manual browser smoke left to AFU (house rule).
+plain: Tambah "Help me choose" — jawab 4 soalan (cara integrate, channel, recurring, jenis akaun) → website cadang gateway paling padan, termurah dulu, dengan sebab + butang compare. Ada enjin cadangan baru yang boleh guna semula untuk page SEO nanti.
+
 ## 2026-06-27 · type: chore
 **MCP Worker deployed + verified LIVE.** AFU was authed via `CLOUDFLARE_API_TOKEN` (so `wrangler login` errored — expected; no OAuth needed). Deployed `mcp/` → `https://mpg-mcp.afuitdev.workers.dev` (DO `MpgMCP` migration applied, startup 65ms). Verified end-to-end over Streamable HTTP: initialize (serverInfo "mpg", protocol 2025-06-18, session id), tools/list (all 4), tools/call `recommend_gateway {channels:[fpx], need_recurring:true}` → matched 15, returned cardbizpay RM1.19 / gkash RM1.24 / bizappay RM1.32 (real data fetched live from the JSON API). Wired the live URL into `/learn/api` + `mcp/README`. Spec 08 = done.
 plain: Pelayan MCP dah naik live dan diuji betul-betul jalan — AI agent boleh tanya direktori terus (cth dapat 3 gateway termurah untuk FPX+recurring). Letak URL sebenar dalam page /learn/api.

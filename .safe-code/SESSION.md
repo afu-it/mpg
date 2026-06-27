@@ -14,6 +14,7 @@ _2026-06-27_
 - **Don't use chrome-devtools to verify unless AFU asks.** Use build / astro check / npm test.
 - Stray vite cache may reappear under a `src/` subdir (NTFS dev quirk) — `rm -rf`, gitignored + regenerates (see MEMORY.md).
 - Payex REJECTED — it is now Xendit (already listed). Domain `malaysiapg.com.my`: MYNIC LoU ready, awaiting availability.
+- **"Help me choose" wizard (spec 09):** `/choose` — 4-question fit-first → ranked shortlist via `src/lib/recommend.ts` (pure, tested). `recommend()` is the shared engine the planned **Spec B (programmatic SEO pages)** reuses — don't reimplement filtering elsewhere. Wizard data embedded as `gw-data` JSON (compare.astro pattern).
 - **Data API + MCP (spec 08):** static `GET /api/gateways.json` + `/api/gateways/<slug>.json` (build-time, `src/lib/api.ts` → `dist/api/`), docs at `/learn/api`. **MCP server lives in `mcp/`** — a SEPARATE Cloudflare Worker (NOT the Astro app), deployed by hand (`cd mcp && npx wrangler login && npm run deploy`); it reads the live JSON API, so Phase 1 must be deployed first. Root `tsconfig.json` excludes `mcp/`. Don't merge the Worker into the static app.
 
 ## Task List

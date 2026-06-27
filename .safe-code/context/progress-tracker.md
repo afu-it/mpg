@@ -1,6 +1,6 @@
 # Progress Tracker — MPG
 
-last_synced_commit: 5d66601
+last_synced_commit: 048c8b2
 context_synced_at: 2026-06-27
 context_selftest: skipped (not first-run)
 
@@ -21,11 +21,12 @@ No server/DB. Deployed (push master → Cloudflare Pages).
 - **Compare** list cells: short chips pair 2-per-row (lone one centered), long-name chips drop to a full-width centered row, and show-more toggles all providers at once.
 - **Logos:** 59 real logos (no monograms). Square symbol-marks for wordmark brands, circle-crop (`logo_round`) for circular marks, all visible on dark (dark-on-transparent recoloured).
 - Developer-experience (MCP/webhooks/plugins/dev_docs); Jalur Gemilang theme; Clerk auth (CDN). Auto-deploy: push master → GitHub Actions → Cloudflare Pages.
+- **"Help me choose" wizard (spec 09):** `/choose` — 4-question fit-first flow → ranked shortlist (cheapest first) with reasons + Compare deep link. Powered by `src/lib/recommend.ts` (pure, tested); linked from landing/footer/learn. `recommend()` is the shared engine the planned SEO pages (Spec B) reuse.
 - **Data API (spec 08):** static `GET /api/gateways.json` + `/api/gateways/<slug>.json` (build-time, no server), documented at `/learn/api`. Each entry carries `est_fee_rm100`/`rankable` so the API matches the site ranking. **MCP server** in `mcp/` (standalone CF Worker, 4 tools over the JSON API) — built + dry-run verified, deployed separately by AFU (`cd mcp && npx wrangler login && npm run deploy`).
 
 ## Current Goal / Next Up
-- **Deploy the MCP Worker** (spec 08): `cd mcp && npx wrangler login && npm run deploy`, then connect a client to `https://mpg-mcp.<account>.workers.dev/mcp` and confirm the handshake + tools. Update `/learn/api` (and the "coming" note) with the real URL once live.
-- API + MCP built (spec 08): JSON API live on push; MCP Worker awaits AFU deploy.
+- **Spec B — programmatic SEO pages** (brainstormed as the pair to spec 09; not yet specced): pre-render `recommend()` results for common need-profiles + head-to-head "X vs Y" pages, reusing `src/lib/recommend.ts`. Own spec → plan → build.
+- API + MCP (spec 08) DONE + live: JSON API at `/api/gateways.json`; MCP Worker deployed at `https://mpg-mcp.afuitdev.workers.dev/mcp` (re-deploy: `cd mcp && npm run deploy`).
 - Ranking redesign (spec 07) shipped A→D (default lowest-fee + gating + corrected popularity); **live as of 2026-06-27**. Optional follow-ups: per-RM100 cells on `/compare`; a separate visual track for BNPL/bank/wallet rows.
 - Custom domain `malaysiapg.com.my` (MYNIC Letter of Undertaking ready) → CF Pages + Clerk `pk_live` when it lands.
 - Phase 3: public "submit a gateway" (needs server + DB).

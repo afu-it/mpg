@@ -1,7 +1,14 @@
 ---
-status: approved   # suggested | approved | in-progress | done | rejected
+status: done   # suggested | approved | in-progress | done | rejected
 created: 2026-06-27
 ---
+
+> **DONE 2026-06-27.** Built inline via executing-plans (plan: docs/superpowers/plans/
+> 2026-06-27-help-me-choose-wizard.md). `src/lib/recommend.ts` (pure, 8 vitest) +
+> `src/pages/choose.astro` + `src/scripts/choose.ts` + entry points (landing CTA, footer,
+> /learn card). astro check 0, build 70, vitest 42/42. Manual browser smoke left to AFU
+> (house rule: no chrome-devtools unless asked). Spec B (programmatic SEO) reuses recommend().
+
 # "Help me choose" wizard (`/choose`)
 
 Brainstormed + approved 2026-06-27. Spec kept in the project's feature-specs system

@@ -1,12 +1,14 @@
 # BACKLOG — operational queue
 
-_2026-06-27 (rev 8)_
+_2026-06-27 (rev 9)_
 
 - [ ] Watch: stray vite deps cache keeps appearing in a source subdir (`src/content/gateways` before, `src/pages/` on 2026-06-26). Caused by `astro dev` + `CHOKIDAR_USEPOLLING` on the NTFS mount writing its cache relative to the wrong cwd. Gitignored so harmless to git, but pollutes the tree. If it recurs, pin vite `cacheDir` to a root path in `astro.config.mjs`.
 
 - [ ] Custom domain `malaysiapg.com.my` (MYNIC Letter of Undertaking ready) → connect to the CF Pages project and switch Clerk to `pk_live` when going live.
 - [x] **Ranking redesign A→D (spec 07)** — done 2026-06-27 (effective-cost ranking + gating + Est. fee/RM100 column + per-channel sorts + corrected popularity). Live.
 - [x] **Data API (spec 08, Phase 1)** — done 2026-06-27 (static `/api/gateways.json` + per-slug + `/learn/api` docs). Live on push.
+- [x] **"Help me choose" wizard (spec 09)** — done 2026-06-27 (`/choose` + `recommend()` lib). Live on push.
+- [ ] **Spec B — programmatic SEO pages** (pair to spec 09): pre-render `recommend()` results for common need-profiles + head-to-head "X vs Y" comparison pages, reusing `src/lib/recommend.ts`. Needs its own spec → plan → build.
 - [x] **Deploy the MCP Worker (spec 08, Phase 2)** — done 2026-06-27. Live at `https://mpg-mcp.afuitdev.workers.dev/mcp`, verified end-to-end (initialize + tools/list + recommend_gateway). Real URL wired into `/learn/api` + README. Re-deploy: `cd mcp && npm run deploy`.
 - [x] Decide **Payex** — done 2026-06-27: REJECTED (payex.io is now Xendit Malaysia; already listed).
 - [ ] Optional ranking follow-ups (spec 07): per-RM100 effective-cost cells on `/compare`; separate visual track for BNPL/bank/wallet rows; decide whether ranking should require FPX (Fasspay ranks #1 on card+e-wallet but has no FPX).
