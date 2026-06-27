@@ -2,6 +2,11 @@
 
 _2026-06-27_
 
+## Data API + MCP architecture (2026-06-27, spec 08)
+- The site is static, so the "API" is build-time JSON: `src/lib/api.ts` (`toApiGateway`/`buildApiPayload`) + Astro endpoints `src/pages/api/gateways.json.ts` and `src/pages/api/gateways/[slug].json.ts` (`prerender = true`) → `dist/api/*.json`. NO server. `est_fee_rm100`/`rankable` come from `gatewayCost`, so the API mirrors the site ranking. Docs: `src/pages/learn/api.astro`.
+- MCP server is a SEPARATE Cloudflare Worker in `mcp/` (its own package.json/wrangler.jsonc/tsconfig; NOT `@astrojs/cloudflare`). `McpAgent` + `McpServer`, Streamable HTTP `MpgMCP.serve("/mcp")`, DO `MpgMCP` (`new_sqlite_classes` migration), var `MPG_API_BASE`. 4 read-only tools (list/get/compare/recommend) fetch the live JSON API (cached per isolate via module-scope cache, 10-min TTL). Root `tsconfig.json` excludes `mcp/` so astro check doesn't scan the Worker.
+- Deploy is manual + separate (GitHub Actions only deploys the Pages dist): `cd mcp && npx wrangler login && npm run deploy`. Worker needs Phase 1 (`/api/gateways.json`) live first. When the custom domain lands, update `MPG_API_BASE`.
+
 ## Fee math + ranking model (2026-06-27, spec 07)
 - `src/lib/fees.ts` is the single source of fee math. `parseFeeShape(str)` → `{pct, fixed, floor, known, indicative}` (parses %, additive `+RM`, whichever-greater/`min` floor, range→midpoint, `*`→indicative, B2C/first for tiers). `effectiveCost(shape, ticket) = max(ticket·pct/100, floor) + fixed`. `gatewayCost(fees, ticket=100)` → `{rankable, cost}`: weighted blend FPX .5 / card .3 / e-wallet .2 over known non-indicative channels, renormalised; **eligibility gate** = (FPX + card|e-wallet) OR (card + e-wallet), else `rankable:false` (cost Infinity).
 - `GatewayTable.astro` default order: rankable by cost asc, then non-rankable ("On request") by popularity desc, then name. Per-fee-column `data-sort-value` = `effectiveCostAt(cell, 100)` (unit-correct within a column). Row `data-value` = blended cost (Infinity if not rankable); `data-popularity` drives the Popularity sort option.

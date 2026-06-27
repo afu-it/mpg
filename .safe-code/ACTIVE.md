@@ -1,20 +1,16 @@
 # ACTIVE — resume point
 
 ## Last Session
-status: completed
+status: saved
 saved_at: 2026-06-27
 completed:
-  - Resumed (--continue); verified green; pushed the 6 prior local commits → CF Pages deploy (run 28278599282) → 59-gateway expansion + logos + Bank/E-wallet categories went LIVE.
-  - Payex open question RESOLVED (rejected): payex.io is now Xendit Malaysia (verified page title "Payex is now Xendit"); Xendit already listed. Closed in spec 04 + progress-tracker.
-  - Ranking audit (12-agent + adversarial workflow): proved the old "Lowest fees" valueScore was unit-broken (RM vs %, dropped add-ons, opacity reward); popularity had 16 silently-0 gateways + brand-halo errors. Captured as spec 07.
-  - Ranking redesign A→D (AFU approved full scope), built + verified:
-    - TDD rewrite src/lib/fees.ts (parseFeeShape/effectiveCost/gatewayCost) + 28 vitest.
-    - Default sort = lowest effective fee (RM100 basket, 50/30/20), gated; "On request" zone for un-rankable gateways; Est. fee/RM100 column (beside Fixed fee); Lowest FPX/card/e-wallet sorts; detail + compare use effective cost.
-    - Corrected editorial popularity on 34 .md files (filled 16 unset incl. RevPay/ManagePay; Fiuu up; Billplz/toyyibPay/senangPay/Stripe/Curlec/Boost down).
-  - Verified: vitest 28/28, astro check 0 errors, build 68 pages. Committed (3 atomic) + pushed to deploy.
+  - Pushed the prior 59-gateway expansion live (run 28278599282).
+  - Payex resolved (rejected — now Xendit).
+  - Ranking redesign A→D (spec 07): unit-correct effective-cost ranking + gating + Est. fee/RM100 column + per-channel sorts + corrected popularity. Built, verified, committed (1855633/6092b3e/7a1298c) and pushed live (run 28281111856).
+  - API + MCP (spec 08): Phase 1 static JSON API (`src/lib/api.ts` + endpoints `/api/gateways.json`, `/api/gateways/<slug>.json` + `/learn/api` docs) and Phase 2 MCP Worker (`mcp/`, McpAgent, 4 tools). Built + verified (astro check 0, build 69, vitest 34/34; worker tsc 0 + wrangler dry-run OK). Committed (22a7e9f Phase 1, 5d66601 Phase 2).
 pending:
-  - Custom domain malaysiapg.com.my (MYNIC Letter of Undertaking ready) → wire to CF Pages + Clerk pk_live when it lands.
-  - Optional ranking follow-ups (spec 07): per-RM100 cells on /compare; separate visual track for BNPL/bank/wallet rows; decide if ranking should require FPX (Fasspay ranks #1 on card+e-wallet, has no FPX).
-  - Reconsider deferred Tier 2 international PSPs (2C2P, Adyen, Omise, …) — kept Malaysian-focused per AFU.
-  - Phase 3: public submit-a-gateway (needs server + DB).
-next_action: When resuming, either wire the domain + Clerk pk_live for production, or pick up an optional spec-07 ranking follow-up. Tuning knobs (weights 50/30/20, basket RM100, gating rule) are in src/lib/fees.ts if AFU wants to adjust.
+  - **Deploy the MCP Worker**: AFU runs `cd mcp && npx wrangler login` (interactive), then `npm run deploy`. The Worker fetches the live `/api/gateways.json`, so Phase 1 must be deployed first. After deploy, connect a client to `https://mpg-mcp.<account>.workers.dev/mcp`, confirm the handshake + tools, then update `/learn/api` with the real URL.
+  - Custom domain malaysiapg.com.my (MYNIC LoU ready) → CF Pages + Clerk pk_live + update MPG_API_BASE in mcp/wrangler.jsonc.
+  - Optional ranking follow-ups (spec 07): per-RM100 cells on /compare; separate visual track for BNPL/bank/wallet; decide if ranking should require FPX.
+  - Reconsider deferred Tier 2 international PSPs; Phase 3 submit-a-gateway.
+next_action: Help AFU deploy the MCP Worker (AFU runs `npx wrangler login` first, then `npm run deploy` in mcp/), verify the live handshake, and wire the real Worker URL into /learn/api.

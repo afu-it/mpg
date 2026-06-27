@@ -1,6 +1,6 @@
 # safe-refactor-code — flagged candidates
 
-_2026-06-27 (rev 9)_
+_2026-06-27 (rev 10)_
 
 ## Resolved
 - Removed unused dependency `@clerk/clerk-js` (auth loads Clerk from CDN via `window.Clerk`).
@@ -22,3 +22,5 @@ _2026-06-27 (rev 9)_
 - Logos must stay square (1.0 aspect) symbol-marks for table consistency — don't "restore" wide wordmark logos. `logo_round: true` marks circular logos; don't drop it.
 - `compare.ts` list-cell layout (narrow-pair / wide-to-bottom / shared `listExpanded`) is intentional — don't "simplify" back to a flat per-cell toggle.
 - Don't reuse legacy iPay88 fee numbers for NTTDataPay — ADAPTIS publishes none, so it's "Contact sales".
+- `mcp/` is a SEPARATE Cloudflare Worker (own package.json/wrangler/tsconfig) — never fold it into the static Astro app or add `@astrojs/cloudflare`. Root `tsconfig.json` must keep `mcp` in `exclude` (else astro check scans the Worker and fails on Workers types). `mcp/node_modules` + `.wrangler` are gitignored.
+- The JSON API (`src/lib/api.ts` + `/api/*` endpoints) and the MCP Worker derive `est_fee_rm100`/`rankable` from `gatewayCost` — keep them sourced from `fees.ts`, don't hardcode a parallel fee number.

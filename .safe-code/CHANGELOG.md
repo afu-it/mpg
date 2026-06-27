@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 ### Added
+- **Static JSON API**: `GET /api/gateways.json` (the whole directory, machine-readable, with `est_fee_rm100`, `rankable`, `verified_date`, `source` and a disclaimer) and `GET /api/gateways/<slug>.json` (one gateway). Built at deploy time — no server. Documented at `/learn/api`.
+- **MCP server** (`mcp/`, a standalone Cloudflare Worker — deploy separately) so AI coding agents can query the directory live: `list_gateways`, `get_gateway`, `compare_gateways`, `recommend_gateway`.
 - **Est. fee / RM100** column on the gateway table (a unit-correct blended cost on a RM100 transaction, beside Fixed fee), plus **Lowest FPX / Card / E-wallet** per-channel sort options. Detail pages show the same "Est. fee on a RM100 sale".
 - 22 more gateways (directory now 59): local acquirers (Boost, Ampersand Pay, Axaipay, Fasspay, PayCools, gomobi, SecurePay, SwiF, bayarlah, J&C Pacific, FINEXUS), Touch 'n Go eWallet, and 10 bank gateways (Maybank2u Pay, CIMB e-Commerce, Public Bank, RHB, Hong Leong, AmBank, Alliance, UOB, OCBC OneCollect, HSBC Omni Collect). Boost + CIMB publish rates; the rest mostly "Contact sales".
 - New categories **Bank** and **E-wallet** (sidebar filter, table/detail/compare badges).
