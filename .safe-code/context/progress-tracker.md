@@ -1,7 +1,7 @@
 # Progress Tracker — MPG
 
-last_synced_commit: dbda774
-context_synced_at: 2026-06-26
+last_synced_commit: 6092b3e
+context_synced_at: 2026-06-27
 context_selftest: skipped (not first-run)
 
 ## Current Phase
@@ -12,7 +12,8 @@ account, plus BNPL + infrastructure). Sourced fees, popularity-ranked by default
 No server/DB. Deployed (push master → Cloudflare Pages).
 
 ## What works now
-- Landing `/`, `/gateways` (sidebar filter + sortable/searchable table + **sort dropdown**, popularity-ranked, `?category=` deep-links), `/compare` (shareable `?ids=`), `/gateway/<slug>` detail, custom `404`.
+- Landing `/`, `/gateways` (sidebar filter + sortable/searchable table + **sort dropdown**, `?category=` deep-links), `/compare` (shareable `?ids=`), `/gateway/<slug>` detail, custom `404`.
+- **Default sort = lowest estimated fee** (gated). `src/lib/fees.ts` computes a unit-correct effective cost on a RM100 basket (`parseFeeShape` → `{pct,fixed,floor}`, `effectiveCost`, `gatewayCost` weighted FPX/card/e-wallet 50/30/20). Only gateways publishing comparable official rates are ranked (18/59); single-channel / indicative-`*` / "Contact sales" gateways show **"On request"** below. Table has an **Est. fee / RM100** column (beside Fixed fee). Dropdown: Lowest fees · Popularity · Lowest FPX/card/e-wallet · Name A-Z/Z-A. (See spec 07.)
 - **59 gateways** across categories: gateway 40, bank 10, ewallet 1 (TNG), bnpl 7, infrastructure 1 (PayNet). Every entry sourced; Boost + CIMB publish rates, most banks/acquirers are "Contact sales".
 - **Categories:** Gateways / Banks / E-wallet / BNPL / Infrastructure (sidebar radio, table/detail/compare badges at text-[8px]).
 - **Access model** (`src/lib/access.ts`): each entry shows "Integrate (API/plugin)" or "Merchant account" (detail strip + compare row); /learn hub has a "Which type do you need?" explainer; category filter accepts `?category=` deep-links from /learn.
@@ -22,12 +23,13 @@ No server/DB. Deployed (push master → Cloudflare Pages).
 - Developer-experience (MCP/webhooks/plugins/dev_docs); Jalur Gemilang theme; Clerk auth (CDN). Auto-deploy: push master → GitHub Actions → Cloudflare Pages.
 
 ## Current Goal / Next Up
+- Ranking redesign (spec 07) shipped A→D (default lowest-fee + gating + corrected popularity); **live as of 2026-06-27**. Optional follow-ups: per-RM100 cells on `/compare`; a separate visual track for BNPL/bank/wallet rows.
 - Custom domain `malaysiapg.com.my` (MYNIC Letter of Undertaking ready) → CF Pages + Clerk `pk_live` when it lands.
-- Decide whether to source **Payex** (Maybank-owned). Tier 2 international PSPs (2C2P, Adyen, Omise, Worldpay, Global Payments, Fiserv, Ksher, Nomu Pay, Pine Labs) were found + deferred per AFU — revisit if wanted.
 - Phase 3: public "submit a gateway" (needs server + DB).
 
 ## Open Questions
-- Add Payex and/or the deferred Tier 2 international PSPs?
+- Reconsider the deferred Tier 2 international PSPs (2C2P, Adyen, Omise, Worldpay, Global Payments, Fiserv, Ksher, Nomu Pay, Pine Labs)? Found + deferred per AFU (Malaysian-focused).
+- Tune the ranking knobs if AFU wants: channel weighting (50/30/20), basket size (RM100), or gating rule (currently FPX + card/e-wallet, OR card+e-wallet). Should ranking require FPX (e.g. Fasspay ranks #1 on card+e-wallet but has no FPX)?
 - Per-entry access override for acquirer gateways that are "apply first" (currently derived as "Integrate" from category)?
 - Backfill `methods` for remaining all-"Contact sales" gateways if/when sourced.
 
@@ -41,5 +43,7 @@ No server/DB. Deployed (push master → Cloudflare Pages).
 - Tier 2 international PSPs SKIPPED (AFU: keep Malaysian-focused); kept as history in spec 04.
 - Excluded as non-gateways: EOS Systems, Infinitium, Sinopay, Presto Pay, Merchantrade. Excluded banks (no distinct online gateway): Affin, Bank Islam, Bank Rakyat.
 - myIOU removed (dormant). senangPay = "A DOKU Company" (same brand/URL).
+- **Payex REJECTED (2026-06-27)** — payex.io is now Xendit Malaysia; Xendit already listed. Do not re-add.
 - Logos: square symbol-marks for consistency; recolour dark logos rather than a global white plate (keeps the floating aesthetic).
-- Default table order = popularity, then value, then name. Fees never fabricated; third-party values carry trailing `*`; fee-verify stage downgrades unconfirmed numbers to "Contact sales".
+- **Default table order = lowest estimated effective fee (gated), then On-request rows by popularity** (changed 2026-06-27 from popularity-first; the old `valueScore` mean was unit-broken — see spec 07 audit). Fees never fabricated; third-party values carry trailing `*` and are excluded from the ranking; unconfirmed numbers stay "Contact sales".
+- Ranking redesign (spec 07) chosen over a one-line default flip because a 12-agent + adversarial audit proved the old "Lowest fees" mean mixed RM with %, dropped add-ons, and rewarded opacity. Editorial popularity corrected from researched market signals (estimates, not measured).

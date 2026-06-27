@@ -5,8 +5,10 @@ created: 2026-06-24
 > 2026-06-24: Added M1Pay, CardBizPay, Airwallex (sourced) + PayNet (infrastructure).
 > OnPay EXCLUDED — it is a sales-page SaaS that plugs in other gateways, not an acquirer
 > (revisit only if we add a "platform" category). Listicle rescan surfaced two more
-> candidates pending the owner's go-ahead: **Payex** (payex.io, Maybank-owned) and
-> **2C2P** (regional PSP). StoreHub = POS platform → skip. Crypto (NOWPayments) not selected.
+> candidate pending the owner's go-ahead: **2C2P** (regional PSP). StoreHub = POS
+> platform → skip. Crypto (NOWPayments) not selected. **Payex REJECTED 2026-06-27**
+> (payex.io now redirects/rebrands to Xendit Malaysia — page title "Payex is now
+> Xendit"; Xendit already listed; the earlier "Maybank-owned" note was inaccurate).
 >
 > 2026-06-26: Deep multi-agent discovery + liveness/social sweep (see "Discovery
 > 2026-06-26" below). Removed dormant **myIOU**. Added **22** new gateways across
@@ -80,6 +82,6 @@ EOS Systems (POS/HLB partner), Infinitium (3DS infra), Sinopay (UnionPay POS),
 Presto Pay (e-wallet, tied to Revenue Monster), Merchantrade (remittance).
 
 ### Still pending
-- **Payex** (payex.io, Maybank-owned) — flagged 2026-06-24, not yet sourced.
+- **Payex** — REJECTED 2026-06-27: payex.io is now Xendit Malaysia (page title "Payex is now Xendit"). Xendit already listed; do not re-add. Earlier "Maybank-owned" note was wrong.
 - senangPay now "A DOKU Company" (note added; fees unchanged).
 - Logo polish: boost, jc-pacific (favicon-size 32px); public-bank, rhb (monogram).

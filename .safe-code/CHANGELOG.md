@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 ### Added
+- **Est. fee / RM100** column on the gateway table (a unit-correct blended cost on a RM100 transaction, beside Fixed fee), plus **Lowest FPX / Card / E-wallet** per-channel sort options. Detail pages show the same "Est. fee on a RM100 sale".
 - 22 more gateways (directory now 59): local acquirers (Boost, Ampersand Pay, Axaipay, Fasspay, PayCools, gomobi, SecurePay, SwiF, bayarlah, J&C Pacific, FINEXUS), Touch 'n Go eWallet, and 10 bank gateways (Maybank2u Pay, CIMB e-Commerce, Public Bank, RHB, Hong Leong, AmBank, Alliance, UOB, OCBC OneCollect, HSBC Omni Collect). Boost + CIMB publish rates; the rest mostly "Contact sales".
 - New categories **Bank** and **E-wallet** (sidebar filter, table/detail/compare badges).
 - Access model: per-entry "Integrate (API/plugin)" vs "Merchant account" indicator (detail + compare), a /learn "Which type do you need?" explainer, and `/gateways?category=` deep-links.
@@ -24,6 +25,8 @@
 - Per-gateway logo shape handling: rounded corners for square logos, circle-crop (`logo_round`) for circular marks.
 
 ### Changed
+- **Default sort is now lowest estimated fee** (was popularity). A researched audit found the old "Lowest fees" mean mixed flat ringgit with percentages, dropped "+RM" add-ons, and rewarded gateways that hid pricing. Replaced with a unit-correct effective cost (RM100 basket, FPX/card/e-wallet weighted 50/30/20); only gateways with comparable published rates are ranked, the rest show "On request" below.
+- Corrected editorial **popularity** from researched market signals: filled 16 gateways that were silently unranked (incl. listed companies RevPay, ManagePay), and adjusted brand-halo over/under-rates (Fiuu up; Billplz, toyyibPay, senangPay, Stripe, Curlec, Boost down).
 - Logo quality overhaul: every logo QA'd on the dark theme; 30+ fixed (dark-on-transparent recoloured, tiny favicons replaced with real brand marks, marketing banners removed, wide wordmarks cropped to square symbol marks), 8 circular marks circle-cropped. Now 59 real logos, no monogram fallbacks.
 - Re-themed to a Jalur Gemilang (Malaysia flag) dark palette: blue primary buttons, lighter flag-blue accent, brand red/yellow accents, deeper surface `#0a0a0a` / panel `#141416`. FPX and DuitNow QR labels use their brand colours.
 - Refreshed logos: NTT DATA, PayHalal, RinggitPay, Bizappay, AsiaPay, Revenue Monster.

@@ -2,19 +2,19 @@
 
 ## Last Session
 status: completed
-saved_at: 2026-06-26
+saved_at: 2026-06-27
 completed:
-  - Liveness + social-recency sweep on all 38 gateways (multi-agent workflows). Removed dormant myIOU. senangPay noted as "A DOKU Company"; ipay88/NTT DATA confirmed.
-  - Deep discovery (363 raw → 185 deduped, BNM-corroborated). Added 22 gateways: Tier 1 local acquirers (11), Tier 3 TNG eWallet (1), Tier 4 bank gateways (10). Directory 38 → 59. Skipped Tier 2 international PSPs per AFU.
-  - New Bank + E-wallet categories (schema, sidebar, badges, compare). Badges shrunk to text-[8px].
-  - Access model (lib/access.ts): per-entry Integrate-vs-Merchant-account indicator (detail + compare) + /learn "Which type do you need?" block + ?category= deep-links.
-  - Sort dropdown on /gateways (Popularity / Lowest fees / Name A-Z / Name Z-A).
-  - Compare list cells: lone-badge centering, long-name chips to full-width row, global show-more across providers.
-  - Logo overhaul: QA'd all 59 on dark; fixed/replaced 30+ (recolour dark-on-transparent, replace tiny favicons, remove banners, square wide wordmarks to symbol marks), 8 circle-crops. Official art for J&C/Fasspay/RHB/Public Bank/HLB. 59 real logos, 0 monograms.
-  - Verified: astro check 0, build 68 pages, vitest 11/11.
+  - Resumed (--continue); verified green; pushed the 6 prior local commits → CF Pages deploy (run 28278599282) → 59-gateway expansion + logos + Bank/E-wallet categories went LIVE.
+  - Payex open question RESOLVED (rejected): payex.io is now Xendit Malaysia (verified page title "Payex is now Xendit"); Xendit already listed. Closed in spec 04 + progress-tracker.
+  - Ranking audit (12-agent + adversarial workflow): proved the old "Lowest fees" valueScore was unit-broken (RM vs %, dropped add-ons, opacity reward); popularity had 16 silently-0 gateways + brand-halo errors. Captured as spec 07.
+  - Ranking redesign A→D (AFU approved full scope), built + verified:
+    - TDD rewrite src/lib/fees.ts (parseFeeShape/effectiveCost/gatewayCost) + 28 vitest.
+    - Default sort = lowest effective fee (RM100 basket, 50/30/20), gated; "On request" zone for un-rankable gateways; Est. fee/RM100 column (beside Fixed fee); Lowest FPX/card/e-wallet sorts; detail + compare use effective cost.
+    - Corrected editorial popularity on 34 .md files (filled 16 unset incl. RevPay/ManagePay; Fiuu up; Billplz/toyyibPay/senangPay/Stripe/Curlec/Boost down).
+  - Verified: vitest 28/28, astro check 0 errors, build 68 pages. Committed (3 atomic) + pushed to deploy.
 pending:
   - Custom domain malaysiapg.com.my (MYNIC Letter of Undertaking ready) → wire to CF Pages + Clerk pk_live when it lands.
-  - Decide: add Payex (payex.io, Maybank-owned)? Still unsourced (spec 04). 2C2P + other international PSPs were deferred (Tier 2 skipped) — revisit if AFU wants foreign PSPs.
+  - Optional ranking follow-ups (spec 07): per-RM100 cells on /compare; separate visual track for BNPL/bank/wallet rows; decide if ranking should require FPX (Fasspay ranks #1 on card+e-wallet, has no FPX).
+  - Reconsider deferred Tier 2 international PSPs (2C2P, Adyen, Omise, …) — kept Malaysian-focused per AFU.
   - Phase 3: public submit-a-gateway (needs server + DB).
-  - Optional: per-entry access override (some acquirer gateways are "apply first" but derive as "Integrate" from category).
-next_action: When resuming, either wire the domain + Clerk pk_live for production, or source Payex / reconsider the Tier 2 international PSPs.
+next_action: When resuming, either wire the domain + Clerk pk_live for production, or pick up an optional spec-07 ranking follow-up. Tuning knobs (weights 50/30/20, basket RM100, gating rule) are in src/lib/fees.ts if AFU wants to adjust.

@@ -1,6 +1,6 @@
 # safe-refactor-code — flagged candidates
 
-_2026-06-26 (rev 8)_
+_2026-06-27 (rev 9)_
 
 ## Resolved
 - Removed unused dependency `@clerk/clerk-js` (auth loads Clerk from CDN via `window.Clerk`).
@@ -11,10 +11,10 @@ _2026-06-26 (rev 8)_
 
 ## Guardrails
 - Do not "optimize" by re-adding `@clerk/astro` / `@astrojs/cloudflare` (Astro 7 incompatible).
-- Keep `parseFee()` the single source of fee→number logic (used by `valueScore`, `data-sort-value`, compare).
+- Keep `src/lib/fees.ts` the single source of fee math: `parseFeeShape` ({pct,fixed,floor,known,indicative}) + `effectiveCost`/`effectiveCostAt` + `gatewayCost` (gated, weighted). Used by `GatewayTable.astro`, `data-sort-value`, `compare.ts`, detail page. The old first-%-only `parseFee`/`compareFee` were removed (unit-broken — see spec 07); do not reintroduce a single-number fee proxy.
 - Keep `src/lib/fpx-banks.ts` as the single FPX bank source — never inline/duplicate the list in a gateway `.md` or component.
 - Never strip the trailing ` *` from a fee value as "cleanup" — it marks third-party/indicative data and is explained by a legend. Removing it would misrepresent unofficial rates as official.
-- `popularity` is the primary default-sort key (DESC) in `GatewayTable.astro`, with `valueScore` as tiebreaker — don't "simplify" it back to value-only or alphabetical. It's editorial; changing numbers is fine, removing the field is not.
+- Default sort is **lowest effective fee, gated** (`gatewayCost`): rankable rows by cost asc, then non-rankable ("On request") by popularity. Don't "simplify" the two-tier order back to a single mean or to popularity-first. `popularity` is editorial (a sort option + the On-request tiebreaker); changing numbers is fine, removing the field is not. The eligibility gate (FPX + card/e-wallet, OR card+e-wallet; indicative `*` excluded) is deliberate — don't drop it or single-channel/opaque gateways will fake-lead the ranking again.
 - Don't "tidy" the `#top-progress` bar to a Tailwind `scale-*` class — it sets the CSS `scale` property and collapses the bar to 0 width. Keep the inline `transform: scaleX()` JS.
 - Don't strip `{" "}` spacers in `.astro` prose as "noise" — they fix Astro's newline-before-inline-tag whitespace gluing.
 - Don't remove em-dashes' replacement punctuation back to em-dashes; no em-dashes in prose is house style. The standalone `"—"` fee placeholder is data, keep it.

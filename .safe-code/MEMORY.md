@@ -1,6 +1,12 @@
 # MEMORY — temporary audit/architecture notes
 
-_2026-06-26_
+_2026-06-27_
+
+## Fee math + ranking model (2026-06-27, spec 07)
+- `src/lib/fees.ts` is the single source of fee math. `parseFeeShape(str)` → `{pct, fixed, floor, known, indicative}` (parses %, additive `+RM`, whichever-greater/`min` floor, range→midpoint, `*`→indicative, B2C/first for tiers). `effectiveCost(shape, ticket) = max(ticket·pct/100, floor) + fixed`. `gatewayCost(fees, ticket=100)` → `{rankable, cost}`: weighted blend FPX .5 / card .3 / e-wallet .2 over known non-indicative channels, renormalised; **eligibility gate** = (FPX + card|e-wallet) OR (card + e-wallet), else `rankable:false` (cost Infinity).
+- `GatewayTable.astro` default order: rankable by cost asc, then non-rankable ("On request") by popularity desc, then name. Per-fee-column `data-sort-value` = `effectiveCostAt(cell, 100)` (unit-correct within a column). Row `data-value` = blended cost (Infinity if not rankable); `data-popularity` drives the Popularity sort option.
+- `table.ts` builds `colIndex` from `data-col-key` on fee column headers → per-channel sorts (Lowest FPX/card/e-wallet) and column reordering are safe without touching the script.
+- WHY (audit): old `valueScore` mean averaged flat RM with %, dropped `+RM`, and rewarded opaque/single-channel disclosure → TNG #1 on one figure, Stripe last for honesty, 34/59 unscored. Don't regress to a single-number proxy. Tuning knobs: weights 50/30/20, basket RM100 (`REF_TICKET`), gate rule — all in fees.ts.
 
 ## Categories + access model (2026-06-26)
 - `category` enum (`content.config.ts`): gateway (default) / bank / ewallet / bnpl / infrastructure. Banks → `bank`, TNG → `ewallet`. Boost kept `gateway` (full multi-channel gateway, not just wallet acceptance).
