@@ -1,0 +1,95 @@
+---
+export const prerender = true;
+
+import { getCollection } from "astro:content";
+import Base from "../layouts/Base.astro";
+import { toApiGateway, type GatewayEntryLike } from "../lib/api";
+
+const entries = (await getCollection("gateways")) as unknown as GatewayEntryLike[];
+
+const logos = import.meta.glob("/src/assets/logos/*.{svg,png,webp}", {
+  eager: true, query: "?url", import: "default",
+});
+const logoBySlug: Record<string, string> = {};
+for (const [path, url] of Object.entries(logos)) {
+  const key = path.split("/").pop()!.replace(/\.\w+$/, "");
+  if (!logoBySlug[key] || path.endsWith(".svg")) logoBySlug[key] = url as string;
+}
+
+const data = entries.map((e) => ({ ...toApiGateway(e), logo: logoBySlug[e.id] ?? null }));
+
+const channels = [
+  { key: "fpx", label: "FPX (online banking)" },
+  { key: "card", label: "Cards" },
+  { key: "ewallet", label: "E-wallets" },
+  { key: "duitnowqr", label: "DuitNow QR" },
+  { key: "bnpl", label: "BNPL (instalments)" },
+];
+const card = "block rounded-md border border-line bg-panel p-4 cursor-pointer hover:border-accent";
+---
+
+<Base
+  title="Help me choose a Malaysia payment gateway | MPG"
+  description="Answer a few questions and get a ranked shortlist of Malaysian payment gateways that fit your needs, cheapest first."
+>
+  <div class="mx-auto max-w-2xl">
+    <h1 class="text-2xl font-semibold tracking-tight text-fg">Help me choose</h1>
+    <p class="mt-2 text-muted">
+      Answer up to four questions. We will shortlist the gateways that fit, cheapest first.
+    </p>
+
+    <form id="choose-form" class="mt-8 space-y-4">
+      <!-- Step 1: integration style -->
+      <fieldset data-step="0" class="space-y-3">
+        <legend class="mb-1 text-base font-medium text-fg">How do you want to integrate?</legend>
+        {
+          [{ v: "any", l: "No preference" }, { v: "nocode", l: "No-code (payment links)" }, { v: "developer", l: "Developer (API / plugin)" }].map((o) => (
+            <label class={card}><input type="radio" name="integration" value={o.v} checked={o.v === "any"} class="mr-2" />{o.l}</label>
+          ))
+        }
+      </fieldset>
+
+      <!-- Step 2: channels (multi) -->
+      <fieldset data-step="1" hidden class="space-y-3">
+        <legend class="mb-1 text-base font-medium text-fg">Which payment methods do you need?</legend>
+        {
+          channels.map((c) => (
+            <label class={card}><input type="checkbox" name="channel" value={c.key} class="mr-2" />{c.label}</label>
+          ))
+        }
+      </fieldset>
+
+      <!-- Step 3: recurring -->
+      <fieldset data-step="2" hidden class="space-y-3">
+        <legend class="mb-1 text-base font-medium text-fg">Do you need recurring / subscriptions?</legend>
+        {
+          [{ v: "any", l: "No preference" }, { v: "yes", l: "Yes" }, { v: "no", l: "No" }].map((o) => (
+            <label class={card}><input type="radio" name="recurring" value={o.v} checked={o.v === "any"} class="mr-2" />{o.l}</label>
+          ))
+        }
+      </fieldset>
+
+      <!-- Step 4: access type -->
+      <fieldset data-step="3" hidden class="space-y-3">
+        <legend class="mb-1 text-base font-medium text-fg">How do you want to onboard?</legend>
+        {
+          [{ v: "any", l: "No preference" }, { v: "integrate", l: "Integrate yourself (gateway)" }, { v: "account", l: "Merchant account (bank / e-wallet)" }, { v: "bnpl", l: "BNPL at checkout" }].map((o) => (
+            <label class={card}><input type="radio" name="access" value={o.v} checked={o.v === "any"} class="mr-2" />{o.l}</label>
+          ))
+        }
+      </fieldset>
+
+      <div id="choose-nav" class="flex items-center gap-3 pt-2">
+        <button type="button" id="choose-back" hidden class="rounded-md border border-line px-4 py-2 text-sm text-muted hover:text-fg">Back</button>
+        <button type="button" id="choose-next" class="ml-auto rounded-md bg-accent px-4 py-2 text-sm font-medium text-white">Next</button>
+      </div>
+    </form>
+
+    <div id="choose-results" hidden class="mt-8"></div>
+  </div>
+
+  <script type="application/json" id="gw-data" set:html={JSON.stringify(data)} />
+  <script>
+    import "../scripts/choose.ts";
+  </script>
+</Base>

@@ -12,6 +12,8 @@ function gw(p: Partial<ApiGateway> & { slug: string }): ApiGateway {
     tagline: "",
     access: { key: "integrate", short: "Integrate" },
     fees: {},
+    settlement: "T+1",
+    min_txn: "—",
     est_fee_rm100: p.est_fee_rm100 ?? null,
     rankable: p.rankable ?? (p.est_fee_rm100 != null),
     channels: p.channels ?? [],
