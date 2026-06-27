@@ -31,7 +31,7 @@ const setupFlow = [
 
 const gateways = await getCollection("gateways");
 
-// Gateways that map to a setup-* skill, sorted by popularity (matches the table default).
+// Gateways that map to a setup-* skill, most widely-used first (editorial popularity).
 const withSkill = gateways
   .filter((g) => g.data.skill)
   .sort((a, b) => b.data.popularity - a.data.popularity)

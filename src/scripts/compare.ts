@@ -1,5 +1,5 @@
 // Side-by-side gateway comparison. Fully client-side over embedded JSON.
-import { parseFee } from "../lib/fees";
+import { effectiveCostAt } from "../lib/fees";
 import { splitName } from "../lib/name";
 import { FPX_BANKS } from "../lib/fpx-banks";
 import { accessInfo } from "../lib/access";
@@ -214,7 +214,7 @@ if (dataEl && root) {
       // precompute best (lowest) fee for fee rows
       let bestVal = Infinity;
       if (row.kind === "fee") {
-        const nums = gws.map((g) => parseFee(g.fees[row.key] ?? "—")).filter((n) => Number.isFinite(n));
+        const nums = gws.map((g) => effectiveCostAt(g.fees[row.key] ?? "—", 100)).filter((n) => Number.isFinite(n));
         if (nums.length >= 2) bestVal = Math.min(...nums);
       }
 
@@ -224,7 +224,7 @@ if (dataEl && root) {
           const v = g.fees[row.key] ?? "—";
           td.textContent = v;
           if (muted(v)) td.classList.add("text-muted");
-          if (Number.isFinite(bestVal) && parseFee(v) === bestVal) {
+          if (Number.isFinite(bestVal) && effectiveCostAt(v, 100) === bestVal) {
             td.classList.add("font-semibold", "text-accent");
             td.title = "Lowest in this row";
           }

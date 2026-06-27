@@ -78,6 +78,12 @@ if (table && table.tBodies[0]) {
 
   // ---- sorting ----
   const headerCells = Array.from(table.tHead?.rows[0]?.cells ?? []);
+  // map a channel key (fpx/card/ewallet/…) to its column index, for per-channel sorts
+  const colIndex: Record<string, number> = {};
+  headerCells.forEach((cell, i) => {
+    const k = cell.getAttribute("data-col-key");
+    if (k) colIndex[k] = i;
+  });
   let sortIndex = -1;
   let sortDir: "asc" | "desc" = "asc";
 
@@ -132,12 +138,25 @@ if (table && table.tBodies[0]) {
     return a === b ? 0 : a < b ? -1 : 1; // Infinity-safe (unknown fees sink)
   }
 
+  function colVal(row: HTMLTableRowElement, idx: number): string {
+    const c = row.cells[idx];
+    return c ? (c.getAttribute("data-sort-value") ?? c.textContent ?? "") : "";
+  }
+
   function applyDropdownSort(key: string) {
     let sorted: HTMLTableRowElement[];
     if (key === "value") {
+      // Lowest fees = blended effective cost; "On request" rows (Infinity) sink.
       sorted = [...defaultOrder].sort((a, b) =>
         cmpNum(a.dataset.value ?? "Infinity", b.dataset.value ?? "Infinity"),
       );
+    } else if (key === "popularity") {
+      sorted = [...defaultOrder].sort((a, b) => {
+        const pa = parseFloat(a.dataset.popularity ?? "0");
+        const pb = parseFloat(b.dataset.popularity ?? "0");
+        if (pa !== pb) return pb - pa; // higher popularity first
+        return (a.dataset.name ?? "").localeCompare(b.dataset.name ?? "");
+      });
     } else if (key === "name-asc") {
       sorted = [...defaultOrder].sort((a, b) =>
         (a.dataset.name ?? "").localeCompare(b.dataset.name ?? ""),
@@ -146,8 +165,12 @@ if (table && table.tBodies[0]) {
       sorted = [...defaultOrder].sort((a, b) =>
         (b.dataset.name ?? "").localeCompare(a.dataset.name ?? ""),
       );
+    } else if (key in colIndex) {
+      // per-channel sort (Lowest FPX / card / e-wallet) by effective cost, asc
+      const idx = colIndex[key];
+      sorted = [...defaultOrder].sort((a, b) => cmpNum(colVal(a, idx), colVal(b, idx)));
     } else {
-      sorted = defaultOrder; // popularity = restore server default order
+      sorted = defaultOrder; // restore server default order
     }
     for (const row of sorted) tbody.appendChild(row);
     // dropdown owns the sort now: clear header arrows

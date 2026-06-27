@@ -1,29 +1,31 @@
 ---
 import { getCollection } from "astro:content";
-import { parseFee } from "../lib/fees";
+import { gatewayCost, effectiveCostAt, REF_TICKET } from "../lib/fees";
 import { splitName } from "../lib/name";
 import Logo from "./Logo.astro";
 import FeeCell from "./FeeCell.astro";
 import FeatureBadge from "./FeatureBadge.astro";
 
-// "Value" proxy: mean of the published core rates (FPX / card / e-wallet); lower = better
-// value. Gateways with no published rate ("Contact sales"/"—") sink to the bottom.
-function valueScore(g: { data: { fees: Record<string, string | undefined> } }): number {
-  const vals = [g.data.fees.fpx, g.data.fees.card, g.data.fees.ewallet]
-    .map((v) => parseFee(v ?? ""))
-    .filter((n) => Number.isFinite(n));
-  return vals.length ? vals.reduce((a, b) => a + b, 0) / vals.length : Infinity;
-}
+// Each gateway gets a blended effective cost (RM on a RM100 transaction) and a
+// `rankable` flag. Only gateways that publish official rates for a comparable
+// channel set are ranked by fee; the rest ("Pricing on request") sort below.
+const entries = (await getCollection("gateways")).map((g) => ({
+  g,
+  ...gatewayCost(g.data.fees, REF_TICKET),
+}));
 
-// Default order = most widely used first (editorial popularity), then best value, then name.
-const gateways = (await getCollection("gateways")).sort((a, b) => {
-  if (b.data.popularity !== a.data.popularity) return b.data.popularity - a.data.popularity;
-  const sa = valueScore(a);
-  const sb = valueScore(b);
-  if (sa !== sb) return sa - sb;
-  return a.data.name.localeCompare(b.data.name);
+// Default order = cheapest published effective cost first; un-rankable gateways
+// drop below, ordered by editorial popularity then name.
+entries.sort((a, b) => {
+  if (a.rankable !== b.rankable) return a.rankable ? -1 : 1;
+  if (a.rankable && b.rankable && a.cost !== b.cost) return a.cost - b.cost;
+  if (b.g.data.popularity !== a.g.data.popularity) return b.g.data.popularity - a.g.data.popularity;
+  return a.g.data.name.localeCompare(b.g.data.name);
 });
-const total = gateways.length;
+const total = entries.length;
+const rankedCount = entries.filter((e) => e.rankable).length;
+
+const rm = (n: number) => `RM${n.toFixed(2)}`;
 
 // header cells: label + whether sortable + sort type
 const feeCols = [
@@ -43,6 +45,7 @@ const td = "whitespace-nowrap px-3 py-3 align-middle";
 
 <p class="mb-3 text-sm text-muted">
   Showing <span id="gw-count" class="text-fg">{total}</span> of {total} gateways
+  · <span class="text-fg">{rankedCount}</span> with comparable published pricing
 </p>
 
 <div class="overflow-x-auto rounded-md border border-line">
@@ -54,9 +57,24 @@ const td = "whitespace-nowrap px-3 py-3 align-middle";
             Gateway <span class="sort-arrow text-accent" aria-hidden="true"></span>
           </button>
         </th>
+        <th scope="col" class={th} aria-sort="none">
+          <button
+            type="button"
+            class={sortBtn}
+            data-sort-type="num"
+            title="Estimated processing fee on a RM100 transaction, blending FPX/card/e-wallet (50/30/20). Indicative; see note below."
+          >
+            Est. fee / RM100 <span class="sort-arrow text-accent" aria-hidden="true"></span>
+          </button>
+        </th>
+        <th scope="col" class={th} aria-sort="none">
+          <button type="button" class={sortBtn} data-sort-type="num" title="Setup / recurring">
+            Fixed fee <span class="sort-arrow text-accent" aria-hidden="true"></span>
+          </button>
+        </th>
         {
           feeCols.map((c) => (
-            <th scope="col" class={th} aria-sort="none">
+            <th scope="col" class={th} data-col-key={c.key} aria-sort="none">
               <button type="button" class={sortBtn} data-sort-type="num">
                 {c.key === "duitnowqr" ? <span class="text-duitnow">{c.label}</span> : c.key === "fpx" ? <span class="text-fpx">{c.label}</span> : c.label} <span class="sort-arrow text-accent" aria-hidden="true" />
               </button>
@@ -69,11 +87,6 @@ const td = "whitespace-nowrap px-3 py-3 align-middle";
           </button>
         </th>
         <th scope="col" class={th} aria-sort="none">
-          <button type="button" class={sortBtn} data-sort-type="num" title="Setup / recurring">
-            Fixed fee <span class="sort-arrow text-accent" aria-hidden="true"></span>
-          </button>
-        </th>
-        <th scope="col" class={th} aria-sort="none">
           <button type="button" class={sortBtn} data-sort-type="num">
             Recurring <span class="sort-arrow text-accent" aria-hidden="true"></span>
           </button>
@@ -83,12 +96,14 @@ const td = "whitespace-nowrap px-3 py-3 align-middle";
 
     <tbody>
       {
-        gateways.map((g) => (
+        entries.map(({ g, rankable, cost }) => (
           <tr
             class="cursor-pointer border-b border-line/60 last:border-0 hover:bg-panel"
             data-name={g.data.name.toLowerCase()}
             data-category={g.data.category}
-            data-value={String(valueScore(g))}
+            data-value={rankable ? String(cost) : "Infinity"}
+            data-popularity={String(g.data.popularity)}
+            data-rankable={String(rankable)}
             data-channels={g.data.channels.join(" ")}
             data-no_code={String(g.data.features.no_code)}
             data-api={String(g.data.features.api)}
@@ -135,22 +150,29 @@ const td = "whitespace-nowrap px-3 py-3 align-middle";
                 )}
               </a>
             </td>
+            <td class={td} data-sort-value={rankable ? String(cost) : "Infinity"}>
+              {rankable ? (
+                <span class="font-medium text-fg" title="Estimated blended fee on a RM100 transaction">{rm(cost)}</span>
+              ) : (
+                <span class="text-muted" title="No comparable published pricing — contact the provider for a quote">On request</span>
+              )}
+            </td>
+            <td class={td} data-sort-value={String(effectiveCostAt(g.data.fees.monthly, REF_TICKET))}>
+              <FeeCell value={g.data.fees.setup} />
+              {g.data.fees.monthly !== g.data.fees.setup && (
+                <span class="ml-1 text-xs text-muted">/ {g.data.fees.monthly}</span>
+              )}
+            </td>
             {feeCols.map((c) => {
               const v = g.data.fees[c.key] ?? "—";
               return (
-                <td class={td} data-sort-value={String(parseFee(v))}>
+                <td class={td} data-sort-value={String(effectiveCostAt(v, REF_TICKET))}>
                   <FeeCell value={v} />
                 </td>
               );
             })}
             <td class={td} data-sort-value={g.data.settlement.toLowerCase()}>
               <FeeCell value={g.data.settlement} />
-            </td>
-            <td class={td} data-sort-value={String(parseFee(g.data.fees.monthly))}>
-              <FeeCell value={g.data.fees.setup} />
-              {g.data.fees.monthly !== g.data.fees.setup && (
-                <span class="ml-1 text-xs text-muted">/ {g.data.fees.monthly}</span>
-              )}
             </td>
             <td class={td} data-sort-value={g.data.features.recurring ? "0" : "1"}>
               <FeatureBadge on={g.data.features.recurring} label="Recurring" />
@@ -167,8 +189,11 @@ const td = "whitespace-nowrap px-3 py-3 align-middle";
 </div>
 
 <p class="mt-2 text-xs text-muted">
-  <span class="text-fg">*</span> Indicative rate from a third-party source, not officially
-  published. Always confirm with the provider.
+  <span class="text-fg">Est. fee / RM100</span> is an indicative blended cost on a
+  RM100 transaction (FPX/card/e-wallet weighted 50/30/20), counting flat add-ons.
+  Gateways without comparable published rates show <span class="text-fg">On request</span>
+  and are not ranked by fee. <span class="text-fg">*</span> marks an indicative
+  third-party rate, excluded from the ranking. Always confirm with the provider.
 </p>
 
 <style>

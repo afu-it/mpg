@@ -23,7 +23,8 @@ import GatewayTable from "../components/GatewayTable.astro";
             Malaysia Payment Gateways
           </h1>
           <p class="mt-1 text-sm text-muted">
-            Ranked by popularity (most-used in Malaysia) by default. Click a column to re-sort.
+            Ranked by lowest estimated fee (RM100 basket) by default. Gateways without
+            comparable published rates show "On request" below. Click a column to re-sort.
           </p>
         </div>
         <!-- sort dropdown: sits to the left of the search box -->
@@ -54,7 +55,7 @@ import GatewayTable from "../components/GatewayTable.astro";
               <path d="M17 4v16"></path>
             </svg>
             <span class="text-muted/80">Sort:</span>
-            <span id="gw-sort-label" class="min-w-0 flex-1 truncate text-left text-fg">Popularity</span>
+            <span id="gw-sort-label" class="min-w-0 flex-1 truncate text-left text-fg">Lowest fees</span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -77,8 +78,11 @@ import GatewayTable from "../components/GatewayTable.astro";
           >
             {
               [
-                { key: "popularity", label: "Popularity", checked: true },
-                { key: "value", label: "Lowest fees", checked: false },
+                { key: "value", label: "Lowest fees", checked: true },
+                { key: "popularity", label: "Popularity", checked: false },
+                { key: "fpx", label: "Lowest FPX", checked: false },
+                { key: "card", label: "Lowest card", checked: false },
+                { key: "ewallet", label: "Lowest e-wallet", checked: false },
                 { key: "name-asc", label: "Name A-Z", checked: false },
                 { key: "name-desc", label: "Name Z-A", checked: false },
               ].map((o) => (

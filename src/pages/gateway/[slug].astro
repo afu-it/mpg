@@ -10,6 +10,7 @@ import FeatureBadge from "../../components/FeatureBadge.astro";
 import { FPX_BANKS, FPX_BANKS_SOURCE } from "../../lib/fpx-banks";
 import { skillRepoUrl, skillInstallCommand, agentPrompt } from "../../lib/learn";
 import { accessInfo } from "../../lib/access";
+import { gatewayCost, REF_TICKET } from "../../lib/fees";
 
 export async function getStaticPaths() {
   const gateways = await getCollection("gateways");
@@ -53,6 +54,8 @@ const features = [
 ];
 
 const access = accessInfo(d.category);
+// Blended estimated fee on a RM100 transaction (matches the directory ranking).
+const est = gatewayCost(d.fees, REF_TICKET);
 
 const mcpLabel =
   d.mcp === "official"
@@ -130,6 +133,17 @@ const installCmd = d.skill ? skillInstallCommand(d.skill) : null;
     <!-- fees -->
     <section>
       <h2 class="mb-3 text-sm font-medium uppercase tracking-wide text-muted">Fees</h2>
+      <div class="mb-3 flex items-baseline gap-2 rounded-md border border-line bg-panel px-3 py-2">
+        <span class="text-sm text-muted">Est. fee on a RM100 sale</span>
+        {
+          est.rankable ? (
+            <span class="text-lg font-semibold text-fg">RM{est.cost.toFixed(2)}</span>
+          ) : (
+            <span class="text-sm text-muted">On request</span>
+          )
+        }
+        <span class="ml-auto text-xs text-muted">FPX/card/e-wallet weighted 50/30/20 · indicative</span>
+      </div>
       <div class="overflow-hidden rounded-md border border-line">
         <table class="w-full text-sm">
           <tbody>
