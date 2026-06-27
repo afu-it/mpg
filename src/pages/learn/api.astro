@@ -1,0 +1,123 @@
+---
+export const prerender = true;
+
+import Base from "../../layouts/Base.astro";
+
+const BASE = "https://mpg-1hw.pages.dev";
+
+const fields = [
+  { name: "slug", desc: "Stable id, matches /gateway/<slug> and the per-gateway endpoint." },
+  { name: "name, tagline, website, category", desc: "Display basics. category = gateway | bank | ewallet | bnpl | infrastructure." },
+  { name: "access", desc: "{ key, short } — how a merchant onboards: integrate | account | infrastructure." },
+  { name: "fees", desc: "Raw published fee strings per channel (fpx, card, card_intl, ewallet, duitnowqr, bnpl, setup, monthly). A trailing ' *' means third-party/indicative." },
+  { name: "est_fee_rm100", desc: "Blended effective cost (RM) on a RM100 sale, FPX/card/e-wallet weighted 50/30/20. null when the gateway has no comparable published rates." },
+  { name: "rankable", desc: "true when est_fee_rm100 is comparable; false gateways are 'pricing on request'." },
+  { name: "channels, features, methods, banks", desc: "Supported rails, capability flags (no_code/api/recurring), e-wallets, and FPX banks." },
+  { name: "mcp, webhooks, plugins, dev_docs, skill", desc: "Developer experience: AI-agent MCP support, webhooks, CMS plugins, API docs, and the matching setup-* skill." },
+  { name: "popularity", desc: "Editorial market-presence score (0-100). Estimate, not a measured metric." },
+  { name: "verified_date, source", desc: "When the fees were last checked, and where they came from. Always reconfirm before relying on them." },
+];
+---
+
+<Base
+  title="Data API: query Malaysian payment gateways as JSON | MPG"
+  description="Free static JSON API for the MPG directory: every Malaysian payment gateway with fees, an estimated effective cost, channels, features and developer-experience data."
+>
+  <header class="max-w-2xl">
+    <h1 class="text-2xl font-semibold tracking-tight text-fg">Data API</h1>
+    <p class="mt-2 text-muted">
+      The whole directory as machine-readable JSON, so your code or AI agent can
+      pick a gateway programmatically. It is a static file rebuilt on every deploy,
+      so it is fast, free, and always matches what you see on the site.
+    </p>
+  </header>
+
+  <!-- endpoints -->
+  <section class="mt-8">
+    <h2 class="text-base font-medium text-fg">Endpoints</h2>
+    <div class="mt-3 space-y-3">
+      <div class="rounded-md border border-line bg-panel p-4">
+        <code class="text-sm text-accent">GET /api/gateways.json</code>
+        <p class="mt-1.5 text-sm text-muted">All gateways, ordered like the site (lowest estimated fee first, then "on request" by popularity), wrapped with <code class="text-fg">schema</code>, <code class="text-fg">generated_at</code>, <code class="text-fg">count</code>, a <code class="text-fg">disclaimer</code> and the <code class="text-fg">weighting</code>.</p>
+        <a href="/api/gateways.json" class="mt-2 inline-block text-sm text-accent hover:underline">View {BASE}/api/gateways.json →</a>
+      </div>
+      <div class="rounded-md border border-line bg-panel p-4">
+        <code class="text-sm text-accent">GET /api/gateways/&lt;slug&gt;.json</code>
+        <p class="mt-1.5 text-sm text-muted">A single gateway object (same shape as one item in the array above).</p>
+        <a href="/api/gateways/chip.json" class="mt-2 inline-block text-sm text-accent hover:underline">Example: /api/gateways/chip.json →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- examples -->
+  <section class="mt-8">
+    <h2 class="text-base font-medium text-fg">Examples</h2>
+    <div class="mt-3 space-y-4">
+      <div>
+        <p class="mb-1.5 text-sm text-muted">Fetch the whole directory:</p>
+        <pre class="overflow-x-auto rounded-md border border-line bg-raised p-3 text-xs text-fg"><code>curl -s {BASE}/api/gateways.json</code></pre>
+      </div>
+      <div>
+        <p class="mb-1.5 text-sm text-muted">Cheapest gateways that support FPX, with a real published rate (jq):</p>
+        <pre class="overflow-x-auto rounded-md border border-line bg-raised p-3 text-xs text-fg"><code>{`curl -s ${BASE}/api/gateways.json \\
+  | jq '.gateways
+        | map(select(.rankable and (.channels | index("fpx"))))
+        | sort_by(.est_fee_rm100)
+        | .[0:5]
+        | map({slug, est_fee_rm100})'`}</code></pre>
+      </div>
+      <div>
+        <p class="mb-1.5 text-sm text-muted">In JavaScript:</p>
+        <pre class="overflow-x-auto rounded-md border border-line bg-raised p-3 text-xs text-fg"><code>{`const { gateways } = await fetch(
+  "${BASE}/api/gateways.json"
+).then((r) => r.json());
+
+const recurringWithMcp = gateways.filter(
+  (g) => g.features.recurring && g.mcp === "official"
+);`}</code></pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- fields -->
+  <section class="mt-8">
+    <h2 class="text-base font-medium text-fg">Fields</h2>
+    <div class="mt-3 overflow-hidden rounded-md border border-line">
+      <table class="w-full text-sm">
+        <tbody>
+          {
+            fields.map((f, i) => (
+              <tr class={i % 2 ? "bg-panel" : ""}>
+                <th scope="row" class="whitespace-nowrap px-3 py-2 text-left align-top font-mono text-xs font-normal text-fg">
+                  {f.name}
+                </th>
+                <td class="px-3 py-2 text-muted">{f.desc}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- disclaimer -->
+  <section class="mt-8 rounded-md border border-line bg-panel p-5">
+    <h2 class="text-base font-medium text-fg">Use the fees responsibly</h2>
+    <p class="mt-1.5 max-w-2xl text-sm text-muted">
+      Fees are indicative and change. Values marked with a trailing <span class="text-fg">*</span>
+      are third-party / not officially published, and <code class="text-fg">est_fee_rm100</code>
+      is a modelled estimate, not a quote. Always confirm with the provider and check each
+      gateway's <code class="text-fg">verified_date</code> and <code class="text-fg">source</code>.
+    </p>
+  </section>
+
+  <!-- MCP coming -->
+  <section class="mt-6 rounded-md border border-line bg-panel p-5">
+    <h2 class="text-base font-medium text-fg">MCP server (coming)</h2>
+    <p class="mt-1.5 max-w-2xl text-sm text-muted">
+      An MCP server is planned so AI coding agents (Claude, Cursor) can query this
+      directory live while you build, on top of the same data. See
+      <a href="/learn/ai-agents" class="text-accent hover:underline">Build with AI agents</a>.
+    </p>
+  </section>
+</Base>
