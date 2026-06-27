@@ -24,6 +24,7 @@ features:
   recurring: false
 webhooks: true
 dev_docs: "https://www.m1pay.com.my/assets/documents/M1Pay_IntegrationGuideline.pdf"
+popularity: 18
 verified_date: "2026-06-24"
 source: "https://www.m1pay.com.my"
 notes: "Operated by MobilityOne Sdn Bhd, a KL-based fintech. Advertises free settlement at T+2 with no minimum amount or trading limit. Pricing is entirely quote-based; no per-transaction rates are published, so all fee fields are Contact sales."

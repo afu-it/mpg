@@ -25,7 +25,7 @@ features:
   no_code: false
   api: true
   recurring: true
-popularity: 40
+popularity: 28
 verified_date: "2026-06-26"
 source: "https://fasspay.com/productsandservices"
 notes: "Operated by Fass Payment Solutions Sdn Bhd, Petaling Jaya, part of the Soft Space group; BNM-registered merchant acquirer. Published rates: card 1.2%, e-wallet 1%, DuitNow QR 1%, settling T+1. Card brands Visa/Mastercard/JCB/UnionPay/MyDebit, NFC tap-and-pay, plus prepaid card issuing. Setup and other fees quote-only; FPX online banking not offered."

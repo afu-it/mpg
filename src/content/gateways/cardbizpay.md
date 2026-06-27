@@ -27,6 +27,7 @@ features:
   no_code: true
   api: true
   recurring: true
+popularity: 30
 verified_date: "2026-06-24"
 source: "https://cardbiz.com.my/cardbiz-payment-services/cardbizpay-rates/"
 notes: "By Cardbiz Group (~20-year fintech, BNM/PCI-DSS/MyDebit compliant). No setup fee; first-year annual fee waived. Rates shown are indicative from the official rates page; a separate marketing site lists slightly different numbers, so confirm a firm quote with sales."

@@ -20,6 +20,7 @@ features:
   no_code: true
   api: true
   recurring: false
+popularity: 8
 verified_date: "2026-06-24"
 source: "https://riipay.my/business/"
 notes: "The bnpl value is the merchant fee (MDR), not publicly published, so contact sales. Riipay's business page states 'zero cost if no usage' (no setup/monthly commitment), but the per-transaction rate is undisclosed. Merchant gets paid upfront."

@@ -19,6 +19,7 @@ features:
   no_code: true
   api: false
   recurring: false
+popularity: 30
 verified_date: "2026-06-24"
 source: "https://favepartner.zendesk.com/hc/en-us/articles/9161566446617-What-is-Fave-Fee"
 notes: "The bnpl value is the merchant fee (Fave Fee). Malaysia: 1.5% default, dropping to 1% if the merchant activates ≥10% cashback; +6% SST on the fee. Rate is 'subject to contract' and is the general FavePay fee; a FavePay Later-specific MDR is not separately published, so treat 1.5% as indicative."

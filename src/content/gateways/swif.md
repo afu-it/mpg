@@ -41,7 +41,7 @@ plugins:
   - Magento
   - EasyStore
   - CS-Cart
-popularity: 32
+popularity: 26
 verified_date: "2026-06-26"
 source: "https://swifs.io/pricing"
 notes: "Operated by SwiF Fintech Sdn Bhd (1355554-T), powered by Syntrino Solutions Sdn Bhd, Kuala Lumpur. Broad channel coverage (cards, FPX, DuitNow QR, e-wallets, BNPL) with WooCommerce/Shopify/Magento/EasyStore plugins and auto-debit. Pricing page routes to Contact Sales, so all rates are quote-only."

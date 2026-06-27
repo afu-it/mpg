@@ -20,6 +20,7 @@ features:
   no_code: true
   api: true
   recurring: false
+popularity: 15
 verified_date: "2026-06-24"
 source: "https://moby.my/faqs/"
 notes: "The bnpl value is the merchant fee (MDR), not publicly published, so contact sales (onboarding via merchantsupport@moby.my). MOBY offers both conventional and Shariah-compliant (Moby Islamic) BNPL."

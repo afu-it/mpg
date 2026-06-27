@@ -25,7 +25,7 @@ features:
   no_code: true
   api: false
   recurring: false
-popularity: 45
+popularity: 58
 verified_date: "2026-06-26"
 source: "https://www.ambankgroup.com/products-and-services/business/sme/merchant-business-solutions"
 notes: "AmBank's merchant business solutions include online (eCommerce) acquiring for cards, FPX and DuitNow QR, alongside POS terminals, eBilling, EPP instalments and DCC. Requires an AmBank business account; rates are quoted on application, not published. Online product details are thinner than dedicated gateways."

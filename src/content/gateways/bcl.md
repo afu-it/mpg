@@ -18,6 +18,7 @@ features:
   api: true
   recurring: false
 skill: setup-bcl
+popularity: 22
 verified_date: "2026-06-24"
 source: "https://bcl.my"
 notes: "No-code platform built on top of Bayarcash. FPX fees 'as low as RM1.00'. Paid annual packages (3 tiers; exact prices vary and the MSME Digital Grant MADANI offers up to 50% off). Card/BNPL and settlement run through Bayarcash. Confirm package pricing and channel rates on the site."

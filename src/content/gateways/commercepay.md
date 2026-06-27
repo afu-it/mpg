@@ -38,6 +38,7 @@ plugins:
   - WHMCS
   - SiteGiant
 dev_docs: "https://docs.commercepay.asia"
+popularity: 26
 verified_date: "2026-06-24"
 source: "https://www.commercepay.asia/faq"
 notes: "Indicative. Gateway fee is per-transaction (fixed or %) but not published; only the Instalment (IPP) rate of 'as low as 3.5%' + RM500 setup is public."

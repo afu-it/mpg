@@ -18,6 +18,7 @@ features:
   no_code: false
   api: true
   recurring: false
+popularity: 38
 verified_date: "2026-06-24"
 source: "https://www.mpay.my/"
 notes: "Indicative. Only the ECPOS package (RM399 joining + RM10/mo) is published; MDR/card/FPX rates are not public."

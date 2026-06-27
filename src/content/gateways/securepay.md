@@ -30,7 +30,7 @@ webhooks: true
 plugins:
   - WooCommerce
 dev_docs: "https://docs.securepay.my"
-popularity: 38
+popularity: 22
 verified_date: "2026-06-26"
 source: "https://www.securepay.my"
 notes: "SecurePay Sdn Bhd, Shah Alam, Selangor; FPX-based MYR gateway. Advertises no registration fee. A widely cited RM1.00-per-FPX figure appears on third-party sites but could not be confirmed on SecurePay's own pricing, so all per-transaction rates are shown as Contact sales (not fabricated). WooCommerce plugin, documented API and webhooks; settles T+1."

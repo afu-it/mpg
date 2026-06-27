@@ -19,6 +19,7 @@ features:
   no_code: true
   api: true
   recurring: true
+popularity: 58
 verified_date: "2026-06-24"
 source: "https://revpay.com.my/interchange.php"
 notes: "Indicative. Merchant rates not published; only BNM interchange floor rates shown (domestic credit 0.60%, domestic debit 0.10% or 37 sen). These are network rates, not RevPay's merchant fee."

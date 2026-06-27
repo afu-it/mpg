@@ -19,6 +19,7 @@ features:
   no_code: true
   api: true
   recurring: false
+popularity: 10
 verified_date: "2026-06-24"
 source: "https://ahapay.my/merchants"
 notes: "The bnpl value is the merchant fee: AhaPay officially states '6% per transaction' with no hidden charges (e.g. RM2,000 sale nets RM1,880). Transaction limits RM50–RM3,500, vary by merchant."
