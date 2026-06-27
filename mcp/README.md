@@ -32,7 +32,7 @@ npm run inspect        # MCP Inspector to exercise the tools
 ```bash
 cd mcp
 npx wrangler login     # once
-npm run deploy         # wrangler deploy → https://mpg-mcp.<account>.workers.dev
+npm run deploy         # wrangler deploy → https://mpg-mcp.afuitdev.workers.dev
 ```
 
 The Durable Object (`MpgMCP`, SQLite-backed) is created automatically by the
@@ -44,13 +44,13 @@ migration in `wrangler.jsonc`. To point the server at a different data source
 Add the deployed URL to an MCP client. Example (Claude Code):
 
 ```bash
-claude mcp add --transport http mpg https://mpg-mcp.<account>.workers.dev/mcp
+claude mcp add --transport http mpg https://mpg-mcp.afuitdev.workers.dev/mcp
 ```
 
 Or in a client config:
 
 ```jsonc
-{ "mcpServers": { "mpg": { "url": "https://mpg-mcp.<account>.workers.dev/mcp" } } }
+{ "mcpServers": { "mpg": { "url": "https://mpg-mcp.afuitdev.workers.dev/mcp" } } }
 ```
 
 Then ask your agent things like *"which Malaysian gateway is cheapest for FPX +

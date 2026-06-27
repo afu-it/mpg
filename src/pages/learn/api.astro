@@ -111,12 +111,20 @@ const recurringWithMcp = gateways.filter(
     </p>
   </section>
 
-  <!-- MCP coming -->
+  <!-- MCP server -->
   <section class="mt-6 rounded-md border border-line bg-panel p-5">
-    <h2 class="text-base font-medium text-fg">MCP server (coming)</h2>
+    <h2 class="text-base font-medium text-fg">MCP server</h2>
     <p class="mt-1.5 max-w-2xl text-sm text-muted">
-      An MCP server is planned so AI coding agents (Claude, Cursor) can query this
-      directory live while you build, on top of the same data. See
+      AI coding agents (Claude, Cursor) can query this directory live while you
+      build, via the Model Context Protocol. Point your client at:
+    </p>
+    <pre class="mt-2 overflow-x-auto rounded-md border border-line bg-raised p-3 text-xs text-fg"><code>https://mpg-mcp.afuitdev.workers.dev/mcp</code></pre>
+    <p class="mt-2 text-sm text-muted">Example (Claude Code):</p>
+    <pre class="mt-1 overflow-x-auto rounded-md border border-line bg-raised p-3 text-xs text-fg"><code>claude mcp add --transport http mpg https://mpg-mcp.afuitdev.workers.dev/mcp</code></pre>
+    <p class="mt-2 max-w-2xl text-sm text-muted">
+      Tools: <code class="text-fg">list_gateways</code>, <code class="text-fg">get_gateway</code>,
+      <code class="text-fg">compare_gateways</code>, <code class="text-fg">recommend_gateway</code>. Then ask
+      e.g. <em>"cheapest Malaysian gateway for FPX + recurring?"</em>. See
       <a href="/learn/ai-agents" class="text-accent hover:underline">Build with AI agents</a>.
     </p>
   </section>
