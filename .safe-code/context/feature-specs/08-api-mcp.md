@@ -1,7 +1,16 @@
 ---
-status: in-progress   # suggested | approved | in-progress | done | rejected
+status: done   # suggested | approved | in-progress | done | rejected
 created: 2026-06-27
 ---
+
+> **DONE 2026-06-27 — both phases shipped + verified LIVE.** Phase 1 API live at
+> mpg-1hw.pages.dev/api/gateways.json (200, 59). Phase 2 MCP Worker DEPLOYED at
+> `https://mpg-mcp.afuitdev.workers.dev/mcp` (CLOUDFLARE_API_TOKEN auth). Verified
+> end-to-end: initialize handshake (serverInfo name "mpg", protocol 2025-06-18,
+> mcp-session-id issued), tools/list (all 4), tools/call recommend_gateway
+> {fpx+recurring} → matched 15, returned cardbizpay RM1.19 / gkash RM1.24 /
+> bizappay RM1.32. /learn/api + mcp/README carry the live URL. Re-deploy with
+> `cd mcp && npm run deploy`; update MPG_API_BASE when the custom domain lands.
 
 > **Built 2026-06-27 (both phases).**
 > Phase 1 (LIVE-able on push): `src/lib/api.ts` (+ api.test.ts, 6 tests), static endpoints

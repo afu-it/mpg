@@ -7,7 +7,7 @@ _2026-06-27 (rev 8)_
 - [ ] Custom domain `malaysiapg.com.my` (MYNIC Letter of Undertaking ready) → connect to the CF Pages project and switch Clerk to `pk_live` when going live.
 - [x] **Ranking redesign A→D (spec 07)** — done 2026-06-27 (effective-cost ranking + gating + Est. fee/RM100 column + per-channel sorts + corrected popularity). Live.
 - [x] **Data API (spec 08, Phase 1)** — done 2026-06-27 (static `/api/gateways.json` + per-slug + `/learn/api` docs). Live on push.
-- [ ] **Deploy the MCP Worker (spec 08, Phase 2)** — built in `mcp/`, dry-run OK. AFU: `cd mcp && npx wrangler login && npm run deploy`; confirm handshake; put the real Worker URL into `/learn/api` (currently says "coming"). Needs Phase 1 live first (Worker fetches the JSON API).
+- [x] **Deploy the MCP Worker (spec 08, Phase 2)** — done 2026-06-27. Live at `https://mpg-mcp.afuitdev.workers.dev/mcp`, verified end-to-end (initialize + tools/list + recommend_gateway). Real URL wired into `/learn/api` + README. Re-deploy: `cd mcp && npm run deploy`.
 - [x] Decide **Payex** — done 2026-06-27: REJECTED (payex.io is now Xendit Malaysia; already listed).
 - [ ] Optional ranking follow-ups (spec 07): per-RM100 effective-cost cells on `/compare`; separate visual track for BNPL/bank/wallet rows; decide whether ranking should require FPX (Fasspay ranks #1 on card+e-wallet but has no FPX).
 - [ ] Reconsider the deferred **Tier 2 international PSPs** (2C2P, Adyen, Omise, Worldpay, Global Payments, Fiserv, Ksher, Nomu Pay, Pine Labs) — all found + verified, skipped per AFU (kept Malaysian-focused). Full data in spec 04.
