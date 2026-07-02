@@ -18,7 +18,7 @@ export interface Match {
   reasons: string[];
 }
 
-const CHANNEL_LABEL: Record<Channel, string> = {
+export const CHANNEL_LABEL: Record<Channel, string> = {
   fpx: "FPX",
   card: "cards",
   ewallet: "e-wallets",
