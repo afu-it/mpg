@@ -12,7 +12,7 @@ fees:
   bnpl: "6.00%"
   setup: "RM0–RM999"
   monthly: "RM0"
-settlement: "T+2 *"
+settlement: "T+2"
 min_txn: "—"
 mcp: "official"
 webhooks: true
@@ -30,7 +30,7 @@ features:
   recurring: true
 skill: setup-curlec
 popularity: 62
-verified_date: "2026-06-24"
+verified_date: "2026-07-02"
 source: "https://curlec.com/pricing/"
 notes: "Basic-plan rates shown: FPX 1.50% (or RM1, whichever greater), credit/debit card 2.40%, foreign card 3.30%, e-wallet 1.50%, BNPL 6.00%. Premium plan lowers card to 2.00% / FPX to 1.00%. A one-time setup fee applies; Enterprise (>RM1M/month) is personalised. Applicable taxes (SST) extra."
 ---

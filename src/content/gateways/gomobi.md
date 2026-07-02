@@ -1,6 +1,6 @@
 ---
-name: gomobi (Mobi Asia)
-website: https://gomobi.io
+name: Mobi (formerly gomobi)
+website: https://www.mobi.xyz
 logo_round: true
 tagline: "KL acquirer for cards, FPX, e-wallets and DuitNow QR"
 fees:
@@ -9,7 +9,7 @@ fees:
   card_intl: "Contact sales"
   ewallet: "Contact sales"
   duitnowqr: "Contact sales"
-  setup: "RM0"
+  setup: "Contact sales"
   monthly: "Contact sales"
 settlement: "Contact sales"
 min_txn: "—"
@@ -26,9 +26,9 @@ features:
   api: true
   recurring: true
 popularity: 36
-verified_date: "2026-06-26"
-source: "https://gomobi.io/products"
-notes: "Operated by Mobi Asia Sdn Bhd (formerly Mobiversa Sdn Bhd), Kuala Lumpur, founded 2014; BNM-registered. Distinct from the unrelated MOBY (moby.my) BNPL provider also in this directory. Markets an optional or zero setup fee and low MDR; per-transaction rates are quote-only. Known for the eZ tap softPOS and online acceptance."
+verified_date: "2026-07-02"
+source: "https://www.mobi.xyz/"
+notes: "Rebranded: gomobi.io now redirects to mobi.xyz under the Mobi brand (Mobi Asia / Mobiversa), repositioned as pan-Asia payments infrastructure (payins/payouts; MY channels: FPX, e-wallets, DuitNow QR, cards). No pricing published anywhere on the current site, including the previously listed RM0 setup."
 ---
 
 **gomobi** (operated by **Mobi Asia Sdn Bhd**, formerly Mobiversa) is a Kuala

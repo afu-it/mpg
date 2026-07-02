@@ -26,7 +26,7 @@ features:
 webhooks: true
 dev_docs: "https://doc.paycools.com"
 popularity: 22
-verified_date: "2026-06-26"
+verified_date: "2026-07-02"
 source: "https://www.paycools.com.my"
 notes: "Operated by Micro Bluetech Sdn Bhd (202001042390), incorporated 2020; BNM Registered Merchant Acquirer (Non-bank). Advertises free setup; per-transaction rates are quote-only. Supports FPX, cards, e-wallets and DuitNow QR with a documented API and webhooks."
 ---

@@ -28,7 +28,7 @@ features:
 webhooks: true
 dev_docs: "https://developer.cybersource.com/docs/cybs/en-us/sa/developer/all/sa-hosted/secure-acceptance.html"
 popularity: 45
-verified_date: "2026-06-26"
+verified_date: "2026-07-02"
 source: "https://apply.pbebank.com/MOSOnboardApp"
 notes: "Public Bank Berhad's Merchant Online Service is its online card-acceptance gateway, built on Visa/CyberSource Secure Acceptance (hosted checkout and API). Accepts Visa, Mastercard, UnionPay, JCB, MyDebit and e-wallets with 3D-Secure, recurring/tokenisation. Requires a Public Bank business account; rates are quoted on application, not published."
 ---

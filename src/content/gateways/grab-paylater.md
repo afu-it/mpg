@@ -20,8 +20,8 @@ features:
   api: true
   recurring: false
 popularity: 66
-verified_date: "2026-06-24"
-source: "https://www.grab.com/my/finance/pay-later/"
+verified_date: "2026-07-02"
+source: "https://www.grab.com/my/merchant/checkout-solutions/"
 notes: "The bnpl value is the merchant fee (MDR), not the shopper's instalment terms. Grab does not publish the PayLater merchant MDR officially; merchants apply for a rate. Settlement within 5 working days is official. A third-party indicatively estimates ~3%–4% (unofficial)."
 ---
 

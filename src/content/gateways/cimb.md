@@ -25,7 +25,7 @@ features:
   api: true
   recurring: true
 popularity: 52
-verified_date: "2026-06-26"
+verified_date: "2026-07-02"
 source: "https://www.cimb.com.my/en/business/business-solutions/solutions/merchant-solutions.html"
 notes: "Bank-run online gateway under CIMB's Merchant Solutions, distinct from POS and DuitNow QR products. Three forms: Payment Link (no website, Mastercard/Visa 1.00% on-us / 1.10% off-us), CIMB e-Commerce Partners (hosted gateway, 1.50%-1.80% domestic / 2.80%-3.00% international cards), and Direct Connect to CIMB (direct integration accepting cards, FPX and JomPAY, priced case by case). 3D-Secure; supports recurring and instalment. Requires a CIMB business current account; settled next business day. Card rates are CIMB-published."
 ---

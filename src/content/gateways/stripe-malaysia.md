@@ -12,7 +12,7 @@ fees:
   setup: "RM0"
   monthly: "RM0"
 settlement: "T+7"
-min_txn: "—"
+min_txn: "RM2.00"
 channels: [fpx, card, ewallet]
 methods:
   - Visa
@@ -33,7 +33,7 @@ plugins:
   - PrestaShop
 dev_docs: "https://docs.stripe.com/api"
 popularity: 68
-verified_date: "2026-06-24"
+verified_date: "2026-07-02"
 source: "https://stripe.com/en-my/pricing"
 notes: "Domestic cards and FPX both 3% + RM1.00. International cards add +1% (so ~4% + RM1.00), plus 2% if currency conversion is needed. GrabPay 3%, Alipay 2.9% + RM1.00. No setup or monthly fee. Powerful APIs and Stripe Billing for subscriptions. DuitNow QR not listed."
 ---

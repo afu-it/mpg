@@ -8,7 +8,7 @@ fees:
   card: "—"
   ewallet: "—"
   duitnowqr: "—"
-  bnpl: "4.5%"
+  bnpl: "4.5% (5% for 3-mo plans)"
   setup: "RM0"
   monthly: "RM0"
 settlement: "Paid in full on order completion"
@@ -20,9 +20,9 @@ features:
   api: true
   recurring: false
 popularity: 70
-verified_date: "2026-06-24"
-source: "https://seller.shopee.com.my/edu/article/21112"
-notes: "The bnpl value is the merchant (seller) fee. On Shopee the SPayLater seller fee is 4.5% before SST (rising to 5% for 3-month instalments from 1 Feb 2026), plus 8% SST. For external/offline merchants via a payment gateway, the rate is quoted on request."
+verified_date: "2026-07-02"
+source: "https://seller.shopee.com.my/edu/article/16542"
+notes: "Merchant transaction fee 4.5% before SST; from 1 Feb 2026 the 3-month instalment tenure is 5% (others stay 4.5%). Fees subject to 8% SST. Auto-enabled for eligible Shopee sellers (no setup step). Sellers receive sales proceeds in full on order completion. Now operated with Monee Capital Malaysia (Shopee financial affiliate)."
 ---
 
 SPayLater is Shopee's Shariah-compliant Buy Now, Pay Later option, built directly into the Shopee marketplace. Shoppers can choose Pay Next Month (1 month, interest-free) or instalments of 3 to 48 months, with a buyer processing fee of about 1.5%/month (0% for up to 6 months under the Special SPayLater Programme).

@@ -8,13 +8,14 @@ fees:
   fpx: "1.8% + RM0.40"
   card: "1.2% + RM1.00"
   card_intl: "3% + RM1.00"
-  ewallet: "Contact sales"
+  ewallet: "1.9% - 2.2%"
   duitnowqr: "1.2%"
+  bnpl: "2.2% - 6.5%"
   setup: "RM0"
   monthly: "RM0"
-settlement: "T+1"
+settlement: "T+2 (T+3 cards)"
 min_txn: "—"
-channels: [fpx, card, ewallet, duitnowqr]
+channels: [fpx, card, ewallet, duitnowqr, bnpl]
 methods:
   - Visa
   - Mastercard
@@ -36,9 +37,9 @@ plugins:
   - EasyStore
 dev_docs: "https://docs.hitpayapp.com/apis/overview"
 popularity: 70
-verified_date: "2026-06-24"
-source: "https://hitpayapp.com/my/pricing"
-notes: "Malaysia online rates: domestic card 1.2% + RM1.00, FPX 1.8% + RM0.40, DuitNow 1.2%, international card 3% + RM1.00 (+2% on foreign-currency). No setup or monthly fee. An extra 0.2% applies when using software tools (payment links, invoicing, online store, POS, recurring billing); Shopify +0.5%. Payout T+1. E-wallet supported; confirm rate."
+verified_date: "2026-07-02"
+source: "https://www.hitpayapp.com/my/pricing"
+notes: "Official per-wallet rates: TNG 1.9%, GrabPay 2%, Boost 2.1%, Maybank QRPay 2.1%, ShopeePay 2.2%. BNPL: SPayLater 2.2%, Atome 5.5% + RM1, PayLater by Grab 6.5%. A platform fee applies on top for some products (0.2% payment links/invoicing/store; 0.5% Shopify app). Payouts T+2 business days (cards from T+3, processed by Stripe). International cards +2% on foreign-currency transactions."
 ---
 
 HitPay is a Singapore-headquartered, MAS-licensed platform that operates in

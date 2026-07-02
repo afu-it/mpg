@@ -25,7 +25,7 @@ plugins:
   - OpenCart
 dev_docs: "https://doc.revenuemonster.my/"
 popularity: 60
-verified_date: "2026-06-24"
+verified_date: "2026-07-02"
 source: "https://revenuemonster.my/pricing"
 notes: "Setup fee (RM499 one-time) and T+2 settlement are from the official pricing page; per-transaction rates are described only as 'competitive rates' and are not publicly published, so contact sales."
 ---

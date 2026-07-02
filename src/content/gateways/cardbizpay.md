@@ -8,8 +8,8 @@ fees:
   card_intl: "2.40%"
   ewallet: "1.2%"
   duitnowqr: "—"
-  setup: "—"
-  monthly: "—"
+  setup: "RM0 (waived)"
+  monthly: "RM0 (1st year waived)"
 settlement: "Contact sales"
 min_txn: "—"
 channels: [fpx, card, ewallet]
@@ -28,9 +28,9 @@ features:
   api: true
   recurring: true
 popularity: 30
-verified_date: "2026-06-24"
+verified_date: "2026-07-02"
 source: "https://cardbiz.com.my/cardbiz-payment-services/cardbizpay-rates/"
-notes: "By Cardbiz Group (~20-year fintech, BNM/PCI-DSS/MyDebit compliant). No setup fee; first-year annual fee waived. Rates shown are indicative from the official rates page; a separate marketing site lists slightly different numbers, so confirm a firm quote with sales."
+notes: "Official rate card: FPX B2C RM1.00 / B2B RM1.50, local cards 1%-2.0%, overseas premium cards 2.40%, e-wallets 1.2% (WeChat 1%, Alipay cross-border 1.5%). Setup waived; annual fee waived for the first year (amount after year 1 not published). A RM1.00 per-transaction settlement fee applies; settlement timing not published. No minimum transaction volume."
 ---
 
 CardBizPay is a Malaysian payment gateway from the **Cardbiz Group**, a payments

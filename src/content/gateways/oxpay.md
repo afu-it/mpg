@@ -25,7 +25,7 @@ plugins:
   - Magento
   - PrestaShop
 popularity: 12
-verified_date: "2026-06-24"
+verified_date: "2026-07-02"
 source: "https://oxpay.com.my/payment/"
 notes: "Indicative. No fees of any kind are published on the site; all pricing is quote-based via sales."
 ---

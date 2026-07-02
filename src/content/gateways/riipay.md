@@ -9,10 +9,10 @@ fees:
   card: "—"
   ewallet: "—"
   duitnowqr: "—"
-  bnpl: "2.5%"
+  bnpl: "Contact sales"
   setup: "RM0"
   monthly: "RM0"
-settlement: "T+7"
+settlement: "Contact sales"
 min_txn: "—"
 category: bnpl
 channels: [bnpl]
@@ -21,9 +21,9 @@ features:
   api: true
   recurring: false
 popularity: 8
-verified_date: "2026-06-24"
+verified_date: "2026-07-02"
 source: "https://riipay.my/business/"
-notes: "The bnpl value is the merchant fee (MDR), not publicly published, so contact sales. Riipay's business page states 'zero cost if no usage' (no setup/monthly commitment), but the per-transaction rate is undisclosed. Merchant gets paid upfront."
+notes: "3-instalment BNPL, conventional and Shariah-aware positioning. Official merchant FAQ now says fees vary by industry and monthly turnover (the old 2.5% figure is no longer published), and no settlement timing is published. Zero upfront and zero monthly cost confirmed officially."
 ---
 
 Riipay is a Malaysian Buy Now Pay Later provider that lets shoppers split a purchase into 3 monthly instalments at 0% interest, paying just one-third upon checkout via debit or credit card. For merchants, Riipay positions itself as a way to increase cart size, reach new customers, and get paid in full upfront while the customer stretches their payments.

@@ -9,13 +9,13 @@ fees:
   card: "1.8%"
   card_intl: "3.8%"
   ewallet: "1.5%"
-  duitnowqr: "Contact sales"
+  duitnowqr: "1.5%"
   bnpl: "6.5%"
   setup: "RM0"
   monthly: "RM0"
-settlement: "T+1"
+settlement: "T+1 (T+2 cards)"
 min_txn: "—"
-channels: [fpx, card, ewallet, bnpl]
+channels: [fpx, card, ewallet, duitnowqr, bnpl]
 methods:
   - Credit / debit card
   - Maybank QRPay
@@ -38,8 +38,8 @@ plugins:
   - WHMCS
 dev_docs: "https://www.billplz.com/api"
 popularity: 82
-verified_date: "2026-06-24"
-source: "https://www.billplz.com/pricing"
+verified_date: "2026-07-02"
+source: "https://main.billplz.com/pricing"
 notes: "Basic (free) plan rates: B2C FPX RM1.25, B2B FPX RM3.00. Premium annual membership lowers these to RM0.75 / RM2.00. Card (MYR) 1.8%, non-MYR 3.8% (T+2 payout). E-wallet 1.5%. BNPL 6–6.5%. FPX payout next business day, guaranteed."
 ---
 

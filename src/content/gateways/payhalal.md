@@ -22,7 +22,7 @@ features:
   api: true
   recurring: true
 popularity: 52
-verified_date: "2026-06-24"
+verified_date: "2026-07-02"
 source: "https://payhalal.my/home_v3/pricing/"
 notes: "Rates shown are the official published Basic (free) tier; lower rates apply on paid tiers (Plus/Pro/Advanced). Settlement period not published; contact sales."
 ---

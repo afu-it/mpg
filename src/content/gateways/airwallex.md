@@ -3,13 +3,13 @@ name: Airwallex (Malaysia)
 website: https://www.airwallex.com/my
 tagline: "Global payment acceptance with local Malaysian rails (FPX, DuitNow)"
 fees:
-  fpx: "From 1.4% + RM0.50"
+  fpx: "1.4% + RM0.50"
   card: "1.90% + RM0.50"
   card_intl: "+1.05% (international cards)"
-  ewallet: "From 1.4% + RM0.50"
-  duitnowqr: "From 1.4% + RM0.50"
-  setup: "—"
-  monthly: "—"
+  ewallet: "1.4% + RM0.50"
+  duitnowqr: "1.4% + RM0.50"
+  setup: "RM0"
+  monthly: "RM0"
 settlement: "Contact sales"
 min_txn: "—"
 channels: [fpx, card, ewallet, duitnowqr, bnpl]
@@ -41,7 +41,7 @@ plugins:
   - BigCommerce
 dev_docs: "https://www.airwallex.com/docs/api"
 popularity: 52
-verified_date: "2026-06-24"
+verified_date: "2026-07-02"
 source: "https://www.airwallex.com/my/pricing"
 notes: "Global fintech (HQ Australia) with a BNM-licensed Malaysian entity (Airwallex (Malaysia) Sdn Bhd; MSB Licence 00743). Local FPX + DuitNow are supported alongside 160+ global methods. No setup or monthly fees. Best fit for cross-border / globally-trading MY businesses."
 ---

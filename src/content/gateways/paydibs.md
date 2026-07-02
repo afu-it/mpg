@@ -11,7 +11,7 @@ fees:
   bnpl: "Contact sales"
   setup: "Free (local); USD120 (foreign)"
   monthly: "RM300/year (waived if prior-year sales ≥ RM360,000)"
-settlement: "T+1 (gateway) / T+2 (acquirer)"
+settlement: "3x weekly (Tue/Wed/Fri)"
 min_txn: "—"
 category: gateway
 channels: [fpx, card, ewallet, duitnowqr, bnpl]
@@ -24,7 +24,7 @@ plugins:
   - WooCommerce
 dev_docs: "https://v3api-docs.paydibs.com/docs/introduction"
 popularity: 42
-verified_date: "2026-06-24"
+verified_date: "2026-07-02"
 source: "https://paydibs.com/pricing/"
 notes: "Signup fee, RM300/year maintenance fee and T+1/T+2 settlement are confirmed on the official pricing page; per-transaction MDR rates are not publicly published, so contact sales."
 ---

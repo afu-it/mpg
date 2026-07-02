@@ -10,7 +10,7 @@ fees:
   duitnowqr: "Contact sales"
   setup: "Contact sales"
   monthly: "Contact sales"
-settlement: "T+2"
+settlement: "Contact sales"
 min_txn: "—"
 channels: [card, duitnowqr]
 methods:
@@ -24,7 +24,7 @@ features:
   api: true
   recurring: false
 popularity: 38
-verified_date: "2026-06-26"
+verified_date: "2026-07-02"
 source: "https://www.finexusgroup.com/digital-money"
 notes: "FINEXUS Cards Sdn Bhd (FINEXUS Group); BNM Registered Merchant Acquirer (Non-bank). Enterprise and white-label card acquiring plus DuitNow QR and Alipay/Alipay+ acceptance; also issuer-side card services. Onboarding is enterprise and quote-only, no public rate card."
 ---

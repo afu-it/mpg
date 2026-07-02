@@ -41,7 +41,7 @@ plugins:
   - Shopify
   - WHMCS
 popularity: 100
-verified_date: "2026-06-25"
+verified_date: "2026-07-02"
 source: "https://my.nttdatapay.com/en/payment-services/adaptis-e-commerce"
 notes: "iPay88 has been retired and folded into NTT DATA Payment Services' ADAPTIS platform (which also consolidates eGHL). The old ipay88.com is offline; the site is now my.nttdatapay.com. ADAPTIS does not publish rates, so all fees are quote-only (Contact sales) — confirm directly with NTT DATA. Channels supported: FPX, cards, e-wallets, DuitNow QR and BNPL (37+ payment methods)."
 ---

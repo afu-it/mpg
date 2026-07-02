@@ -28,7 +28,7 @@ plugins:
   - Easy Digital Downloads
 dev_docs: "https://documenter.getpostman.com/view/6258355/SzmZdLp3"
 popularity: 46
-verified_date: "2026-06-24"
+verified_date: "2026-07-02"
 source: "https://www.bizappay.my/main/"
 notes: "Official rate card. Pay-as-you-use: no setup, monthly, or annual fees. DuitNow QR offered but rate not separately published."
 ---

@@ -29,7 +29,7 @@ features:
   recurring: true
 webhooks: false
 popularity: 60
-verified_date: "2026-06-26"
+verified_date: "2026-07-02"
 source: "https://myboost.co/business/payment-gateway"
 notes: "Operated by Boost Connect Sdn Bhd (1259684-W, formerly Apigate), an Axiata fintech and BNM Registered Merchant Acquirer (Non-bank). Published online rate card: FPX CASA B2C RM1.00 (B2B RM2.00), local credit card 2.00% (local debit 1.25%), foreign card 4.00%, DuitNow QR 0.85%, Boost e-wallet 1.20% (GrabPay/TNG/ShopeePay 1.30%). Setup RM499 waived during introductory period, RM499 annual fee. Refund RM0.70 (online banking), chargeback RM50, per-transaction limit RM2,000 on banking and cards, minimum settlement RM100."
 ---

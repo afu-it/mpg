@@ -11,7 +11,7 @@ fees:
   ewallet: "1.5% / RM0.65"
   duitnowqr: "Contact sales"
   bnpl: "2.0%–6.0%"
-  setup: "RM0"
+  setup: "Contact sales"
   monthly: "from RM199/year"
 settlement: "Contact sales"
 min_txn: "—"
@@ -38,9 +38,9 @@ plugins:
   - Shopify
 dev_docs: "https://guide.senangpay.com/developer-tools"
 popularity: 70
-verified_date: "2026-06-24"
+verified_date: "2026-07-02"
 source: "https://senangpay.com/pricing/"
-notes: "Annual subscription from RM199 (up to ~RM299) depending on package. FPX 1.5% or RM1.00 whichever higher; local card 2.5% or RM0.65 whichever higher; e-wallet 1.5% or RM0.65. Foreign card by package. Minimum settlement RM100. Supports recurring & tokenisation. Now operating as senangPay, A DOKU Company, following acquisition by the regional payments group DOKU; brand, URL and product unchanged, with the platform migrating to DOKU Global through 2026."
+notes: "Official pricing: FPX RM1 or 1.5% whichever higher; local cards RM0.65 or 2.5%; e-wallets RM0.65 or 1.5%; BNPL SPayLater 2.0% / Atome 5.5% / PayLater by Grab 6.0%. Plans: Starter RM199/yr, Advance RM349/yr, Enterprise custom (promo prices run seasonally). Foreign-card rates and any setup fee are quoted per package; settlement timing not published (faster settlement is an Enterprise perk)."
 ---
 
 senangPay is an SME-focused gateway that combines hosted checkout, payment forms

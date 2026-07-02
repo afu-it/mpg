@@ -25,7 +25,7 @@ features:
   api: true
   recurring: true
 popularity: 42
-verified_date: "2026-06-26"
+verified_date: "2026-07-02"
 source: "https://www.alliancebank.com.my/business/SME/alliance-merchant-solutions"
 notes: "Alliance Bank's Merchant Solutions include an online payment gateway for card and e-wallet acceptance with recurring billing, settled to an Alliance Bank business current account (required). Rates are quoted on application, not published."
 ---

@@ -8,7 +8,7 @@ fees:
   card: "2.5%–3.0%"
   ewallet: "Contact sales"
   duitnowqr: "Contact sales"
-  setup: "RM399 (ECPOS, +8% SST)"
+  setup: "RM399 (waived during promo)"
   monthly: "RM10–RM30"
 settlement: "T+1"
 min_txn: "—"
@@ -19,9 +19,9 @@ features:
   api: true
   recurring: false
 popularity: 38
-verified_date: "2026-06-24"
-source: "https://www.mpay.my/"
-notes: "Indicative. Only the ECPOS package (RM399 joining + RM10/mo) is published; MDR/card/FPX rates are not public."
+verified_date: "2026-07-02"
+source: "https://info.mpay.my/faq/"
+notes: "Official FAQ: MDR 3.0% (Lite) / 2.5% (Pro); one-time start-up RM399 (currently waived during pre-launch promo); RM10/mo Lite, RM30/mo Pro (waived above RM3k/RM10k monthly volume); T+1 settlement with a Sponsor Bank account. Minimum charge RM0.60 overrides MDR on transactions below RM30; RM1 bank-transfer fee, RM100 minimum transfer."
 ---
 
 ManagePay Services Sdn Bhd (MPay) is a Malaysian digital financial services provider offering end-to-end e-payment solutions, including an online payment gateway, POS/QR acceptance, and its own MPay wallet. It serves individuals, SMEs, corporates, and government agencies, and accepts QR payments including MPay Balance, Boost, KA$H, and Touch 'n Go Wallet alongside credit and debit cards.

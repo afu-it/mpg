@@ -8,8 +8,8 @@ fees:
   card: "From 1.80% (min RM0.60)"
   ewallet: "From 1.00%"
   duitnowqr: "Contact sales"
-  setup: "RM200 *"
-  monthly: "RM100/year *"
+  setup: "Contact sales"
+  monthly: "Contact sales"
 settlement: "T+2"
 min_txn: "—"
 category: gateway
@@ -24,8 +24,8 @@ plugins:
   - OpenCart
 dev_docs: "https://doc.gkash.my/"
 popularity: 38
-verified_date: "2026-06-24"
-source: "https://gkash.com/merchant-faq/"
+verified_date: "2026-07-02"
+source: "https://gkash.com/faq_1/"
 notes: "Indicative. Published MDR floors (card from 1.80%/min RM0.60; FPX & e-wallet from 1%); exact rates and setup/monthly fees vary by package, quoted on request. Settlement T+2 business days."
 ---
 

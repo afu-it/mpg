@@ -7,8 +7,8 @@ fees:
   fpx: "RM1.00"
   card: "RM1.00 + 1%"
   ewallet: "—"
-  duitnowqr: "1.60%"
-  bnpl: "1.60%"
+  duitnowqr: "1.6% / RM0.15"
+  bnpl: "1.6% / RM0.15"
   setup: "RM0"
   monthly: "RM0"
 settlement: "T+1"
@@ -29,7 +29,7 @@ plugins:
   - EasyStore
 dev_docs: "https://docs.bayarcash.com/"
 popularity: 52
-verified_date: "2026-06-24"
+verified_date: "2026-07-02"
 source: "https://bayarcash.com"
 notes: "Free 'T+ Plan' shown: FPX B2C RM1.00 / B2B RM2.00, credit card RM1.00 + 1%, direct debit RM1.50, DuitNow QR 1.60% (min RM0.15); T+1 payout (off-day Friday). Paid annual plans (Starter RM189, Lite RM2,899, Enterprise RM12,000) unlock realtime settlement (Public Bank & Bank Islam) and lower online-banking rates (RM1.20 / RM0.70 / RM0.20) plus DuitNow QR RM0.50. Excludes SST 8%."
 ---
