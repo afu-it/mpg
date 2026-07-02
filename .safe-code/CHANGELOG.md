@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 ### Added
+- **Site logo + favicon**: real brand mark (Jalur Gemilang shield + growth arrow) as a crisp SVG in the header next to "Malaysia Payment Gateway", plus a full icon set (browser favicon, Google search icon, iPhone home-screen icon, WhatsApp/Telegram share image).
 - **Programmatic SEO pages** (spec 10): 12 `/best/<profile>` guide pages (cheapest, FPX, cards, e-wallets, DuitNow QR, recurring, no-code, developer API, online store, BNPL, plugins) ranked by the same cost engine as the rest of the site, and 69 curated `/vs/<a>-vs-<b>` head-to-head pages (fees + features side by side with data-derived verdicts). Linked from the Learn hub and footer.
 - **Sitemap + robots.txt**: `sitemap-index.xml` generated at build (`@astrojs/sitemap`) and referenced from a new `robots.txt`.
 - **Custom domain**: the site is now live at `https://malaysiapg.com.my` (Cloudflare Pages + SSL); `mpg-1hw.pages.dev` remains a working alias. Astro `site` set for canonical URLs / SEO.

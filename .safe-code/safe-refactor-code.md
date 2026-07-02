@@ -1,6 +1,6 @@
 # safe-refactor-code — flagged candidates
 
-_2026-07-02 (rev 13)_
+_2026-07-02 (rev 14)_
 
 ## Resolved
 - Removed unused dependency `@clerk/clerk-js` (auth loads Clerk from CDN via `window.Clerk`).
@@ -27,3 +27,4 @@ _2026-07-02 (rev 13)_
 - `src/lib/recommend.ts` is the single recommendation engine (filter `Needs` → rank → reasons). `/choose` (`choose.ts`) and the SEO pages (`seo-pages.ts`, spec 10) MUST call it — don't reimplement gateway filtering inline. Keep it pure (no DOM) so it stays testable + reusable.
 - `src/lib/seo-pages.ts` (spec 10) must stay copy/registry only — no fee math, no parallel ranking. Its vs-pair list is DERIVED (top-12 gateway + top-4 BNPL rule), don't replace it with a hand-maintained list; add `/best/` pages by adding a `PROFILES` entry. Page prose is templated there so the no-em-dash + never-fabricate-fees rules are enforced by its tests — keep those tests.
 - `@astrojs/sitemap` is build-time only and safe on Astro 7 static — it is NOT in the same family as the banned SSR adapters; don't remove it as "adapter cleanup", and don't delete `public/robots.txt` (it points crawlers at sitemap-index.xml).
+- `public/logo.svg` is the BRAND source of truth; `favicon.ico`/`favicon-96.png`/`apple-touch-icon.png`/`icon-512.png` are derived outputs — regenerate from the SVG (rsvg-convert + magick), never hand-edit, never "dedupe" them as redundant copies. Don't re-add a default Astro `favicon.svg`.

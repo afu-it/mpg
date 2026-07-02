@@ -1,6 +1,6 @@
 # Progress Tracker — MPG
 
-last_synced_commit: 922d415
+last_synced_commit: 3bf0310
 context_synced_at: 2026-07-02
 context_selftest: skipped (not first-run)
 
@@ -21,6 +21,7 @@ No server/DB. Deployed (push master → Cloudflare Pages).
 - **Compare** list cells: short chips pair 2-per-row (lone one centered), long-name chips drop to a full-width centered row, and show-more toggles all providers at once.
 - **Logos:** 59 real logos (no monograms). Square symbol-marks for wordmark brands, circle-crop (`logo_round`) for circular marks, all visible on dark (dark-on-transparent recoloured).
 - Developer-experience (MCP/webhooks/plugins/dev_docs); Jalur Gemilang theme; Clerk auth (CDN). Auto-deploy: push master → GitHub Actions → Cloudflare Pages.
+- **Branding (2026-07-02):** real logo (shield + growth arrow, flag colours) as `public/logo.svg` (vector-traced, source of truth); header brand mark + "Malaysia Payment Gateway"; favicon set (ico 48/32/16 + 96 png for Google + SVG), apple-touch-icon, og:image 512. Google search icon updates when Google recrawls (days to weeks).
 - **"Help me choose" wizard (spec 09):** `/choose` — 4-question fit-first flow → ranked shortlist (cheapest first) with reasons + Compare deep link. Powered by `src/lib/recommend.ts` (pure, tested); linked from landing/footer/learn. `recommend()` is the shared engine the planned SEO pages (Spec B) reuse.
 - **Data API (spec 08):** static `GET /api/gateways.json` + `/api/gateways/<slug>.json` (build-time, no server), documented at `/learn/api`. Each entry carries `est_fee_rm100`/`rankable` so the API matches the site ranking. **MCP server** in `mcp/` (standalone CF Worker, 4 tools over the JSON API) — built + dry-run verified, deployed separately by AFU (`cd mcp && npx wrangler login && npm run deploy`).
 - **Programmatic SEO pages (spec 10):** `/best/<profile>` (12 curated need-profiles: cheapest, FPX, cards, e-wallet, DuitNow QR, recurring, no-code, API, online-store, BNPL, plugins, generic) + `/vs/<a>-vs-<b>` (69 curated same-category head-to-heads: top-12 gateways where a side publishes rates + top-4 BNPL). Registry + builders in `src/lib/seo-pages.ts` (pure, 22 vitest) over `recommend()`/`fees.ts`; ItemList + FAQPage JSON-LD; `@astrojs/sitemap` (`sitemap-index.xml`) + `robots.txt`; linked from /learn hub Guides block + footer. Build = 151 pages.
