@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://malaysiapg.com.my/sitemap-index.xml
