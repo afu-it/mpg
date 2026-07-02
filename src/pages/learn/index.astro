@@ -1,8 +1,17 @@
 ---
 export const prerender = true;
 
+import { getCollection } from "astro:content";
 import Base from "../../layouts/Base.astro";
 import { SKILLS_REPO } from "../../lib/learn";
+import { toApiGateway, type GatewayEntryLike } from "../../lib/api";
+import { PROFILES, vsPairs } from "../../lib/seo-pages";
+
+const entries = (await getCollection("gateways")) as unknown as GatewayEntryLike[];
+const gateways = entries.map(toApiGateway);
+const topComparisons = vsPairs(gateways)
+  .sort((x, y) => y.a.popularity + y.b.popularity - (x.a.popularity + x.b.popularity))
+  .slice(0, 8);
 
 const sections = [
   {
@@ -116,6 +125,40 @@ const sections = [
       ))
     }
   </div>
+
+  <!-- programmatic SEO guides (spec 10): /best/* profiles + /vs/* head-to-heads -->
+  <section class="mt-10">
+    <h2 class="text-base font-medium text-fg">Guides: best gateway for your need</h2>
+    <p class="mt-1.5 max-w-2xl text-sm text-muted">
+      Pre-ranked shortlists for common needs, using the same estimated-cost engine as the
+      directory and the <a href="/choose" class="text-accent hover:underline">Help me choose</a> wizard.
+    </p>
+    <div class="mt-4 flex flex-wrap gap-2">
+      {
+        PROFILES.map((p) => (
+          <a
+            href={`/best/${p.slug}`}
+            class="rounded-full border border-line bg-panel px-3 py-1 text-xs text-muted hover:border-accent hover:text-fg"
+          >
+            {p.h1}
+          </a>
+        ))
+      }
+    </div>
+    <h3 class="mt-6 text-sm font-medium text-fg">Popular comparisons</h3>
+    <div class="mt-3 flex flex-wrap gap-2">
+      {
+        topComparisons.map((p) => (
+          <a
+            href={`/vs/${p.slug}`}
+            class="rounded-full border border-line bg-panel px-3 py-1 text-xs text-muted hover:border-accent hover:text-fg"
+          >
+            {p.a.name} vs {p.b.name}
+          </a>
+        ))
+      }
+    </div>
+  </section>
 
   <section class="mt-10 rounded-md border border-line bg-panel p-5">
     <h2 class="text-base font-medium text-fg">Built for vibe coders</h2>
