@@ -1,21 +1,16 @@
 # SESSION — working memory
 
-_2026-06-27_
+_2026-07-02_
 
 ## Carry Forward
-- Live: https://mpg-1hw.pages.dev · auto-deploy on **push** to master (GitHub Actions → CF Pages). safe-code --save never pushes; AFU/agent pushes when going live.
-- Pure **static** site. Astro 7 static + Clerk browser SDK (CDN) + Tailwind v4. Never `@clerk/astro` / `@astrojs/cloudflare`.
-- **59 gateways**: gateway 40, bank 10, ewallet 1 (TNG), bnpl 7, infrastructure 1 (PayNet). Categories in `content.config.ts`; access label derived in `src/lib/access.ts`.
-- **Ranking (spec 07, live 2026-06-27):** default sort = **lowest estimated fee**, gated. `src/lib/fees.ts` = single source of fee math (`parseFeeShape`/`effectiveCost`/`gatewayCost`, weighted FPX/card/e-wallet 50/30/20 on RM100). Only gateways with comparable published rates are ranked (18/59); the rest show **"On request"** below. Table has an **Est. fee / RM100** column (beside Fixed fee). Dropdown: Lowest fees · Popularity · Lowest FPX/card/e-wallet · Name. Don't regress to a single-number fee proxy or popularity-first default (see MEMORY.md + safe-refactor-code.md).
-- **popularity** is editorial (a sort option + On-request tiebreaker); all 59 carry an explicit value (only PayNet=0). Corrected 2026-06-27 from a researched audit — estimates, retune freely.
-- Theme = **Jalur Gemilang on dark**. **No em-dashes in prose** (house style); standalone `"—"` fee placeholder is data.
-- Fees: official = no marker; third-party/indicative = trailing ` *` (excluded from the ranking); else `Contact sales`. Never fabricate.
-- Logos: 59 real, 0 monograms. Square symbol-marks; `logo_round` for circular. In `src/assets/logos/<slug>.{svg,png,webp}`.
-- **Don't use chrome-devtools to verify unless AFU asks.** Use build / astro check / npm test.
-- Stray vite cache may reappear under a `src/` subdir (NTFS dev quirk) — `rm -rf`, gitignored + regenerates (see MEMORY.md).
-- Payex REJECTED — it is now Xendit (already listed). Domain `malaysiapg.com.my`: MYNIC LoU ready, awaiting availability.
-- **"Help me choose" wizard (spec 09):** `/choose` — 4-question fit-first → ranked shortlist via `src/lib/recommend.ts` (pure, tested). `recommend()` is the shared engine the planned **Spec B (programmatic SEO pages)** reuses — don't reimplement filtering elsewhere. Wizard data embedded as `gw-data` JSON (compare.astro pattern).
-- **Data API + MCP (spec 08):** static `GET /api/gateways.json` + `/api/gateways/<slug>.json` (build-time, `src/lib/api.ts` → `dist/api/`), docs at `/learn/api`. **MCP server lives in `mcp/`** — a SEPARATE Cloudflare Worker (NOT the Astro app), deployed by hand (`cd mcp && npx wrangler login && npm run deploy`); it reads the live JSON API, so Phase 1 must be deployed first. Root `tsconfig.json` excludes `mcp/`. Don't merge the Worker into the static app.
+- **Live: https://malaysiapg.com.my** (custom domain, CF Pages + SSL) with `mpg-1hw.pages.dev` as a working alias. Auto-deploy on **push** to master (GitHub Actions → CF Pages). safe-code --save never pushes.
+- Pure **static** Astro 7 + Clerk browser SDK (CDN) + Tailwind v4. Never `@clerk/astro` / `@astrojs/cloudflare`. Astro `site` = `https://malaysiapg.com.my` (canonical/SEO).
+- **Clerk PRODUCTION live:** app "Malaysia Payment Gateway" (`app_3FZd3mHzTBeSp0ufdwueJaORgP2`), prod instance `ins_3FvlB7gGDEHgTNV12mP6YFQQqBM`, `pk_live` for `clerk.malaysiapg.com.my`. Sign-in = email code + password + **Google** (GitHub disabled). GH secret `PUBLIC_CLERK_PUBLISHABLE_KEY` = `pk_live`; **local `.env` stays `pk_test`** for `npm run dev`. Clerk instance-config changes apply at runtime (no rebuild); only a publishable-key change needs a redeploy.
+- **MCP Worker** redeployed with `MPG_API_BASE` = `https://malaysiapg.com.my` (`mpg-mcp.afuitdev.workers.dev/mcp`). Deploy: `cd mcp && npm run deploy`.
+- **59 gateways**: gateway 40, bank 10, ewallet 1 (TNG), bnpl 7, infrastructure 1 (PayNet). Ranking (spec 07, live): default = lowest estimated fee, gated; `src/lib/fees.ts` is the single fee-math source. `src/lib/recommend.ts` powers `/choose` and is the engine the planned **Spec B (SEO pages)** must reuse.
+- Theme = Jalur Gemilang on dark. **No em-dashes in prose** (house style); standalone `"—"` fee placeholder is data. Fees: official = no marker; third-party = trailing ` *`; else `Contact sales`. Never fabricate.
+- **Don't chrome-devtools verify unless AFU asks.** Use build / astro check / npm test.
+- Stray vite cache may reappear under a `src/` subdir (NTFS dev quirk) — `rm -rf`, gitignored + regenerates.
 
 ## Task List
 - (none active — session saved)

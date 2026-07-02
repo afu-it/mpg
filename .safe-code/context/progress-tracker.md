@@ -1,7 +1,7 @@
 # Progress Tracker — MPG
 
-last_synced_commit: 73c99d9
-context_synced_at: 2026-06-27
+last_synced_commit: 014feb8
+context_synced_at: 2026-07-02
 context_selftest: skipped (not first-run)
 
 ## Current Phase
@@ -28,7 +28,7 @@ No server/DB. Deployed (push master → Cloudflare Pages).
 - **Spec B — programmatic SEO pages** (brainstormed as the pair to spec 09; not yet specced): pre-render `recommend()` results for common need-profiles + head-to-head "X vs Y" pages, reusing `src/lib/recommend.ts`. Own spec → plan → build.
 - API + MCP (spec 08) DONE + live: JSON API at `/api/gateways.json`; MCP Worker deployed at `https://mpg-mcp.afuitdev.workers.dev/mcp` (re-deploy: `cd mcp && npm run deploy`).
 - Ranking redesign (spec 07) shipped A→D (default lowest-fee + gating + corrected popularity); **live as of 2026-06-27**. Optional follow-ups: per-RM100 cells on `/compare`; a separate visual track for BNPL/bank/wallet rows.
-- Custom domain `malaysiapg.com.my` (MYNIC Letter of Undertaking ready) → CF Pages + Clerk `pk_live` when it lands.
+- Custom domain `malaysiapg.com.my` **LIVE** (2026-07-02): registered at YeahHost → nameservers moved to Cloudflare → CF Pages custom domain + SSL. Clerk **production** live too (`pk_live`, Google + email sign-in). MCP redeployed at the new domain.
 - Phase 3: public "submit a gateway" (needs server + DB).
 
 ## Open Questions
@@ -51,3 +51,4 @@ No server/DB. Deployed (push master → Cloudflare Pages).
 - Logos: square symbol-marks for consistency; recolour dark logos rather than a global white plate (keeps the floating aesthetic).
 - **Default table order = lowest estimated effective fee (gated), then On-request rows by popularity** (changed 2026-06-27 from popularity-first; the old `valueScore` mean was unit-broken — see spec 07 audit). Fees never fabricated; third-party values carry trailing `*` and are excluded from the ranking; unconfirmed numbers stay "Contact sales".
 - Ranking redesign (spec 07) chosen over a one-line default flip because a 12-agent + adversarial audit proved the old "Lowest fees" mean mixed RM with %, dropped add-ons, and rewarded opacity. Editorial popularity corrected from researched market signals (estimates, not measured).
+- **Custom domain + production auth go-live (2026-07-02):** malaysiapg.com.my registered at YeahHost, DNS moved to Cloudflare, connected to CF Pages (SSL). Clerk production instance on `clerk.malaysiapg.com.my` (`pk_live`); sign-in = email code + password + Google (GitHub disabled). GH secret `PUBLIC_CLERK_PUBLISHABLE_KEY` holds `pk_live` for the prod build; local `.env` stays `pk_test` for `npm run dev`. Clerk instance config changes apply at runtime (no site rebuild needed). App `app_3FZd3mHzTBeSp0ufdwueJaORgP2`, prod instance `ins_3FvlB7gGDEHgTNV12mP6YFQQqBM`.

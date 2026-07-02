@@ -1,10 +1,10 @@
 # BACKLOG — operational queue
 
-_2026-06-27 (rev 9)_
+_2026-07-02 (rev 10)_
 
 - [ ] Watch: stray vite deps cache keeps appearing in a source subdir (`src/content/gateways` before, `src/pages/` on 2026-06-26). Caused by `astro dev` + `CHOKIDAR_USEPOLLING` on the NTFS mount writing its cache relative to the wrong cwd. Gitignored so harmless to git, but pollutes the tree. If it recurs, pin vite `cacheDir` to a root path in `astro.config.mjs`.
 
-- [ ] Custom domain `malaysiapg.com.my` (MYNIC Letter of Undertaking ready) → connect to the CF Pages project and switch Clerk to `pk_live` when going live.
+- [x] **Custom domain `malaysiapg.com.my` + Clerk `pk_live`** — done 2026-07-02. Registered at YeahHost, DNS → Cloudflare, CF Pages custom domain + SSL, Clerk production instance live (Google + email sign-in), MCP redeployed at the new domain.
 - [x] **Ranking redesign A→D (spec 07)** — done 2026-06-27 (effective-cost ranking + gating + Est. fee/RM100 column + per-channel sorts + corrected popularity). Live.
 - [x] **Data API (spec 08, Phase 1)** — done 2026-06-27 (static `/api/gateways.json` + per-slug + `/learn/api` docs). Live on push.
 - [x] **"Help me choose" wizard (spec 09)** — done 2026-06-27 (`/choose` + `recommend()` lib). Live on push.

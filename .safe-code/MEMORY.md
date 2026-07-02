@@ -1,6 +1,11 @@
 # MEMORY — temporary audit/architecture notes
 
-_2026-06-27_
+_2026-07-02_
+
+## Clerk production (2026-07-02)
+- App "Malaysia Payment Gateway" = `app_3FZd3mHzTBeSp0ufdwueJaORgP2`; dev `ins_3FZd3lUKfoKphjFxMa78MStFTXF` (pk_test), prod `ins_3FvlB7gGDEHgTNV12mP6YFQQqBM` (pk_live for `clerk.malaysiapg.com.my`).
+- Production is driven via the `clerk` CLI + Platform API. Domain verified (dns/ssl/mail) with 5 CNAMEs on Cloudflare (clerk/accounts/clkmail + 2 DKIM, all DNS-only). Sign-in = email code + password + Google; GitHub disabled. `clerk deploy status` may still show github "pending" (cosmetic — it's disabled, not a blocker).
+- Build wiring: prod uses `pk_live` via GitHub secret `PUBLIC_CLERK_PUBLISHABLE_KEY`; local `.env` keeps `pk_test` for `npm run dev`. Clerk **instance config** changes (enable/disable a provider, OAuth creds) take effect at runtime — no site rebuild; only a publishable-key change needs a redeploy.
 
 ## Recommendation engine + /choose wizard (2026-06-27, spec 09)
 - `src/lib/recommend.ts` is the canonical, pure, DOM-free recommendation engine: `recommend(gateways, needs, limit)` filters by `Needs` (channels all-of, recurring, no-code/developer, access→category mapping: integrate=gateway, account=bank|ewallet, bnpl=bnpl; infrastructure always excluded) and ranks by `est_fee_rm100` then `popularity`, attaching `reasons[]`. `recommendOrClosest()` relaxes constraints in a fixed order (access → integration → recurring → channels last-first) when nothing matches.

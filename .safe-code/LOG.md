@@ -1,5 +1,9 @@
 # LOG — safe diary (append above)
 
+## 2026-07-02 · type: chore
+**Custom domain + Clerk production go-live.** malaysiapg.com.my (registered at YeahHost) → nameservers moved to Cloudflare → zone Active → CF Pages custom domain with SSL. Repo pointed at the domain: Astro `site` for canonical/SEO + swapped 5 hardcoded `mpg-1hw.pages.dev` refs (learn/api, MCP var/DEFAULT_BASE/HELP/README) — committed 014feb8, pushed, deployed, verified live (/learn/api shows the domain; astro check 0, build 70, vitest 42/42). Clerk PRODUCTION brought up for app "Malaysia Payment Gateway": prod instance + domain verified (dns/ssl/mail) via 5 Clerk CNAMEs added to Cloudflare (CF token, DNS-only); GitHub sign-in disabled, Google kept + prod OAuth credentials added (AFU-created Google app); GH secret `PUBLIC_CLERK_PUBLISHABLE_KEY` → `pk_live` and redeployed (live site confirmed serving pk_live). Google + email sign-in verified working end-to-end by AFU. MCP Worker redeployed with `MPG_API_BASE` = the custom domain. Local `.env` stays `pk_test` (dev) for local `npm run dev`. gitignored the `clerk-*.zone` deploy artifact.
+plain: Website Master sekarang hidup kat malaysiapg.com.my sendiri (bukan lagi alamat .pages.dev), ada SSL. Login dah jadi "mod live" betul — boleh masuk guna Google atau email. Pelayan data MCP pun dah tukar guna domain baru. Semua diuji jalan.
+
 ## 2026-06-27 · type: verify
 Session closed via `/safe-code --save`. Everything this session is committed + pushed + verified live: ranking redesign (spec 07), Payex→Xendit, API + MCP (spec 08, MCP deployed at mpg-mcp.afuitdev.workers.dev/mcp), and the "Help me choose" wizard (spec 09). Tree clean, master 0/0 with origin before this bookkeeping commit. astro check 0, build 70 pages, vitest 42/42. Bumped last_synced_commit to 73c99d9.
 plain: Tutup sesi dengan selamat — semua kerja hari ni (ranking, API, MCP, wizard) dah simpan, push, dan disahkan live.

@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 ### Added
+- **Custom domain**: the site is now live at `https://malaysiapg.com.my` (Cloudflare Pages + SSL); `mpg-1hw.pages.dev` remains a working alias. Astro `site` set for canonical URLs / SEO.
+- **Production authentication**: Clerk switched to a production instance on `clerk.malaysiapg.com.my` (`pk_live`), with email code + password and Google sign-in (GitHub disabled).
 - **"Help me choose" wizard** (`/choose`): a 4-question, fit-first flow (integration style, channels, recurring, onboarding type) that returns a ranked shortlist of matching gateways, cheapest first, with reasons and a "Compare these" deep link. Powered by a new pure `recommend()` engine (reused by the planned SEO pages). Linked from the landing page, footer, and `/learn`.
 - **Static JSON API**: `GET /api/gateways.json` (the whole directory, machine-readable, with `est_fee_rm100`, `rankable`, `verified_date`, `source` and a disclaimer) and `GET /api/gateways/<slug>.json` (one gateway). Built at deploy time — no server. Documented at `/learn/api`.
 - **MCP server** (`mcp/`, a standalone Cloudflare Worker — deploy separately) so AI coding agents can query the directory live: `list_gateways`, `get_gateway`, `compare_gateways`, `recommend_gateway`.
