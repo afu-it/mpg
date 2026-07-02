@@ -7,6 +7,9 @@ on:
 
 jobs:
   deploy:
+    # Only the repo owner's pushes deploy production. Invited collaborators
+    # (spec 11) can push branches or even master without touching the live site.
+    if: github.actor == github.repository_owner
     runs-on: ubuntu-latest
     permissions:
       contents: read

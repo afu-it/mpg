@@ -1,0 +1,164 @@
+---
+// Open-for-contribution page (spec 11): explains how contributing works and
+// gates the application form behind Clerk sign-in (client-side UX gate; the
+// real trust decision is AFU's GitHub invite). The repo is private; approved
+// contributors are invited as collaborators and work through branches + PRs.
+export const prerender = true;
+
+import Base from "../layouts/Base.astro";
+
+const areas = [
+  "Fix or update a gateway's fees (with an official source)",
+  "Add a missing Malaysian gateway",
+  "Fill in supported banks / e-wallet methods",
+  "Improve the Learn guides or docs",
+  "Something else",
+];
+
+const steps = [
+  {
+    n: "1",
+    title: "Sign up",
+    desc: "Create a free account on this site (top-right). We use it to know who is applying.",
+  },
+  {
+    n: "2",
+    title: "Apply",
+    desc: "Send the short application below: your GitHub username and what you want to work on.",
+  },
+  {
+    n: "3",
+    title: "Get invited",
+    desc: "If it is a fit, you will receive a GitHub invite to the (private) repository.",
+  },
+  {
+    n: "4",
+    title: "Contribute via PR",
+    desc: "Work on a branch and open a pull request. Every change is reviewed before it goes live.",
+  },
+];
+---
+
+<Base
+  title="Contribute to MPG | Malaysia Payment Gateway"
+  description="Help keep Malaysia's payment gateway directory accurate: fix fees with official sources, add missing gateways, improve the guides. Sign up and apply to contribute."
+>
+  <nav aria-label="Breadcrumb" class="mb-4 flex items-center gap-2 text-sm text-muted">
+    <a href="/" class="hover:text-fg hover:underline">Home</a>
+    <span aria-hidden="true">/</span>
+    <span class="text-fg">Contribute</span>
+  </nav>
+
+  <div class="mx-auto max-w-2xl">
+    <h1 class="text-2xl font-semibold tracking-tight text-fg">Contribute to MPG</h1>
+    <p class="mt-2 text-muted">
+      This directory stays useful only if the data stays true. If you spot an outdated fee,
+      know a gateway we missed, or want to improve the guides, you can help.
+    </p>
+
+    <section class="mt-8">
+      <h2 class="mb-3 text-sm font-medium uppercase tracking-wide text-muted">The rules (non-negotiable)</h2>
+      <ul class="space-y-2 text-sm text-muted">
+        <li class="rounded-md border border-line bg-panel px-4 py-3">
+          <strong class="text-fg">Every fee needs an official source.</strong>{" "}
+          Provider pricing page or rate card, with a date. No source, no number.
+        </li>
+        <li class="rounded-md border border-line bg-panel px-4 py-3">
+          <strong class="text-fg">Never invent a figure.</strong>{" "}
+          Unpublished pricing stays "Contact sales". Third-party figures carry a trailing *.
+        </li>
+        <li class="rounded-md border border-line bg-panel px-4 py-3">
+          <strong class="text-fg">One gateway = one markdown file.</strong>{" "}
+          Data lives in simple, schema-checked files; tests and checks must pass before merge.
+        </li>
+      </ul>
+    </section>
+
+    <section class="mt-8">
+      <h2 class="mb-3 text-sm font-medium uppercase tracking-wide text-muted">How it works</h2>
+      <ol class="grid gap-3 sm:grid-cols-2">
+        {
+          steps.map((s) => (
+            <li class="rounded-md border border-line bg-panel p-4">
+              <span class="grid h-6 w-6 place-items-center rounded-full bg-brand-blue text-xs font-semibold text-white">
+                {s.n}
+              </span>
+              <h3 class="mt-2 text-sm font-medium text-fg">{s.title}</h3>
+              <p class="mt-1 text-sm text-muted">{s.desc}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+
+    <section class="mt-8">
+      <h2 class="mb-3 text-sm font-medium uppercase tracking-wide text-muted">Apply</h2>
+
+      <!-- signed out: sign-up gate -->
+      <div id="apply-gate" class="rounded-md border border-line bg-panel p-5 text-center">
+        <p class="text-sm text-muted">
+          Applications are tied to an account, so sign up (free) first, then this form unlocks.
+        </p>
+        <button
+          id="apply-signup"
+          type="button"
+          class="mt-3 rounded-md bg-brand-blue px-4 py-2 text-sm font-medium text-white hover:opacity-90"
+        >
+          Sign up to apply
+        </button>
+      </div>
+
+      <!-- signed in: application form -> prefilled email -->
+      <form id="apply-form" hidden class="space-y-4 rounded-md border border-line bg-panel p-5">
+        <p class="text-sm text-muted">
+          Applying as <span id="apply-email" class="text-fg"></span>. Submitting opens a
+          prefilled email in your mail app; just hit send.
+        </p>
+        <div>
+          <label for="apply-github" class="mb-1 block text-sm font-medium text-fg">GitHub username</label>
+          <input
+            id="apply-github"
+            name="github"
+            required
+            placeholder="e.g. octocat"
+            class="w-full rounded-md border border-line bg-raised px-3 py-2 text-sm text-fg placeholder:text-muted focus:border-accent focus:outline-none"
+          />
+        </div>
+        <div>
+          <label for="apply-area" class="mb-1 block text-sm font-medium text-fg">What do you want to contribute?</label>
+          <select
+            id="apply-area"
+            name="area"
+            class="w-full rounded-md border border-line bg-raised px-3 py-2 text-sm text-fg focus:border-accent focus:outline-none"
+          >
+            {areas.map((a) => <option value={a}>{a}</option>)}
+          </select>
+        </div>
+        <div>
+          <label for="apply-message" class="mb-1 block text-sm font-medium text-fg">Tell us a little more</label>
+          <textarea
+            id="apply-message"
+            name="message"
+            rows="4"
+            placeholder="Which gateway, what is wrong or missing, and your source if you have one."
+            class="w-full rounded-md border border-line bg-raised px-3 py-2 text-sm text-fg placeholder:text-muted focus:border-accent focus:outline-none"></textarea>
+        </div>
+        <button
+          type="submit"
+          class="rounded-md bg-brand-blue px-4 py-2 text-sm font-medium text-white hover:opacity-90"
+        >
+          Send application
+        </button>
+      </form>
+    </section>
+
+    <p class="mt-8 text-xs text-muted">
+      Prefer not to apply? You can still help: use the details on a gateway page to tell the
+      provider their public pricing is unclear, or just share this site.
+    </p>
+  </div>
+
+  <script>
+    import "../scripts/contribute.ts";
+  </script>
+</Base>
