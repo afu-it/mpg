@@ -9,7 +9,7 @@
   },
   "migrations": [{ "tag": "v1", "new_sqlite_classes": ["MpgMCP"] }],
   "vars": {
-    "MPG_API_BASE": "https://mpg-1hw.pages.dev"
+    "MPG_API_BASE": "https://malaysiapg.com.my"
   },
   "observability": { "enabled": true }
 }

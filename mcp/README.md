@@ -1,6 +1,6 @@
 # MPG MCP server
 
-A standalone Cloudflare Worker that exposes the [MPG](https://mpg-1hw.pages.dev)
+A standalone Cloudflare Worker that exposes the [MPG](https://malaysiapg.com.my)
 Malaysia-payment-gateway directory to AI coding agents over the
 **Model Context Protocol** (Streamable HTTP).
 

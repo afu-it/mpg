@@ -45,7 +45,7 @@ interface ApiPayload {
   gateways: ApiGateway[];
 }
 
-const DEFAULT_BASE = "https://mpg-1hw.pages.dev";
+const DEFAULT_BASE = "https://malaysiapg.com.my";
 const TTL_MS = 10 * 60 * 1000;
 let cache: { at: number; data: ApiPayload } | null = null;
 
@@ -203,7 +203,7 @@ export class MpgMCP extends McpAgent<Env, unknown, Record<string, never>> {
 const HELP = `MPG MCP server — Malaysia payment gateway directory.
 Connect an MCP client to: <this-url>/mcp  (Streamable HTTP)
 Tools: list_gateways, get_gateway, compare_gateways, recommend_gateway.
-Data: https://mpg-1hw.pages.dev/api/gateways.json
+Data: https://malaysiapg.com.my/api/gateways.json
 `;
 
 export default {
