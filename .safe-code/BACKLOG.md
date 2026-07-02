@@ -1,6 +1,6 @@
 # BACKLOG — operational queue
 
-_2026-07-02 (rev 13)_
+_2026-07-02 (rev 14)_
 
 - [x] Site logo + favicon + header brand — done 2026-07-02 (AFU's mark, vector-traced `public/logo.svg` source of truth + full icon set). Google search icon appears after recrawl. Dark-mode variants done same day (white header mark + adaptive favicon).
 - [x] **Open for contribution (spec 11)** — done 2026-07-02: /contribute (Clerk-gated apply → email), private repo + invite model, owner-gated deploys.

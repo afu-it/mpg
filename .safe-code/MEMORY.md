@@ -1,6 +1,6 @@
 # MEMORY — temporary audit/architecture notes
 
-_2026-07-02 (rev 4)_
+_2026-07-02 (rev 5)_
 
 ## SEO pages layer (2026-07-02)
 - `src/lib/seo-pages.ts` is registry + builders ONLY (pure, tested); it owns page copy, not fee math or ranking. Canonical architecture note lives in `context/architecture.md` (Navigation map).

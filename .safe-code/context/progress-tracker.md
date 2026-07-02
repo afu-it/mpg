@@ -1,6 +1,6 @@
 # Progress Tracker — MPG
 
-last_synced_commit: 6cbd734
+last_synced_commit: 712c892
 context_synced_at: 2026-07-02
 context_selftest: skipped (not first-run)
 

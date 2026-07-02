@@ -13,7 +13,7 @@ _2026-07-02 (post-save, night)_
 - Stray vite cache may reappear under a `src/` subdir (NTFS dev quirk) — `rm -rf`, gitignored + regenerates.
 
 ## Task List
-- (none active — session saved)
+- (none active — session saved; favicon fix + contribute polish deployed)
 
 ## Draft updates
 - (none pending)

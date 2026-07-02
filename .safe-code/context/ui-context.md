@@ -28,7 +28,7 @@ Flag blue `#0031a0` and red `#cc0000` are **too low-contrast as small text** on 
 A newline between a word and an inline tag (`<strong>`/`<a>`/`<em>`) is stripped, gluing the words. When prose wraps right before an inline tag, end the line with `{" "}`.
 
 ## Auth styling
-Clerk modal/UserButton themed dark via `appearance` in `src/scripts/auth.ts` (panel `#212025`, input `#18181b`, primary `#0031a0` + white text, links `#4f86f5`) + WCAG contrast overrides for Clerk's dim text in `global.css` (`.cl-*`).
+Clerk modal/UserButton themed dark via `appearance` in `src/scripts/auth.ts` (panel `#212025`, input `#18181b`, primary `#0031a0` + white text, links `#4f86f5`) + WCAG contrast overrides for Clerk's dim text in `global.css` (`.cl-*`). Note: Clerk social buttons have TWO variants — `socialButtonsIconButton` AND `socialButtonsBlockButton` ("Continue with Google" full-width); style BOTH or the block one renders unstyled. Favicon links carry `?v=N` — bump when the brand mark changes (busts sticky favicon caches).
 
 ## Accessibility
 WCAG 2.2 AA — accent focus ring, AA contrast, keyboard-operable sort/filter, semantic table. No em-dashes in prose (house style).
