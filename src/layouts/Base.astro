@@ -20,7 +20,10 @@ const updated = "2026-06-24";
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" type="image/svg+xml" href="/logo.svg" />
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
@@ -28,6 +31,7 @@ const updated = "2026-06-24";
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
+    <meta property="og:image" content={new URL("/icon-512.png", Astro.site ?? Astro.url)} />
   </head>
   <body class="flex min-h-screen flex-col tabular-nums">
     <div
@@ -39,8 +43,10 @@ const updated = "2026-06-24";
     </div>
     <header class="sticky top-0 z-20 border-b border-line bg-surface">
       <div class="flex h-14 w-full items-center px-4 sm:px-6">
-        <a href="/" class="font-semibold tracking-tight text-fg">
-          MPG <span class="hidden font-normal text-muted sm:inline">· Malaysia Payment Gateways</span>
+        <a href="/" class="flex items-center gap-2 font-semibold tracking-tight text-fg">
+          <img src="/logo.svg" alt="Malaysia Payment Gateway logo" width="22" height="22" class="h-[22px] w-[22px] object-contain" />
+          <span class="sm:hidden">MPG</span>
+          <span class="hidden sm:inline">Malaysia Payment Gateway</span>
         </a>
         <nav class="ml-auto flex items-center gap-2 text-sm">
           <a href="/gateways" class="rounded-md px-2.5 py-1.5 text-muted hover:bg-panel hover:text-fg">Gateways</a>
