@@ -1,6 +1,12 @@
 # BACKLOG — operational queue
 
-_2026-07-02 (rev 14)_
+_2026-07-02 (rev 15)_
+
+- [ ] Watch: **FavePay Later** liveness — product fading (not promoted on myfave.com homepage, help section behind login; fee article still live). Re-check on the next liveness sweep; remove if it goes myIOU-pattern dormant.
+- [ ] **Mobi (ex-gomobi) logo** may need a brand refresh to match mobi.xyz branding (current logo is the old gomobi mark).
+- [ ] Revisit UOB/RHB `ewallet: "—"` semantics — both accept e-wallets (unpriced); kept "—" conservatively since acceptance skews in-store/POS.
+- [x] **Full official-source fee audit (all 59)** — done 2026-07-02 (26 corrected; verified_date bumped on all).
+- [x] **Discovery round 2 (+4 gateways, 59→63)** — done 2026-07-02 (BetterPay, BOLD.Pay, Share Commerce, Antom; rejects in spec 04).
 
 - [x] Site logo + favicon + header brand — done 2026-07-02 (AFU's mark, vector-traced `public/logo.svg` source of truth + full icon set). Google search icon appears after recrawl. Dark-mode variants done same day (white header mark + adaptive favicon).
 - [x] **Open for contribution (spec 11)** — done 2026-07-02: /contribute (Clerk-gated apply → email), private repo + invite model, owner-gated deploys.

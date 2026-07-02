@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 ### Added
+- **4 more gateways** (directory now 63): BetterPay (instant-settlement gateway with a fully published rate card), BOLD.Pay by MACROKIOSK (multichannel incl. direct carrier billing), Share Commerce (BNM-registered acquirer, white-label + terminals), and Antom by Ant International (Alipay+ network, official MCP server).
 - **Contribute page** (`/contribute`): rules, the 4-step contributor flow, and an application form that unlocks after signing in and sends a prefilled email. Production deploys are now owner-only, so future collaborators can never publish the site by accident.
 - **Dark-mode branding**: the header logo is now pure white on the dark theme, and the browser-tab icon adapts automatically (white on dark browsers, brand colours on light ones).
 - **Site logo + favicon**: real brand mark (Jalur Gemilang shield + growth arrow) as a crisp SVG in the header next to "Malaysia Payment Gateway", plus a full icon set (browser favicon, Google search icon, iPhone home-screen icon, WhatsApp/Telegram share image).
@@ -35,6 +36,7 @@
 - Per-gateway logo shape handling: rounded corners for square logos, circle-crop (`logo_round`) for circular marks.
 
 ### Changed
+- **Every fee re-audited against official sources (2 Jul 2026).** 26 entries corrected, including Xendit's repricing (flat RM0.90 processing fee on every method), toyyibPay's newly published card/DuitNow QR rates (now ranked), SwiF's new 4-tier rate card, HitPay's official per-wallet and BNPL rates, and SPayLater's 3-month tenure rising to 5% from Feb 2026. Figures providers no longer publish were downgraded to "Contact sales" instead of being kept stale. gomobi renamed to Mobi (rebrand).
 - **Default sort is now lowest estimated fee** (was popularity). A researched audit found the old "Lowest fees" mean mixed flat ringgit with percentages, dropped "+RM" add-ons, and rewarded gateways that hid pricing. Replaced with a unit-correct effective cost (RM100 basket, FPX/card/e-wallet weighted 50/30/20); only gateways with comparable published rates are ranked, the rest show "On request" below.
 - Corrected editorial **popularity** from researched market signals: filled 16 gateways that were silently unranked (incl. listed companies RevPay, ManagePay), and adjusted brand-halo over/under-rates (Fiuu up; Billplz, toyyibPay, senangPay, Stripe, Curlec, Boost down).
 - Logo quality overhaul: every logo QA'd on the dark theme; 30+ fixed (dark-on-transparent recoloured, tiny favicons replaced with real brand marks, marketing banners removed, wide wordmarks cropped to square symbol marks), 8 circular marks circle-cropped. Now 59 real logos, no monogram fallbacks.

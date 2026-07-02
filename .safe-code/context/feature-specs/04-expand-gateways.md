@@ -85,3 +85,35 @@ Presto Pay (e-wallet, tied to Revenue Monster), Merchantrade (remittance).
 - **Payex** — REJECTED 2026-06-27: payex.io is now Xendit Malaysia (page title "Payex is now Xendit"). Xendit already listed; do not re-add. Earlier "Maybank-owned" note was wrong.
 - senangPay now "A DOKU Company" (note added; fees unchanged).
 - Logo polish: boost, jc-pacific (favicon-size 32px); public-bank, rhb (monogram).
+
+## Discovery round 2 (2026-07-02)
+
+4-modal sweep (BNM FSP directory read in full: 68 non-bank + 22 bank acquirers;
+market articles 2025-2026; plugin ecosystems; BM/community). Results archive:
+session scratchpad discovery-2/*.txt (summaries below are the durable record).
+
+**ADDED (AFU-approved):** BetterPay (Pay Direct Technology; published rate card,
+rankable), BOLD.Pay (MACROKIOSK; quote-based, carrier billing angle), Share
+Commerce (BNM-registered acquirer; quote-based, white-label + terminal side),
+Antom (Ant International; quote-based, Alipay+ network, official MCP server).
+Directory 59 -> 63.
+
+**Explicitly SKIPPED by AFU this round:** Straight2Bank Pay (StanChart corporate
+collect), PayPal (active for MY merchants but no FPX/DNQR; international class).
+
+**REJECTED this round (do not re-suggest):**
+- Tekkis / T-Pay — site live but no dated life since Aug 2023 (myIOU pattern).
+- KineticPay — onboarding reportedly limited to omg-host customers; no 2025+ news.
+- Aleta Planet — BNM-licensed but China-corridor B2B acquiring, not an SME gateway.
+- UniPin — games/digital-content vertical aggregator only.
+- MG Group — likely ISO/reseller, stale site assets.
+- SHOPLINE Payments — platform-locked to SHOPLINE stores.
+- ADAPTIS — NTT DATA brand consolidating already-listed iPay88 + eGHL (rebrand,
+  not net-new; watch for eGHL brand retirement).
+- Registry names resolving to existing entries: Simplepay Gateway=senangPay,
+  Beez Fintech=bayarlah, Micro Bluetech=PayCools, Syntrino=SwiF, Mobiedge=HitPay,
+  Commerce DotAsia=CommercePay, Axai Digital=Axaipay, Revenue Harvest=RevPay,
+  Souqa=PayHalal, Fass=Fasspay, AiraPay=Moby Islamic.
+- Dead/dormant confirmed: RaudhahPay (deadpooled), UPay/i-Serve (unreachable),
+  ShopBack PayLater/Pay (discontinued; MY shutdown 25 Mar 2026), WavPay (wallet,
+  dormant news), Ozopay (Merchantrade; origin down).

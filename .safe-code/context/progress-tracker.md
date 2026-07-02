@@ -1,11 +1,11 @@
 # Progress Tracker — MPG
 
-last_synced_commit: 712c892
+last_synced_commit: 2b0dce1
 context_synced_at: 2026-07-02
 context_selftest: skipped (not first-run)
 
 ## Current Phase
-Pure static directory of **59** Malaysian payment providers, polished, with a
+Pure static directory of **63** Malaysian payment providers, polished, with a
 **/learn** section for devs and a **Jalur Gemilang** dark theme. Categorised by
 how a merchant accesses them (gateway = integrate, bank/e-wallet = merchant
 account, plus BNPL + infrastructure). Sourced fees, popularity-ranked by default.
@@ -14,7 +14,7 @@ No server/DB. Deployed (push master → Cloudflare Pages).
 ## What works now
 - Landing `/`, `/gateways` (sidebar filter + sortable/searchable table + **sort dropdown**, `?category=` deep-links), `/compare` (shareable `?ids=`), `/gateway/<slug>` detail, custom `404`.
 - **Default sort = lowest estimated fee** (gated). `src/lib/fees.ts` computes a unit-correct effective cost on a RM100 basket (`parseFeeShape` → `{pct,fixed,floor}`, `effectiveCost`, `gatewayCost` weighted FPX/card/e-wallet 50/30/20). Only gateways publishing comparable official rates are ranked (18/59); single-channel / indicative-`*` / "Contact sales" gateways show **"On request"** below. Table has an **Est. fee / RM100** column (beside Fixed fee). Dropdown: Lowest fees · Popularity · Lowest FPX/card/e-wallet · Name A-Z/Z-A. (See spec 07.)
-- **59 gateways** across categories: gateway 40, bank 10, ewallet 1 (TNG), bnpl 7, infrastructure 1 (PayNet). Every entry sourced; Boost + CIMB publish rates, most banks/acquirers are "Contact sales".
+- **63 gateways** across categories: gateway 44, bank 10, ewallet 1 (TNG), bnpl 7, infrastructure 1 (PayNet). Every entry sourced and **fully re-audited against official sources on 2026-07-02** (all verified_date = 2026-07-02; 26 corrected; 21 rankable). Discovery round 2 added BetterPay (rankable), BOLD.Pay, Share Commerce, Antom (official MCP).
 - **Categories:** Gateways / Banks / E-wallet / BNPL / Infrastructure (sidebar radio, table/detail/compare badges at text-[8px]).
 - **Access model** (`src/lib/access.ts`): each entry shows "Integrate (API/plugin)" or "Merchant account" (detail strip + compare row); /learn hub has a "Which type do you need?" explainer; category filter accepts `?category=` deep-links from /learn.
 - **/learn** (spec 06): hub + glossary, integration-flow, ai-agents, checklist. Per-gateway "Copy prompt" from `skill:`.
