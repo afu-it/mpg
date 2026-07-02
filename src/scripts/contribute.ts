@@ -34,10 +34,17 @@ document.getElementById("apply-signup")?.addEventListener("click", () => {
   });
 });
 
+// Accept a bare username, @username, or a full profile URL — normalise to the username.
+function githubUsername(raw: string): string {
+  const s = raw.trim().replace(/^@/, "");
+  const m = s.match(/github\.com\/([A-Za-z0-9-]+)/i);
+  return (m ? m[1] : s).replace(/\/+$/, "");
+}
+
 form?.addEventListener("submit", (e) => {
   e.preventDefault();
   const data = new FormData(form);
-  const github = String(data.get("github") ?? "").trim();
+  const github = githubUsername(String(data.get("github") ?? ""));
   const area = String(data.get("area") ?? "");
   const message = String(data.get("message") ?? "").trim();
   const email =
@@ -46,7 +53,7 @@ form?.addEventListener("submit", (e) => {
   const to = ["afuitdev", "gmail.com"].join("@");
   const subject = "MPG contributor application";
   const body = [
-    `GitHub username: ${github}`,
+    `GitHub: ${github} (https://github.com/${github})`,
     `Contribution area: ${area}`,
     `Signed-in email: ${email}`,
     "",
