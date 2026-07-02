@@ -21,7 +21,7 @@ const updated = "2026-06-24";
   <head>
     <meta charset="utf-8" />
     <link rel="icon" href="/favicon.ico" sizes="48x48" />
-    <link rel="icon" type="image/svg+xml" href="/logo.svg" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -44,7 +44,8 @@ const updated = "2026-06-24";
     <header class="sticky top-0 z-20 border-b border-line bg-surface">
       <div class="flex h-14 w-full items-center px-4 sm:px-6">
         <a href="/" class="flex items-center gap-2 font-semibold tracking-tight text-fg">
-          <img src="/logo.svg" alt="Malaysia Payment Gateway logo" width="22" height="22" class="h-[22px] w-[22px] object-contain" />
+          <!-- dark theme uses the white mark; the coloured /logo.svg is reserved for the future light mode -->
+          <img src="/logo-white.svg" alt="Malaysia Payment Gateway logo" width="22" height="22" class="h-[22px] w-[22px] object-contain" />
           <span class="sm:hidden">MPG</span>
           <span class="hidden sm:inline">Malaysia Payment Gateway</span>
         </a>
@@ -82,6 +83,8 @@ const updated = "2026-06-24";
           <a href="/best/payment-gateway-malaysia" class="text-muted underline-offset-2 hover:text-fg hover:underline">Best gateways</a>
           <span class="px-1">·</span>
           <a href="/learn/api" class="text-muted underline-offset-2 hover:text-fg hover:underline">API &amp; MCP for developers</a>
+          <span class="px-1">·</span>
+          <a href="/contribute" class="text-muted underline-offset-2 hover:text-fg hover:underline">Contribute</a>
         </p>
       </div>
     </footer>
