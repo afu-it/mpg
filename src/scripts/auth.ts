@@ -29,6 +29,13 @@ const appearance = {
       backgroundColor: "#18181b",
       border: "1px solid #3d3d42",
     },
+    // Clerk renders the full-width "Continue with Google" as the BLOCK variant,
+    // which the icon-button style above does not cover.
+    socialButtonsBlockButton: {
+      backgroundColor: "#18181b",
+      border: "1px solid #3d3d42",
+      color: "#dfe1e2",
+    },
     formFieldInput: { backgroundColor: "#18181b", borderColor: "#3d3d42" },
     dividerLine: { backgroundColor: "#3d3d42" },
     formButtonPrimary: { color: "#ffffff" },
