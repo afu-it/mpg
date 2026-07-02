@@ -1,6 +1,10 @@
 # MEMORY — temporary audit/architecture notes
 
-_2026-07-02_
+_2026-07-02 (rev 2)_
+
+## SEO pages layer (2026-07-02)
+- `src/lib/seo-pages.ts` is registry + builders ONLY (pure, tested); it owns page copy, not fee math or ranking. Canonical architecture note lives in `context/architecture.md` (Navigation map).
+- vs-pair curation is derived from data (top-12 gateway w/ ≥1 rankable side + top-4 BNPL); if popularity numbers are re-tuned, the generated pair set (and thus URLs) can shift on the next build — old /vs URLs would 404. Acceptable now (fresh, unindexed); revisit (pin the list or add redirects) once pages are indexed.
 
 ## Clerk production (2026-07-02)
 - App "Malaysia Payment Gateway" = `app_3FZd3mHzTBeSp0ufdwueJaORgP2`; dev `ins_3FZd3lUKfoKphjFxMa78MStFTXF` (pk_test), prod `ins_3FvlB7gGDEHgTNV12mP6YFQQqBM` (pk_live for `clerk.malaysiapg.com.my`).

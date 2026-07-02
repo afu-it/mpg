@@ -3,19 +3,21 @@
 ## Stack
 - **Astro 7** (static output) + **Tailwind CSS v4** (`@tailwindcss/vite`, tokens in `src/styles/global.css` via `@theme`).
 - **Astro Content Collections** for data: one markdown file per gateway in `src/content/gateways/`, validated by a Zod schema in `src/content.config.ts` (z imported from `zod` directly to avoid Astro's deprecated re-export).
-- **Vitest** for the one piece of pure logic: fee parsing (`src/lib/fees.ts`).
+- **Vitest** for the pure logic libs: fee math (`fees.ts`), API shaping (`api.ts`), recommendations (`recommend.ts`), SEO page builders (`seo-pages.ts`).
+- **@astrojs/sitemap** (build-time only, static-safe — NOT an SSR adapter) emits `sitemap-index.xml`; `public/robots.txt` points crawlers at it.
 - **Auth:** `@clerk/clerk-js` (browser SDK) loaded **from Clerk's CDN** in `src/scripts/auth.ts` — client-side only. Frontend-API host is derived from the publishable key.
 - **Hosting:** Cloudflare Pages (static assets). CI: GitHub Actions (`.github/workflows/deploy.yml`) → build + test + `wrangler pages deploy`.
 
 ## Navigation map (where things live)
 - Data: `src/content/gateways/<slug>.md` · schema `src/content.config.ts`
-- Pages: `src/pages/index.astro` (landing), `gateways.astro` (table+sidebar), `compare.astro` (side-by-side), `gateway/[slug].astro` (detail), `404.astro`
-- Components: `src/components/` (GatewayTable, Sidebar, FeeCell, FeatureBadge, Logo)
-- Client scripts: `src/scripts/` (`table.ts` sort/filter/search, `compare.ts`, `auth.ts`)
-- Logic: `src/lib/` (`fees.ts` parse/compare, `name.ts` split name+note, `fpx-banks.ts` shared PayNet FPX bank list)
-- Schema extras: `banks`/`methods` (optional string[]), `category: gateway|bnpl|infrastructure`. Methods (e-wallets) + banks shown on detail + `/compare`.
-- Default table order = value rank (`valueScore` in `GatewayTable.astro`: mean of published FPX/card/e-wallet rates; unknowns sink to bottom).
-- Layout: `src/layouts/Base.astro` · Logos: `src/assets/logos/<slug>.{svg,png}` (favicon-grade PNGs; monogram fallback in `Logo.astro`)
+- Pages: `src/pages/index.astro` (landing), `gateways.astro` (table+sidebar), `compare.astro`, `gateway/[slug].astro` (detail), `choose.astro` (wizard), `learn/*` (hub + guides), `best/[profile].astro` + `vs/[pair].astro` (programmatic SEO, spec 10), `api/*.json.ts` (static JSON API), `404.astro`
+- Components: `src/components/` (GatewayTable, Sidebar, FeeCell, FeatureBadge, Logo, LogoCycle, FlowDiagram)
+- Client scripts: `src/scripts/` (`table.ts` sort/filter/search, `compare.ts`, `choose.ts`, `auth.ts`, `progress.ts`)
+- Logic: `src/lib/` (`fees.ts` fee math + rankable gating, `api.ts` ApiGateway shape, `recommend.ts` needs→shortlist engine, `seo-pages.ts` SEO profile/pair registries + copy builders, `access.ts`, `learn.ts`, `name.ts`, `fpx-banks.ts`)
+- Schema extras: `banks`/`methods` (optional string[]), `category: gateway|bank|ewallet|bnpl|infrastructure`. Methods (e-wallets) + banks shown on detail + `/compare`.
+- Default table order = lowest estimated blended fee on RM100 (gated `rankable`, spec 07); non-rankable rows follow by popularity. Single source: `src/lib/fees.ts`.
+- Layout: `src/layouts/Base.astro` · Logos: `src/assets/logos/<slug>.{svg,png,webp}` (real marks for all 59; monogram fallback in `Logo.astro`)
+- Adding a `/best/` SEO profile = one `PROFILES` entry in `src/lib/seo-pages.ts` (+ tests keep it honest); the vs-pair list is derived, not hand-listed.
 
 ## Invariants
 - Content pages are static (`prerender`/static). No SSR adapter (would break — see below).

@@ -1,6 +1,6 @@
 # safe-refactor-code — flagged candidates
 
-_2026-07-02 (rev 12)_
+_2026-07-02 (rev 13)_
 
 ## Resolved
 - Removed unused dependency `@clerk/clerk-js` (auth loads Clerk from CDN via `window.Clerk`).
@@ -24,4 +24,6 @@ _2026-07-02 (rev 12)_
 - Don't reuse legacy iPay88 fee numbers for NTTDataPay — ADAPTIS publishes none, so it's "Contact sales".
 - `mcp/` is a SEPARATE Cloudflare Worker (own package.json/wrangler/tsconfig) — never fold it into the static Astro app or add `@astrojs/cloudflare`. Root `tsconfig.json` must keep `mcp` in `exclude` (else astro check scans the Worker and fails on Workers types). `mcp/node_modules` + `.wrangler` are gitignored.
 - The JSON API (`src/lib/api.ts` + `/api/*` endpoints) and the MCP Worker derive `est_fee_rm100`/`rankable` from `gatewayCost` — keep them sourced from `fees.ts`, don't hardcode a parallel fee number.
-- `src/lib/recommend.ts` is the single recommendation engine (filter `Needs` → rank → reasons). `/choose` (`choose.ts`) and the planned SEO pages (Spec B) MUST call it — don't reimplement gateway filtering inline. Keep it pure (no DOM) so it stays testable + reusable.
+- `src/lib/recommend.ts` is the single recommendation engine (filter `Needs` → rank → reasons). `/choose` (`choose.ts`) and the SEO pages (`seo-pages.ts`, spec 10) MUST call it — don't reimplement gateway filtering inline. Keep it pure (no DOM) so it stays testable + reusable.
+- `src/lib/seo-pages.ts` (spec 10) must stay copy/registry only — no fee math, no parallel ranking. Its vs-pair list is DERIVED (top-12 gateway + top-4 BNPL rule), don't replace it with a hand-maintained list; add `/best/` pages by adding a `PROFILES` entry. Page prose is templated there so the no-em-dash + never-fabricate-fees rules are enforced by its tests — keep those tests.
+- `@astrojs/sitemap` is build-time only and safe on Astro 7 static — it is NOT in the same family as the banned SSR adapters; don't remove it as "adapter cleanup", and don't delete `public/robots.txt` (it points crawlers at sitemap-index.xml).
