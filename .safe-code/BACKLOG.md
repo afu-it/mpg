@@ -1,8 +1,11 @@
 # BACKLOG — operational queue
 
-_2026-07-02 (rev 12)_
+_2026-07-02 (rev 13)_
 
-- [x] Site logo + favicon + header brand — done 2026-07-02 (AFU's mark, vector-traced `public/logo.svg` source of truth + full icon set). Google search icon appears after recrawl.
+- [x] Site logo + favicon + header brand — done 2026-07-02 (AFU's mark, vector-traced `public/logo.svg` source of truth + full icon set). Google search icon appears after recrawl. Dark-mode variants done same day (white header mark + adaptive favicon).
+- [x] **Open for contribution (spec 11)** — done 2026-07-02: /contribute (Clerk-gated apply → email), private repo + invite model, owner-gated deploys.
+- [ ] Light mode (AFU intent, 2026-07-02): coloured `logo.svg` already reserved for it; needs a theme toggle + light token set. Own spec when AFU asks.
+- [ ] When the first contributor is approved: GitHub Settings → Collaborators → invite; brief them on branch + PR flow.
 
 - [ ] Watch: stray vite deps cache keeps appearing in a source subdir (`src/content/gateways` before, `src/pages/` on 2026-06-26). Caused by `astro dev` + `CHOKIDAR_USEPOLLING` on the NTFS mount writing its cache relative to the wrong cwd. Gitignored so harmless to git, but pollutes the tree. If it recurs, pin vite `cacheDir` to a root path in `astro.config.mjs`.
 

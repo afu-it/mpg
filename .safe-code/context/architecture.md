@@ -6,13 +6,13 @@
 - **Vitest** for the pure logic libs: fee math (`fees.ts`), API shaping (`api.ts`), recommendations (`recommend.ts`), SEO page builders (`seo-pages.ts`).
 - **@astrojs/sitemap** (build-time only, static-safe — NOT an SSR adapter) emits `sitemap-index.xml`; `public/robots.txt` points crawlers at it.
 - **Auth:** `@clerk/clerk-js` (browser SDK) loaded **from Clerk's CDN** in `src/scripts/auth.ts` — client-side only. Frontend-API host is derived from the publishable key.
-- **Hosting:** Cloudflare Pages (static assets). CI: GitHub Actions (`.github/workflows/deploy.yml`) → build + test + `wrangler pages deploy`.
+- **Hosting:** Cloudflare Pages (static assets). CI: GitHub Actions (`.github/workflows/deploy.yml`) → build + test + `wrangler pages deploy`. The deploy job is gated `if: github.actor == github.repository_owner` (spec 11): only AFU's pushes deploy production; invited collaborators' pushes never auto-deploy.
 
 ## Navigation map (where things live)
 - Data: `src/content/gateways/<slug>.md` · schema `src/content.config.ts`
-- Pages: `src/pages/index.astro` (landing), `gateways.astro` (table+sidebar), `compare.astro`, `gateway/[slug].astro` (detail), `choose.astro` (wizard), `learn/*` (hub + guides), `best/[profile].astro` + `vs/[pair].astro` (programmatic SEO, spec 10), `api/*.json.ts` (static JSON API), `404.astro`
+- Pages: `src/pages/index.astro` (landing), `gateways.astro` (table+sidebar), `compare.astro`, `gateway/[slug].astro` (detail), `choose.astro` (wizard), `learn/*` (hub + guides), `best/[profile].astro` + `vs/[pair].astro` (programmatic SEO, spec 10), `contribute.astro` (Clerk-gated apply, spec 11), `api/*.json.ts` (static JSON API), `404.astro`
 - Components: `src/components/` (GatewayTable, Sidebar, FeeCell, FeatureBadge, Logo, LogoCycle, FlowDiagram)
-- Client scripts: `src/scripts/` (`table.ts` sort/filter/search, `compare.ts`, `choose.ts`, `auth.ts`, `progress.ts`)
+- Client scripts: `src/scripts/` (`table.ts` sort/filter/search, `compare.ts`, `choose.ts`, `auth.ts`, `contribute.ts`, `progress.ts`)
 - Logic: `src/lib/` (`fees.ts` fee math + rankable gating, `api.ts` ApiGateway shape, `recommend.ts` needs→shortlist engine, `seo-pages.ts` SEO profile/pair registries + copy builders, `access.ts`, `learn.ts`, `name.ts`, `fpx-banks.ts`)
 - Schema extras: `banks`/`methods` (optional string[]), `category: gateway|bank|ewallet|bnpl|infrastructure`. Methods (e-wallets) + banks shown on detail + `/compare`.
 - Default table order = lowest estimated blended fee on RM100 (gated `rankable`, spec 07); non-rankable rows follow by popularity. Single source: `src/lib/fees.ts`.
