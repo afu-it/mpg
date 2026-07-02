@@ -1,0 +1,134 @@
+---
+// Programmatic SEO: one pre-rendered head-to-head page per curated pair
+// (spec 10). Fee strings pass through the same semantics as the rest of the
+// site: official values plain, third-party values carry a trailing *, unknown
+// values stay "Contact sales" or "—". Nothing is fabricated.
+export const prerender = true;
+
+import { getCollection } from "astro:content";
+import Base from "../../layouts/Base.astro";
+import Logo from "../../components/Logo.astro";
+import FeeCell from "../../components/FeeCell.astro";
+import { toApiGateway, type GatewayEntryLike } from "../../lib/api";
+import { vsPairs, buildVsPage } from "../../lib/seo-pages";
+
+export async function getStaticPaths() {
+  const entries = (await getCollection("gateways")) as unknown as GatewayEntryLike[];
+  const gateways = entries.map(toApiGateway);
+  return vsPairs(gateways).map((pair) => ({ params: { pair: pair.slug }, props: { pair } }));
+}
+
+const { pair } = Astro.props;
+const page = buildVsPage(pair);
+const { a, b } = pair;
+const hasIndicative = [...page.feeRows, ...page.featureRows].some(
+  (r) => r.a.includes("*") || r.b.includes("*"),
+);
+---
+
+<Base title={page.title} description={page.description}>
+  <nav aria-label="Breadcrumb" class="mb-4 flex items-center gap-2 text-sm text-muted">
+    <a href="/" class="hover:text-fg hover:underline">Home</a>
+    <span aria-hidden="true">/</span>
+    <a href="/gateways" class="hover:text-fg hover:underline">Gateways</a>
+    <span aria-hidden="true">/</span>
+    <span class="text-fg">{a.name} vs {b.name}</span>
+  </nav>
+
+  <h1 class="text-2xl font-semibold tracking-tight text-fg">
+    {a.name} vs {b.name}
+  </h1>
+  <p class="mt-2 max-w-3xl text-muted">
+    Side-by-side fees and features for Malaysian merchants, from each provider's published
+    pricing. For the full matrix including supported banks and e-wallets, open the
+    <a href={`/compare?ids=${a.slug},${b.slug}`} class="text-accent hover:underline">interactive comparison</a>.
+  </p>
+
+  <section class="mt-6">
+    <h2 class="mb-3 text-sm font-medium uppercase tracking-wide text-muted">At a glance</h2>
+    <ul class="space-y-2">
+      {
+        page.verdicts.map((v) => (
+          <li class="rounded-md border border-line bg-panel px-4 py-3 text-sm text-fg">{v}</li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section class="mt-8">
+    <h2 class="mb-3 text-sm font-medium uppercase tracking-wide text-muted">Fees</h2>
+    <div class="overflow-x-auto rounded-md border border-line">
+      <table class="w-full min-w-[520px] text-sm">
+        <thead>
+          <tr class="border-b border-line bg-panel text-left">
+            <th class="px-4 py-3 font-medium text-muted"></th>
+            <th class="px-4 py-3">
+              <a href={`/gateway/${a.slug}`} class="flex items-center gap-2 font-medium text-fg hover:underline">
+                <Logo slug={a.slug} name={a.name} size={20} /> {a.name}
+              </a>
+            </th>
+            <th class="px-4 py-3">
+              <a href={`/gateway/${b.slug}`} class="flex items-center gap-2 font-medium text-fg hover:underline">
+                <Logo slug={b.slug} name={b.name} size={20} /> {b.name}
+              </a>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            page.feeRows.map((r) => (
+              <tr class="border-b border-line last:border-b-0">
+                <td class="px-4 py-2.5 text-muted">{r.label}</td>
+                <td class="px-4 py-2.5"><FeeCell value={r.a} /></td>
+                <td class="px-4 py-2.5"><FeeCell value={r.b} /></td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+    <p class="mt-2 text-xs text-muted">
+      Est. fee / RM100 = blended cost of a RM100 transaction from officially published FPX, card
+      and e-wallet rates (weighted 50/30/20).{" "}
+      {hasIndicative && "Values with a trailing * are third-party or indicative, not officially published. "}
+      Fees change and may be negotiable by volume; always confirm with the provider.
+    </p>
+  </section>
+
+  <section class="mt-8">
+    <h2 class="mb-3 text-sm font-medium uppercase tracking-wide text-muted">Features</h2>
+    <div class="overflow-x-auto rounded-md border border-line">
+      <table class="w-full min-w-[520px] text-sm">
+        <tbody>
+          {
+            page.featureRows.map((r) => (
+              <tr class="border-b border-line last:border-b-0">
+                <td class="px-4 py-2.5 text-muted">{r.label}</td>
+                <td class="px-4 py-2.5 text-fg">{r.a}</td>
+                <td class="px-4 py-2.5 text-fg">{r.b}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <div class="mt-8 flex flex-wrap gap-3">
+    <a
+      href={`/compare?ids=${a.slug},${b.slug}`}
+      class="rounded-md bg-brand-blue px-4 py-2 text-sm font-medium text-white hover:opacity-90"
+    >
+      Full comparison
+    </a>
+    <a href={`/gateway/${a.slug}`} class="rounded-md border border-line px-4 py-2 text-sm text-muted hover:text-fg">
+      {a.name} details
+    </a>
+    <a href={`/gateway/${b.slug}`} class="rounded-md border border-line px-4 py-2 text-sm text-muted hover:text-fg">
+      {b.name} details
+    </a>
+    <a href="/choose" class="rounded-md border border-line px-4 py-2 text-sm text-muted hover:text-fg">
+      Help me choose
+    </a>
+  </div>
+</Base>
