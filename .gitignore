@@ -20,3 +20,6 @@ Thumbs.db
 
 # safe-code local-only issue tracker
 /.safe-code/context/current-issues.md
+
+# clerk deploy artifact (DNS zone export)
+/clerk-*.zone
