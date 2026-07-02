@@ -9,7 +9,7 @@ _2026-07-02 (rev 11)_
 - [x] **Data API (spec 08, Phase 1)** — done 2026-06-27 (static `/api/gateways.json` + per-slug + `/learn/api` docs). Live on push.
 - [x] **"Help me choose" wizard (spec 09)** — done 2026-06-27 (`/choose` + `recommend()` lib). Live on push.
 - [x] **Spec B — programmatic SEO pages (spec 10)** — done 2026-07-02: `/best/*` (12 profiles) + `/vs/*` (69 curated pairs) via `src/lib/seo-pages.ts` over `recommend()`, sitemap-index.xml + robots.txt, /learn + footer links. Pushed → live on deploy.
-- [ ] Submit `sitemap-index.xml` in Google Search Console (needs AFU's Google account) so the new SEO pages get crawled sooner.
+- [x] Submit `sitemap-index.xml` in Google Search Console — done 2026-07-02 by AFU (property `malaysiapg.com.my` verified; sitemap status Success, index read same day). Discovered-pages count populates over days; check GSC "Pages" report in 1-2 weeks.
 - [x] **Deploy the MCP Worker (spec 08, Phase 2)** — done 2026-06-27. Live at `https://mpg-mcp.afuitdev.workers.dev/mcp`, verified end-to-end (initialize + tools/list + recommend_gateway). Real URL wired into `/learn/api` + README. Re-deploy: `cd mcp && npm run deploy`.
 - [x] Decide **Payex** — done 2026-06-27: REJECTED (payex.io is now Xendit Malaysia; already listed).
 - [ ] Optional ranking follow-ups (spec 07): per-RM100 effective-cost cells on `/compare`; separate visual track for BNPL/bank/wallet rows; decide whether ranking should require FPX (Fasspay ranks #1 on card+e-wallet but has no FPX).
