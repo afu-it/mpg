@@ -1,0 +1,160 @@
+---
+// Settlement-speed ranking (spec 12 item 6): static sibling of the
+// /best/[profile] pages. Ranks by worst-case parsed settlement days
+// (lib/settlement.ts) so nobody ranks faster than they officially promise.
+export const prerender = true;
+
+import { getCollection } from "astro:content";
+import Base from "../../layouts/Base.astro";
+import Logo from "../../components/Logo.astro";
+import { toApiGateway, type GatewayEntryLike } from "../../lib/api";
+import { parseSettlementDays } from "../../lib/settlement";
+import { breadcrumbLd } from "../../lib/jsonld";
+import { PROFILES } from "../../lib/seo-pages";
+
+const entries = (await getCollection("gateways")) as unknown as GatewayEntryLike[];
+const gateways = entries.map(toApiGateway).filter((g) => g.category !== "infrastructure");
+const asOf = gateways.map((g) => g.verified_date).sort().at(-1);
+
+const parsed = gateways.map((g) => ({ g, days: parseSettlementDays(g.settlement) }));
+const ranked = parsed
+  .filter((x): x is { g: (typeof gateways)[number]; days: number } => x.days != null)
+  .sort((a, b) => a.days - b.days || b.g.popularity - a.g.popularity || a.g.name.localeCompare(b.g.name));
+const unstated = parsed
+  .filter((x) => x.days == null)
+  .map((x) => x.g)
+  .sort((a, b) => b.popularity - a.popularity || a.name.localeCompare(b.name));
+
+const site = (Astro.site?.href ?? "https://malaysiapg.com.my/").replace(/\/$/, "");
+const top = ranked[0];
+const answerLine = top
+  ? `As of ${asOf}, the fastest officially stated settlement among Malaysian payment providers is ${top.g.name} at ${top.g.settlement}.`
+  : undefined;
+
+const jsonld = [
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "Fastest settlement payment gateways in Malaysia",
+    itemListElement: ranked.map((x, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: x.g.name,
+      url: `${site}/gateway/${x.g.slug}/`,
+    })),
+  },
+  breadcrumbLd(site, [
+    { name: "Home", path: "/" },
+    { name: "Learn", path: "/learn/" },
+    { name: "Fastest settlement" },
+  ]),
+];
+
+const dayLabel = (d: number) => (d === 0 ? "Same day" : d === 1 ? "Next business day" : `Up to ${d} business days`);
+---
+
+<Base
+  title="Fastest settlement payment gateways in Malaysia | MPG"
+  description="Malaysian payment gateways ranked by officially stated settlement speed: who pays out T+1, who takes a week, and who does not say. Worst-case ranked."
+>
+  <nav aria-label="Breadcrumb" class="mb-4 flex items-center gap-2 text-sm text-muted">
+    <a href="/" class="hover:text-fg hover:underline">Home</a>
+    <span aria-hidden="true">/</span>
+    <a href="/learn" class="hover:text-fg hover:underline">Learn</a>
+    <span aria-hidden="true">/</span>
+    <span class="text-fg">Fastest settlement</span>
+  </nav>
+
+  <h1 class="text-2xl font-semibold tracking-tight text-fg">
+    Fastest settlement payment gateways in Malaysia
+  </h1>
+  <p class="mt-2 max-w-3xl text-muted">
+    Settlement is when the money actually reaches your bank account, and it moves your cash
+    flow more than a few basis points of fees ever will. Providers below are ranked by their
+    officially stated settlement time, using the slowest leg they promise (a "T+1 to T+2"
+    provider ranks as T+2, never flattered).
+  </p>
+  {answerLine && <p class="mt-3 max-w-3xl font-medium text-fg">{answerLine}</p>}
+
+  <section class="mt-8">
+    <h2 class="mb-3 text-sm font-medium uppercase tracking-wide text-muted">
+      Ranked by stated settlement (slowest leg)
+    </h2>
+    <ol class="space-y-3">
+      {
+        ranked.map((x, i) => (
+          <li class="rounded-md border border-line bg-panel p-4">
+            <div class="flex flex-wrap items-center gap-3">
+              <span class="w-6 text-right font-semibold text-muted">{i + 1}.</span>
+              <Logo slug={x.g.slug} name={x.g.name} size={26} />
+              <a href={`/gateway/${x.g.slug}`} class="font-medium text-fg hover:underline">
+                {x.g.name}
+              </a>
+              <span class="ml-auto text-sm text-fg">{x.g.settlement}</span>
+            </div>
+            <p class="mt-2 pl-9 text-sm text-muted">
+              {dayLabel(x.days)}
+              {x.g.est_fee_rm100 != null && (
+                <>
+                  {" · "}est. fee ~RM{x.g.est_fee_rm100.toFixed(2)} / RM100
+                </>
+              )}
+            </p>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  <section class="mt-8">
+    <h2 class="mb-3 text-sm font-medium uppercase tracking-wide text-muted">
+      Settlement not stated publicly
+    </h2>
+    <p class="mb-3 max-w-3xl text-sm text-muted">
+      These providers publish no official settlement time (or only a third-party figure), so
+      we will not rank them on it. Listed by market presence; ask when you request a quote.
+    </p>
+    <div class="flex flex-wrap gap-2">
+      {
+        unstated.map((g) => (
+          <a
+            href={`/gateway/${g.slug}`}
+            class="rounded-full border border-line bg-panel px-3 py-1 text-xs text-muted hover:text-fg"
+          >
+            {g.name}
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  <div class="mt-8 flex flex-wrap gap-3">
+    <a href="/learn/glossary/settlement/" class="rounded-md border border-line px-4 py-2 text-sm text-muted hover:text-fg">
+      What does T+1 mean?
+    </a>
+    <a href="/compare" class="rounded-md border border-line px-4 py-2 text-sm text-muted hover:text-fg">
+      Compare side by side
+    </a>
+    <a href="/gateways" class="rounded-md border border-line px-4 py-2 text-sm text-muted hover:text-fg">
+      Browse all providers
+    </a>
+  </div>
+
+  <section class="mt-10 border-t border-line pt-6">
+    <h2 class="mb-3 text-sm font-medium uppercase tracking-wide text-muted">More guides</h2>
+    <div class="flex flex-wrap gap-2">
+      {
+        PROFILES.map((p) => (
+          <a
+            href={`/best/${p.slug}/`}
+            class="rounded-full border border-line bg-panel px-3 py-1 text-xs text-muted hover:text-fg"
+          >
+            {p.h1}
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  {jsonld.map((obj) => <script is:inline type="application/ld+json" set:html={JSON.stringify(obj)} />)}
+</Base>
