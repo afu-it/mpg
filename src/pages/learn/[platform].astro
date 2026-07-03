@@ -1,0 +1,134 @@
+---
+// Platform guides (spec 12 slice H): gateways with an official plugin for a
+// given e-commerce platform, ranked by the site's usual estimated cost.
+// Data-derived from each gateway's plugins[] field; add a platform by adding
+// an entry to PLATFORMS below.
+export const prerender = true;
+
+import { getCollection } from "astro:content";
+import Base from "../../layouts/Base.astro";
+import Logo from "../../components/Logo.astro";
+import { toApiGateway, type GatewayEntryLike } from "../../lib/api";
+import { breadcrumbLd, techArticleLd } from "../../lib/jsonld";
+import { PLATFORMS } from "../../lib/platform-guides";
+
+export async function getStaticPaths() {
+  return PLATFORMS.map((p) => ({ params: { platform: p.slug }, props: { def: p } }));
+}
+
+const { def } = Astro.props;
+
+const entries = (await getCollection("gateways")) as unknown as GatewayEntryLike[];
+const gateways = entries.map(toApiGateway);
+const asOf = gateways.map((g) => g.verified_date).sort().at(-1);
+
+const withPlugin = gateways.filter((g) => g.plugins.includes(def.plugin));
+const ranked = withPlugin
+  .filter((g) => g.rankable)
+  .sort((a, b) => a.est_fee_rm100! - b.est_fee_rm100! || b.popularity - a.popularity);
+const onRequest = withPlugin
+  .filter((g) => !g.rankable)
+  .sort((a, b) => b.popularity - a.popularity || a.name.localeCompare(b.name));
+const top = ranked[0];
+
+const site = (Astro.site?.href ?? "https://malaysiapg.com.my/").replace(/\/$/, "");
+const jsonld = [
+  techArticleLd(site, `/learn/${def.slug}/`, `${def.name} payment gateways for Malaysia`, def.description, asOf),
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: `${def.name} payment gateways for Malaysia`,
+    itemListElement: [...ranked, ...onRequest].map((g, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: g.name,
+      url: `${site}/gateway/${g.slug}/`,
+    })),
+  },
+  breadcrumbLd(site, [
+    { name: "Home", path: "/" },
+    { name: "Learn", path: "/learn/" },
+    { name: `${def.name} gateways` },
+  ]),
+];
+---
+
+<Base title={def.title} description={def.description}>
+  {jsonld.map((obj) => <script is:inline type="application/ld+json" set:html={JSON.stringify(obj)} />)}
+  <a href="/learn" class="text-sm text-muted hover:text-fg">← Learn</a>
+
+  <header class="mt-4 max-w-2xl">
+    <h1 class="text-2xl font-semibold tracking-tight text-fg">
+      {def.name} payment gateways for Malaysia
+    </h1>
+    <p class="mt-2 text-muted">{def.intro}</p>
+    {
+      top && (
+        <p class="mt-3 font-medium text-fg">
+          As of {asOf}, the cheapest {def.name}-ready gateway with officially published rates is{" "}
+          {top.name}, at about RM{top.est_fee_rm100!.toFixed(2)} per RM100 transaction.
+        </p>
+      )
+    }
+  </header>
+
+  <section class="mt-8">
+    <h2 class="mb-3 text-sm font-medium uppercase tracking-wide text-muted">
+      Ranked by estimated cost (published rates)
+    </h2>
+    <ol class="max-w-3xl space-y-2">
+      {
+        ranked.map((g, i) => (
+          <li class="flex flex-wrap items-center gap-3 rounded-md border border-line bg-panel px-4 py-3">
+            <span class="w-5 text-right font-semibold text-muted">{i + 1}.</span>
+            <Logo slug={g.slug} name={g.name} size={22} />
+            <a href={`/gateway/${g.slug}`} class="font-medium text-fg hover:underline">
+              {g.name}
+            </a>
+            <span class="ml-auto text-sm text-fg">
+              ~RM{g.est_fee_rm100!.toFixed(2)}
+              <span class="text-muted"> / RM100</span>
+            </span>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  {
+    onRequest.length > 0 && (
+      <section class="mt-8">
+        <h2 class="mb-3 text-sm font-medium uppercase tracking-wide text-muted">
+          Also {def.name}-ready, pricing on request
+        </h2>
+        <div class="flex max-w-3xl flex-wrap gap-2">
+          {onRequest.map((g) => (
+            <a
+              href={`/gateway/${g.slug}`}
+              class="rounded-full border border-line bg-panel px-3 py-1 text-xs text-muted hover:text-fg"
+            >
+              {g.name}
+            </a>
+          ))}
+        </div>
+      </section>
+    )
+  }
+
+  <section class="mt-10 max-w-3xl rounded-md border border-line bg-panel p-5">
+    <h2 class="font-medium text-fg">Setup notes</h2>
+    <p class="mt-2 text-sm text-muted">{def.note}</p>
+  </section>
+
+  <div class="mt-8 flex flex-wrap gap-3">
+    <a href="/best/payment-gateway-ecommerce-plugins/" class="rounded-md bg-brand-blue px-4 py-2 text-sm font-medium text-white hover:opacity-90">
+      All plugin-ready gateways
+    </a>
+    <a href="/learn/integration-flow" class="rounded-md border border-line px-4 py-2 text-sm text-muted hover:text-fg">
+      The safe integration flow
+    </a>
+    <a href="/learn/checklist" class="rounded-md border border-line px-4 py-2 text-sm text-muted hover:text-fg">
+      Production checklist
+    </a>
+  </div>
+</Base>
