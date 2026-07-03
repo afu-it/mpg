@@ -14,4 +14,4 @@ pending:
   - Spec 12 DONE (2026-07-03, second sitting): slices G (BM /ms/ set + reciprocal hreflang) + H (FPX how-to + WooCommerce/Shopify guides) built, 198 pages; only item 10 entity corroboration (AFU-driven) remains in BACKLOG.
   - Spec 02 decision: recommend demote approved → suggested (superseded by spec 11); awaiting AFU word.
   - AFU (SEO): GSC Request Indexing; AI Overview + favicon fix on recrawl.
-next_action: Push slices G+H (2 feat + docs commits) → deploy → verify /ms/ + guides live. Then: AFU's real-phone + signed-in smoke → flip CSP to enforcing + close specs 13/14. Next build units are all fresh picks (light mode / Tier 2 PSPs / Phase 3).
+next_action: Slices G+H PUSHED + DEPLOYED + VERIFIED LIVE 2026-07-03 petang (all /ms/ + guide pages 200 after edge propagation; reciprocal hreflang confirmed live both directions; html lang=ms). Remaining: AFU's real-phone + signed-in smoke → flip CSP to enforcing + close specs 13/14. Next build units are fresh picks (light mode / Tier 2 PSPs / Phase 3 / spec 02 decision).
