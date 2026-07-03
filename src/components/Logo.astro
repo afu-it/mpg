@@ -4,6 +4,7 @@
 // Square logos get subtly rounded corners; logos flagged `logo_round` in their
 // frontmatter are cropped to a full circle.
 import { getCollection } from "astro:content";
+import type { ImageMetadata } from "astro";
 
 interface Props {
   slug: string;
@@ -12,18 +13,19 @@ interface Props {
 }
 const { slug, name, size = 22 } = Astro.props;
 
-const logos = import.meta.glob("/src/assets/logos/*.{svg,png,webp}", {
-  eager: true,
-  query: "?url",
-  import: "default",
-});
-// map slug -> url, preferring .svg when both an svg and a raster exist
-const bySlug: Record<string, string> = {};
-for (const [path, url] of Object.entries(logos)) {
+// metadata import (not ?url) so each <img> gets intrinsic width/height
+// attributes — the browser then reserves the right box and avoids layout shift
+const logos = import.meta.glob<{ default: ImageMetadata }>(
+  "/src/assets/logos/*.{svg,png,webp}",
+  { eager: true },
+);
+// map slug -> image, preferring .svg when both an svg and a raster exist
+const bySlug: Record<string, ImageMetadata> = {};
+for (const [path, mod] of Object.entries(logos)) {
   const key = path.split("/").pop()!.replace(/\.\w+$/, "");
-  if (!bySlug[key] || path.endsWith(".svg")) bySlug[key] = url as string;
+  if (!bySlug[key] || path.endsWith(".svg")) bySlug[key] = mod.default;
 }
-const logoUrl = bySlug[slug];
+const logo = bySlug[slug];
 
 const roundSlugs = new Set(
   (await getCollection("gateways")).filter((g) => g.data.logo_round).map((g) => g.id),
@@ -34,19 +36,23 @@ const initial = (name.trim().charAt(0) || "?").toUpperCase();
 ---
 
 {
-  logoUrl ? (
+  logo ? (
     isRound ? (
       <img
-        src={logoUrl}
+        src={logo.src}
         alt={`${name} logo`}
+        width={logo.width}
+        height={logo.height}
         style={`width:${size}px;height:${size}px`}
         class="shrink-0 rounded-full object-cover"
         loading="lazy"
       />
     ) : (
       <img
-        src={logoUrl}
+        src={logo.src}
         alt={`${name} logo`}
+        width={logo.width}
+        height={logo.height}
         style={`height:${size}px`}
         class="w-auto max-w-[120px] rounded-[22%] object-contain"
         loading="lazy"

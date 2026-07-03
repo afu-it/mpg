@@ -22,6 +22,7 @@
   --color-accent: #4f86f5; /* lighter flag-blue — links, focus, small accents */
   --color-brand-blue: #0031a0; /* deep flag blue — primary buttons (white text) */
   --color-brand-red: #cc0000; /* flag red — large text / fill + white text */
+  --color-brand-red-soft: #f5545f; /* readable flag-red tint (5.5:1 on panel) — small text on dark */
   --color-brand-yellow: #fed100; /* flag yellow — accents / large text */
   --color-duitnow: #e61f65; /* DuitNow brand magenta — use on DuitNow labels */
   --color-fpx: #6f83cc; /* FPX navy, lightened for readable contrast on dark (~6:1) */
