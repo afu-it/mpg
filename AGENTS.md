@@ -24,7 +24,7 @@ openrouter.ai/models. Static Astro site on Cloudflare Pages.
 ## Hard rules
 - **Fees are sourced.** Every gateway carries `source` + `verified_date`. Never fabricate a fee — use `"Contact sales"` (negotiated/unpublished) or `"—"` (not offered).
 - **Content pages stay static.** Auth is client-side via `@clerk/clerk-js` (CDN hotload), NOT `@clerk/astro`.
-- **Secrets live in `.env`** (gitignored). Never commit keys. Clerk keys are currently `pk_test`/`sk_test`.
+- **Secrets live in `.env`** (gitignored). Never commit keys. Local dev uses Clerk `pk_test`; production `pk_live` comes from the GitHub secret. No Clerk `sk_*` is used anywhere (auth is client-side only). Security posture: `.safe-code/context/security.md`.
 - **Add a gateway = one `.md`** in `src/content/gateways/` (Zod-validated). No code change needed.
 - Do NOT add `@astrojs/cloudflare` or `@clerk/astro` while on Astro 7 (both break — see architecture.md).
 - After changing a client script (`src/scripts/*.ts`), **hard-refresh** the browser; HMR for inline scripts lags on the NTFS mount.

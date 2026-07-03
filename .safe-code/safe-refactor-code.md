@@ -1,6 +1,6 @@
 # safe-refactor-code — flagged candidates
 
-_2026-07-03 (rev 18)_
+_2026-07-03 (rev 19)_
 
 ## Resolved
 - Removed unused dependency `@clerk/clerk-js` (auth loads Clerk from CDN via `window.Clerk`).
@@ -30,6 +30,7 @@ _2026-07-03 (rev 18)_
 - `public/logo.svg` is the BRAND source of truth; `favicon.ico`/`favicon-96.png`/`apple-touch-icon.png`/`icon-512.png` are derived outputs — regenerate from the SVG (rsvg-convert + magick), never hand-edit, never "dedupe" them as redundant copies. `public/favicon.svg` is OUR adaptive icon (prefers-color-scheme CSS inside the SVG) — don't "simplify" the classes/media query away; `logo-white.svg` is the dark-theme header mark, not a duplicate of logo.svg.
 - The deploy job's `if: github.actor == github.repository_owner` gate is a SECURITY control (spec 11: private repo has no branch protection on free plan) — never remove it as workflow cleanup.
 - `public/robots.txt`'s long explicit AI-bot Allow list is DELIBERATE (AFU decision 2026-07-03: full AI access incl. training) — don't collapse it to `User-agent: * Allow` as "simplification"; the named stanzas are the point. `public/llms.txt` is the AI-facing guide, not a stray doc.
-- `public/_headers` is Cloudflare Pages config (security headers + caching) — not dead config. CSP is deliberately absent (Clerk breakage risk); don't "harden" it in without testing auth.
+- `public/_headers` is Cloudflare Pages config (security headers + caching) — not dead config. CSP ships as **Report-Only** (spec 13) until AFU's live auth smoke is clean; don't flip it to enforcing, loosen it, or delete it without that verification. The `! Access-Control-Allow-Origin` detach + `/api/*` re-add is deliberate (Cloudflare Pages adds ACAO:* by default) — not a typo, don't "clean" it.
+- Deploy workflow actions are pinned to commit SHAs with `# vN` comments (spec 13, TM-003) — don't "simplify" back to mutable tags. When upgrading an action, resolve the new tag to its commit and update both SHA and comment.
 - Never add Offer/Product/AggregateRating/Review structured data to gateway fees (third-party pricing, spam-policy risk — see spec 12). `src/lib/jsonld.ts` breadcrumbLd is the single breadcrumb builder; JSON-LD urls always trailing-slash.
 - Inline `{" "}` spacers in .astro prose fix Astro's tag-boundary whitespace trim — never strip them (also listed in code-standards).

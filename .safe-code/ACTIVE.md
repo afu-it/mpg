@@ -4,15 +4,12 @@
 status: saved
 saved_at: 2026-07-03
 completed:
-  - Spec 07 follow-ups DONE (spec closed): /compare "Est. fee / RM100" row + ≈ annotations; /gateways "Pricing on request" divider; FPX-gating decided by AFU (keep current gate, Fasspay stays #1).
-  - Lighthouse + Google-result fixes: red-soft contrast token, sr-only h2, underlined links, Inter preload, logo intrinsic dims, canonical sitewide, data-driven footer date, homepage WebSite+Organization JSON-LD.
-  - FULL SEO SESSION (squirrel 69/D baseline + 3-specialist pass, 2 rounds): /about /privacy /contact, /vs hub + homepage comparisons block, trailing-slash internal links, all 162 pages in SERP windows, BreadcrumbList + detail-page schema + fee-verified captions, _headers, logo compression, kiple dead-link fix, robots.txt AI allow-list + llms.txt.
-  - CRITICAL: Cloudflare "Managed robots.txt" was blocking all AI crawlers (why AI Overview said site "does not exist") — AFU disabled it, verified gone live.
-  - Sitewide link-spacing (Astro whitespace gluing) fixed, 0 left by scan.
-  - Committed atomic: c24d4a3 (feat spec-07), d27f95f (fix lighthouse), 60c8b6a (feat seo overhaul), + docs commit. PUSHED at AFU's "save & deploy".
+  - Spec 13 security hardening BUILT: ownership map + threat model (TM-001..008) in context/security.md; repo code review clean (XSS/secrets/MCP verified); GitHub Actions SHA-pinned; CSP shipped Report-Only; ACAO scoped to /api/* only; COOP/COEP/CORP decision documented.
+  - Commits: adf4dfe (chore: SHA-pin actions), 5ceff6c (chore: CSP-RO + ACAO), + docs commit. Pushed at AFU's "buat je semua" → deploy + live verification run by JARVIS same session (see LOG verify entry if present).
 pending:
-  - AFU: GSC URL Inspection → Request Indexing on / + top /best pages; favicon + AI Overview self-fix on recrawl.
-  - AFU: re-run PageSpeed (expect a11y ~95+) + squirrel on live (expect mid-high 80s).
+  - AFU (spec 13): 2FA confirm on GitHub/Cloudflare/YeahHost/Clerk/Google; rotate Google OAuth client secret; signed-in live smoke (email + Google + contribute unlock) with console open.
+  - Next session: flip CSP Report-Only → enforcing once AFU's smoke is clean.
+  - AFU (SEO): GSC Request Indexing on / + top /best pages; AI Overview + favicon fix on recrawl.
   - Backlog watches: FavePay Later liveness, Mobi logo, UOB/RHB ewallet semantics.
-  - Optional next units: spec 12 SEO round 2 (BM content, glossary URLs, calculator, Dataset schema, entity corroboration), light mode, Phase 3 submit-a-gateway.
-next_action: Deploy verified live 2026-07-03 (see LOG verify entry). Next unit is AFU's pick — spec 12 items (SEO round 2) are the warmest; or light mode / Phase 3.
+  - Next units: spec 12 SEO round 2 (status: suggested — needs AFU approval), light mode, Phase 3 submit-a-gateway.
+next_action: If AFU reports a clean signed-in smoke → flip CSP to enforcing (public/_headers, rename Report-Only header) + verify live + close spec 13 as done. Otherwise AFU picks the next unit (spec 12 is warmest but still suggested).

@@ -1,6 +1,11 @@
 # MEMORY — temporary audit/architecture notes
 
-_2026-07-03 (rev 7)_
+_2026-07-03 (rev 8)_
+
+## Security layer (2026-07-03, spec 13)
+- Canonical doc: `context/security.md` (ownership map, TM-001..008, header decisions). Highlights that bite during coding: CSP is **Report-Only** in `public/_headers` (flip after AFU smoke); Cloudflare Pages injects `access-control-allow-origin: *` by default — we detach it and re-add on `/api/*` only; deploy actions are SHA-pinned; XSS-clean verified (URL params allowlisted, `esc()` in choose.ts, textContent-only DOM).
+- Clerk JS host is decoded from the publishable key at runtime (`src/scripts/auth.ts` atob) — prod = `clerk.malaysiapg.com.my`; CSP script-src/connect-src must keep that origin.
+- `/security-review` skill is diff-scoped (needs `origin/HEAD`); on a clean tree run the repo-scoped review manually per spec 13 section D.
 
 ## SEO/GEO layer (2026-07-03)
 - `src/lib/jsonld.ts` = shared JSON-LD builders (breadcrumbLd). ALL structured-data URLs must be https + trailing slash (match canonical + sitemap). Canonical is emitted by `Base.astro` from Astro.url + Astro.site.

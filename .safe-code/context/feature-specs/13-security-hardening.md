@@ -1,5 +1,5 @@
 ---
-status: approved   # suggested | approved | in-progress | done | rejected
+status: in-progress   # suggested | approved | in-progress | done | rejected — built 2026-07-03, done after AFU live smoke + securityheaders re-scan
 created: 2026-07-03
 ---
 

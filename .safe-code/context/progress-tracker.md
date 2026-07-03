@@ -1,6 +1,6 @@
 # Progress Tracker — MPG
 
-last_synced_commit: 60c8b6a
+last_synced_commit: 5ceff6c
 context_synced_at: 2026-07-03
 context_selftest: skipped (not first-run)
 
@@ -53,6 +53,12 @@ No server/DB. Deployed (push master → Cloudflare Pages).
 - public/_headers: HSTS, XFO, nosniff, Referrer-Policy, Permissions-Policy, immutable /_astro, HTML must-revalidate. CSP deliberately omitted (Clerk breakage risk).
 - Astro whitespace trap: inline links on their own source line glue to surrounding text; fixed sitewide with {" "}; scan showed 0 gluings across a/code/em/strong.
 - Round-2 backlog (BM content, glossary URLs, calculator, Wikidata, IndexNow, Dataset schema) lives in spec 12 (suggested).
+
+## Security layer (2026-07-03, spec 13)
+- Canonical security doc: `context/security.md` (ownership map + threat model TM-001..TM-008 + header decisions). Read it before touching auth, deploy, headers, or inviting collaborators.
+- Headers: HSTS/XFO/nosniff/Referrer/Permissions live; **CSP is Report-Only** (flip to enforcing after AFU's clean live auth smoke); ACAO detached from HTML, `/api/*` only. COOP/COEP/CORP deliberately not enabled.
+- Deploy actions SHA-pinned. **TM-001 trigger**: before inviting ANY collaborator, remove `CLOUDFLARE_API_TOKEN` from GH secrets (switch to Pages direct Git integration) or use fork+PR only — any workflow file on any branch can read repo secrets.
+- AFU open: 2FA confirmation on GitHub/Cloudflare/YeahHost/Clerk/Google; Google OAuth secret rotation (pending since 2026-07-02).
 
 ## Decisions (safe summary)
 - **Contribution model (2026-07-02, spec 11):** repo stays PRIVATE; approved applicants get a GitHub collaborator invite; applications arrive via prefilled email (not a backend form). GitHub free gives no branch protection on private repos, so the deploy job is actor-gated (owner-only) as the production safety net. Public-repo fork+PR was offered and declined.
