@@ -1,6 +1,6 @@
 # MEMORY — temporary audit/architecture notes
 
-_2026-07-03 (rev 8)_
+_2026-07-03 (rev 9)_
 
 ## Security layer (2026-07-03, spec 13)
 - Canonical doc: `context/security.md` (ownership map, TM-001..008, header decisions). Highlights that bite during coding: CSP is **Report-Only** in `public/_headers` (flip after AFU smoke); Cloudflare Pages injects `access-control-allow-origin: *` by default — we detach it and re-add on `/api/*` only; deploy actions are SHA-pinned; XSS-clean verified (URL params allowlisted, `esc()` in choose.ts, textContent-only DOM).

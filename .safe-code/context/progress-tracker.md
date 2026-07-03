@@ -1,6 +1,6 @@
 # Progress Tracker — MPG
 
-last_synced_commit: 5ceff6c
+last_synced_commit: 24a15b3
 context_synced_at: 2026-07-03
 context_selftest: skipped (not first-run)
 
@@ -53,6 +53,11 @@ No server/DB. Deployed (push master → Cloudflare Pages).
 - public/_headers: HSTS, XFO, nosniff, Referrer-Policy, Permissions-Policy, immutable /_astro, HTML must-revalidate. CSP deliberately omitted (Clerk breakage risk).
 - Astro whitespace trap: inline links on their own source line glue to surrounding text; fixed sitewide with {" "}; scan showed 0 gluings across a/code/em/strong.
 - Round-2 backlog (BM content, glossary URLs, calculator, Wikidata, IndexNow, Dataset schema) lives in spec 12 (suggested).
+
+## SEO round 2 + mobile (2026-07-03, specs 12 + 14)
+- **191 pages** (was 162). New this session: /learn/glossary/<term>/ x14 (DefinedTerm LD, registry `src/lib/glossary.ts`), /calculator (fees.ts engine), /fee-changes (append-only `src/lib/fee-changes.ts`, audit-backed), /best/fastest-settlement/ (`src/lib/settlement.ts`, worst-case parsing), /alternatives/<slug>/ x12 (top-12 popular, recommend()-ranked), /llms-full.txt. Dated answer lines on /best; Dataset+WebAPI LD on /learn/api; TechArticle on guides; sitewide Organization @id.
+- Spec 12 slices G (BM + hreflang) and H (how-to guides) remain; item 10 (Wikidata/Bing/community) is AFU-driven.
+- **Mobile (spec 14)**: hamburger nav drawer sitewide; /gateways filter drawer + CSS card-list transform of the same table DOM (table.ts untouched); compare sticky labels; 44px drawer targets. Verified by chrome-devtools emulation (390x844 + 1280 desktop-unchanged); AFU real-device smoke pending.
 
 ## Security layer (2026-07-03, spec 13)
 - Canonical security doc: `context/security.md` (ownership map + threat model TM-001..TM-008 + header decisions). Read it before touching auth, deploy, headers, or inviting collaborators.

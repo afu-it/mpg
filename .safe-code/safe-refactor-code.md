@@ -1,6 +1,6 @@
 # safe-refactor-code — flagged candidates
 
-_2026-07-03 (rev 19)_
+_2026-07-03 (rev 20)_
 
 ## Resolved
 - Removed unused dependency `@clerk/clerk-js` (auth loads Clerk from CDN via `window.Clerk`).
@@ -34,3 +34,5 @@ _2026-07-03 (rev 19)_
 - Deploy workflow actions are pinned to commit SHAs with `# vN` comments (spec 13, TM-003) — don't "simplify" back to mutable tags. When upgrading an action, resolve the new tag to its commit and update both SHA and comment.
 - Never add Offer/Product/AggregateRating/Review structured data to gateway fees (third-party pricing, spam-policy risk — see spec 12). `src/lib/jsonld.ts` breadcrumbLd is the single breadcrumb builder; JSON-LD urls always trailing-slash.
 - Inline `{" "}` spacers in .astro prose fix Astro's tag-boundary whitespace trim — never strip them (also listed in code-standards).
+- The `@media (max-width: 767px)` block in `GatewayTable.astro` (spec 14) turns the SAME table DOM into a mobile card list — `table.ts` search/sort/filter/divider depend on that single DOM; don't replace it with a separate mobile list, and don't remove the `tr::after` full-width break or `data-label`/`gw-minor` hooks as "unused". The gateways filter `<aside id="gw-filters">` doubles as the mobile drawer (`data-open` + table.ts) — one element by design.
+- `src/lib/glossary.ts`, `src/lib/fee-changes.ts` (append-only), `src/lib/settlement.ts` are registries/parsers with tests enforcing SERP windows + house style — extend them, don't inline their data into pages. Alternatives targets are DERIVED (top-12 popularity), same rule as vs-pairs.

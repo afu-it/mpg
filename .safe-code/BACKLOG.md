@@ -1,11 +1,11 @@
 # BACKLOG — operational queue
 
-_2026-07-03 (rev 17)_
+_2026-07-03 (rev 18)_
 
 - [ ] **AFU security actions (spec 13)**: (1) confirm 2FA on GitHub / Cloudflare / YeahHost / Clerk / Google (TM-002, highest-leverage control); (2) rotate the Google OAuth client secret (pending since 2026-07-02) — Google Cloud Console → credentials → paste new secret into Clerk dashboard; (3) signed-in live smoke: email + Google sign-in + contribute unlock with console open — a clean console clears CSP for enforcing next session.
 - [ ] **Flip CSP Report-Only → enforcing** (`public/_headers`) once AFU's smoke above is clean. See `context/security.md` header decisions.
 - [ ] **AFU after this deploy**: GSC URL Inspection → Request Indexing on `/` + top /best pages; favicon + AI Overview fix themselves on recrawl now that AI crawlers are unblocked. (PageSpeed + headers re-verified by JARVIS 2026-07-03 post-deploy.)
-- [ ] **SEO round 2 ideas** parked in spec 12 (BM content + hreflang, glossary term URLs, how-to guides, fee-change news, fee calculator, Dataset/WebAPI schema, llms-full.txt, dated answer-sentences, FAQ de-cannibalisation).
+- [~] **SEO round 2 (spec 12)**: slices A-F BUILT 2026-07-03 (glossary URLs, calculator, fee-changes, fastest-settlement, alternatives, schema/citability, llms-full.txt). REMAINING: slice G (BM money pages + hreflang, /ms/ prefix), slice H (how-to guides: cara daftar FPX, Shopify/WooCommerce MY).
 - [ ] **Entity corroboration** (AFU-driven, from GEO audit): Wikidata item, GitHub README with the domain, MCP registry listings (modelcontextprotocol/PulseMCP/Smithery/mcp.so), Bing Webmaster Tools + IndexNow (Cloudflare one-click), community posts.
 - [x] Spec 07 follow-ups (per-RM100 on /compare, On-request divider, FPX-gating decision: keep) — done 2026-07-03.
 
@@ -38,6 +38,6 @@ _2026-07-03 (rev 17)_
 - [x] Liveness + social-recency sweep on all gateways — done 2026-06-26 (removed dormant myIOU; all others live + active).
 - [x] Deep discovery + add Tier 1/3/4 gateways — done 2026-06-26 (22 added, directory 59).
 - [x] Tune `popularity` numbers — done 2026-06-27 (corrected all 59 from researched market audit; no longer any silently-0 gateways). Re-tune anytime; they are editorial estimates.
-- [ ] Optional: collapsible "Filters" sidebar on mobile (currently stacks on top).
+- [x] Collapsible Filters sidebar on mobile — done 2026-07-03 (spec 14: left drawer + card-list table + nav drawer).
 - [x] Build `/learn` section (spec 06) — done 2026-06-25 (commit 65e192b).
 - [x] Upgrade several favicon-grade logos to real brand assets — done for NTT DATA, PayHalal, RinggitPay, Bizappay, AsiaPay, Revenue Monster (2026-06-25).

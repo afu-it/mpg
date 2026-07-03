@@ -1,5 +1,5 @@
 ---
-status: suggested   # suggested | approved | in-progress | done | rejected
+status: in-progress   # suggested | approved | in-progress | done | rejected — approved by AFU 2026-07-03 ("buatlah jugak spec 12 tu")
 created: 2026-07-03
 ---
 
