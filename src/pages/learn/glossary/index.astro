@@ -1,0 +1,67 @@
+---
+export const prerender = true;
+
+import Base from "../../../layouts/Base.astro";
+import { GLOSSARY, glossaryPath } from "../../../lib/glossary";
+import { breadcrumbLd } from "../../../lib/jsonld";
+
+const site = (Astro.site?.href ?? "https://malaysiapg.com.my/").replace(/\/$/, "");
+
+// DefinedTermSet: each term links its own page (spec 12 item 2)
+const termSetLd = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "DefinedTermSet",
+  "@id": `${site}/learn/glossary/#termset`,
+  name: "Malaysian payment gateway glossary",
+  url: `${site}/learn/glossary/`,
+  hasDefinedTerm: GLOSSARY.map((t) => ({
+    "@type": "DefinedTerm",
+    name: t.term,
+    description: t.def,
+    url: `${site}${glossaryPath(t.slug)}`,
+  })),
+});
+const crumbLd = JSON.stringify(
+  breadcrumbLd(site, [{ name: "Home", path: "/" }, { name: "Learn", path: "/learn/" }, { name: "Glossary" }]),
+);
+---
+
+<Base
+  title="Glossary: payment terms in plain language | MPG"
+  description="Plain-language definitions of Malaysian payment-gateway terms: FPX, DuitNow QR, MDR, settlement, webhooks, idempotency, MCP and more."
+>
+  <script is:inline type="application/ld+json" set:html={termSetLd} />
+  <script is:inline type="application/ld+json" set:html={crumbLd} />
+  <a href="/learn" class="text-sm text-muted hover:text-fg">← Learn</a>
+
+  <header class="mt-4 max-w-2xl">
+    <h1 class="text-2xl font-semibold tracking-tight text-fg">Glossary</h1>
+    <p class="mt-2 text-muted">
+      The vocabulary you'll meet integrating a gateway, in plain English. Every term
+      links to a full explanation.
+    </p>
+  </header>
+
+  <dl class="mt-8 max-w-2xl divide-y divide-line overflow-hidden rounded-md border border-line">
+    {
+      GLOSSARY.map((t) => (
+        <div class="px-4 py-3">
+          <dt class="font-medium">
+            <a
+              href={glossaryPath(t.slug)}
+              class={`hover:underline ${t.term === "DuitNow QR" ? "text-duitnow" : t.term === "FPX" ? "text-fpx" : "text-fg"}`}
+            >
+              {t.term}
+            </a>
+          </dt>
+          <dd class="mt-1 text-sm text-muted">
+            {t.def}{" "}
+            <a href={glossaryPath(t.slug)} class="whitespace-nowrap text-accent hover:underline">
+              Read more
+            </a>
+          </dd>
+        </div>
+      ))
+    }
+  </dl>
+</Base>

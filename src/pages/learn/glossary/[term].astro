@@ -1,0 +1,85 @@
+---
+// Per-term glossary pages (spec 12 item 2): one URL per definition, each a
+// featured-snippet / AI-citation candidate. All copy lives in lib/glossary.ts.
+export const prerender = true;
+
+import Base from "../../../layouts/Base.astro";
+import { GLOSSARY, glossaryPath } from "../../../lib/glossary";
+import { breadcrumbLd } from "../../../lib/jsonld";
+
+export async function getStaticPaths() {
+  return GLOSSARY.map((t) => ({ params: { term: t.slug }, props: { t } }));
+}
+
+const { t } = Astro.props;
+const site = (Astro.site?.href ?? "https://malaysiapg.com.my/").replace(/\/$/, "");
+
+const termLd = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "DefinedTerm",
+  name: t.term,
+  description: t.def,
+  url: `${site}${glossaryPath(t.slug)}`,
+  inDefinedTermSet: { "@id": `${site}/learn/glossary/#termset` },
+});
+const crumbLd = JSON.stringify(
+  breadcrumbLd(site, [
+    { name: "Home", path: "/" },
+    { name: "Learn", path: "/learn/" },
+    { name: "Glossary", path: "/learn/glossary/" },
+    { name: t.term },
+  ]),
+);
+
+const others = GLOSSARY.filter((x) => x.slug !== t.slug);
+---
+
+<Base title={t.title} description={t.description}>
+  <script is:inline type="application/ld+json" set:html={termLd} />
+  <script is:inline type="application/ld+json" set:html={crumbLd} />
+
+  <nav aria-label="Breadcrumb" class="mb-4 flex items-center gap-2 text-sm text-muted">
+    <a href="/" class="hover:text-fg hover:underline">Home</a>
+    <span aria-hidden="true">/</span>
+    <a href="/learn" class="hover:text-fg hover:underline">Learn</a>
+    <span aria-hidden="true">/</span>
+    <a href="/learn/glossary/" class="hover:text-fg hover:underline">Glossary</a>
+    <span aria-hidden="true">/</span>
+    <span class="text-fg">{t.term}</span>
+  </nav>
+
+  <header class="max-w-2xl">
+    <h1 class="text-2xl font-semibold tracking-tight text-fg">{t.question}</h1>
+    <p class="mt-3 font-medium text-fg">{t.def}</p>
+  </header>
+
+  <div class="mt-5 max-w-2xl space-y-4">
+    {t.body.map((p) => <p class="text-muted">{p}</p>)}
+  </div>
+
+  <div class="mt-8 flex flex-wrap gap-3">
+    {
+      t.related.map((r) => (
+        <a href={r.href} class="rounded-md border border-line px-4 py-2 text-sm text-muted hover:text-fg">
+          {r.label}
+        </a>
+      ))
+    }
+  </div>
+
+  <section class="mt-10 border-t border-line pt-6">
+    <h2 class="mb-3 text-sm font-medium uppercase tracking-wide text-muted">More terms</h2>
+    <div class="flex flex-wrap gap-2">
+      {
+        others.map((x) => (
+          <a
+            href={glossaryPath(x.slug)}
+            class="rounded-full border border-line bg-panel px-3 py-1 text-xs text-muted hover:text-fg"
+          >
+            {x.term}
+          </a>
+        ))
+      }
+    </div>
+  </section>
+</Base>
