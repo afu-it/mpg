@@ -11,9 +11,8 @@ completed:
   - Sitewide link-spacing (Astro whitespace gluing) fixed, 0 left by scan.
   - Committed atomic: c24d4a3 (feat spec-07), d27f95f (fix lighthouse), 60c8b6a (feat seo overhaul), + docs commit. PUSHED at AFU's "save & deploy".
 pending:
-  - Verify deploy landed: live robots.txt shows AI allow-list, /llms.txt 200, security headers present, /about /vs/ live. (Done same session if push succeeded — check LOG.)
   - AFU: GSC URL Inspection → Request Indexing on / + top /best pages; favicon + AI Overview self-fix on recrawl.
   - AFU: re-run PageSpeed (expect a11y ~95+) + squirrel on live (expect mid-high 80s).
   - Backlog watches: FavePay Later liveness, Mobi logo, UOB/RHB ewallet semantics.
   - Optional next units: spec 12 SEO round 2 (BM content, glossary URLs, calculator, Dataset schema, entity corroboration), light mode, Phase 3 submit-a-gateway.
-next_action: Confirm the deploy verification results in LOG.md happened; if not, curl live robots.txt/llms.txt/_headers. Then next unit is AFU's pick (spec 12 items are the warmest).
+next_action: Deploy verified live 2026-07-03 (see LOG verify entry). Next unit is AFU's pick — spec 12 items (SEO round 2) are the warmest; or light mode / Phase 3.

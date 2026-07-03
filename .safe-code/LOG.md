@@ -1,5 +1,9 @@
 # LOG — safe diary (append above)
 
+## 2026-07-03 · type: verify
+Session closed via save & deploy. 4 atomic commits (c24d4a3 feat spec-07, d27f95f fix lighthouse, 60c8b6a feat seo overhaul, 4301722 docs) pushed → GitHub Actions run 28637077350 succeeded → verified LIVE: robots.txt serves the AI allow-list (no Cloudflare managed block), /llms.txt 200, security headers active (HSTS/XFO/nosniff/Referrer-Policy), /about /privacy /contact /vs/ all 200, canonical on homepage, "Fees verified 2026-07-02" caption on detail pages, /gateways divider present, link spacing correct. Remaining for AFU: GSC Request Indexing; PageSpeed + squirrel re-run on live when convenient.
+plain: Semua kerja hari ni dah naik live dan disahkan satu-satu kat website sebenar. Tinggal Master minta Google datang semula (Request Indexing).
+
 ## 2026-07-03 · type: fix
 **Sitewide link-spacing fix.** AFU reported glued text ("thecontribute page"); root cause = Astro trims whitespace when an inline tag sits on its own source line. Fixed with explicit {" "} at every boundary; a full-dist scan (162 pages, a/code/em/strong) confirmed 0 gluings left, and caught pre-existing cases on all 71 /vs pages, /learn/api and the /gateways footnote.
 plain: Baiki perkataan yang terlekat dengan link kat banyak page (contoh "thecontribute page") dan pastikan seluruh website bersih dengan scan automatik.
