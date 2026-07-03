@@ -1,14 +1,30 @@
 # Cloudflare Pages headers (see https://developers.cloudflare.com/pages/configuration/headers/)
-# CSP intentionally omitted: Clerk's hosted JS + inline bootstrap would need a
-# permissive policy that adds little; revisit if the auth setup changes.
+#
+# CSP ships as Report-Only first (spec 13): violations log to the browser console,
+# nothing is blocked. Flip to enforcing (rename to Content-Security-Policy) only
+# after AFU smoke-tests live sign-in (email + Google), the user button, and the
+# contribute form unlock with a clean console.
+# script-src needs 'unsafe-inline' because Astro inlines the small per-page module
+# script; Clerk loads from clerk.malaysiapg.com.my (host decoded from pk_live) and
+# may embed Cloudflare Turnstile (challenges.cloudflare.com). JSON-LD blocks are
+# data, not executed - CSP does not apply to them.
+#
+# Cloudflare Pages adds "access-control-allow-origin: *" to every response by
+# default; we detach it site-wide and re-add it only for /api/* (the JSON API is
+# meant to be fetched cross-origin, HTML pages are not).
 
 /*
+  ! Access-Control-Allow-Origin
   Strict-Transport-Security: max-age=31536000; includeSubDomains
   X-Frame-Options: SAMEORIGIN
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: camera=(), microphone=(), geolocation=()
   Cache-Control: public, max-age=0, must-revalidate
+  Content-Security-Policy-Report-Only: default-src 'self'; script-src 'self' 'unsafe-inline' https://clerk.malaysiapg.com.my https://challenges.cloudflare.com; connect-src 'self' https://clerk.malaysiapg.com.my https://clerk-telemetry.com; img-src 'self' data: https://img.clerk.com; style-src 'self' 'unsafe-inline'; font-src 'self'; worker-src 'self' blob:; frame-src https://challenges.cloudflare.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'
+
+/api/*
+  Access-Control-Allow-Origin: *
 
 # hashed build assets never change content under the same filename
 /_astro/*
