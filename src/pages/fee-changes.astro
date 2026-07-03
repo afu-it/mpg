@@ -1,0 +1,98 @@
+---
+// Fee-change log page (spec 12 item 4): a dated, sourced freshness signal.
+// Entries come from src/lib/fee-changes.ts, curated during fee audits.
+export const prerender = true;
+
+import { getCollection } from "astro:content";
+import Base from "../layouts/Base.astro";
+import { FEE_CHANGES, KIND_LABEL } from "../lib/fee-changes";
+import { breadcrumbLd } from "../lib/jsonld";
+
+const site = (Astro.site?.href ?? "https://malaysiapg.com.my/").replace(/\/$/, "");
+
+// existing slugs so entries about renamed/removed providers never emit dead links
+const validSlugs = new Set((await getCollection("gateways")).map((g) => g.id));
+
+const changes = [...FEE_CHANGES].sort((a, b) => b.observed.localeCompare(a.observed));
+const byDate = new Map<string, typeof changes>();
+for (const c of changes) {
+  const list = byDate.get(c.observed) ?? [];
+  list.push(c);
+  byDate.set(c.observed, list);
+}
+
+const crumbLd = JSON.stringify(
+  breadcrumbLd(site, [{ name: "Home", path: "/" }, { name: "Fee changes" }]),
+);
+
+const KIND_CLASS: Record<string, string> = {
+  increase: "text-brand-red-soft",
+  decrease: "text-fg",
+  published: "text-accent",
+  unpublished: "text-muted",
+  correction: "text-muted",
+  listing: "text-accent",
+};
+---
+
+<Base
+  title="Recent Malaysian payment gateway fee changes | MPG"
+  description="A dated log of Malaysian payment gateway fee changes: increases, newly published official rates, and rates quietly withdrawn, from our fee audits."
+>
+  <script is:inline type="application/ld+json" set:html={crumbLd} />
+
+  <header class="max-w-2xl">
+    <h1 class="text-2xl font-semibold tracking-tight text-fg">Payment gateway fee changes</h1>
+    <p class="mt-2 text-muted">
+      What changed and when, straight from our audits of each provider's official pricing
+      pages. Increases, newly published rates, and figures quietly withdrawn all land here,
+      with the date we verified them.
+    </p>
+  </header>
+
+  {
+    [...byDate.entries()].map(([date, list]) => (
+      <section class="mt-8">
+        <h2 class="text-sm font-medium uppercase tracking-wide text-muted">Verified {date}</h2>
+        <ul class="mt-3 max-w-3xl space-y-2">
+          {list.map((c) => (
+            <li class="rounded-md border border-line bg-panel px-4 py-3">
+              <div class="flex flex-wrap items-center gap-2">
+                {c.slug && validSlugs.has(c.slug) ? (
+                  <a href={`/gateway/${c.slug}`} class="font-medium text-fg hover:underline">
+                    {c.name}
+                  </a>
+                ) : (
+                  <span class="font-medium text-fg">{c.name}</span>
+                )}
+                <span class={`rounded-full border border-line px-2 py-0.5 text-xs ${KIND_CLASS[c.kind] ?? "text-muted"}`}>
+                  {KIND_LABEL[c.kind]}
+                </span>
+              </div>
+              <p class="mt-1 text-sm text-muted">{c.what}</p>
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))
+  }
+
+  <section class="mt-10 max-w-3xl border-t border-line pt-6">
+    <h2 class="text-base font-medium text-fg">How this log works</h2>
+    <p class="mt-2 text-sm text-muted">
+      We periodically re-verify every fee in the directory against each provider's own
+      pricing pages (the current pass covered all providers). A change only appears here
+      when the official source itself changed; each provider's detail page carries the
+      source link and verified date. If a provider stops publishing a figure, we mark it
+      "Contact sales" rather than keep a stale number.
+    </p>
+    <div class="mt-4 flex flex-wrap gap-3">
+      <a href="/gateways" class="rounded-md border border-line px-4 py-2 text-sm text-muted hover:text-fg">
+        Current fees table
+      </a>
+      <a href="/calculator" class="rounded-md border border-line px-4 py-2 text-sm text-muted hover:text-fg">
+        Fee calculator
+      </a>
+    </div>
+  </section>
+</Base>
