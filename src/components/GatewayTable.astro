@@ -24,6 +24,9 @@ entries.sort((a, b) => {
 });
 const total = entries.length;
 const rankedCount = entries.filter((e) => e.rankable).length;
+// index of the ranked → "Pricing on request" boundary; a divider row renders here
+// (table.ts repositions/hides it as filters and sorts change)
+const firstOnRequest = entries.findIndex((e) => !e.rankable);
 
 const rm = (n: number) => `RM${n.toFixed(2)}`;
 
@@ -35,6 +38,8 @@ const feeCols = [
   { key: "duitnowqr", label: "DuitNow QR" },
   { key: "bnpl", label: "BNPL" },
 ] as const;
+
+const COLS = 3 + feeCols.length + 2; // gateway + est fee + fixed fee + fee cols + settlement + recurring
 
 const th =
   "whitespace-nowrap px-3 py-2 text-left align-bottom font-medium text-muted";
@@ -96,7 +101,15 @@ const td = "whitespace-nowrap px-3 py-3 align-middle";
 
     <tbody>
       {
-        entries.map(({ g, rankable, cost }) => (
+        entries.map(({ g, rankable, cost }, i) => (
+          <>
+          {i === firstOnRequest && (
+            <tr id="gw-divider" data-divider class="border-b border-line/60">
+              <td colspan={COLS} class="bg-panel px-3 py-1.5 text-[11px] uppercase tracking-wide text-muted">
+                Pricing on request · no comparable published rates · ordered by popularity
+              </td>
+            </tr>
+          )}
           <tr
             class="cursor-pointer border-b border-line/60 last:border-0 hover:bg-panel"
             data-name={g.data.name.toLowerCase()}
@@ -178,6 +191,7 @@ const td = "whitespace-nowrap px-3 py-3 align-middle";
               <FeatureBadge on={g.data.features.recurring} label="Recurring" />
             </td>
           </tr>
+          </>
         ))
       }
     </tbody>
@@ -191,7 +205,7 @@ const td = "whitespace-nowrap px-3 py-3 align-middle";
 <p class="mt-2 text-xs text-muted">
   <span class="text-fg">Est. fee / RM100</span> is an indicative blended cost on a
   RM100 transaction (FPX/card/e-wallet weighted 50/30/20), counting flat add-ons.
-  Gateways without comparable published rates show <span class="text-fg">On request</span>
+  Gateways without comparable published rates show <span class="text-fg">On request</span>{" "}
   and are not ranked by fee. <span class="text-fg">*</span> marks an indicative
   third-party rate, excluded from the ranking. Always confirm with the provider.
 </p>

@@ -1,5 +1,5 @@
 // Side-by-side gateway comparison. Fully client-side over embedded JSON.
-import { effectiveCostAt } from "../lib/fees";
+import { effectiveCostAt, gatewayCost, parseFeeShape } from "../lib/fees";
 import { splitName } from "../lib/name";
 import { FPX_BANKS } from "../lib/fpx-banks";
 import { accessInfo } from "../lib/access";
@@ -81,10 +81,15 @@ if (dataEl && root) {
 
   type Row =
     | { label: string; kind: "fee"; key: string }
+    | { label: string; kind: "est" }
     | { label: string; kind: "text"; get: (g: GW) => string }
     | { label: string; kind: "bool"; get: (g: GW) => boolean }
     | { label: string; kind: "link"; get: (g: GW) => string }
     | { label: string; kind: "list"; get: (g: GW) => string[] };
+
+  // per-transaction fee rows get a "≈ RMx.xx" cost annotation on a RM100 ticket
+  // (setup/monthly are one-off or recurring charges, so a ticket cost is meaningless)
+  const TICKET_FEES = new Set(["fpx", "card", "card_intl", "ewallet", "duitnowqr", "bnpl"]);
 
   const categoryLabel = (g: GW) =>
     g.category === "bnpl"
@@ -100,6 +105,7 @@ if (dataEl && root) {
   const ROWS: Row[] = [
     { label: "Category", kind: "text", get: categoryLabel },
     { label: "Access", kind: "text", get: (g) => accessInfo(g.category).short },
+    { label: "Est. fee / RM100", kind: "est" },
     { label: "FPX", kind: "fee", key: "fpx" },
     { label: "Card (local)", kind: "fee", key: "card" },
     { label: "International card", kind: "fee", key: "card_intl" },
@@ -216,17 +222,44 @@ if (dataEl && root) {
       if (row.kind === "fee") {
         const nums = gws.map((g) => effectiveCostAt(g.fees[row.key] ?? "—", 100)).filter((n) => Number.isFinite(n));
         if (nums.length >= 2) bestVal = Math.min(...nums);
+      } else if (row.kind === "est") {
+        const nums = gws.map((g) => gatewayCost(g.fees).cost).filter((n) => Number.isFinite(n));
+        if (nums.length >= 2) bestVal = Math.min(...nums);
+        label.title = "Estimated blended cost on a RM100 transaction (FPX/card/e-wallet weighted 50/30/20)";
       }
 
       gws.forEach((g) => {
         const td = el("td", "px-3 py-2 text-center");
         if (row.kind === "fee") {
           const v = g.fees[row.key] ?? "—";
-          td.textContent = v;
+          const shape = parseFeeShape(v);
+          // %-based fees get a ringgit annotation so they compare against flat "RMx" rates
+          if (TICKET_FEES.has(row.key) && shape.known && shape.pct > 0) {
+            td.appendChild(el("div", "", v));
+            td.appendChild(el("div", "text-[11px] text-muted", `≈ RM${effectiveCostAt(v, 100).toFixed(2)}`));
+          } else {
+            td.textContent = v;
+          }
           if (muted(v)) td.classList.add("text-muted");
           if (Number.isFinite(bestVal) && effectiveCostAt(v, 100) === bestVal) {
             td.classList.add("font-semibold", "text-accent");
             td.title = "Lowest in this row";
+          }
+        } else if (row.kind === "est") {
+          const { rankable, cost } = gatewayCost(g.fees);
+          if (rankable) {
+            td.textContent = `RM${cost.toFixed(2)}`;
+            td.classList.add("font-medium");
+            td.title = "Estimated blended cost on a RM100 transaction";
+            if (Number.isFinite(bestVal) && cost === bestVal) {
+              td.classList.remove("font-medium");
+              td.classList.add("font-semibold", "text-accent");
+              td.title = "Lowest estimated cost";
+            }
+          } else {
+            td.textContent = "On request";
+            td.classList.add("text-muted");
+            td.title = "No comparable published pricing";
           }
         } else if (row.kind === "text") {
           const v = row.get(g);

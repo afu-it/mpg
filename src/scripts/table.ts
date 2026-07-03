@@ -5,7 +5,11 @@ const table = document.getElementById("gw-table") as HTMLTableElement | null;
 
 if (table && table.tBodies[0]) {
   const tbody = table.tBodies[0];
-  const rows = () => Array.from(tbody.rows);
+  // the "Pricing on request" divider row is presentational: excluded from
+  // filtering/sorting and repositioned (or removed) by updateDivider()
+  const divider = document.getElementById("gw-divider");
+  const rows = () =>
+    Array.from(tbody.rows).filter((r) => !r.hasAttribute("data-divider"));
 
   const search = document.getElementById("gw-search") as HTMLInputElement | null;
   const countEl = document.getElementById("gw-count");
@@ -20,8 +24,24 @@ if (table && table.tBodies[0]) {
   const sortItems = Array.from(
     sortMenu?.querySelectorAll<HTMLButtonElement>("[data-sort-key]") ?? [],
   );
-  // initial DOM order = server default (popularity, then value, then name)
-  const defaultOrder = Array.from(tbody.rows);
+  // initial DOM order = server default (lowest fee, then popularity, then name)
+  const defaultOrder = Array.from(tbody.rows).filter(
+    (r) => !r.hasAttribute("data-divider"),
+  );
+
+  // the divider only makes sense under the blended "Lowest fees" order, where
+  // ranked and on-request rows form two contiguous zones
+  let sortMode = "value";
+  function updateDivider() {
+    if (!divider) return;
+    divider.remove();
+    if (sortMode !== "value") return;
+    const visible = rows().filter((r) => !r.hidden);
+    const firstOnRequest = visible.find((r) => r.dataset.rankable === "false");
+    // skip when a zone is empty (nothing ranked above, or nothing on request)
+    if (!firstOnRequest || visible.indexOf(firstOnRequest) === 0) return;
+    tbody.insertBefore(divider, firstOnRequest);
+  }
 
   const categoryInputs = Array.from(
     document.querySelectorAll<HTMLInputElement>('input[name="gw-category"]'),
@@ -60,6 +80,7 @@ if (table && table.tBodies[0]) {
 
     if (countEl) countEl.textContent = String(visible);
     if (emptyEl) emptyEl.hidden = visible !== 0;
+    updateDivider();
   }
 
   categoryInputs.forEach((i) => i.addEventListener("change", applyFilters));
@@ -122,6 +143,8 @@ if (table && table.tBodies[0]) {
       // a column header now drives the sort: clear the dropdown's selection
       sortItems.forEach((i) => i.setAttribute("aria-checked", "false"));
       if (sortLabel) sortLabel.textContent = "Custom";
+      sortMode = "custom";
+      updateDivider();
     });
   });
 
@@ -176,6 +199,8 @@ if (table && table.tBodies[0]) {
     // dropdown owns the sort now: clear header arrows
     headerCells.forEach((cell) => cell.setAttribute("aria-sort", "none"));
     sortIndex = -1;
+    sortMode = key;
+    updateDivider();
   }
 
   sortTrigger?.addEventListener("click", (e) => {
