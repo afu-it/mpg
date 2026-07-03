@@ -1,5 +1,5 @@
 ---
-status: in-progress   # suggested | approved | in-progress | done | rejected — approved by AFU 2026-07-03 ("buatlah jugak spec 12 tu")
+status: done   # suggested | approved | in-progress | done | rejected — approved + built 2026-07-03 (slices A-H). Item 10 (entity corroboration) is AFU-driven and lives in BACKLOG; item 14 (PDF report artifact) skipped as optional.
 created: 2026-07-03
 ---
 

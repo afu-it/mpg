@@ -56,7 +56,7 @@ No server/DB. Deployed (push master → Cloudflare Pages).
 
 ## SEO round 2 + mobile (2026-07-03, specs 12 + 14)
 - **191 pages** (was 162). New this session: /learn/glossary/<term>/ x14 (DefinedTerm LD, registry `src/lib/glossary.ts`), /calculator (fees.ts engine), /fee-changes (append-only `src/lib/fee-changes.ts`, audit-backed), /best/fastest-settlement/ (`src/lib/settlement.ts`, worst-case parsing), /alternatives/<slug>/ x12 (top-12 popular, recommend()-ranked), /llms-full.txt. Dated answer lines on /best; Dataset+WebAPI LD on /learn/api; TechArticle on guides; sitewide Organization @id.
-- Spec 12 slices G (BM + hreflang) and H (how-to guides) remain; item 10 (Wikidata/Bing/community) is AFU-driven.
+- **Spec 12 DONE** (slices A-H): adds /ms/ BM set (hub, murah, cara-pilih, bisnes-online; reciprocal hreflang via src/lib/i18n-pages.ts read by Base.astro, html lang prop) + /learn how-to guides (how-to-accept-fpx, woocommerce-payment-gateways, shopify-payment-gateways-malaysia via src/lib/platform-guides.ts). 198 pages. Item 10 (entity corroboration) stays AFU-driven.
 - **Mobile (spec 14)**: hamburger nav drawer sitewide; /gateways filter drawer + CSS card-list transform of the same table DOM (table.ts untouched); compare sticky labels; 44px drawer targets. Verified by chrome-devtools emulation (390x844 + 1280 desktop-unchanged); AFU real-device smoke pending.
 
 ## Security layer (2026-07-03, spec 13)

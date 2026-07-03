@@ -11,7 +11,7 @@ pending:
   - PUSHED + DEPLOYED + VERIFIED 2026-07-03 (AFU's "push & deploy"): run 28644788518 success; CSP-RO live, ACAO scoped, 6 new page types 200, mobile live with zero console errors, **securityheaders.com grade A** (was D). See LOG verify entry.
   - AFU: real-phone smoke (drawers, cards, compare) + signed-in auth smoke (email + Google + contribute unlock) with console open → then flip CSP Report-Only → enforcing + close specs 13/14.
   - AFU security items: 2FA on GitHub/Cloudflare/YeahHost/Clerk/Google; rotate Google OAuth client secret.
-  - Spec 12 remaining: slice G (BM money pages + hreflang, /ms/ prefix) + slice H (how-to guides); item 10 entity corroboration is AFU-driven.
+  - Spec 12 DONE (2026-07-03, second sitting): slices G (BM /ms/ set + reciprocal hreflang) + H (FPX how-to + WooCommerce/Shopify guides) built, 198 pages; only item 10 entity corroboration (AFU-driven) remains in BACKLOG.
   - Spec 02 decision: recommend demote approved → suggested (superseded by spec 11); awaiting AFU word.
   - AFU (SEO): GSC Request Indexing; AI Overview + favicon fix on recrawl.
-next_action: AFU's real-phone + signed-in smoke → flip CSP to enforcing + mark specs 13/14 done. Then spec 12 slice G (BM money pages + hreflang) is the warmest build unit.
+next_action: Push slices G+H (2 feat + docs commits) → deploy → verify /ms/ + guides live. Then: AFU's real-phone + signed-in smoke → flip CSP to enforcing + close specs 13/14. Next build units are all fresh picks (light mode / Tier 2 PSPs / Phase 3).

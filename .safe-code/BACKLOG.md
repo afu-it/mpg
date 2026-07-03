@@ -1,11 +1,11 @@
 # BACKLOG — operational queue
 
-_2026-07-03 (rev 18)_
+_2026-07-03 (rev 19)_
 
 - [ ] **AFU security actions (spec 13)**: (1) confirm 2FA on GitHub / Cloudflare / YeahHost / Clerk / Google (TM-002, highest-leverage control); (2) rotate the Google OAuth client secret (pending since 2026-07-02) — Google Cloud Console → credentials → paste new secret into Clerk dashboard; (3) signed-in live smoke: email + Google sign-in + contribute unlock with console open — a clean console clears CSP for enforcing next session.
 - [ ] **Flip CSP Report-Only → enforcing** (`public/_headers`) once AFU's smoke above is clean. See `context/security.md` header decisions.
 - [ ] **AFU after this deploy**: GSC URL Inspection → Request Indexing on `/` + top /best pages; favicon + AI Overview fix themselves on recrawl now that AI crawlers are unblocked. (PageSpeed + headers re-verified by JARVIS 2026-07-03 post-deploy.)
-- [~] **SEO round 2 (spec 12)**: slices A-F BUILT 2026-07-03 (glossary URLs, calculator, fee-changes, fastest-settlement, alternatives, schema/citability, llms-full.txt). REMAINING: slice G (BM money pages + hreflang, /ms/ prefix), slice H (how-to guides: cara daftar FPX, Shopify/WooCommerce MY).
+- [x] **SEO round 2 (spec 12)** — DONE 2026-07-03, all 8 slices: schema/citability, glossary URLs, calculator, fee-changes, fastest-settlement, alternatives x12, BM pages + hreflang (/ms/), how-to guides (FPX/WooCommerce/Shopify). Only item 10 (entity corroboration, AFU-driven, next line) remains.
 - [ ] **Entity corroboration** (AFU-driven, from GEO audit): Wikidata item, GitHub README with the domain, MCP registry listings (modelcontextprotocol/PulseMCP/Smithery/mcp.so), Bing Webmaster Tools + IndexNow (Cloudflare one-click), community posts.
 - [x] Spec 07 follow-ups (per-RM100 on /compare, On-request divider, FPX-gating decision: keep) — done 2026-07-03.
 
