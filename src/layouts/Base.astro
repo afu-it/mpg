@@ -2,6 +2,7 @@
 import "../styles/global.css";
 import { getCollection } from "astro:content";
 import { organizationLd } from "../lib/jsonld";
+import { pairFor } from "../lib/i18n-pages";
 // preload the text face so the LCP headline doesn't wait on the CSS → font chain
 import interWoff2 from "@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url";
 
@@ -9,12 +10,14 @@ interface Props {
   title?: string;
   description?: string;
   full?: boolean; // full-bleed layout (index with sidebar)
+  lang?: "en" | "ms"; // BM pages under /ms/ set "ms" (spec 12 slice G)
 }
 
 const {
   title = "MPG · Malaysia Payment Gateways",
   description = "Compare fees and features of 60+ Malaysian payment gateways: FPX, cards, e-wallets, DuitNow QR and BNPL, sourced from official rate cards. Free and independent.",
   full = false,
+  lang = "en",
 } = Astro.props;
 
 // footer date = most recent fee verification across the directory (data-true,
@@ -35,10 +38,13 @@ const canonical = new URL(canonicalPath, Astro.site);
 // the homepage already emits it inside its WebSite graph — skip the duplicate
 const orgLd =
   canonicalPath === "/" ? null : JSON.stringify(organizationLd(String(Astro.site ?? Astro.url.origin)));
+
+// reciprocal hreflang for the curated BM pairs (both sides, x-default = en)
+const i18nPair = pairFor(canonicalPath);
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={lang}>
   <head>
     <meta charset="utf-8" />
     <!-- ?v= busts sticky favicon caches; bump it when the brand mark changes -->
@@ -57,6 +63,15 @@ const orgLd =
     <meta property="og:type" content="website" />
     <meta property="og:image" content={new URL("/icon-512.png", Astro.site ?? Astro.url)} />
     {orgLd && <script is:inline type="application/ld+json" set:html={orgLd} />}
+    {
+      i18nPair && (
+        <>
+          <link rel="alternate" hreflang="en" href={new URL(i18nPair.en, Astro.site)} />
+          <link rel="alternate" hreflang="ms" href={new URL(i18nPair.ms, Astro.site)} />
+          <link rel="alternate" hreflang="x-default" href={new URL(i18nPair.en, Astro.site)} />
+        </>
+      )
+    }
     <slot name="head" />
   </head>
   <body class="flex min-h-screen flex-col tabular-nums">
@@ -180,6 +195,8 @@ const orgLd =
           <a href="/about" class="text-muted underline-offset-2 hover:text-fg hover:underline">About</a>
           <span class="px-1">·</span>
           <a href="/contact" class="text-muted underline-offset-2 hover:text-fg hover:underline">Contact</a>
+          <span class="px-1">·</span>
+          <a href="/ms/" class="text-muted underline-offset-2 hover:text-fg hover:underline" hreflang="ms" lang="ms">Bahasa Malaysia</a>
           <span class="px-1">·</span>
           <a href="/privacy" class="text-muted underline-offset-2 hover:text-fg hover:underline">Privacy</a>
         </p>
