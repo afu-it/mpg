@@ -1,0 +1,125 @@
+---
+// Fee calculator (spec 12 item 5): user-entered ticket size against every
+// gateway's officially published rates, through the same fees.ts engine.
+export const prerender = true;
+
+import { getCollection } from "astro:content";
+import Base from "../layouts/Base.astro";
+import { toApiGateway, type GatewayEntryLike } from "../lib/api";
+import { breadcrumbLd } from "../lib/jsonld";
+
+const entries = (await getCollection("gateways")) as unknown as GatewayEntryLike[];
+// slim embed: the client only needs fee strings + identity
+const data = entries.map((e) => {
+  const g = toApiGateway(e);
+  return { slug: g.slug, name: g.name, fees: g.fees, popularity: g.popularity };
+});
+
+const site = (Astro.site?.href ?? "https://malaysiapg.com.my/").replace(/\/$/, "");
+const crumbLd = JSON.stringify(
+  breadcrumbLd(site, [{ name: "Home", path: "/" }, { name: "Fee calculator" }]),
+);
+const appLd = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  name: "Malaysian payment gateway fee calculator",
+  url: `${site}/calculator/`,
+  applicationCategory: "FinanceApplication",
+  operatingSystem: "Web",
+  isAccessibleForFree: true,
+  provider: { "@id": `${site}/#organization` },
+});
+---
+
+<Base
+  title="Payment gateway fee calculator for Malaysia | MPG"
+  description="Enter your typical transaction size and see what each Malaysian gateway really costs per sale, from officially published FPX, card and e-wallet rates."
+>
+  <script is:inline type="application/ld+json" set:html={crumbLd} />
+  <script is:inline type="application/ld+json" set:html={appLd} />
+
+  <header class="max-w-2xl">
+    <h1 class="text-2xl font-semibold tracking-tight text-fg">Payment gateway fee calculator</h1>
+    <p class="mt-2 text-muted">
+      Percentages hide the real cost. Enter your typical sale amount and see the estimated
+      cost per transaction on every provider with officially published rates, computed with
+      the same engine that ranks the whole directory.
+    </p>
+  </header>
+
+  <div class="mt-6 flex flex-wrap items-end gap-4">
+    <label class="block">
+      <span class="text-sm text-muted">Transaction amount (RM)</span>
+      <input
+        id="calc-amount"
+        type="number"
+        min="0.1"
+        step="1"
+        value="100"
+        inputmode="decimal"
+        class="mt-1 block w-40 rounded-md border border-line bg-panel px-3 py-2 text-fg focus:border-accent focus:outline-none"
+      />
+    </label>
+    <label class="block">
+      <span class="text-sm text-muted">Channel</span>
+      <select
+        id="calc-channel"
+        class="mt-1 block w-56 rounded-md border border-line bg-panel px-3 py-2 text-fg focus:border-accent focus:outline-none"
+      >
+        <option value="blended" selected>Blended (FPX/card/e-wallet)</option>
+        <option value="fpx">FPX</option>
+        <option value="card">Card</option>
+        <option value="ewallet">E-wallet</option>
+        <option value="duitnowqr">DuitNow QR</option>
+      </select>
+    </label>
+  </div>
+
+  <p id="calc-note" class="mt-4 text-sm text-muted"></p>
+
+  <div class="mt-4 overflow-x-auto rounded-md border border-line">
+    <table class="w-full min-w-[560px] text-sm">
+      <thead>
+        <tr class="border-b border-line bg-panel text-left text-xs uppercase tracking-wide text-muted">
+          <th class="px-3 py-2 text-right">#</th>
+          <th class="px-3 py-2">Gateway</th>
+          <th class="px-3 py-2">Published rate</th>
+          <th class="px-3 py-2 text-right">Est. cost / sale</th>
+          <th class="px-3 py-2 text-right">Effective %</th>
+        </tr>
+      </thead>
+      <tbody id="calc-rows" class="divide-y divide-line"></tbody>
+    </table>
+  </div>
+
+  <section class="mt-10 max-w-3xl border-t border-line pt-6">
+    <h2 class="text-base font-medium text-fg">How the estimate works</h2>
+    <p class="mt-2 text-sm text-muted">
+      Each cost is max(amount × rate, minimum fee) plus any flat add-on the provider
+      publishes, exactly as on the rest of this site. The blended view weights FPX 50%,
+      card 30% and e-wallet 20%, and only includes gateways whose official rates cover
+      enough channels to compare honestly. Third-party or indicative rates (marked * in
+      the directory) and "Contact sales" providers are excluded rather than guessed.
+      Estimates are not quotes: confirm current pricing with the provider.
+    </p>
+    <div class="mt-4 flex flex-wrap gap-3">
+      <a href="/gateways" class="rounded-md border border-line px-4 py-2 text-sm text-muted hover:text-fg">
+        Browse the full table
+      </a>
+      <a href="/choose" class="rounded-md border border-line px-4 py-2 text-sm text-muted hover:text-fg">
+        Help me choose
+      </a>
+      <a
+        href="/learn/glossary/mdr/"
+        class="rounded-md border border-line px-4 py-2 text-sm text-muted hover:text-fg"
+      >
+        What is MDR?
+      </a>
+    </div>
+  </section>
+
+  <script type="application/json" id="gw-data" set:html={JSON.stringify(data)} />
+  <script>
+    import "../scripts/calculator.ts";
+  </script>
+</Base>
