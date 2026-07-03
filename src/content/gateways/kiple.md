@@ -1,6 +1,6 @@
 ---
 name: Kiple
-website: https://kiplepay.com
+website: https://kiple.com
 tagline: "Malaysian payment gateway with e-wallet and POS"
 logo: /logos/kiple.svg
 fees:
@@ -25,7 +25,6 @@ plugins:
   - OpenCart
   - Magento
   - PrestaShop
-dev_docs: "https://kiplebiz.com/documentation/"
 popularity: 54
 verified_date: "2026-07-02"
 source: "https://kiple.com/sme/"

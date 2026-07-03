@@ -11,6 +11,8 @@ import Logo from "../../components/Logo.astro";
 import FeeCell from "../../components/FeeCell.astro";
 import { toApiGateway, type GatewayEntryLike } from "../../lib/api";
 import { vsPairs, buildVsPage } from "../../lib/seo-pages";
+import { breadcrumbLd } from "../../lib/jsonld";
+import { splitName } from "../../lib/name";
 
 export async function getStaticPaths() {
   const entries = (await getCollection("gateways")) as unknown as GatewayEntryLike[];
@@ -24,13 +26,19 @@ const { a, b } = pair;
 const hasIndicative = [...page.feeRows, ...page.featureRows].some(
   (r) => r.a.includes("*") || r.b.includes("*"),
 );
+const crumbLd = breadcrumbLd(String(Astro.site ?? "https://malaysiapg.com.my/"), [
+  { name: "Home", path: "/" },
+  { name: "Comparisons", path: "/vs/" },
+  { name: `${splitName(a.name).base} vs ${splitName(b.name).base}` },
+]);
 ---
 
 <Base title={page.title} description={page.description}>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(crumbLd)} />
   <nav aria-label="Breadcrumb" class="mb-4 flex items-center gap-2 text-sm text-muted">
     <a href="/" class="hover:text-fg hover:underline">Home</a>
     <span aria-hidden="true">/</span>
-    <a href="/gateways" class="hover:text-fg hover:underline">Gateways</a>
+    <a href="/vs/" class="hover:text-fg hover:underline">Comparisons</a>
     <span aria-hidden="true">/</span>
     <span class="text-fg">{a.name} vs {b.name}</span>
   </nav>
@@ -40,7 +48,7 @@ const hasIndicative = [...page.feeRows, ...page.featureRows].some(
   </h1>
   <p class="mt-2 max-w-3xl text-muted">
     Side-by-side fees and features for Malaysian merchants, from each provider's published
-    pricing. For the full matrix including supported banks and e-wallets, open the
+    pricing. For the full matrix including supported banks and e-wallets, open the{" "}
     <a href={`/compare?ids=${a.slug},${b.slug}`} class="text-accent hover:underline">interactive comparison</a>.
   </p>
 

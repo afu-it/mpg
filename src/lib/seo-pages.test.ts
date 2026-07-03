@@ -60,8 +60,8 @@ describe("PROFILES registry", () => {
       for (const s of [p.h1, p.title, p.description, p.intro, p.faqNoun]) expect(s).not.toMatch(/[—–]/);
   });
 
-  it("profilePath builds the /best/ url", () => {
-    expect(profilePath("payment-gateway-fpx")).toBe("/best/payment-gateway-fpx");
+  it("profilePath builds the /best/ url with a trailing slash", () => {
+    expect(profilePath("payment-gateway-fpx")).toBe("/best/payment-gateway-fpx/");
   });
 });
 
@@ -119,7 +119,7 @@ describe("profileJsonLd", () => {
     expect(list.itemListElement[0]).toMatchObject({
       position: 1,
       name: "cheap",
-      url: "https://malaysiapg.com.my/gateway/cheap",
+      url: "https://malaysiapg.com.my/gateway/cheap/",
     });
     expect(list.itemListElement.map((i: any) => i.position)).toEqual(
       list.itemListElement.map((_: any, idx: number) => idx + 1),

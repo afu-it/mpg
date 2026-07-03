@@ -1,0 +1,107 @@
+---
+export const prerender = true;
+
+import { getCollection } from "astro:content";
+import Base from "../layouts/Base.astro";
+import { breadcrumbLd } from "../lib/jsonld";
+
+const crumbLd = breadcrumbLd(String(Astro.site ?? "https://malaysiapg.com.my/"), [
+  { name: "Home", path: "/" },
+  { name: "About" },
+]);
+const gateways = await getCollection("gateways");
+const total = gateways.length;
+const lastVerified = gateways
+  .map((g) => g.data.verified_date)
+  .sort()
+  .at(-1);
+---
+
+<Base
+  title="About MPG · the Malaysia Payment Gateway directory"
+  description="What MPG is, how every fee is sourced and verified against official provider pages, how the cost ranking works, and how to reach the maintainer."
+>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(crumbLd)} />
+  <nav aria-label="Breadcrumb" class="mb-4 flex items-center gap-2 text-sm text-muted">
+    <a href="/" class="hover:text-fg hover:underline">Home</a>
+    <span aria-hidden="true">/</span>
+    <span class="text-fg">About</span>
+  </nav>
+
+  <div class="mx-auto max-w-2xl">
+    <h1 class="text-2xl font-semibold tracking-tight text-fg">About MPG</h1>
+    <p class="mt-3 text-muted">
+      MPG (Malaysia Payment Gateway) is a free, independent directory comparing
+      {total} Malaysian payment providers: gateways, banks, e-wallets, BNPL and
+      payment infrastructure. It exists so merchants and developers can see FPX,
+      card, e-wallet and DuitNow QR fees side by side without digging through
+      {total} different pricing pages.
+    </p>
+
+    <section class="mt-8">
+      <h2 class="text-lg font-semibold text-fg">How fees are sourced</h2>
+      <ul class="mt-3 list-disc space-y-2 pl-5 text-muted">
+        <li>
+          Every fee is taken from the provider's official website or rate card,
+          and each entry records its source link and the date it was last
+          verified (most recently {lastVerified}).
+        </li>
+        <li>
+          Rates that only exist in third-party writeups carry a
+          <span class="text-fg">*</span> marker and are excluded from the ranking.
+        </li>
+        <li>
+          When a provider does not publish a rate, we say{" "}
+          <span class="text-fg">"Contact sales"</span>. Nothing is guessed, ever.
+        </li>
+      </ul>
+    </section>
+
+    <section class="mt-8">
+      <h2 class="text-lg font-semibold text-fg">How the ranking works</h2>
+      <p class="mt-3 text-muted">
+        The default order on <a href="/gateways" class="text-accent hover:underline">the directory</a>{" "}
+        is the estimated cost of a RM100 transaction, blending officially
+        published FPX, card and e-wallet rates (weighted 50/30/20) and counting
+        flat add-ons. Providers without comparable published rates are never
+        interleaved into the ranking; they are listed separately as
+        "Pricing on request". The same engine powers{" "}
+        <a href="/choose" class="text-accent hover:underline">Help me choose</a>,
+        the <a href="/learn/api" class="text-accent hover:underline">JSON API and MCP server</a>,
+        and the guide pages.
+      </p>
+    </section>
+
+    <section class="mt-8">
+      <h2 class="text-lg font-semibold text-fg">Independence</h2>
+      <p class="mt-3 text-muted">
+        MPG is built and maintained by an independent Malaysian developer. It is
+        not affiliated with, endorsed by, or paid by any payment provider. There
+        are no ads, no affiliate links and no sponsored placements. Fees shown
+        are indicative and may change or be negotiable by volume, so always
+        confirm with the provider before deciding.
+      </p>
+    </section>
+
+    <section class="mt-8" id="contact">
+      <h2 class="text-lg font-semibold text-fg">Contact</h2>
+      <p class="mt-3 text-muted">
+        Spotted a stale fee or a missing gateway? The fastest route is the{" "}
+        <a href="/contribute" class="text-accent hover:underline">contribute page</a>.
+        For anything else, email{" "}
+        <a href="#" id="about-email" class="text-accent hover:underline">the maintainer</a>{" "}
+        and it will land in the right inbox.
+      </p>
+    </section>
+  </div>
+
+  <script>
+    // assemble the address at runtime so scrapers reading static HTML miss it
+    const a = document.getElementById("about-email");
+    if (a) {
+      const to = ["afuitdev", "gmail.com"].join("@");
+      (a as HTMLAnchorElement).href = `mailto:${to}`;
+      a.textContent = to;
+    }
+  </script>
+</Base>

@@ -1,5 +1,8 @@
 ---
 import "../styles/global.css";
+import { getCollection } from "astro:content";
+// preload the text face so the LCP headline doesn't wait on the CSS → font chain
+import interWoff2 from "@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url";
 
 interface Props {
   title?: string;
@@ -9,11 +12,23 @@ interface Props {
 
 const {
   title = "MPG · Malaysia Payment Gateways",
-  description = "Compare fees and features of Malaysian payment gateways (FPX, cards, e-wallets, and DuitNow QR) in one place.",
+  description = "Compare fees and features of 60+ Malaysian payment gateways: FPX, cards, e-wallets, DuitNow QR and BNPL, sourced from official rate cards. Free and independent.",
   full = false,
 } = Astro.props;
 
-const updated = "2026-06-24";
+// footer date = most recent fee verification across the directory (data-true,
+// and Google reads it as the page's freshness signal)
+const updated = (await getCollection("gateways"))
+  .map((g) => g.data.verified_date)
+  .sort()
+  .at(-1);
+
+// canonical: https + trailing slash, matching the sitemap's URL form exactly
+// (Google had picked the http:// duplicate of the homepage without this)
+const canonicalPath = Astro.url.pathname.endsWith("/")
+  ? Astro.url.pathname
+  : Astro.url.pathname + "/";
+const canonical = new URL(canonicalPath, Astro.site);
 ---
 
 <!doctype html>
@@ -26,13 +41,16 @@ const updated = "2026-06-24";
     <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png?v=2" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=2" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preload" href={interWoff2} as="font" type="font/woff2" crossorigin />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:image" content={new URL("/icon-512.png", Astro.site ?? Astro.url)} />
+    <slot name="head" />
   </head>
   <body class="flex min-h-screen flex-col tabular-nums">
     <div
@@ -81,11 +99,19 @@ const updated = "2026-06-24";
         <p class="pt-1">
           <a href="/choose" class="text-muted underline-offset-2 hover:text-fg hover:underline">Help me choose</a>
           <span class="px-1">·</span>
-          <a href="/best/payment-gateway-malaysia" class="text-muted underline-offset-2 hover:text-fg hover:underline">Best gateways</a>
+          <a href="/best/payment-gateway-malaysia/" class="text-muted underline-offset-2 hover:text-fg hover:underline">Best gateways</a>
+          <span class="px-1">·</span>
+          <a href="/vs/" class="text-muted underline-offset-2 hover:text-fg hover:underline">Comparisons</a>
           <span class="px-1">·</span>
           <a href="/learn/api" class="text-muted underline-offset-2 hover:text-fg hover:underline">API &amp; MCP for developers</a>
           <span class="px-1">·</span>
           <a href="/contribute" class="text-muted underline-offset-2 hover:text-fg hover:underline">Contribute</a>
+          <span class="px-1">·</span>
+          <a href="/about" class="text-muted underline-offset-2 hover:text-fg hover:underline">About</a>
+          <span class="px-1">·</span>
+          <a href="/contact" class="text-muted underline-offset-2 hover:text-fg hover:underline">Contact</a>
+          <span class="px-1">·</span>
+          <a href="/privacy" class="text-muted underline-offset-2 hover:text-fg hover:underline">Privacy</a>
         </p>
       </div>
     </footer>

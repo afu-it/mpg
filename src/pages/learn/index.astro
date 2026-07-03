@@ -142,7 +142,7 @@ const sections = [
       {
         PROFILES.map((p) => (
           <a
-            href={`/best/${p.slug}`}
+            href={`/best/${p.slug}/`}
             class="rounded-full border border-line bg-panel px-3 py-1 text-xs text-muted hover:border-accent hover:text-fg"
           >
             {p.h1}
@@ -155,7 +155,7 @@ const sections = [
       {
         topComparisons.map((p) => (
           <a
-            href={`/vs/${p.slug}`}
+            href={`/vs/${p.slug}/`}
             class="rounded-full border border-line bg-panel px-3 py-1 text-xs text-muted hover:border-accent hover:text-fg"
           >
             {p.a.name} vs {p.b.name}

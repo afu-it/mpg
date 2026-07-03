@@ -6,7 +6,18 @@ import Sidebar from "../components/Sidebar.astro";
 import GatewayTable from "../components/GatewayTable.astro";
 ---
 
-<Base full title="All gateways · MPG">
+<Base
+  full
+  title="All Malaysian payment gateways, fees compared · MPG"
+  description="Sortable table of every Malaysian payment gateway, bank, e-wallet and BNPL provider: FPX, card and e-wallet fees, settlement and features, ranked by cost."
+>
+  <link
+    slot="head"
+    rel="alternate"
+    type="application/json"
+    href="/api/gateways.json"
+    title="MPG gateways data (JSON)"
+  />
   <div class="flex w-full flex-col md:flex-row">
     <!-- filter sidebar: sticky column on desktop, stacked panel on mobile -->
     <aside
@@ -20,7 +31,7 @@ import GatewayTable from "../components/GatewayTable.astro";
       <div class="mb-5 flex flex-wrap items-center gap-3">
         <div class="mr-auto">
           <h1 class="text-2xl font-semibold tracking-tight text-fg">
-            Malaysia Payment Gateways
+            Malaysian payment gateway fees, compared
           </h1>
           <p class="mt-1 text-sm text-muted">
             Ranked by lowest estimated fee (RM100 basket) by default. Gateways without

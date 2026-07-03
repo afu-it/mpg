@@ -3,6 +3,12 @@ export const prerender = true;
 
 import { getCollection } from "astro:content";
 import Base from "../layouts/Base.astro";
+import { breadcrumbLd } from "../lib/jsonld";
+
+const crumbLd = breadcrumbLd(String(Astro.site ?? "https://malaysiapg.com.my/"), [
+  { name: "Home", path: "/" },
+  { name: "Compare" },
+]);
 
 const gateways = (await getCollection("gateways")).sort((a, b) =>
   a.data.name.localeCompare(b.data.name),
@@ -49,8 +55,9 @@ const presets = [
 <Base
   full
   title="Compare payment gateways · MPG"
-  description="Compare Malaysian payment gateways side by side: fees, settlement, channels and features."
+  description="Compare up to four Malaysian payment gateways side by side: FPX, card, e-wallet and DuitNow QR fees, settlement times, features and supported banks."
 >
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(crumbLd)} />
   <div class="mx-auto w-full max-w-[1400px] px-4 py-8 sm:px-6">
     <nav aria-label="Breadcrumb" class="mb-4 flex items-center gap-2 text-sm text-muted">
       <a href="/" class="hover:text-fg hover:underline">Home</a>
@@ -76,7 +83,7 @@ const presets = [
             href={`/compare?ids=${p.ids.join(",")}`}
             class="group flex flex-col gap-1 rounded-lg border border-line bg-panel p-3 transition-colors hover:border-accent"
           >
-            <h3 class="text-sm font-semibold text-fg">{p.title}</h3>
+            <h2 class="text-sm font-semibold text-fg">{p.title}</h2>
             <p class="text-xs text-muted">{p.desc}</p>
             <p class="mt-1 truncate text-xs text-muted group-hover:text-accent">
               {p.ids.join(" · ")}
@@ -90,8 +97,10 @@ const presets = [
     <div id="compare-root" class="overflow-x-auto"></div>
 
     <p class="mt-4 text-xs text-muted">
-      <span class="text-fg">*</span> Indicative rate from a third-party source, not officially
-      published. Always confirm with the provider.
+      <span class="text-fg">Est. fee / RM100</span> and <span class="text-fg">≈</span> values are
+      estimated costs on a RM100 transaction (the blended figure weights FPX/card/e-wallet
+      50/30/20, counting flat add-ons). <span class="text-fg">*</span> Indicative rate from a
+      third-party source, not officially published. Always confirm with the provider.
     </p>
   </div>
 

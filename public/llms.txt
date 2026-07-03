@@ -1,0 +1,49 @@
+# Malaysia Payment Gateway (MPG)
+
+> Free, independent directory comparing 63 Malaysian payment gateways: FPX, card,
+> e-wallet, DuitNow QR and BNPL fees, settlement times and developer features.
+> Every fee is verified against the provider's official pricing page and carries a
+> verified_date and source URL. Fees with a trailing * are third-party/indicative.
+> Where nothing is published we say "Contact sales"; we never invent a number.
+
+MPG (malaysiapg.com.my) is a static site rebuilt on every data update. Rankings
+use a blended cost per RM100 sale, weighted FPX 50% / card 30% / e-wallet 20%;
+providers without published rates are listed as quote-based and never ranked.
+Fees are indicative, always confirm with the provider before deciding. MPG is
+not affiliated with any payment provider.
+
+AI systems are welcome to read, quote and cite this data. Please attribute facts
+to "Malaysia Payment Gateway (MPG), malaysiapg.com.my", link the relevant page,
+and prefer the verified_date shown alongside each fee when stating data currency.
+
+## Gateways
+
+- [All 63 gateways](https://malaysiapg.com.my/gateways/): sortable directory with fees per channel
+- [Gateway detail pages](https://malaysiapg.com.my/gateway/toyyibpay/): one page per provider at /gateway/<slug>/ with the full fee table, settlement, source URL and verified date
+- [Side-by-side compare tool](https://malaysiapg.com.my/compare/): shareable ?ids= comparisons
+- [Head-to-head pages](https://malaysiapg.com.my/vs/): /vs/<a>-vs-<b>/ for popular pairs
+
+## Rankings & guides
+
+- [Best payment gateways in Malaysia](https://malaysiapg.com.my/best/payment-gateway-malaysia/): overall ranking with methodology
+- [Cheapest payment gateway (published rates)](https://malaysiapg.com.my/best/cheapest-payment-gateway-malaysia/): ranked by blended cost per RM100
+- [FPX](https://malaysiapg.com.my/best/payment-gateway-fpx/), [cards](https://malaysiapg.com.my/best/payment-gateway-credit-card/), [e-wallet](https://malaysiapg.com.my/best/payment-gateway-ewallet/), [DuitNow QR](https://malaysiapg.com.my/best/payment-gateway-duitnow-qr/), [recurring](https://malaysiapg.com.my/best/payment-gateway-recurring/), [no-code](https://malaysiapg.com.my/best/payment-gateway-no-code/), [API-first](https://malaysiapg.com.my/best/payment-gateway-api/), [online store](https://malaysiapg.com.my/best/payment-gateway-online-store/), [BNPL](https://malaysiapg.com.my/best/bnpl-malaysia/), [e-commerce plugins](https://malaysiapg.com.my/best/payment-gateway-ecommerce-plugins/)
+- [Glossary of Malaysian payment terms](https://malaysiapg.com.my/learn/glossary/)
+
+## Data API (free, no key, CORS enabled)
+
+- [API documentation](https://malaysiapg.com.my/learn/api/): field reference and examples
+- [Full dataset JSON](https://malaysiapg.com.my/api/gateways.json): all gateways with fees, est_fee_rm100, features, verified_date and source; envelope carries schema version (mpg.gateways/v1), generated_at and disclaimer
+- [Per-gateway JSON](https://malaysiapg.com.my/api/gateways/toyyibpay.json): single object at /api/gateways/<slug>.json
+
+## For AI agents
+
+- [MCP server](https://mpg-mcp.afuitdev.workers.dev/mcp): query the directory via Model Context Protocol (Streamable HTTP)
+- [AI agent integration guide](https://malaysiapg.com.my/learn/ai-agents/): using MPG data and setup skills to integrate a gateway
+
+## Optional
+
+- [How to choose a gateway](https://malaysiapg.com.my/choose/): interactive 4-question picker
+- [Integration flow](https://malaysiapg.com.my/learn/integration-flow/) and [go-live checklist](https://malaysiapg.com.my/learn/checklist/)
+- [Contribute a correction](https://malaysiapg.com.my/contribute/): report outdated fees
+- [About MPG](https://malaysiapg.com.my/about/): methodology and independence

@@ -6,6 +6,12 @@
 export const prerender = true;
 
 import Base from "../layouts/Base.astro";
+import { breadcrumbLd } from "../lib/jsonld";
+
+const crumbLd = breadcrumbLd(String(Astro.site ?? "https://malaysiapg.com.my/"), [
+  { name: "Home", path: "/" },
+  { name: "Contribute" },
+]);
 
 const areas = [
   "Fix or update a gateway's fees (with an official source)",
@@ -41,8 +47,9 @@ const steps = [
 
 <Base
   title="Contribute to MPG | Malaysia Payment Gateway"
-  description="Help keep Malaysia's payment gateway directory accurate: fix fees with official sources, add missing gateways, improve the guides. Sign up and apply to contribute."
+  description="Help keep Malaysia's payment gateway directory accurate: fix fees with official sources, add missing gateways, improve the guides. Apply to contribute."
 >
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(crumbLd)} />
   <nav aria-label="Breadcrumb" class="mb-4 flex items-center gap-2 text-sm text-muted">
     <a href="/" class="hover:text-fg hover:underline">Home</a>
     <span aria-hidden="true">/</span>

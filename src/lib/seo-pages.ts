@@ -4,6 +4,7 @@
 // API, wizard, or MCP tools. No DOM, no fee math of its own.
 import type { ApiGateway } from "./api";
 import { recommend, recommendOrClosest, CHANNEL_LABEL, type Channel, type Match, type Needs } from "./recommend";
+import { splitName } from "./name";
 
 // ---------------------------------------------------------------------------
 // Need-profile pages (/best/<profile>)
@@ -40,7 +41,7 @@ export const PROFILES: ProfileDef[] = [
     h1: "Cheapest payment gateways in Malaysia",
     title: "Cheapest payment gateway in Malaysia (published rates) | MPG",
     description:
-      "The cheapest Malaysian payment gateways by estimated cost per RM100 transaction. Only providers with officially published rates are ranked; nothing is estimated from hearsay.",
+      "The cheapest Malaysian payment gateways by estimated cost per RM100 transaction. Only providers with officially published rates are ranked.",
     intro:
       "Cheapest is measured, not guessed: we parse each provider's officially published FPX, card and e-wallet rates and compute the blended cost of a RM100 transaction. Providers without comparable published rates cannot be ranked honestly, so they appear separately as quote-based.",
     faqNoun: "payment gateway in Malaysia",
@@ -84,7 +85,7 @@ export const PROFILES: ProfileDef[] = [
     h1: "Payment gateways with DuitNow QR",
     title: "Payment gateways with DuitNow QR in Malaysia | MPG",
     description:
-      "Malaysian payment gateways that support DuitNow QR payments, ranked by estimated cost from officially published rates.",
+      "Malaysian payment gateways that support DuitNow QR payments, ranked by estimated cost from officially published rates. One QR, every bank and e-wallet.",
     intro:
       "DuitNow QR is Malaysia's national QR standard: one code accepts payment from banking apps and e-wallets alike. These gateways support it at checkout or in person.",
     faqNoun: "DuitNow QR payment gateway",
@@ -149,7 +150,7 @@ export const PROFILES: ProfileDef[] = [
     needs: { developer: true },
     pluginsOnly: true,
     h1: "Payment gateways with e-commerce plugins",
-    title: "Payment gateways with WooCommerce / Shopify plugins in Malaysia | MPG",
+    title: "Payment gateways with WooCommerce/Shopify plugins | MPG",
     description:
       "Malaysian payment gateways with ready-made e-commerce plugins (WooCommerce, Shopify, OpenCart and more), ranked by estimated cost.",
     intro:
@@ -158,8 +159,10 @@ export const PROFILES: ProfileDef[] = [
   },
 ];
 
+// trailing slash matches the served URL form; Cloudflare Pages 308-redirects
+// the slashless variant, which costs a hop and splits incoming-link counts
 export function profilePath(slug: string): string {
-  return `/best/${slug}`;
+  return `/best/${slug}/`;
 }
 
 export interface Faq {
@@ -211,11 +214,12 @@ export function buildProfilePage(gateways: ApiGateway[], def: ProfileDef, limit 
 
 /** JSON-LD for a profile page: ItemList of the ranked matches + FAQPage. */
 export function profileJsonLd(page: ProfilePage, site: string): object[] {
+  // trailing slash: JSON-LD urls must match the canonical/sitemap URL form
   const items = [...page.ranked, ...page.onRequest].map((m, i) => ({
     "@type": "ListItem",
     position: i + 1,
     name: m.gateway.name,
-    url: `${site}/gateway/${m.gateway.slug}`,
+    url: `${site}/gateway/${m.gateway.slug}/`,
   }));
   return [
     {
@@ -366,10 +370,14 @@ export function buildVsPage(pair: VsPair): VsPage {
     { label: "Plugins", a: a.plugins.length ? a.plugins.join(", ") : "—", b: b.plugins.length ? b.plugins.join(", ") : "—" },
   ];
 
+  // brand base names keep titles inside the ~60-char SERP window; notes like
+  // "(formerly Razer Merchant Services)" stay in the page body only
+  const baseA = splitName(a.name).base;
+  const baseB = splitName(b.name).base;
   return {
     pair,
-    title: `${a.name} vs ${b.name}: fees and features compared | MPG`,
-    description: `${a.name} vs ${b.name} for Malaysian merchants: published FPX, card and e-wallet fees, settlement, no-code and developer features, side by side.`,
+    title: `${baseA} vs ${baseB}: fees compared | MPG`,
+    description: `${baseA} vs ${baseB} for Malaysian merchants: published FPX, card and e-wallet fees, settlement, no-code and developer features, side by side.`,
     verdicts: verdictsFor(a, b),
     feeRows,
     featureRows,

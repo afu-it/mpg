@@ -9,6 +9,7 @@ import Base from "../../layouts/Base.astro";
 import Logo from "../../components/Logo.astro";
 import { toApiGateway, type GatewayEntryLike } from "../../lib/api";
 import { PROFILES, buildProfilePage, profileJsonLd } from "../../lib/seo-pages";
+import { breadcrumbLd } from "../../lib/jsonld";
 
 export async function getStaticPaths() {
   return PROFILES.map((p) => ({ params: { profile: p.slug }, props: { def: p } }));
@@ -20,11 +21,18 @@ const entries = (await getCollection("gateways")) as unknown as GatewayEntryLike
 const gateways = entries.map(toApiGateway);
 const page = buildProfilePage(gateways, def);
 const site = (Astro.site?.href ?? "https://malaysiapg.com.my/").replace(/\/$/, "");
-const jsonld = profileJsonLd(page, site);
+const jsonld = [
+  ...profileJsonLd(page, site),
+  breadcrumbLd(site, [
+    { name: "Home", path: "/" },
+    { name: "Learn", path: "/learn/" },
+    { name: def.h1 },
+  ]),
+];
 
 const shortlist = [...page.ranked, ...page.onRequest];
 const compareIds = shortlist.slice(0, 4).map((m) => m.gateway.slug).join(",");
-const otherProfiles = PROFILES.filter((p) => p.slug !== def.slug).slice(0, 6);
+const otherProfiles = PROFILES.filter((p) => p.slug !== def.slug);
 ---
 
 <Base title={def.title} description={def.description}>
@@ -146,7 +154,7 @@ const otherProfiles = PROFILES.filter((p) => p.slug !== def.slug).slice(0, 6);
       {
         otherProfiles.map((p) => (
           <a
-            href={`/best/${p.slug}`}
+            href={`/best/${p.slug}/`}
             class="rounded-full border border-line bg-panel px-3 py-1 text-xs text-muted hover:text-fg"
           >
             {p.h1}

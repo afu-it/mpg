@@ -1,0 +1,96 @@
+---
+// Hub for every head-to-head page: gives the 71 /vs/ pages a crawlable index
+// at depth 1 instead of leaving them reachable only via gateway detail pages.
+export const prerender = true;
+
+import { getCollection } from "astro:content";
+import Base from "../../layouts/Base.astro";
+import { toApiGateway, type GatewayEntryLike } from "../../lib/api";
+import { vsPairs, PROFILES } from "../../lib/seo-pages";
+import { breadcrumbLd } from "../../lib/jsonld";
+import { splitName } from "../../lib/name";
+
+const entries = (await getCollection("gateways")) as unknown as GatewayEntryLike[];
+const gateways = entries.map(toApiGateway);
+const pairs = vsPairs(gateways);
+const popular = [...pairs]
+  .sort((x, y) => y.a.popularity + y.b.popularity - (x.a.popularity + x.b.popularity))
+  .slice(0, 8);
+
+const label = (p: (typeof pairs)[number]) =>
+  `${splitName(p.a.name).base} vs ${splitName(p.b.name).base}`;
+
+const crumbLd = breadcrumbLd(String(Astro.site ?? "https://malaysiapg.com.my/"), [
+  { name: "Home", path: "/" },
+  { name: "Comparisons" },
+]);
+---
+
+<Base
+  title="Payment gateway comparisons: head-to-head fees | MPG"
+  description="Every head-to-head comparison of Malaysian payment gateways on MPG: published FPX, card and e-wallet fees, settlement and features, side by side."
+>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(crumbLd)} />
+  <nav aria-label="Breadcrumb" class="mb-4 flex items-center gap-2 text-sm text-muted">
+    <a href="/" class="hover:text-fg hover:underline">Home</a>
+    <span aria-hidden="true">/</span>
+    <span class="text-fg">Comparisons</span>
+  </nav>
+
+  <h1 class="text-2xl font-semibold tracking-tight text-fg">Payment gateway comparisons</h1>
+  <p class="mt-2 max-w-3xl text-muted">
+    Head-to-head pages for {pairs.length} popular pairings of Malaysian payment
+    providers, built from the same officially published fees as the rest of the
+    directory. Need a custom matchup? Use the{" "}
+    <a href="/compare" class="text-accent hover:underline">interactive compare tool</a>{" "}
+    for any combination of up to four providers.
+  </p>
+
+  <section class="mt-8">
+    <h2 class="mb-3 text-sm font-medium uppercase tracking-wide text-muted">Most popular</h2>
+    <div class="flex flex-wrap gap-2">
+      {
+        popular.map((p) => (
+          <a
+            href={`/vs/${p.slug}/`}
+            class="rounded-full border border-line bg-panel px-3 py-1 text-sm text-fg hover:border-accent"
+          >
+            {label(p)}
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="mt-8">
+    <h2 class="mb-3 text-sm font-medium uppercase tracking-wide text-muted">All comparisons</h2>
+    <div class="flex flex-wrap gap-2">
+      {
+        pairs.map((p) => (
+          <a
+            href={`/vs/${p.slug}/`}
+            class="rounded-full border border-line bg-panel px-3 py-1 text-xs text-muted hover:border-accent hover:text-fg"
+          >
+            {label(p)}
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="mt-10">
+    <h2 class="mb-3 text-sm font-medium uppercase tracking-wide text-muted">Ranked guides</h2>
+    <div class="flex flex-wrap gap-2">
+      {
+        PROFILES.map((p) => (
+          <a
+            href={`/best/${p.slug}/`}
+            class="rounded-full border border-line bg-panel px-3 py-1 text-xs text-muted hover:border-accent hover:text-fg"
+          >
+            {p.h1}
+          </a>
+        ))
+      }
+    </div>
+  </section>
+</Base>

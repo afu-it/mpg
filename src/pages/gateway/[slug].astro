@@ -11,6 +11,9 @@ import { FPX_BANKS, FPX_BANKS_SOURCE } from "../../lib/fpx-banks";
 import { skillRepoUrl, skillInstallCommand, agentPrompt } from "../../lib/learn";
 import { accessInfo } from "../../lib/access";
 import { gatewayCost, REF_TICKET } from "../../lib/fees";
+import { vsPairs } from "../../lib/seo-pages";
+import { toApiGateway, type GatewayEntryLike } from "../../lib/api";
+import { breadcrumbLd } from "../../lib/jsonld";
 
 export async function getStaticPaths() {
   const gateways = await getCollection("gateways");
@@ -67,9 +70,55 @@ const mcpLabel =
 // AI-agent prompt + install command, generated from the gateway's setup-* skill.
 const prompt = d.skill ? agentPrompt(d.name, d.skill) : null;
 const installCmd = d.skill ? skillInstallCommand(d.skill) : null;
+
+// SERP-friendly title/description: brand base name (notes like "(by Razorpay)"
+// stay out of the title). Taglines run 37-75 chars, so this fixed suffix lands
+// every description inside the 110-160 char SERP window.
+const pageTitle = `${nameBase} Malaysia fees & features | MPG`;
+const pageDesc = `${d.tagline} Fees, settlement times and integrations, verified from official sources on MPG.`;
+
+// head-to-head pages featuring this gateway (internal mesh for the /vs pages)
+const allApi = ((await getCollection("gateways")) as unknown as GatewayEntryLike[]).map(toApiGateway);
+const myVs = vsPairs(allApi).filter((p) => p.a.slug === entry.id || p.b.slug === entry.id);
+
+// entity signals: this page is ABOUT a third-party provider (never an Offer of
+// MPG's own; fees here are the provider's merchant pricing, not our product)
+const siteHref = String(Astro.site ?? "https://malaysiapg.com.my/");
+const pageUrl = `${siteHref.replace(/\/$/, "")}/gateway/${entry.id}/`;
+const detailLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": pageUrl,
+    url: pageUrl,
+    name: pageTitle,
+    dateModified: d.verified_date,
+    isPartOf: { "@id": `${siteHref}#website` },
+    about: {
+      "@type": "FinancialService",
+      name: nameBase,
+      url: d.website,
+      description: d.tagline,
+      areaServed: "MY",
+    },
+  },
+  breadcrumbLd(siteHref, [
+    { name: "Home", path: "/" },
+    { name: "Gateways", path: "/gateways/" },
+    { name: nameBase },
+  ]),
+];
 ---
 
-<Base title={`${d.name} fees & features | MPG`} description={d.tagline}>
+<Base title={pageTitle} description={pageDesc}>
+  <link
+    slot="head"
+    rel="alternate"
+    type="application/json"
+    href={`/api/gateways/${entry.id}.json`}
+    title={`${nameBase} data (JSON)`}
+  />
+  {detailLd.map((obj) => <script is:inline type="application/ld+json" set:html={JSON.stringify(obj)} />)}
   <a href="/gateways" class="text-sm text-muted hover:text-fg">← All gateways</a>
 
   <header class="mt-4 flex flex-wrap items-start justify-between gap-4">
@@ -162,6 +211,10 @@ const installCmd = d.skill ? skillInstallCommand(d.skill) : null;
           </tbody>
         </table>
       </div>
+      <p class="mt-2 text-xs text-muted">
+        Fees verified {d.verified_date} against the{" "}
+        <a href={d.source} target="_blank" rel="noopener noreferrer" class="underline-offset-2 hover:text-fg hover:underline">official source</a>.
+      </p>
     </section>
 
     <!-- features -->
@@ -353,7 +406,24 @@ const installCmd = d.skill ? skillInstallCommand(d.skill) : null;
         {d.source}
       </a>
     </p>
-    <p class="mt-1">Last verified {d.verified_date}.</p>
+    {
+      myVs.length > 0 && (
+        <div class="mt-4">
+          <p class="text-fg">Head-to-head comparisons</p>
+          <div class="mt-2 flex flex-wrap gap-2">
+            {myVs.map((p) => (
+              <a
+                href={`/vs/${p.slug}/`}
+                class="rounded-full border border-line bg-panel px-3 py-1 text-xs text-muted hover:border-accent hover:text-fg"
+              >
+                {splitName(p.a.name).base} vs {splitName(p.b.name).base}
+              </a>
+            ))}
+          </div>
+        </div>
+      )
+    }
+    <p class="mt-4">Last verified {d.verified_date}.</p>
     {d.notes && <p class="mt-2 max-w-2xl">{d.notes}</p>}
     {
       hasUnofficial && (

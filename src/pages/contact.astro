@@ -1,0 +1,75 @@
+---
+export const prerender = true;
+
+import Base from "../layouts/Base.astro";
+import { breadcrumbLd } from "../lib/jsonld";
+
+const crumbLd = breadcrumbLd(String(Astro.site ?? "https://malaysiapg.com.my/"), [
+  { name: "Home", path: "/" },
+  { name: "Contact" },
+]);
+---
+
+<Base
+  title="Contact MPG · Malaysia Payment Gateway directory"
+  description="How to reach the maintainer of the Malaysia Payment Gateway directory: report a stale fee, suggest a missing provider, or ask about the data and API."
+>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(crumbLd)} />
+  <nav aria-label="Breadcrumb" class="mb-4 flex items-center gap-2 text-sm text-muted">
+    <a href="/" class="hover:text-fg hover:underline">Home</a>
+    <span aria-hidden="true">/</span>
+    <span class="text-fg">Contact</span>
+  </nav>
+
+  <div class="mx-auto max-w-2xl">
+    <h1 class="text-2xl font-semibold tracking-tight text-fg">Contact</h1>
+    <p class="mt-3 text-muted">
+      MPG is maintained by one independent Malaysian developer, so every message
+      is read by the person who actually edits the data.
+    </p>
+
+    <section class="mt-8">
+      <h2 class="text-lg font-semibold text-fg">Report a wrong or stale fee</h2>
+      <p class="mt-3 text-muted">
+        The fastest route is the{" "}
+        <a href="/contribute" class="text-accent hover:underline">contribute page</a>:
+        it explains the sourcing rules (official pages only) and opens a
+        prefilled application email. If you just want to point out a mistake
+        without contributing, a plain email works too.
+      </p>
+    </section>
+
+    <section class="mt-8">
+      <h2 class="text-lg font-semibold text-fg">Email</h2>
+      <p class="mt-3 text-muted">
+        Write to{" "}
+        <a href="#" id="contact-email" class="text-accent hover:underline">the maintainer</a>{" "}
+        for corrections, missing gateways, questions about the{" "}
+        <a href="/learn/api" class="text-accent hover:underline">JSON API and MCP server</a>,
+        or anything else about the directory. Providers are welcome to send
+        updated official rate cards; a public source link is required before any
+        fee changes.
+      </p>
+    </section>
+
+    <section class="mt-8">
+      <h2 class="text-lg font-semibold text-fg">What this site is</h2>
+      <p class="mt-3 text-muted">
+        Read the <a href="/about" class="text-accent hover:underline">About page</a>{" "}
+        for how fees are sourced and how the cost ranking works, and the{" "}
+        <a href="/privacy" class="text-accent hover:underline">privacy policy</a>{" "}
+        for what data the site does and does not collect.
+      </p>
+    </section>
+  </div>
+
+  <script>
+    // assemble the address at runtime so scrapers reading static HTML miss it
+    const a = document.getElementById("contact-email");
+    if (a) {
+      const to = ["afuitdev", "gmail.com"].join("@");
+      (a as HTMLAnchorElement).href = `mailto:${to}`;
+      a.textContent = to;
+    }
+  </script>
+</Base>
