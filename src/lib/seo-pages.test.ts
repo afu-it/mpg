@@ -1,5 +1,16 @@
 import { describe, it, expect } from "vitest";
-import { PROFILES, buildProfilePage, profileJsonLd, profilePath, vsPairs, buildVsPage, headlineRates } from "./seo-pages";
+import {
+  PROFILES,
+  buildProfilePage,
+  profileJsonLd,
+  profilePath,
+  vsPairs,
+  buildVsPage,
+  headlineRates,
+  alternativesTargets,
+  buildAlternativesPage,
+  alternativesJsonLd,
+} from "./seo-pages";
 import type { ApiGateway } from "./api";
 
 // minimal ApiGateway fixture factory (same pattern as recommend.test.ts)
@@ -245,5 +256,50 @@ describe("buildVsPage", () => {
     expect(page.description).toContain("cheap vs mid");
     expect(page.title).not.toMatch(/[—–]/);
     expect(page.description).not.toMatch(/[—–]/);
+  });
+});
+
+describe("alternativesTargets + buildAlternativesPage", () => {
+  const many = [
+    ...all,
+    ...Array.from({ length: 10 }, (_, i) =>
+      gw({ slug: `g${i}`, category: "gateway", channels: ["fpx", "card"], popularity: 90 - i, est_fee_rm100: 2 + i * 0.1 }),
+    ),
+  ];
+
+  it("targets are the top popular gateway-category entries only", () => {
+    const targets = alternativesTargets(many);
+    expect(targets.length).toBe(12);
+    expect(targets.every((g) => g.category === "gateway")).toBe(true);
+    expect(targets[0].slug).toBe("quote"); // popularity 100
+  });
+
+  it("page excludes the target, ranks cheapest first, dates the answer", () => {
+    const target = many.find((g) => g.slug === "g0")!;
+    const page = buildAlternativesPage(many, target, 8, "2026-07-02");
+    const slugs = [...page.ranked, ...page.onRequest].map((m) => m.gateway.slug);
+    expect(slugs).not.toContain("g0");
+    expect(page.ranked[0].gateway.est_fee_rm100).toBeLessThanOrEqual(page.ranked.at(-1)!.gateway.est_fee_rm100!);
+    expect(page.answerLine).toContain("As of 2026-07-02");
+    expect(page.faqs[0].q).toContain("cheapest alternative");
+  });
+
+  it("title and description stay inside the SERP windows for long brand names", () => {
+    const target = gw({ slug: "long", name: "Curlec by Razorpay", category: "gateway", channels: ["fpx", "card"], popularity: 99 });
+    const page = buildAlternativesPage([...many, target], target);
+    expect(page.title.length).toBeGreaterThanOrEqual(30);
+    expect(page.title.length).toBeLessThanOrEqual(65);
+    expect(page.description.length).toBeGreaterThanOrEqual(110);
+    expect(page.description.length).toBeLessThanOrEqual(160);
+    expect(page.title).not.toMatch(/[—–]/);
+  });
+
+  it("jsonld emits ItemList + FAQPage with trailing-slash urls", () => {
+    const target = many.find((g) => g.slug === "g0")!;
+    const page = buildAlternativesPage(many, target, 8, "2026-07-02");
+    const [list, faq] = alternativesJsonLd(page, "https://x.test") as any[];
+    expect(list["@type"]).toBe("ItemList");
+    expect(list.itemListElement[0].url).toMatch(/\/$/);
+    expect(faq["@type"]).toBe("FAQPage");
   });
 });

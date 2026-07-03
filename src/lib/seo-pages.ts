@@ -427,3 +427,111 @@ export function buildVsPage(pair: VsPair): VsPage {
     featureRows,
   };
 }
+
+// ---------------------------------------------------------------------------
+// Alternatives pages (/alternatives/<slug>) — spec 12 item 7
+// ---------------------------------------------------------------------------
+
+const TOP_ALTERNATIVE_TARGETS = 12; // most popular "gateway" entries get a page (same window as the vs-pair curation)
+
+export interface AlternativesPage {
+  target: ApiGateway;
+  /** display base name (parenthetical notes stripped) */
+  base: string;
+  title: string;
+  description: string;
+  intro: string;
+  ranked: Match[];
+  onRequest: Match[];
+  faqs: Faq[];
+  answerLine?: string;
+}
+
+/** The big-brand gateways worth an alternatives page: top-N by popularity. */
+export function alternativesTargets(gateways: ApiGateway[]): ApiGateway[] {
+  return gateways
+    .filter((g) => g.category === "gateway")
+    .sort(byPopularity)
+    .slice(0, TOP_ALTERNATIVE_TARGETS);
+}
+
+/**
+ * Alternatives = recommend() over the same core channels the target serves
+ * (all-of, so every alternative covers the target's rails), minus the target.
+ * Falls back to no channel constraint when the target's channels are unusual.
+ */
+export function buildAlternativesPage(gateways: ApiGateway[], target: ApiGateway, limit = 8, asOf?: string): AlternativesPage {
+  const CORE: Channel[] = ["fpx", "card", "ewallet", "duitnowqr"];
+  const channels = target.channels.filter((c): c is Channel => (CORE as string[]).includes(c));
+  const pool = gateways.filter((g) => g.slug !== target.slug);
+  const needs: Needs = channels.length ? { channels, access: "integrate" } : { access: "integrate" };
+  const { matches } = recommendOrClosest(pool, needs, limit);
+  const ranked = matches.filter((m) => m.gateway.rankable);
+  const onRequest = matches.filter((m) => !m.gateway.rankable);
+
+  const base = splitName(target.name).base;
+  const top = ranked[0]?.gateway;
+
+  let answerLine: string | undefined;
+  if (top && top.est_fee_rm100 != null && asOf) {
+    answerLine = `As of ${asOf}, the cheapest ${base} alternative with officially published rates is ${top.name}, at about ${fmtRM(top.est_fee_rm100)} per RM100 transaction${
+      target.rankable && target.est_fee_rm100 != null ? ` (vs about ${fmtRM(target.est_fee_rm100)} on ${base})` : ""
+    }.`;
+  }
+
+  const faqs: Faq[] = [];
+  if (top && top.est_fee_rm100 != null) {
+    faqs.push({
+      q: `What is the cheapest alternative to ${base}?`,
+      a: `${asOf ? `As of ${asOf}, ` : ""}${top.name} is the cheapest alternative with officially published rates, at about ${fmtRM(top.est_fee_rm100)} per RM100 transaction covering the same core channels.`,
+    });
+  }
+  faqs.push({
+    q: `Why look beyond ${base}?`,
+    a: `Fees, settlement speed and supported e-wallets differ by provider, and ${
+      target.rankable ? "a published headline rate is not always the lowest blended cost for your mix of channels" : `${base} does not publish comparable rates, so you cannot price it without a quote`
+    }. Comparing on the same RM100 basket shows what each provider really costs.`,
+  });
+  faqs.push({
+    q: "Are these fees official?",
+    a: "Yes. Only rates published on each provider's own site are ranked; third-party figures are marked and excluded, and unpublished pricing shows as Contact sales. Every detail page carries the source and verified date.",
+  });
+
+  return {
+    target,
+    base,
+    title: `${base} alternatives in Malaysia, compared | MPG`,
+    description: `Alternatives to ${base} for Malaysian merchants, ranked by estimated cost per RM100 from officially published FPX, card and e-wallet rates.`,
+    intro: `Every provider below covers the same core payment channels as ${base} and is ranked by the same estimated blended cost used across this site: officially published rates applied to a RM100 transaction. Quote-based providers follow, by market presence.`,
+    ranked,
+    onRequest,
+    faqs,
+    answerLine,
+  };
+}
+
+/** JSON-LD for an alternatives page: ItemList + FAQPage. */
+export function alternativesJsonLd(page: AlternativesPage, site: string): object[] {
+  return [
+    {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      name: `${page.base} alternatives in Malaysia`,
+      itemListElement: [...page.ranked, ...page.onRequest].map((m, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        name: m.gateway.name,
+        url: `${site}/gateway/${m.gateway.slug}/`,
+      })),
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: page.faqs.map((f) => ({
+        "@type": "Question",
+        name: f.q,
+        acceptedAnswer: { "@type": "Answer", text: f.a },
+      })),
+    },
+  ];
+}

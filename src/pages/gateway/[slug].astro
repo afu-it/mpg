@@ -11,7 +11,7 @@ import { FPX_BANKS, FPX_BANKS_SOURCE } from "../../lib/fpx-banks";
 import { skillRepoUrl, skillInstallCommand, agentPrompt } from "../../lib/learn";
 import { accessInfo } from "../../lib/access";
 import { gatewayCost, REF_TICKET } from "../../lib/fees";
-import { vsPairs } from "../../lib/seo-pages";
+import { vsPairs, alternativesTargets } from "../../lib/seo-pages";
 import { toApiGateway, type GatewayEntryLike } from "../../lib/api";
 import { breadcrumbLd } from "../../lib/jsonld";
 
@@ -80,6 +80,7 @@ const pageDesc = `${d.tagline} Fees, settlement times and integrations, verified
 // head-to-head pages featuring this gateway (internal mesh for the /vs pages)
 const allApi = ((await getCollection("gateways")) as unknown as GatewayEntryLike[]).map(toApiGateway);
 const myVs = vsPairs(allApi).filter((p) => p.a.slug === entry.id || p.b.slug === entry.id);
+const hasAlternativesPage = alternativesTargets(allApi).some((g) => g.slug === entry.id);
 
 // entity signals: this page is ABOUT a third-party provider (never an Offer of
 // MPG's own; fees here are the provider's merchant pricing, not our product)
@@ -419,6 +420,14 @@ const detailLd = [
                 {splitName(p.a.name).base} vs {splitName(p.b.name).base}
               </a>
             ))}
+            {hasAlternativesPage && (
+              <a
+                href={`/alternatives/${entry.id}/`}
+                class="rounded-full border border-line bg-panel px-3 py-1 text-xs text-muted hover:border-accent hover:text-fg"
+              >
+                {splitName(d.name).base} alternatives
+              </a>
+            )}
           </div>
         </div>
       )
