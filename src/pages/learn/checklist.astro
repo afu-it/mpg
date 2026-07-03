@@ -2,6 +2,7 @@
 export const prerender = true;
 
 import Base from "../../layouts/Base.astro";
+import { techArticleLd } from "../../lib/jsonld";
 
 const groups = [
   {
@@ -37,12 +38,15 @@ const groups = [
     ],
   },
 ];
+const site = (Astro.site?.href ?? "https://malaysiapg.com.my/").replace(/\/$/, "");
+const articleLd = JSON.stringify(techArticleLd(site, "/learn/checklist/", 'Production checklist', 'What to verify before taking a Malaysian payment gateway live: keys, webhook URLs, replay-safety, separated credentials, and no fake-redirect unlock.'));
 ---
 
 <Base
   title="Production checklist | MPG Learn"
   description="What to verify before taking a Malaysian payment gateway live: keys, webhook URLs, replay-safety, separated credentials, and no fake-redirect unlock."
 >
+  <script is:inline type="application/ld+json" set:html={articleLd} />
   <a href="/learn" class="text-sm text-muted hover:text-fg">← Learn</a>
 
   <header class="mt-4 max-w-2xl">

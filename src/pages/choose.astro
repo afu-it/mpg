@@ -86,6 +86,25 @@ const card = "block rounded-md border border-line bg-panel p-4 cursor-pointer ho
     </form>
 
     <div id="choose-results" hidden class="mt-8"></div>
+
+    <section class="mt-12 border-t border-line pt-6">
+      <h2 class="text-base font-medium text-fg">How the recommendation works</h2>
+      <p class="mt-2 text-sm text-muted">
+        Your answers filter the directory by hard requirements: the payment channels your
+        customers use, recurring billing, whether you want a no-code setup or a developer
+        API, and the kind of account you can open. Matching providers are then ranked by the
+        same estimated blended cost used across this site: officially published FPX, card and
+        e-wallet rates applied to a RM100 transaction. Providers without comparable published
+        rates are shown as quote-based rather than ranked.
+      </p>
+      <h2 class="mt-5 text-base font-medium text-fg">Why results may differ from ads</h2>
+      <p class="mt-2 text-sm text-muted">
+        We only rank on rates a provider publishes on its own site, each with a source link
+        and verified date. Promotional or negotiated rates you see elsewhere are real but not
+        comparable, so they never move the ranking. Shortlist two or three candidates here,
+        then confirm current pricing with the provider before signing up.
+      </p>
+    </section>
   </div>
 
   <script type="application/json" id="gw-data" set:html={JSON.stringify(data)} />

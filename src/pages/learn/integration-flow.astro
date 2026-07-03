@@ -2,6 +2,7 @@
 export const prerender = true;
 
 import Base from "../../layouts/Base.astro";
+import { techArticleLd } from "../../lib/jsonld";
 import FlowDiagram from "../../components/FlowDiagram.astro";
 
 const paymentFlow = [
@@ -62,12 +63,15 @@ const tests = [
   "Duplicate webhook event → processed once only (idempotent).",
   "Wrong amount or currency → not marked paid.",
 ];
+const site = (Astro.site?.href ?? "https://malaysiapg.com.my/").replace(/\/$/, "");
+const articleLd = JSON.stringify(techArticleLd(site, "/learn/integration-flow/", 'The safe integration flow', 'The correct order to wire a Malaysian payment gateway so a payment can never be faked: pending record, verified webhook, idempotent settlement.'));
 ---
 
 <Base
   title="The safe integration flow | MPG Learn"
   description="The correct order to wire a Malaysian payment gateway so a payment can never be faked: pending record, verified webhook, idempotent settlement."
 >
+  <script is:inline type="application/ld+json" set:html={articleLd} />
   <a href="/learn" class="text-sm text-muted hover:text-fg">← Learn</a>
 
   <header class="mt-4 max-w-2xl">

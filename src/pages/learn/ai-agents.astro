@@ -3,6 +3,7 @@ export const prerender = true;
 
 import { getCollection } from "astro:content";
 import Base from "../../layouts/Base.astro";
+import { techArticleLd } from "../../lib/jsonld";
 import FlowDiagram from "../../components/FlowDiagram.astro";
 import { SKILLS_REPO, skillRepoUrl, skillInstallCommand } from "../../lib/learn";
 
@@ -46,12 +47,15 @@ const mcpCommunity = gateways
   .filter((g) => g.data.mcp === "community")
   .map((g) => g.data.name)
   .sort();
+const site = (Astro.site?.href ?? "https://malaysiapg.com.my/").replace(/\/$/, "");
+const articleLd = JSON.stringify(techArticleLd(site, "/learn/ai-agents/", 'Build with AI agents', "Install AFU's setup-* skills, paste a ready prompt, and understand what MCP vs API/webhooks unlocks for AI coding tools when integrating a Malaysian gateway."));
 ---
 
 <Base
   title="Build with AI agents | MPG Learn"
   description="Install AFU's setup-* skills, paste a ready prompt, and understand what MCP vs API/webhooks unlocks for AI coding tools when integrating a Malaysian gateway."
 >
+  <script is:inline type="application/ld+json" set:html={articleLd} />
   <a href="/learn" class="text-sm text-muted hover:text-fg">← Learn</a>
 
   <header class="mt-4 max-w-2xl">

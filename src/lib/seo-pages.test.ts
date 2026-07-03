@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { PROFILES, buildProfilePage, profileJsonLd, profilePath, vsPairs, buildVsPage } from "./seo-pages";
+import { PROFILES, buildProfilePage, profileJsonLd, profilePath, vsPairs, buildVsPage, headlineRates } from "./seo-pages";
 import type { ApiGateway } from "./api";
 
 // minimal ApiGateway fixture factory (same pattern as recommend.test.ts)
@@ -87,10 +87,38 @@ describe("buildProfilePage", () => {
   });
 
   it("cheapest FAQ names the top ranked gateway with its fee", () => {
-    const page = buildProfilePage(all, PROFILES[0]);
+    const def = PROFILES.find((p) => p.slug === "cheapest-payment-gateway-malaysia")!;
+    const page = buildProfilePage(all, def);
     expect(page.faqs[0].q).toContain("cheapest");
     expect(page.faqs[0].a).toContain("cheap");
     expect(page.faqs[0].a).toContain("RM1.10");
+  });
+
+  it("generic profile swaps the cheapest FAQ for a how-to-choose FAQ (de-cannibalised)", () => {
+    expect(PROFILES[0].noCheapestFaq).toBe(true);
+    const page = buildProfilePage(all, PROFILES[0]);
+    expect(page.faqs.some((f) => f.q.includes("cheapest"))).toBe(false);
+    expect(page.faqs[0].q).toContain("How do I choose");
+  });
+
+  it("dates the cheapest FAQ and emits a citable answerLine when asOf is given", () => {
+    const def = PROFILES.find((p) => p.slug === "cheapest-payment-gateway-malaysia")!;
+    const page = buildProfilePage(all, def, 8, "2026-07-02");
+    expect(page.faqs[0].a).toMatch(/^As of 2026-07-02, /);
+    expect(page.answerLine).toContain("As of 2026-07-02");
+    expect(page.answerLine).toContain("cheap");
+    expect(page.answerLine).toContain("RM1.10");
+    // no date, no answerLine (backwards compatible)
+    expect(buildProfilePage(all, def).answerLine).toBeUndefined();
+  });
+
+  it("headlineRates lists official rates only, in channel order, capped", () => {
+    const g = gw({
+      slug: "hr",
+      fees: { fpx: "RM1.25", card: "1.8%", ewallet: "1.5% *", duitnowqr: "1.2%", bnpl: "6%" },
+    });
+    expect(headlineRates(g)).toBe("FPX RM1.25 · Card 1.8% · DuitNow QR 1.2%");
+    expect(headlineRates(gw({ slug: "cs", fees: { fpx: "Contact sales", card: "—" } }))).toBe("");
   });
 
   it("omits the cheapest FAQ when nothing is rankable", () => {

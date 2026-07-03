@@ -1,9 +1,51 @@
 ---
 export const prerender = true;
 
+import { getCollection } from "astro:content";
 import Base from "../../layouts/Base.astro";
 
 const BASE = "https://malaysiapg.com.my";
+
+// Dataset + WebAPI JSON-LD: makes the directory eligible for Google Dataset
+// Search and describes the JSON endpoints to machine readers (spec 12).
+const dateModified = (await getCollection("gateways"))
+  .map((g) => g.data.verified_date)
+  .sort()
+  .at(-1);
+const datasetLd = JSON.stringify({
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Dataset",
+      "@id": `${BASE}/learn/api/#dataset`,
+      name: "Malaysian payment gateway fees and features",
+      description:
+        "Fees (FPX, card, e-wallet, DuitNow QR, BNPL), settlement times, supported channels and developer-experience data for Malaysian payment providers, verified against official pricing pages. Each record carries a verified_date and source URL.",
+      url: `${BASE}/learn/api/`,
+      license: `${BASE}/about/`,
+      isAccessibleForFree: true,
+      inLanguage: "en",
+      dateModified,
+      creator: { "@id": `${BASE}/#organization` },
+      distribution: [
+        {
+          "@type": "DataDownload",
+          encodingFormat: "application/json",
+          contentUrl: `${BASE}/api/gateways.json`,
+        },
+      ],
+    },
+    {
+      "@type": "WebAPI",
+      "@id": `${BASE}/learn/api/#webapi`,
+      name: "MPG Data API",
+      description:
+        "Free static JSON API over the MPG directory: all gateways, or one gateway by slug.",
+      documentation: `${BASE}/learn/api/`,
+      provider: { "@id": `${BASE}/#organization` },
+    },
+  ],
+});
 
 const fields = [
   { name: "slug", desc: "Stable id, matches /gateway/<slug> and the per-gateway endpoint." },
@@ -23,6 +65,7 @@ const fields = [
   title="Data API: query Malaysian payment gateways as JSON | MPG"
   description="Free static JSON API for the MPG directory: every Malaysian payment gateway with fees, estimated cost, channels, features and developer-experience data."
 >
+  <script is:inline type="application/ld+json" set:html={datasetLd} />
   <header class="max-w-2xl">
     <h1 class="text-2xl font-semibold tracking-tight text-fg">Data API</h1>
     <p class="mt-2 text-muted">

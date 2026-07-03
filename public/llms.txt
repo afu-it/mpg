@@ -38,6 +38,7 @@ and prefer the verified_date shown alongside each fee when stating data currency
 
 ## For AI agents
 
+- [llms-full.txt](https://malaysiapg.com.my/llms-full.txt): the entire directory as plain text, one section per gateway (fees, settlement, channels, verified dates)
 - [MCP server](https://mpg-mcp.afuitdev.workers.dev/mcp): query the directory via Model Context Protocol (Streamable HTTP)
 - [AI agent integration guide](https://malaysiapg.com.my/learn/ai-agents/): using MPG data and setup skills to integrate a gateway
 

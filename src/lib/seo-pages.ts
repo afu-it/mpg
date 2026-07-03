@@ -21,6 +21,11 @@ export interface ProfileDef {
   intro: string;
   /** noun used in generated FAQ copy, e.g. "payment gateway with FPX" */
   faqNoun: string;
+  /**
+   * Skip the "What is the cheapest…" FAQ. Set on the generic profile so it
+   * does not cannibalise /best/cheapest-payment-gateway-malaysia (spec 12).
+   */
+  noCheapestFaq?: boolean;
 }
 
 export const PROFILES: ProfileDef[] = [
@@ -34,6 +39,7 @@ export const PROFILES: ProfileDef[] = [
     intro:
       "Every provider below is ranked by the same estimated blended cost we use across this site: the officially published FPX, card and e-wallet rates applied to a RM100 transaction. Providers that only quote on request are listed after the ranked ones, by market presence.",
     faqNoun: "payment gateway in Malaysia",
+    noCheapestFaq: true,
   },
   {
     slug: "cheapest-payment-gateway-malaysia",
@@ -181,11 +187,16 @@ export interface ProfilePage {
   /** constraints recommendOrClosest() had to drop (normally empty) */
   relaxed: string[];
   faqs: Faq[];
+  /**
+   * Citable dated answer sentence ("As of <date>, X is the cheapest…"),
+   * present when a ranked top exists and an as-of date was supplied (spec 12).
+   */
+  answerLine?: string;
 }
 
 const fmtRM = (v: number) => `RM${v.toFixed(2)}`;
 
-export function buildProfilePage(gateways: ApiGateway[], def: ProfileDef, limit = 8): ProfilePage {
+export function buildProfilePage(gateways: ApiGateway[], def: ProfileDef, limit = 8, asOf?: string): ProfilePage {
   const pool = def.pluginsOnly ? gateways.filter((g) => g.plugins.length > 0) : gateways;
   const totalMatches = recommend(pool, def.needs, Number.POSITIVE_INFINITY).length;
   const { matches, relaxed } = recommendOrClosest(pool, def.needs, limit);
@@ -194,10 +205,20 @@ export function buildProfilePage(gateways: ApiGateway[], def: ProfileDef, limit 
 
   const faqs: Faq[] = [];
   const top = ranked[0]?.gateway;
-  if (top && top.est_fee_rm100 != null) {
+  let answerLine: string | undefined;
+  if (top && top.est_fee_rm100 != null && asOf) {
+    answerLine = `As of ${asOf}, ${top.name} is the cheapest ${def.faqNoun} with officially published rates, at about ${fmtRM(top.est_fee_rm100)} per RM100 transaction.`;
+  }
+  if (top && top.est_fee_rm100 != null && !def.noCheapestFaq) {
     faqs.push({
       q: `What is the cheapest ${def.faqNoun}?`,
-      a: `Among providers with officially published rates, ${top.name} has the lowest estimated blended cost at about ${fmtRM(top.est_fee_rm100)} per RM100 transaction. Quote-based providers may negotiate lower, but publish no comparable rates.`,
+      a: `${asOf ? `As of ${asOf}, ` : "Among providers with officially published rates, "}${top.name} has the lowest estimated blended cost at about ${fmtRM(top.est_fee_rm100)} per RM100 transaction${asOf ? ", among providers with officially published rates" : ""}. Quote-based providers may negotiate lower, but publish no comparable rates.`,
+    });
+  }
+  if (def.noCheapestFaq) {
+    faqs.push({
+      q: `How do I choose a ${def.faqNoun}?`,
+      a: `Match by the payment channels your customers use (FPX, card, e-wallet, DuitNow QR), then compare officially published rates on a like-for-like basket. This directory ranks providers by estimated blended cost per RM100 transaction; the "Help me choose" wizard narrows it to your needs in four questions.`,
     });
   }
   faqs.push({
@@ -209,7 +230,30 @@ export function buildProfilePage(gateways: ApiGateway[], def: ProfileDef, limit 
     a: "Fees without a marker come from the provider's official pricing page (see the source and verified date on each detail page). Values with a trailing * are third-party or indicative and are excluded from the ranking. Where nothing is published we say \"Contact sales\" instead of inventing a number.",
   });
 
-  return { def, ranked, onRequest, totalMatches, relaxed, faqs };
+  return { def, ranked, onRequest, totalMatches, relaxed, faqs, answerLine };
+}
+
+const HEADLINE_CHANNELS: Array<[key: string, label: string]> = [
+  ["fpx", "FPX"],
+  ["card", "Card"],
+  ["ewallet", "E-wallet"],
+  ["duitnowqr", "DuitNow QR"],
+];
+
+/**
+ * Compact per-item headline rates for ranked lists ("FPX RM1.25 · Card 1.8%"),
+ * straight from the published fee strings — no math, `*`/Contact-sales rows
+ * are skipped so only official headline rates surface (spec 12 item 11).
+ */
+export function headlineRates(g: ApiGateway, max = 3): string {
+  const parts: string[] = [];
+  for (const [key, label] of HEADLINE_CHANNELS) {
+    const v = g.fees[key];
+    if (!v || v === "—" || v === "Contact sales" || v.includes("*")) continue;
+    parts.push(`${label} ${v}`);
+    if (parts.length >= max) break;
+  }
+  return parts.join(" · ");
 }
 
 /** JSON-LD for a profile page: ItemList of the ranked matches + FAQPage. */

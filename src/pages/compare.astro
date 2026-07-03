@@ -102,6 +102,25 @@ const presets = [
       50/30/20, counting flat add-ons). <span class="text-fg">*</span> Indicative rate from a
       third-party source, not officially published. Always confirm with the provider.
     </p>
+
+    <section class="mt-10 border-t border-line pt-6">
+      <h2 class="text-base font-medium text-fg">How this comparison works</h2>
+      <p class="mt-2 max-w-3xl text-sm text-muted">
+        Every figure comes from the provider's official pricing page and carries a verified
+        date on its detail page. The side-by-side rows cover fees per channel, settlement
+        speed, supported banks and e-wallets, and developer experience (API docs, webhooks,
+        plugins, MCP). Fee strings in different units are made comparable through the
+        estimated cost of a RM100 transaction, so a flat "RM1.00" and a "1.2%" rate can be
+        compared honestly.
+      </p>
+      <h2 class="mt-5 text-base font-medium text-fg">Picking between close providers</h2>
+      <p class="mt-2 max-w-3xl text-sm text-muted">
+        When estimated costs are within a few sen, decide on the other rows: settlement speed
+        moves your cash flow, plugin support saves integration time, and quote-based
+        providers may beat published rates at volume. Use the share link above to send this
+        exact comparison to a teammate.
+      </p>
+    </section>
   </div>
 
   <script type="application/json" id="gw-data" set:html={JSON.stringify(data)} />

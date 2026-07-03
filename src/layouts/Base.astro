@@ -1,6 +1,7 @@
 ---
 import "../styles/global.css";
 import { getCollection } from "astro:content";
+import { organizationLd } from "../lib/jsonld";
 // preload the text face so the LCP headline doesn't wait on the CSS → font chain
 import interWoff2 from "@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url";
 
@@ -29,6 +30,11 @@ const canonicalPath = Astro.url.pathname.endsWith("/")
   ? Astro.url.pathname
   : Astro.url.pathname + "/";
 const canonical = new URL(canonicalPath, Astro.site);
+
+// sitewide Organization entity (same @id as the homepage graph, so they merge);
+// the homepage already emits it inside its WebSite graph — skip the duplicate
+const orgLd =
+  canonicalPath === "/" ? null : JSON.stringify(organizationLd(String(Astro.site ?? Astro.url.origin)));
 ---
 
 <!doctype html>
@@ -50,6 +56,7 @@ const canonical = new URL(canonicalPath, Astro.site);
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:image" content={new URL("/icon-512.png", Astro.site ?? Astro.url)} />
+    {orgLd && <script is:inline type="application/ld+json" set:html={orgLd} />}
     <slot name="head" />
   </head>
   <body class="flex min-h-screen flex-col tabular-nums">

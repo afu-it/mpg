@@ -8,7 +8,7 @@ import { getCollection } from "astro:content";
 import Base from "../../layouts/Base.astro";
 import Logo from "../../components/Logo.astro";
 import { toApiGateway, type GatewayEntryLike } from "../../lib/api";
-import { PROFILES, buildProfilePage, profileJsonLd } from "../../lib/seo-pages";
+import { PROFILES, buildProfilePage, profileJsonLd, headlineRates } from "../../lib/seo-pages";
 import { breadcrumbLd } from "../../lib/jsonld";
 
 export async function getStaticPaths() {
@@ -19,7 +19,9 @@ const { def } = Astro.props;
 
 const entries = (await getCollection("gateways")) as unknown as GatewayEntryLike[];
 const gateways = entries.map(toApiGateway);
-const page = buildProfilePage(gateways, def);
+// citable "as of" date = the newest official verification across the directory
+const asOf = gateways.map((g) => g.verified_date).sort().at(-1);
+const page = buildProfilePage(gateways, def, 8, asOf);
 const site = (Astro.site?.href ?? "https://malaysiapg.com.my/").replace(/\/$/, "");
 const jsonld = [
   ...profileJsonLd(page, site),
@@ -46,6 +48,7 @@ const otherProfiles = PROFILES.filter((p) => p.slug !== def.slug);
 
   <h1 class="text-2xl font-semibold tracking-tight text-fg">{def.h1}</h1>
   <p class="mt-2 max-w-3xl text-muted">{def.intro}</p>
+  {page.answerLine && <p class="mt-3 max-w-3xl font-medium text-fg">{page.answerLine}</p>}
 
   {
     page.relaxed.length > 0 && (
@@ -76,6 +79,9 @@ const otherProfiles = PROFILES.filter((p) => p.slug !== def.slug);
                 </span>
               </div>
               <p class="mt-2 pl-9 text-sm text-muted">{m.gateway.tagline}</p>
+              {headlineRates(m.gateway) && (
+                <p class="mt-1 pl-9 text-xs text-muted">{headlineRates(m.gateway)}</p>
+              )}
               {m.reasons.length > 0 && (
                 <div class="mt-2 flex flex-wrap gap-2 pl-9">
                   {m.reasons.map((r) => (
