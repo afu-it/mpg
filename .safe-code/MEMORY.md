@@ -1,6 +1,13 @@
 # MEMORY — temporary audit/architecture notes
 
-_2026-07-02 (rev 6)_
+_2026-07-03 (rev 7)_
+
+## SEO/GEO layer (2026-07-03)
+- `src/lib/jsonld.ts` = shared JSON-LD builders (breadcrumbLd). ALL structured-data URLs must be https + trailing slash (match canonical + sitemap). Canonical is emitted by `Base.astro` from Astro.url + Astro.site.
+- Base.astro has a named `head` slot — pages inject extra head tags (e.g. `<link slot="head" rel="alternate" type="application/json">` on home, /gateways, detail pages).
+- Schema stance (from adversarial schema audit): WebPage+about:FinancialService+dateModified on detail pages; BreadcrumbList everywhere with a visible trail; ItemList+FAQPage on /best (FAQ rich results won't display — Google limits to authority sites — kept for AI engines). FORBIDDEN: Offer/Product on fees, AggregateRating/Review, SearchAction (no crawlable search URL).
+- AI access: Cloudflare zone had "Managed robots.txt" ON (blocked GPTBot/ClaudeBot/CCBot/Google-Extended with ai-train=no signal) — AFU turned it OFF 2026-07-03. public/robots.txt = explicit allow-list for 13 AI bots; public/llms.txt = AI-facing guide. If robots.txt ever shows a "BEGIN Cloudflare Managed content" block again, that toggle got re-enabled.
+- squirrel CLI (v0.0.63) at ~/.local/bin/squirrel; audit db/config in session scratchpads, never the repo. Live baseline 2026-07-03 pre-fix: 69/D. Localhost audits under-report Security/Crawlability (no HTTPS, no _headers processing, sitemap domain mismatch) — judge those categories on live only.
 
 ## SEO pages layer (2026-07-02)
 - `src/lib/seo-pages.ts` is registry + builders ONLY (pure, tested); it owns page copy, not fee math or ranking. Canonical architecture note lives in `context/architecture.md` (Navigation map).

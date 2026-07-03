@@ -1,7 +1,7 @@
 # Progress Tracker — MPG
 
-last_synced_commit: 2b0dce1
-context_synced_at: 2026-07-02
+last_synced_commit: 60c8b6a
+context_synced_at: 2026-07-03
 context_selftest: skipped (not first-run)
 
 ## Current Phase
@@ -36,13 +36,23 @@ No server/DB. Deployed (push master → Cloudflare Pages).
 
 ## Open Questions
 - Reconsider the deferred Tier 2 international PSPs (2C2P, Adyen, Omise, Worldpay, Global Payments, Fiserv, Ksher, Nomu Pay, Pine Labs)? Found + deferred per AFU (Malaysian-focused).
-- Tune the ranking knobs if AFU wants: channel weighting (50/30/20), basket size (RM100), or gating rule (currently FPX + card/e-wallet, OR card+e-wallet). Should ranking require FPX (e.g. Fasspay ranks #1 on card+e-wallet but has no FPX)?
+- Tune the ranking knobs if AFU wants: channel weighting (50/30/20), basket size (RM100). Gating question CLOSED 2026-07-03: AFU keeps the current gate (FPX+1 OR card+e-wallet); Fasspay stays ranked without FPX.
 - Per-entry access override for acquirer gateways that are "apply first" (currently derived as "Integrate" from category)?
 - Backfill `methods` for remaining all-"Contact sales" gateways if/when sourced.
 
 ## Reference
 - Owner's agent-skills repo: https://github.com/afu-it/malaysia-payment-gateway — maps 1:1 to the `skill:` field; backbone of /learn.
 - Discovery research (2026-06-26): full candidate data in spec `context/feature-specs/04-expand-gateways.md`.
+
+## SEO layer (2026-07-03 session)
+- Trust pages live: /about (methodology + independence + contact), /privacy, /contact; footer links. E-E-A-T audit score 44 → 100.
+- /vs/ hub page lists all 71 head-to-heads + homepage "Popular comparisons" block; internal links to /best //vs all trailing-slash (no 308 hops).
+- Structured data: BreadcrumbList on 8 page types; WebPage + about:FinancialService + dateModified(=verified_date) on all 63 detail pages; ItemList/FAQPage on /best (urls trailing-slash); WebSite+Organization on home. NEVER add Offer/Rating schema to fees (spam risk, recorded in spec 12 + safe-refactor guardrails).
+- AI-crawler access: Cloudflare "Managed robots.txt" (which blocked GPTBot/ClaudeBot/CCBot/Google-Extended) DISABLED by AFU 2026-07-03; public/robots.txt now explicitly allows 13 AI bots; public/llms.txt ships the AI-facing site guide. AFU's decision: full access including training.
+- All 162 pages inside SERP windows (title 30-65, description 110-160), scan-enforced; canonical https+trailing-slash sitewide; footer "Last updated" = max verified_date (data-driven).
+- public/_headers: HSTS, XFO, nosniff, Referrer-Policy, Permissions-Policy, immutable /_astro, HTML must-revalidate. CSP deliberately omitted (Clerk breakage risk).
+- Astro whitespace trap: inline links on their own source line glue to surrounding text; fixed sitewide with {" "}; scan showed 0 gluings across a/code/em/strong.
+- Round-2 backlog (BM content, glossary URLs, calculator, Wikidata, IndexNow, Dataset schema) lives in spec 12 (suggested).
 
 ## Decisions (safe summary)
 - **Contribution model (2026-07-02, spec 11):** repo stays PRIVATE; approved applicants get a GitHub collaborator invite; applications arrive via prefilled email (not a backend form). GitHub free gives no branch protection on private repos, so the deploy job is actor-gated (owner-only) as the production safety net. Public-repo fork+PR was offered and declined.

@@ -1,6 +1,11 @@
 # BACKLOG — operational queue
 
-_2026-07-02 (rev 15)_
+_2026-07-03 (rev 16)_
+
+- [ ] **AFU after this deploy**: GSC URL Inspection → Request Indexing on `/` + top /best pages; re-run PageSpeed + squirrel on live (expect a11y ~95+, squirrel mid-high 80s); favicon + AI Overview fix themselves on recrawl now that AI crawlers are unblocked.
+- [ ] **SEO round 2 ideas** parked in spec 12 (BM content + hreflang, glossary term URLs, how-to guides, fee-change news, fee calculator, Dataset/WebAPI schema, llms-full.txt, dated answer-sentences, FAQ de-cannibalisation).
+- [ ] **Entity corroboration** (AFU-driven, from GEO audit): Wikidata item, GitHub README with the domain, MCP registry listings (modelcontextprotocol/PulseMCP/Smithery/mcp.so), Bing Webmaster Tools + IndexNow (Cloudflare one-click), community posts.
+- [x] Spec 07 follow-ups (per-RM100 on /compare, On-request divider, FPX-gating decision: keep) — done 2026-07-03.
 
 - [ ] Watch: **FavePay Later** liveness — product fading (not promoted on myfave.com homepage, help section behind login; fee article still live). Re-check on the next liveness sweep; remove if it goes myIOU-pattern dormant.
 - [ ] **Mobi (ex-gomobi) logo** may need a brand refresh to match mobi.xyz branding (current logo is the old gomobi mark).
@@ -23,7 +28,7 @@ _2026-07-02 (rev 15)_
 - [x] Submit `sitemap-index.xml` in Google Search Console — done 2026-07-02 by AFU (property `malaysiapg.com.my` verified; sitemap status Success, index read same day). Discovered-pages count populates over days; check GSC "Pages" report in 1-2 weeks.
 - [x] **Deploy the MCP Worker (spec 08, Phase 2)** — done 2026-06-27. Live at `https://mpg-mcp.afuitdev.workers.dev/mcp`, verified end-to-end (initialize + tools/list + recommend_gateway). Real URL wired into `/learn/api` + README. Re-deploy: `cd mcp && npm run deploy`.
 - [x] Decide **Payex** — done 2026-06-27: REJECTED (payex.io is now Xendit Malaysia; already listed).
-- [ ] Optional ranking follow-ups (spec 07): per-RM100 effective-cost cells on `/compare`; separate visual track for BNPL/bank/wallet rows; decide whether ranking should require FPX (Fasspay ranks #1 on card+e-wallet but has no FPX).
+- [x] Optional ranking follow-ups (spec 07) — done 2026-07-03: per-RM100 cells on `/compare`, "Pricing on request" divider on /gateways; FPX-gating decided (keep current gate).
 - [ ] Reconsider the deferred **Tier 2 international PSPs** (2C2P, Adyen, Omise, Worldpay, Global Payments, Fiserv, Ksher, Nomu Pay, Pine Labs) — all found + verified, skipped per AFU (kept Malaysian-focused). Full data in spec 04.
 - [ ] Optional: per-entry `access` override — acquirer gateways (Fiuu, NTT DATA, local acquirers) are "apply first" but derive as "Integrate" from category.
 - [ ] Phase 3: public submit-a-gateway, moderated (would need server + DB → curated `.md`). Spec: `context/feature-specs/02-submit-gateway.md`.

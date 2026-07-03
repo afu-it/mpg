@@ -1,18 +1,21 @@
 ---
-status: in-progress   # suggested | approved | in-progress | done | rejected
+status: done   # suggested | approved | in-progress | done | rejected
 created: 2026-06-27
 ---
 
-> **Built 2026-06-27 (AFU approved full A→D).** New default = lowest effective fee
-> (gated). `src/lib/fees.ts` rewritten (parseFeeShape/effectiveCost/gatewayCost,
-> TDD 28 tests). GatewayTable: "Est. fee / RM100" column + eligibility gating +
-> On-request zone; table.ts: default Lowest fees + per-channel sorts (FPX/card/
-> e-wallet) + popularity-by-attribute; gateways.astro copy/dropdown; compare.ts
-> + detail page use effective cost; popularity corrected on 34 files (16 inserts).
-> Ranked head 18/59; TNG/Revenue Monster/toyyibPay/eGHL now On-request; Stripe
-> ranks on real RM3.80. Verified: vitest 28/28, astro check 0, build 68. Pending:
-> AFU visual review + `/safe-code --save` (commit) + push to deploy. Not yet done:
-> per-RM100 cells on /compare (optional); separate visual track for BNPL/bank/wallet (optional).
+> **Built 2026-06-27 (AFU approved full A→D), live since 2026-06-27.** New default
+> = lowest effective fee (gated). `src/lib/fees.ts` rewritten (parseFeeShape/
+> effectiveCost/gatewayCost, TDD). GatewayTable: "Est. fee / RM100" column +
+> eligibility gating + On-request zone; per-channel sorts; compare.ts + detail
+> page use effective cost; popularity corrected on 34 files.
+>
+> **Follow-ups closed 2026-07-03:** (1) /compare got an "Est. fee / RM100" row
+> (blended, lowest highlighted, "On request" muted) + "≈ RMx.xx" annotations under
+> every %-based per-transaction fee cell; (2) /gateways got a "Pricing on request"
+> divider row between the ranked and unranked zones (Lowest-fees sort only,
+> managed by table.ts updateDivider). (3) FPX-gating question DECIDED by AFU:
+> keep the current gate (FPX+1 OR card+e-wallet) — Fasspay stays ranked #1
+> without FPX. Do not re-litigate.
 # Ranking redesign — trustworthy "Lowest fees" + corrected popularity
 
 ## Goal

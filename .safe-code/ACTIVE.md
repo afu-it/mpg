@@ -2,16 +2,18 @@
 
 ## Last Session
 status: saved
-saved_at: 2026-07-02
+saved_at: 2026-07-03
 completed:
-  - Spec 10 (SEO pages /best + /vs + sitemap) DONE + live; GSC property verified + sitemap submitted (Success).
-  - Branding DONE + live: logo.svg source of truth, white header mark, adaptive favicon (+ ?v=2 cache-buster), full icon set.
-  - Spec 11 (/contribute, Clerk-gated apply → email; private repo + invite; owner-gated deploys) DONE + live.
-  - FULL FEE AUDIT: all 59 pre-existing gateways re-verified against official sources (26 corrected, 33 confirmed, 0 dead; verified_date=2026-07-02 on all). Xendit repriced, toyyibPay newly rankable (#2), SwiF rate card, SPayLater Feb-2026 hike, gomobi→Mobi rebrand, de-published figures downgraded honestly.
-  - DISCOVERY ROUND 2: +BetterPay (rankable #9), +BOLD.Pay, +Share Commerce, +Antom (official MCP). Directory 59→63; rejected list recorded in spec 04. Committed + deployed at AFU's "deploy".
+  - Spec 07 follow-ups DONE (spec closed): /compare "Est. fee / RM100" row + ≈ annotations; /gateways "Pricing on request" divider; FPX-gating decided by AFU (keep current gate, Fasspay stays #1).
+  - Lighthouse + Google-result fixes: red-soft contrast token, sr-only h2, underlined links, Inter preload, logo intrinsic dims, canonical sitewide, data-driven footer date, homepage WebSite+Organization JSON-LD.
+  - FULL SEO SESSION (squirrel 69/D baseline + 3-specialist pass, 2 rounds): /about /privacy /contact, /vs hub + homepage comparisons block, trailing-slash internal links, all 162 pages in SERP windows, BreadcrumbList + detail-page schema + fee-verified captions, _headers, logo compression, kiple dead-link fix, robots.txt AI allow-list + llms.txt.
+  - CRITICAL: Cloudflare "Managed robots.txt" was blocking all AI crawlers (why AI Overview said site "does not exist") — AFU disabled it, verified gone live.
+  - Sitewide link-spacing (Astro whitespace gluing) fixed, 0 left by scan.
+  - Committed atomic: c24d4a3 (feat spec-07), d27f95f (fix lighthouse), 60c8b6a (feat seo overhaul), + docs commit. PUSHED at AFU's "save & deploy".
 pending:
-  - AFU browser smoke of the refreshed data (e.g. /gateway/xendit, /gateway/toyyibpay, /gateway/betterpay) + new logos on /gateways.
-  - GSC "Pages" check in 1-2 weeks; Google favicon updates on recrawl.
-  - BACKLOG watches: FavePay Later product fading (re-check liveness next sweep); Mobi logo may need brand refresh; UOB/RHB accept e-wallets but unpriced (kept "—", conservative).
-  - Optional next units: spec-07 ranking follow-ups; Phase 3 submit-a-gateway; light mode (colour logo ready); rotate Google OAuth secret.
-next_action: Nothing urgent. Directory is 63 gateways, all fees officially verified same-day. Next session: pick an optional unit above, or check GSC indexing.
+  - Verify deploy landed: live robots.txt shows AI allow-list, /llms.txt 200, security headers present, /about /vs/ live. (Done same session if push succeeded — check LOG.)
+  - AFU: GSC URL Inspection → Request Indexing on / + top /best pages; favicon + AI Overview self-fix on recrawl.
+  - AFU: re-run PageSpeed (expect a11y ~95+) + squirrel on live (expect mid-high 80s).
+  - Backlog watches: FavePay Later liveness, Mobi logo, UOB/RHB ewallet semantics.
+  - Optional next units: spec 12 SEO round 2 (BM content, glossary URLs, calculator, Dataset schema, entity corroboration), light mode, Phase 3 submit-a-gateway.
+next_action: Confirm the deploy verification results in LOG.md happened; if not, curl live robots.txt/llms.txt/_headers. Then next unit is AFU's pick (spec 12 items are the warmest).

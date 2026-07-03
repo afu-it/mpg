@@ -2,6 +2,18 @@
 
 ## [Unreleased]
 ### Added
+- **About, Privacy and Contact pages**: who runs MPG, how fees are sourced and ranked, what data the site does (and does not) collect, and how to reach the maintainer. Linked from the footer.
+- **Comparisons hub** (`/vs/`): every head-to-head page in one index, plus a "Popular comparisons" block on the homepage.
+- **Est. fee / RM100 on /compare**: a blended-cost row (lowest highlighted) and "≈ RM" annotations under percentage fees, so flat and % rates compare fairly. The gateway table also gained a "Pricing on request" divider between ranked and unranked rows.
+- **AI-crawler access**: robots.txt now explicitly welcomes AI crawlers (GPTBot, ClaudeBot, Perplexity, Google-Extended, CCBot and more) and a new `llms.txt` gives AI systems a guided tour of the data with attribution guidance. (Cloudflare's managed AI-bot block, which had been silently locking them all out, was switched off.)
+- **Structured data**: breadcrumbs on all major page types, entity markup on every gateway detail page (with the fee-verification date), and site/organization markup on the homepage. Detail pages also show "Fees verified <date> against the official source" right under the fee table.
+- **Security headers**: HSTS, clickjacking protection, referrer policy, and long-lived caching for build assets.
+### Fixed (2026-07-03)
+- Words no longer glue to links ("thecontribute page") anywhere on the site.
+- Canonical URLs sitewide (Google had picked the http:// duplicate of the homepage); footer "Last updated" now reflects the newest fee-verification date automatically.
+- Accessibility: readable red on the landing cards, always-underlined inline links, proper heading order; logos carry explicit dimensions (no layout shift) and the text font preloads (faster headline paint).
+- AsiaPay and J&C Pacific logos were 200KB+; now 36KB and 117KB.
+- Kiple: developer-docs link pointed at a dead domain (removed); website updated to kiple.com.
 - **4 more gateways** (directory now 63): BetterPay (instant-settlement gateway with a fully published rate card), BOLD.Pay by MACROKIOSK (multichannel incl. direct carrier billing), Share Commerce (BNM-registered acquirer, white-label + terminals), and Antom by Ant International (Alipay+ network, official MCP server).
 - **Contribute page** (`/contribute`): rules, the 4-step contributor flow, and an application form that unlocks after signing in and sends a prefilled email. Production deploys are now owner-only, so future collaborators can never publish the site by accident.
 - **Dark-mode branding**: the header logo is now pure white on the dark theme, and the browser-tab icon adapts automatically (white on dark browsers, brand colours on light ones).
