@@ -72,7 +72,7 @@ if (raw && amountInput && channelSelect && tbody && note) {
         el("td", "px-3 py-2 text-muted", ch === "blended" ? "FPX/card/e-wallet mix" : row.feeText),
       );
       tr.appendChild(el("td", "px-3 py-2 text-right font-medium text-fg", `RM${row.cost.toFixed(2)}`));
-      tr.appendChild(el("td", "px-3 py-2 text-right text-muted", `${((row.cost / amt) * 100).toFixed(2)}%`));
+      tr.appendChild(el("td", "hidden px-3 py-2 text-right text-muted sm:table-cell", `${((row.cost / amt) * 100).toFixed(2)}%`));
       tbody!.appendChild(tr);
     });
 

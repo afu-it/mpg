@@ -69,6 +69,19 @@ const orgLd =
     </div>
     <header class="sticky top-0 z-20 border-b border-line bg-surface">
       <div class="flex h-14 w-full items-center px-4 sm:px-6">
+        <!-- mobile nav drawer trigger (spec 14) -->
+        <button
+          type="button"
+          id="nav-open"
+          aria-label="Open menu"
+          aria-controls="nav-drawer"
+          aria-expanded="false"
+          class="-ml-2 mr-1 flex size-11 items-center justify-center rounded-md text-muted hover:bg-panel hover:text-fg sm:hidden"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="size-5" aria-hidden="true">
+            <path d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </button>
         <a href="/" class="flex items-center gap-2 font-semibold tracking-tight text-fg">
           <!-- dark theme uses the white mark; the coloured /logo.svg is reserved for the future light mode -->
           <img src="/logo-white.svg" alt="Malaysia Payment Gateway logo" width="22" height="22" class="h-[22px] w-[22px] object-contain" />
@@ -76,13 +89,59 @@ const orgLd =
           <span class="hidden sm:inline">Malaysia Payment Gateway</span>
         </a>
         <nav class="ml-auto flex items-center gap-2 text-sm">
-          <a href="/gateways" class="rounded-md px-2.5 py-1.5 text-muted hover:bg-panel hover:text-fg">Gateways</a>
-          <a href="/compare" class="rounded-md px-2.5 py-1.5 text-muted hover:bg-panel hover:text-fg">Compare</a>
-          <a href="/learn" class="rounded-md px-2.5 py-1.5 text-muted hover:bg-panel hover:text-fg">Learn</a>
+          <a href="/gateways" class="hidden rounded-md px-2.5 py-1.5 text-muted hover:bg-panel hover:text-fg sm:inline-block">Gateways</a>
+          <a href="/compare" class="hidden rounded-md px-2.5 py-1.5 text-muted hover:bg-panel hover:text-fg sm:inline-block">Compare</a>
+          <a href="/learn" class="hidden rounded-md px-2.5 py-1.5 text-muted hover:bg-panel hover:text-fg sm:inline-block">Learn</a>
           <div id="clerk-auth" class="flex items-center gap-2"></div>
         </nav>
       </div>
     </header>
+
+    <!-- mobile nav drawer (spec 14): left slide-in, scrim + Esc + X to close -->
+    <div id="nav-scrim" hidden class="fixed inset-0 z-30 bg-black/50 sm:hidden" aria-hidden="true"></div>
+    <aside
+      id="nav-drawer"
+      class="fixed inset-y-0 left-0 z-40 w-80 max-w-[85vw] -translate-x-full overflow-y-auto border-r border-line bg-surface px-4 py-4 transition-transform duration-200 data-[open]:translate-x-0 motion-reduce:transition-none sm:hidden"
+      aria-label="Site menu"
+    >
+      <div class="mb-3 flex items-center justify-between">
+        <span class="flex items-center gap-2 font-semibold text-fg">
+          <img src="/logo-white.svg" alt="" width="20" height="20" class="h-5 w-5 object-contain" />
+          Menu
+        </span>
+        <button
+          type="button"
+          id="nav-close"
+          aria-label="Close menu"
+          class="flex size-11 items-center justify-center rounded-md text-muted hover:bg-panel hover:text-fg"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="size-5" aria-hidden="true">
+            <path d="M18 6 6 18M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+      <nav class="flex flex-col text-sm" aria-label="Mobile">
+        {
+          [
+            { href: "/gateways", label: "Gateways" },
+            { href: "/compare", label: "Compare" },
+            { href: "/choose", label: "Help me choose" },
+            { href: "/calculator", label: "Fee calculator" },
+            { href: "/fee-changes", label: "Fee changes" },
+            { href: "/best/payment-gateway-malaysia/", label: "Best gateways" },
+            { href: "/vs/", label: "Comparisons" },
+            { href: "/learn", label: "Learn" },
+            { href: "/learn/api", label: "API & MCP" },
+            { href: "/contribute", label: "Contribute" },
+            { href: "/about", label: "About" },
+          ].map((l) => (
+            <a href={l.href} class="rounded-md px-2 py-3 text-fg hover:bg-panel">
+              {l.label}
+            </a>
+          ))
+        }
+      </nav>
+    </aside>
 
     {
       full ? (
@@ -130,6 +189,7 @@ const orgLd =
     <script>
       import "../scripts/progress.ts";
       import "../scripts/auth.ts";
+      import "../scripts/nav.ts";
     </script>
   </body>
 </html>

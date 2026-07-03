@@ -174,7 +174,8 @@ if (dataEl && root) {
     // header
     const thead = el("thead");
     const htr = el("tr", "border-b border-line");
-    htr.appendChild(el("th", "w-40 px-3 py-3 text-left align-bottom"));
+    // corner cell sticks with the label column; narrower on phones (spec 14)
+    htr.appendChild(el("th", "sticky left-0 z-10 w-28 bg-surface px-3 py-3 text-left align-bottom sm:w-40"));
     gws.forEach((g) => {
       const th = el("th", "min-w-[150px] px-3 py-3 align-bottom");
       const wrap = el("div", "flex flex-col items-center gap-1.5");
@@ -211,7 +212,7 @@ if (dataEl && root) {
     const listDraws: Array<() => void> = [];
     ROWS.forEach((row, i) => {
       const tr = el("tr", i % 2 ? "bg-panel" : "");
-      const label = el("th", "sticky left-0 z-10 px-3 py-2 text-left font-normal text-muted " + (i % 2 ? "bg-panel" : "bg-surface"));
+      const label = el("th", "sticky left-0 z-10 max-w-28 whitespace-normal px-3 py-2 text-left font-normal text-muted sm:max-w-none " + (i % 2 ? "bg-panel" : "bg-surface"));
       label.textContent = row.label;
       if (row.label === "DuitNow QR") label.style.color = "#e61f65"; // DuitNow brand
       if (row.label === "FPX") label.style.color = "#6f83cc"; // FPX navy (lightened for dark)

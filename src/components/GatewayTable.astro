@@ -170,7 +170,7 @@ const td = "whitespace-nowrap px-3 py-3 align-middle";
                 <span class="text-muted" title="No comparable published pricing — contact the provider for a quote">On request</span>
               )}
             </td>
-            <td class={td} data-sort-value={String(effectiveCostAt(g.data.fees.monthly, REF_TICKET))}>
+            <td class={`${td} gw-minor`} data-sort-value={String(effectiveCostAt(g.data.fees.monthly, REF_TICKET))}>
               <FeeCell value={g.data.fees.setup} />
               {g.data.fees.monthly !== g.data.fees.setup && (
                 <span class="ml-1 text-xs text-muted">/ {g.data.fees.monthly}</span>
@@ -179,15 +179,19 @@ const td = "whitespace-nowrap px-3 py-3 align-middle";
             {feeCols.map((c) => {
               const v = g.data.fees[c.key] ?? "—";
               return (
-                <td class={td} data-sort-value={String(effectiveCostAt(v, REF_TICKET))}>
+                <td
+                  class={`${td}${v === "—" ? " gw-minor" : ""}`}
+                  data-label={c.label}
+                  data-sort-value={String(effectiveCostAt(v, REF_TICKET))}
+                >
                   <FeeCell value={v} />
                 </td>
               );
             })}
-            <td class={td} data-sort-value={g.data.settlement.toLowerCase()}>
+            <td class={td} data-label="Settlement" data-sort-value={g.data.settlement.toLowerCase()}>
               <FeeCell value={g.data.settlement} />
             </td>
-            <td class={td} data-sort-value={g.data.features.recurring ? "0" : "1"}>
+            <td class={`${td} gw-minor`} data-sort-value={g.data.features.recurring ? "0" : "1"}>
               <FeatureBadge on={g.data.features.recurring} label="Recurring" />
             </td>
           </tr>
@@ -217,6 +221,85 @@ const td = "whitespace-nowrap px-3 py-3 align-middle";
   }
   th[aria-sort="descending"] .sort-arrow::after {
     content: "↓";
+  }
+
+  /* Mobile card list (spec 14): the SAME table DOM renders as cards below md,
+     so table.ts search/sort/filter/divider logic keeps working untouched.
+     The sort dropdown replaces column-header sorting on mobile. */
+  @media (max-width: 767px) {
+    #gw-table {
+      display: block;
+    }
+    #gw-table thead {
+      display: none;
+    }
+    #gw-table tbody {
+      display: block;
+    }
+    #gw-table tbody tr {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      padding: 0.75rem 0.875rem;
+      border-bottom: 1px solid color-mix(in oklab, var(--color-line) 60%, transparent);
+    }
+    /* full-width break between the name/fee header line and the chips */
+    #gw-table tbody tr::after {
+      content: "";
+      order: 0;
+      width: 100%;
+    }
+    #gw-table tbody td {
+      display: block;
+      padding: 0;
+      white-space: normal;
+    }
+    /* name cell: no sticky on cards */
+    #gw-table tbody td:first-child {
+      position: static;
+      background: transparent;
+      order: -1;
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+    /* est fee: card header right side */
+    #gw-table tbody td:nth-child(2) {
+      order: -1;
+      flex: 0 0 auto;
+      margin-left: auto;
+      text-align: right;
+    }
+    /* labelled fee chips flow inline under the header line */
+    #gw-table tbody td[data-label] {
+      order: 1;
+      display: inline-flex;
+      align-items: baseline;
+      gap: 0.3rem;
+      flex: 0 0 auto;
+      margin-top: 0.5rem;
+      margin-right: 0.875rem;
+      font-size: 0.75rem;
+    }
+    #gw-table tbody td[data-label]::before {
+      content: attr(data-label);
+      color: var(--color-muted);
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    /* low-value columns and empty fee cells vanish on mobile */
+    #gw-table tbody td.gw-minor {
+      display: none;
+    }
+    /* divider band spans the card width */
+    #gw-table tbody tr[data-divider] {
+      display: block;
+      padding: 0;
+    }
+    #gw-table tbody tr[data-divider] td {
+      display: block;
+      white-space: normal;
+    }
   }
 </style>
 

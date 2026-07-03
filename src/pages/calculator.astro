@@ -78,14 +78,14 @@ const appLd = JSON.stringify({
   <p id="calc-note" class="mt-4 text-sm text-muted"></p>
 
   <div class="mt-4 overflow-x-auto rounded-md border border-line">
-    <table class="w-full min-w-[560px] text-sm">
+    <table class="w-full text-sm sm:min-w-[560px]">
       <thead>
         <tr class="border-b border-line bg-panel text-left text-xs uppercase tracking-wide text-muted">
           <th class="px-3 py-2 text-right">#</th>
           <th class="px-3 py-2">Gateway</th>
           <th class="px-3 py-2">Published rate</th>
           <th class="px-3 py-2 text-right">Est. cost / sale</th>
-          <th class="px-3 py-2 text-right">Effective %</th>
+          <th class="hidden px-3 py-2 text-right sm:table-cell">Effective %</th>
         </tr>
       </thead>
       <tbody id="calc-rows" class="divide-y divide-line"></tbody>

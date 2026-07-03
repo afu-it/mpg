@@ -79,7 +79,7 @@ if (pk && mount) {
           const btn = document.createElement("button");
           btn.textContent = "Sign up";
           btn.className =
-            "rounded-md bg-brand-blue px-3 py-1.5 font-medium text-white hover:opacity-90";
+            "whitespace-nowrap rounded-md bg-brand-blue px-3 py-1.5 font-medium text-white hover:opacity-90";
           btn.addEventListener("click", () =>
             Clerk.openSignUp({ afterSignUpUrl: "/", afterSignInUrl: "/" }),
           );

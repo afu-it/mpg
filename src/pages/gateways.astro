@@ -19,10 +19,33 @@ import GatewayTable from "../components/GatewayTable.astro";
     title="MPG gateways data (JSON)"
   />
   <div class="flex w-full flex-col md:flex-row">
-    <!-- filter sidebar: sticky column on desktop, stacked panel on mobile -->
-    <aside
-      class="shrink-0 border-b border-line px-4 py-5 md:sticky md:top-14 md:h-[calc(100vh-3.5rem)] md:w-60 md:overflow-y-auto md:border-b-0 md:border-r md:py-6"
+    <!-- filter sidebar: sticky column on desktop, LEFT DRAWER on mobile (spec 14).
+         Same DOM either way, so table.ts filter wiring is untouched. -->
+    <div
+      id="gw-filters-scrim"
+      hidden
+      class="fixed inset-0 z-30 bg-black/50 md:hidden"
+      aria-hidden="true"
     >
+    </div>
+    <aside
+      id="gw-filters"
+      class="fixed inset-y-0 left-0 z-40 w-80 max-w-[85vw] -translate-x-full overflow-y-auto border-r border-line bg-surface px-4 py-5 transition-transform duration-200 data-[open]:translate-x-0 motion-reduce:transition-none md:sticky md:top-14 md:z-auto md:h-[calc(100vh-3.5rem)] md:w-60 md:shrink-0 md:translate-x-0 md:border-b-0 md:py-6"
+      aria-label="Filters"
+    >
+      <div class="mb-4 flex items-center justify-between md:hidden">
+        <span class="text-sm font-medium text-fg">Filters</span>
+        <button
+          type="button"
+          id="gw-filters-close"
+          aria-label="Close filters"
+          class="flex size-11 items-center justify-center rounded-md text-muted hover:bg-panel hover:text-fg"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="size-5" aria-hidden="true">
+            <path d="M18 6 6 18M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
       <Sidebar />
     </aside>
 
@@ -38,6 +61,20 @@ import GatewayTable from "../components/GatewayTable.astro";
             comparable published rates show "On request" below. Click a column to re-sort.
           </p>
         </div>
+        <!-- mobile: open the filter drawer -->
+        <button
+          type="button"
+          id="gw-filters-open"
+          aria-controls="gw-filters"
+          aria-expanded="false"
+          class="inline-flex h-11 w-full items-center justify-center gap-2 rounded-md border border-line bg-panel px-3 text-sm text-muted transition-colors hover:border-accent hover:text-fg md:hidden"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4" aria-hidden="true">
+            <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+          </svg>
+          Filters
+          <span id="gw-filters-count" hidden class="rounded-full bg-brand-blue px-2 py-0.5 text-xs font-medium text-white"></span>
+        </button>
         <!-- sort dropdown: sits to the left of the search box -->
         <div id="gw-sort" class="relative w-full sm:w-auto">
           <button

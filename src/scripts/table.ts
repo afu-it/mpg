@@ -81,6 +81,17 @@ if (table && table.tBodies[0]) {
     if (countEl) countEl.textContent = String(visible);
     if (emptyEl) emptyEl.hidden = visible !== 0;
     updateDivider();
+    updateFilterCount();
+  }
+
+  // mobile Filters button badge: how many filters differ from the default state
+  const filterCountEl = document.getElementById("gw-filters-count");
+  function updateFilterCount() {
+    if (!filterCountEl) return;
+    let n = channelInputs.filter((i) => i.checked).length + featureInputs.filter((i) => i.checked).length;
+    if (activeCategory() !== "gateway") n++;
+    filterCountEl.textContent = String(n);
+    filterCountEl.hidden = n === 0;
   }
 
   categoryInputs.forEach((i) => i.addEventListener("change", applyFilters));
@@ -241,6 +252,30 @@ if (table && table.tBodies[0]) {
     const match = categoryInputs.find((i) => i.value === urlCat);
     if (match) match.checked = true;
   }
+
+  // ---- mobile filter drawer (spec 14): same <aside>, slid in from the left ----
+  const drawer = document.getElementById("gw-filters");
+  const drawerScrim = document.getElementById("gw-filters-scrim");
+  const drawerOpenBtn = document.getElementById("gw-filters-open");
+  const drawerCloseBtn = document.getElementById("gw-filters-close");
+
+  function setDrawer(open: boolean) {
+    if (!drawer || !drawerScrim) return;
+    if (open) drawer.setAttribute("data-open", "");
+    else drawer.removeAttribute("data-open");
+    drawerScrim.hidden = !open;
+    document.body.style.overflow = open ? "hidden" : "";
+    drawerOpenBtn?.setAttribute("aria-expanded", String(open));
+    if (open) drawerCloseBtn?.focus();
+    else drawerOpenBtn?.focus();
+  }
+
+  drawerOpenBtn?.addEventListener("click", () => setDrawer(true));
+  drawerCloseBtn?.addEventListener("click", () => setDrawer(false));
+  drawerScrim?.addEventListener("click", () => setDrawer(false));
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && drawer?.hasAttribute("data-open")) setDrawer(false);
+  });
 
   // apply default (or deep-linked) category on load
   applyFilters();
