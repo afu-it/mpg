@@ -1,6 +1,7 @@
 ---
 name: FINEXUS
 website: https://www.finexusgroup.com
+dev_docs: https://sandbox.finexusgroup.com/myxaas/docs/get-started/
 tagline: "Enterprise card acquirer and white-label gateway"
 fees:
   fpx: "—"

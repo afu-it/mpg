@@ -1,6 +1,7 @@
 ---
 name: AffanPay
 website: https://affanpay.my
+dev_docs: https://app.affanpay.my/api
 logo: /logos/affanpay.png
 tagline: "Full-channel gateway with T+1 settlement and fast setup"
 fees:

@@ -39,7 +39,7 @@ plugins:
   - Magento
   - OpenCart
   - WHMCS
-dev_docs: "https://e2payprod.gitbook.io/payment-gateway/"
+dev_docs: https://github.com/FiuuPayment/Documentation-Fiuu_API_Spec
 popularity: 90
 verified_date: "2026-07-17"
 source: "https://booster.fiuu.com/assets/Appendix_20240419.pdf"

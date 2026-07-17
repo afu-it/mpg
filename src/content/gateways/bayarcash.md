@@ -27,7 +27,7 @@ plugins:
   - Fluent Forms
   - Gravity Forms
   - EasyStore
-dev_docs: "https://docs.bayarcash.com/"
+dev_docs: https://api.webimpian.support/bayarcash
 popularity: 52
 plans:
   - name: "T+ Plan"

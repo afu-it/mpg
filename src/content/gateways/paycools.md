@@ -24,7 +24,7 @@ features:
   api: true
   recurring: false
 webhooks: true
-dev_docs: "https://doc.paycools.com"
+dev_docs: https://docs.paycools.com.my/
 popularity: 22
 verified_date: "2026-07-17"
 source: "https://www.paycools.com.my"

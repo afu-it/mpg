@@ -1,6 +1,7 @@
 ---
 name: Billplz
 website: https://www.billplz.com
+mcp: community
 logo_round: true
 tagline: "Flat-rate FPX collection with fast, guaranteed payouts"
 logo: /logos/billplz.svg
@@ -36,7 +37,7 @@ plugins:
   - Magento
   - Shopify
   - WHMCS
-dev_docs: "https://www.billplz.com/api"
+dev_docs: https://support.billplz.com/api
 popularity: 82
 plans:
   - name: "Basic"

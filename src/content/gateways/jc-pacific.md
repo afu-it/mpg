@@ -22,7 +22,7 @@ methods:
   - DuitNow QR
 features:
   no_code: false
-  api: true
+  api: false
   recurring: false
 popularity: 34
 verified_date: "2026-07-17"

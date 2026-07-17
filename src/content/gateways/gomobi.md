@@ -1,6 +1,7 @@
 ---
 name: Mobi (formerly gomobi)
 website: https://www.mobi.xyz
+dev_docs: https://gomobi.io/documents/getting-started
 logo_round: true
 tagline: "KL acquirer for cards, FPX, e-wallets and DuitNow QR"
 fees:

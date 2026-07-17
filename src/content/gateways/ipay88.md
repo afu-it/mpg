@@ -1,6 +1,7 @@
 ---
 name: NTTDataPay (formerly iPay88)
 website: https://my.nttdatapay.com/en
+mcp: community
 logo_round: true
 tagline: "Malaysia's pioneer iPay88 gateway, now NTT DATA Payment Services (ADAPTIS)"
 logo: /logos/ipay88.svg

@@ -1,6 +1,7 @@
 ---
 name: Maybank2u Pay
 website: https://m2upay.maybank2u.com.my
+dev_docs: https://m2upay.maybank2u.com.my/assets/sdk/index.html
 tagline: "Maybank's bank-direct gateway: online banking, cards and DuitNow QR"
 logo_round: true
 category: bank

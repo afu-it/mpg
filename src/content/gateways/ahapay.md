@@ -1,6 +1,7 @@
 ---
 name: AhaPay
 website: https://ahapay.my
+dev_docs: https://apidocs.ahapay.my/
 tagline: "Scan-to-pay BNPL; merchant paid upfront, zero risk"
 logo: /logos/ahapay.svg
 fees:

@@ -15,7 +15,7 @@ min_txn: "—"
 channels: [fpx, card, ewallet, duitnowqr]
 features:
   no_code: false
-  api: true
+  api: false
   recurring: false
 plugins:
   - WooCommerce

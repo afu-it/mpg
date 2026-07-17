@@ -1,6 +1,7 @@
 ---
 name: Fasspay
 website: https://fasspay.com
+dev_docs: https://developers.softspace.com.my/
 tagline: "Soft Space gateway for cards, e-wallets and DuitNow QR"
 fees:
   fpx: "—"

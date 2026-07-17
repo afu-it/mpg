@@ -1,6 +1,7 @@
 ---
 name: Touch 'n Go eWallet (TNG Digital)
 website: https://www.tngdigital.com.my/business/merchant
+dev_docs: https://miniprogram.tngdigital.com.my/docs/miniprogram_tngd/mpdev/rekqh-qm
 tagline: "Merchant acceptance for the largest Malaysian e-wallet"
 category: ewallet
 fees:

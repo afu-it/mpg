@@ -16,7 +16,7 @@ min_txn: "—"
 channels: [card, ewallet, duitnowqr]
 features:
   no_code: true
-  api: false
+  api: true
   recurring: false
 popularity: 32
 verified_date: "2026-07-17"

@@ -18,7 +18,7 @@ features:
   no_code: true
   api: true
   recurring: true
-dev_docs: "https://product.shopeepay.com"
+dev_docs: https://product.shopeepay.com/integration/api/customer-presented-mode
 popularity: 50
 verified_date: "2026-07-17"
 source: "https://product.shopeepay.com"

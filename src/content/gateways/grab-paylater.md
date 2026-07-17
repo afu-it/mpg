@@ -1,6 +1,7 @@
 ---
 name: PayLater by Grab
 website: https://www.grab.com/my/finance/pay-later/
+dev_docs: https://developer.grab.com/docs/paylater-integrations-launchpad-v2
 tagline: "Pay later next month or in 4 instalments"
 logo: /logos/grab-paylater.svg
 fees:

@@ -1,6 +1,7 @@
 ---
 name: SPayLater (ShopeePayLater)
 website: https://shopee.com.my
+dev_docs: https://product.shopeepay.com/integration/get-started
 tagline: "Shariah-compliant Buy Now Pay Later, built into Shopee"
 logo: /logos/spaylater.svg
 fees:

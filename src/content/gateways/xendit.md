@@ -27,7 +27,7 @@ plugins:
   - Shopify
   - Magento
   - OpenCart
-dev_docs: "https://developers.xendit.co/"
+dev_docs: https://docs.xendit.co/
 popularity: 74
 verified_date: "2026-07-17"
 source: "https://www.xendit.co/en-my/pricing/"

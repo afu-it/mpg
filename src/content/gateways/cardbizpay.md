@@ -1,6 +1,7 @@
 ---
 name: CardBizPay
 website: https://cardbiz.com.my/cardbiz-payment-services/cardbizpay/
+dev_docs: https://cardbizpay.my/developer/
 tagline: "Low-rate Malaysian gateway by Cardbiz Group"
 fees:
   fpx: "RM1.00 (B2C)"

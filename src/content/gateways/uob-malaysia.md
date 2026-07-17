@@ -26,7 +26,7 @@ features:
   api: true
   recurring: true
 webhooks: false
-dev_docs: "https://www.uob.com.my/business/digital/uob-api-services.page"
+dev_docs: https://developers.uobgroup.com/en/
 popularity: 42
 verified_date: "2026-07-17"
 source: "https://www.uob.com.my/personal/cards/merchant-services.page"

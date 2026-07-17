@@ -1,6 +1,7 @@
 ---
 name: KineticPay
 website: https://kineticpay.my
+dev_docs: https://docs.kineticpay.my/
 logo: /logos/kineticpay.png
 tagline: "Collection forms and FPX payments with fraud screening"
 fees:

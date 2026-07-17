@@ -1,6 +1,7 @@
 ---
 name: Atome
 website: https://www.atome.my
+dev_docs: https://doc.apaylater.com/v2/
 tagline: "Buy now, pay later in 3 interest-free instalments"
 logo: /logos/atome.svg
 fees:

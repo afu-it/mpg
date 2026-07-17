@@ -26,7 +26,7 @@ features:
   no_code: true
   api: true
   recurring: false
-dev_docs: "https://api.ocbc.com/"
+dev_docs: https://api.ocbc.com/store
 popularity: 35
 verified_date: "2026-07-17"
 source: "https://www.ocbc.com.my/business-banking/go-digital/one-collect"

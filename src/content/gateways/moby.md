@@ -1,6 +1,7 @@
 ---
 name: MOBY
 website: https://moby.my
+dev_docs: https://docs.mobypay.my/
 logo_round: true
 tagline: "Zero-risk BNPL: the merchant is paid upfront in full"
 logo: /logos/moby.svg

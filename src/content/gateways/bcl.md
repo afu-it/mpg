@@ -1,6 +1,7 @@
 ---
 name: BCL.my
 website: https://bcl.my
+dev_docs: https://docs.bcl.my/
 tagline: "No-code payment forms, links & DuitNow QR (Bayarcash-powered)"
 logo: /logos/bcl.svg
 fees:

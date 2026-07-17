@@ -1,6 +1,7 @@
 ---
 name: PayNet (DuitNow / FPX)
 website: https://www.paynet.my
+dev_docs: https://docs.developer.paynet.my/docs
 tagline: "Malaysia's national payments backbone: FPX, DuitNow & DuitNow QR"
 category: infrastructure
 fees:
@@ -21,7 +22,7 @@ methods:
   - MyDebit
 features:
   no_code: false
-  api: false
+  api: true
   recurring: false
 popularity: 0
 verified_date: "2026-07-17"

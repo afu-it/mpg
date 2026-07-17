@@ -1,6 +1,7 @@
 ---
 name: PayHalal
 website: https://payhalal.my
+dev_docs: https://payhalal.my/home_v3/developers/
 tagline: "World's first Shariah-compliant payment gateway"
 logo: /logos/payhalal.svg
 logo_round: true

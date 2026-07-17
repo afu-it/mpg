@@ -1,6 +1,7 @@
 ---
 name: OxPay Malaysia
 website: https://oxpay.com.my
+dev_docs: https://docs.oxpayfinancial.com/
 tagline: "Regional gateway for cards, e-wallets and BNPL"
 logo: /logos/oxpay.svg
 fees:
