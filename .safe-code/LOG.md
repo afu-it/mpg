@@ -1,5 +1,9 @@
 # LOG — safe diary (append above)
 
+## 2026-07-17 · type: verify
+**Save #5 deploy verified live.** Run success (c4e7440); after edge propagation: /best/payment-gateway-physical-store + digital-products + saas all 200, Developer (API/MCP) filter serving, tulus gold-ring logo asset 200. Sitemap (218 URLs) re-pinged to IndexNow, both endpoints 200.
+plain: Semua naik live dan disahkan: 3 page jenis bisnes, penapis developer, dan logo-logo baru. Bing dimaklumkan semula.
+
 ## 2026-07-17 · type: feat
 **Evening sitting: logos, business-type pages, dev filter, spacing (save #5).** (1) LOGO ROUND: all 11 new gateways now carry official marks fetched from their own sites — symbol crops from white wordmarks (AffanPay A, Payright tick, KineticPay K from the manage-portal banner since the site ships no logo asset), official square icons (edxaPay, LekirPay), circle marks with logo_round (SMAP, Qashier roundel, tulus composed as an HD gold-ring disc per AFU's reference image, LeanX wordmark seated in a white disc per AFU), ShopeePay wallet icon de-backgrounded. Playwright header screenshots eyeballed. (2) BUSINESS-TYPE PROFILES (spec 18, AFU request "fizikal vs digital"): /best/payment-gateway-physical-store (DNQR+ewallet+no-code; intro flags CIMB/HLB zero-MDR QR tiers and terminal-first providers), /best/payment-gateway-digital-products (links+FPX; Herepay #1), /best/payment-gateway-saas (recurring+API). 219 pages. (3) /gateways sidebar gets an open DEVELOPER group with API + MCP checkboxes (rows carry data-mcp; 7 gateways match). (4) Hero top padding cut from 96-144px to 40-64px after AFU flagged the empty gap; hero + cheapest-5 now fit one 1440x900 screen.
 plain: Semua 11 gateway baru dah ada logo rasmi (tulus dengan ring emas HD macam Master minta), ada 3 page baru ikut jenis bisnes (kedai fizikal, produk digital, SaaS), penapis baru untuk developer cari gateway ber-MCP, dan ruang kosong besar atas tajuk dah dikecilkan.
