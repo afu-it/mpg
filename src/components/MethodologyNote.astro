@@ -1,0 +1,21 @@
+---
+// One shared fine-print line (spec 16 slice D) so methodology captions stop
+// repeating in slightly different shapes across pages. Full explanation lives
+// on /about ("How the ranking works").
+interface Props {
+  star?: boolean; // include the third-party * sentence
+}
+const { star = true } = Astro.props;
+---
+
+<p class="mt-2 text-xs text-muted">
+  <span class="text-fg">Est. fee / RM100</span> blends officially published rates
+  (FPX/card/e-wallet 50/30/20).{" "}
+  {star && (
+    <>
+      <span class="text-fg">*</span> = third-party figure, excluded from ranking.{" "}
+    </>
+  )}
+  Fees change; confirm with the provider.{" "}
+  <a href="/about/" class="underline-offset-2 hover:text-fg hover:underline">Methodology</a>
+</p>

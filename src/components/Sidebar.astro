@@ -22,6 +22,10 @@ const features = [
 ];
 
 const heading = "mb-2 text-xs font-semibold uppercase tracking-wide text-muted";
+// collapsed-by-default groups (spec 16 slice C): plain <details>, so table.ts
+// selectors and the filter inputs' DOM stay untouched
+const summary =
+  "flex cursor-pointer select-none items-center justify-between text-xs font-semibold uppercase tracking-wide text-muted [&::-webkit-details-marker]:hidden";
 // py-3 below md keeps each row a >=44px touch target inside the mobile drawer
 const row =
   "flex cursor-pointer select-none items-center gap-2.5 rounded-md px-2 py-3 text-sm text-fg hover:bg-panel md:py-1.5";
@@ -47,29 +51,43 @@ const input = "size-3.5 accent-accent";
     }
   </div>
 
-  <div>
-    <h2 class={heading}>Channels</h2>
-    {
-      channels.map((c) => (
-        <label class={row}>
-          <input type="checkbox" data-filter-channel={c.key} class={input} />
-          {c.key === "duitnowqr" ? <span class="text-duitnow">{c.label}</span> : c.key === "fpx" ? <span class="text-fpx">{c.label}</span> : c.label}
-        </label>
-      ))
-    }
-  </div>
+  <details class="group">
+    <summary class={summary}>
+      <h2>Channels</h2>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="size-3.5 transition-transform group-open:rotate-180" aria-hidden="true">
+        <path d="m6 9 6 6 6-6"></path>
+      </svg>
+    </summary>
+    <div class="mt-2">
+      {
+        channels.map((c) => (
+          <label class={row}>
+            <input type="checkbox" data-filter-channel={c.key} class={input} />
+            {c.key === "duitnowqr" ? <span class="text-duitnow">{c.label}</span> : c.key === "fpx" ? <span class="text-fpx">{c.label}</span> : c.label}
+          </label>
+        ))
+      }
+    </div>
+  </details>
 
-  <div>
-    <h2 class={heading}>Features</h2>
-    {
-      features.map((f) => (
-        <label class={row}>
-          <input type="checkbox" data-filter-feature={f.key} class={input} />
-          {f.label}
-        </label>
-      ))
-    }
-  </div>
+  <details class="group">
+    <summary class={summary}>
+      <h2>Features</h2>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="size-3.5 transition-transform group-open:rotate-180" aria-hidden="true">
+        <path d="m6 9 6 6 6-6"></path>
+      </svg>
+    </summary>
+    <div class="mt-2">
+      {
+        features.map((f) => (
+          <label class={row}>
+            <input type="checkbox" data-filter-feature={f.key} class={input} />
+            {f.label}
+          </label>
+        ))
+      }
+    </div>
+  </details>
 
   <button
     id="gw-reset"

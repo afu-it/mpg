@@ -5,6 +5,7 @@ import { splitName } from "../lib/name";
 import Logo from "./Logo.astro";
 import FeeCell from "./FeeCell.astro";
 import FeatureBadge from "./FeatureBadge.astro";
+import MethodologyNote from "./MethodologyNote.astro";
 
 // Each gateway gets a blended effective cost (RM on a RM100 transaction) and a
 // `rankable` flag. Only gateways that publish official rates for a comparable
@@ -206,13 +207,7 @@ const td = "whitespace-nowrap px-3 py-3 align-middle";
   </p>
 </div>
 
-<p class="mt-2 text-xs text-muted">
-  <span class="text-fg">Est. fee / RM100</span> is an indicative blended cost on a
-  RM100 transaction (FPX/card/e-wallet weighted 50/30/20), counting flat add-ons.
-  Gateways without comparable published rates show <span class="text-fg">On request</span>{" "}
-  and are not ranked by fee. <span class="text-fg">*</span> marks an indicative
-  third-party rate, excluded from the ranking. Always confirm with the provider.
-</p>
+<MethodologyNote />
 
 <style>
   /* sort direction arrow driven by aria-sort on the parent <th> */

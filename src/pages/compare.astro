@@ -3,6 +3,7 @@ export const prerender = true;
 
 import { getCollection } from "astro:content";
 import Base from "../layouts/Base.astro";
+import MethodologyNote from "../components/MethodologyNote.astro";
 import { breadcrumbLd } from "../lib/jsonld";
 
 const crumbLd = breadcrumbLd(String(Astro.site ?? "https://malaysiapg.com.my/"), [
@@ -96,12 +97,7 @@ const presets = [
     <!-- comparison area (rendered by compare.ts) -->
     <div id="compare-root" class="overflow-x-auto"></div>
 
-    <p class="mt-4 text-xs text-muted">
-      <span class="text-fg">Est. fee / RM100</span> and <span class="text-fg">≈</span> values are
-      estimated costs on a RM100 transaction (the blended figure weights FPX/card/e-wallet
-      50/30/20, counting flat add-ons). <span class="text-fg">*</span> Indicative rate from a
-      third-party source, not officially published. Always confirm with the provider.
-    </p>
+    <MethodologyNote />
 
     <section class="mt-10 border-t border-line pt-6">
       <h2 class="text-base font-medium text-fg">How this comparison works</h2>

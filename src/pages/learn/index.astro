@@ -6,12 +6,29 @@ import Base from "../../layouts/Base.astro";
 import { SKILLS_REPO } from "../../lib/learn";
 import { toApiGateway, type GatewayEntryLike } from "../../lib/api";
 import { PROFILES, vsPairs } from "../../lib/seo-pages";
+import { splitName } from "../../lib/name";
 
 const entries = (await getCollection("gateways")) as unknown as GatewayEntryLike[];
 const gateways = entries.map(toApiGateway);
 const topComparisons = vsPairs(gateways)
   .sort((x, y) => y.a.popularity + y.b.popularity - (x.a.popularity + x.b.popularity))
-  .slice(0, 8);
+  .slice(0, 6);
+
+// short chip labels (spec 16 slice E): the full h1 stays in the title attr
+const PROFILE_CHIP: Record<string, string> = {
+  "payment-gateway-malaysia": "Best overall",
+  "cheapest-payment-gateway-malaysia": "Cheapest",
+  "payment-gateway-fpx": "FPX",
+  "payment-gateway-credit-card": "Cards",
+  "payment-gateway-ewallet": "E-wallets",
+  "payment-gateway-duitnow-qr": "DuitNow QR",
+  "payment-gateway-recurring": "Recurring billing",
+  "payment-gateway-no-code": "No-code / payment links",
+  "payment-gateway-api": "Developer API",
+  "payment-gateway-online-store": "Small online stores",
+  "bnpl-malaysia": "BNPL",
+  "payment-gateway-ecommerce-plugins": "E-commerce plugins",
+};
 
 const sections = [
   {
@@ -143,9 +160,10 @@ const sections = [
         PROFILES.map((p) => (
           <a
             href={`/best/${p.slug}/`}
+            title={p.h1}
             class="rounded-full border border-line bg-panel px-3 py-1 text-xs text-muted hover:border-accent hover:text-fg"
           >
-            {p.h1}
+            {PROFILE_CHIP[p.slug] ?? p.h1}
           </a>
         ))
       }
@@ -194,7 +212,7 @@ const sections = [
             href={`/vs/${p.slug}/`}
             class="rounded-full border border-line bg-panel px-3 py-1 text-xs text-muted hover:border-accent hover:text-fg"
           >
-            {p.a.name} vs {p.b.name}
+            {splitName(p.a.name).base} vs {splitName(p.b.name).base}
           </a>
         ))
       }

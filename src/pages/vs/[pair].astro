@@ -96,10 +96,15 @@ const crumbLd = breadcrumbLd(String(Astro.site ?? "https://malaysiapg.com.my/"),
       </table>
     </div>
     <p class="mt-2 text-xs text-muted">
-      Est. fee / RM100 = blended cost of a RM100 transaction from officially published FPX, card
-      and e-wallet rates (weighted 50/30/20).{" "}
-      {hasIndicative && "Values with a trailing * are third-party or indicative, not officially published. "}
-      Fees change and may be negotiable by volume; always confirm with the provider.
+      <span class="text-fg">Est. fee / RM100</span> blends officially published rates
+      (FPX/card/e-wallet 50/30/20).{" "}
+      {hasIndicative && (
+        <>
+          <span class="text-fg">*</span> = third-party figure, excluded from ranking.{" "}
+        </>
+      )}
+      Fees change; confirm with the provider.{" "}
+      <a href="/about/" class="underline-offset-2 hover:text-fg hover:underline">Methodology</a>
     </p>
   </section>
 

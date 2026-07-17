@@ -18,7 +18,7 @@ interface Props {
 
 const {
   title = "MPG · Malaysia Payment Gateways",
-  description = "Compare fees and features of 60+ Malaysian payment gateways: FPX, cards, e-wallets, DuitNow QR and BNPL, sourced from official rate cards. Free and independent.",
+  description = "Compare fees and features of 70+ Malaysian payment gateways: FPX, cards, e-wallets, DuitNow QR and BNPL, sourced from official rate cards. Free and independent.",
   full = false,
   lang = "en",
   ogImage,
@@ -184,46 +184,49 @@ const livePillars = CLUSTERS.filter((c) => c.live);
     }
 
     <footer class="border-t border-line">
-      <div class="w-full space-y-1 px-4 py-6 text-xs text-muted sm:px-6">
-        <p>
-          Fees are indicative and may change or be negotiable by volume.
-          Always confirm with the provider before deciding.
-        </p>
-        <p>Last updated {updated}. MPG is an independent directory, not affiliated with any provider.</p>
-        <p class="pt-1">
-          <a href="/blog/" class="text-muted underline-offset-2 hover:text-fg hover:underline">Guides</a>
-          {
-            livePillars.map((c) => (
-              <>
-                <span class="px-1">·</span>
-                <a href={blogPath(c.slug)} class="text-muted underline-offset-2 hover:text-fg hover:underline">
-                  {c.name}
-                </a>
-              </>
-            ))
-          }
-          <span class="px-1">·</span>
-          <a href="/choose/" class="text-muted underline-offset-2 hover:text-fg hover:underline">Help me choose</a>
-          <span class="px-1">·</span>
-          <a href="/best/payment-gateway-malaysia/" class="text-muted underline-offset-2 hover:text-fg hover:underline">Best gateways</a>
-          <span class="px-1">·</span>
-          <a href="/calculator/" class="text-muted underline-offset-2 hover:text-fg hover:underline">Fee calculator</a>
-          <span class="px-1">·</span>
-          <a href="/fee-changes/" class="text-muted underline-offset-2 hover:text-fg hover:underline">Fee changes</a>
-          <span class="px-1">·</span>
-          <a href="/vs/" class="text-muted underline-offset-2 hover:text-fg hover:underline">Comparisons</a>
-          <span class="px-1">·</span>
-          <a href="/learn/api/" class="text-muted underline-offset-2 hover:text-fg hover:underline">API &amp; MCP for developers</a>
-          <span class="px-1">·</span>
-          <a href="/contribute/" class="text-muted underline-offset-2 hover:text-fg hover:underline">Contribute</a>
-          <span class="px-1">·</span>
-          <a href="/about/" class="text-muted underline-offset-2 hover:text-fg hover:underline">About</a>
-          <span class="px-1">·</span>
-          <a href="/contact/" class="text-muted underline-offset-2 hover:text-fg hover:underline">Contact</a>
-          <span class="px-1">·</span>
-          <a href="/ms/" class="text-muted underline-offset-2 hover:text-fg hover:underline" hreflang="ms" lang="ms">Bahasa Malaysia</a>
-          <span class="px-1">·</span>
-          <a href="/privacy/" class="text-muted underline-offset-2 hover:text-fg hover:underline">Privacy</a>
+      <div class="w-full px-4 py-8 sm:px-6">
+        <div class="grid max-w-3xl gap-6 text-xs sm:grid-cols-3">
+          <div>
+            <p class="mb-2 font-medium uppercase tracking-wide text-fg/70">Tools</p>
+            <ul class="space-y-1.5 text-muted">
+              <li><a href="/choose/" class="hover:text-fg hover:underline">Help me choose</a></li>
+              <li><a href="/calculator/" class="hover:text-fg hover:underline">Fee calculator</a></li>
+              <li><a href="/best/payment-gateway-malaysia/" class="hover:text-fg hover:underline">Best gateways</a></li>
+              <li><a href="/vs/" class="hover:text-fg hover:underline">Comparisons</a></li>
+              <li><a href="/fee-changes/" class="hover:text-fg hover:underline">Fee changes</a></li>
+            </ul>
+          </div>
+          <div>
+            <p class="mb-2 font-medium uppercase tracking-wide text-fg/70">Guides</p>
+            <ul class="space-y-1.5 text-muted">
+              <li><a href="/blog/" class="hover:text-fg hover:underline">All guides</a></li>
+              {
+                livePillars.map((c) => (
+                  <li>
+                    <a href={blogPath(c.slug)} class="hover:text-fg hover:underline">
+                      {c.name}
+                    </a>
+                  </li>
+                ))
+              }
+              <li><a href="/learn/" class="hover:text-fg hover:underline">Learn</a></li>
+              <li><a href="/learn/api/" class="hover:text-fg hover:underline">API &amp; MCP</a></li>
+            </ul>
+          </div>
+          <div>
+            <p class="mb-2 font-medium uppercase tracking-wide text-fg/70">Site</p>
+            <ul class="space-y-1.5 text-muted">
+              <li><a href="/about/" class="hover:text-fg hover:underline">About</a></li>
+              <li><a href="/contact/" class="hover:text-fg hover:underline">Contact</a></li>
+              <li><a href="/contribute/" class="hover:text-fg hover:underline">Contribute</a></li>
+              <li><a href="/ms/" class="hover:text-fg hover:underline" hreflang="ms" lang="ms">Bahasa Malaysia</a></li>
+              <li><a href="/privacy/" class="hover:text-fg hover:underline">Privacy</a></li>
+            </ul>
+          </div>
+        </div>
+        <p class="mt-6 border-t border-line pt-4 text-xs text-muted">
+          Fees are indicative; always confirm with the provider. Last updated {updated} · MPG is an
+          independent directory, not affiliated with any provider.
         </p>
       </div>
     </footer>
