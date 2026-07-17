@@ -19,6 +19,23 @@ features:
   api: true
   recurring: false
 popularity: 38
+plans:
+  - name: "MPay Mobile POS Lite"
+    eligibility: "24-month minimum contract"
+    rows:
+      - { label: "Setup", value: "RM399 (waived during pre-launch)" }
+      - { label: "Monthly fee", value: "RM10 (waived at RM3,000 volume)" }
+      - { label: "MDR", value: "3.0%" }
+    settlement: "T+1 with sponsor-bank account"
+    source: "https://info.mpay.my/faq/"
+  - name: "MPay Mobile POS Pro"
+    eligibility: "24-month minimum contract"
+    rows:
+      - { label: "Setup", value: "RM399 (waived during pre-launch)" }
+      - { label: "Monthly fee", value: "RM30 (waived at RM10,000 volume)" }
+      - { label: "MDR", value: "2.5%" }
+    settlement: "T+1 with sponsor-bank account"
+    source: "https://info.mpay.my/faq/"
 verified_date: "2026-07-02"
 source: "https://info.mpay.my/faq/"
 notes: "Official FAQ: MDR 3.0% (Lite) / 2.5% (Pro); one-time start-up RM399 (currently waived during pre-launch promo); RM10/mo Lite, RM30/mo Pro (waived above RM3k/RM10k monthly volume); T+1 settlement with a Sponsor Bank account. Minimum charge RM0.60 overrides MDR on transactions below RM30; RM1 bank-transfer fee, RM100 minimum transfer."

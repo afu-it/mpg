@@ -27,6 +27,34 @@ plugins:
   - WHMCS
 dev_docs: "https://toyyibpay.com/apireference/"
 popularity: 72
+plans:
+  - name: "Santai"
+    eligibility: "Non-profit organisations only"
+    rows:
+      - { label: "FPX (B2C)", value: "RM0.00 per transaction" }
+      - { label: "FPX (B2B)", value: "RM2.00 per transaction" }
+    settlement: "Next 10 business days"
+    source: "https://www.toyyibpay.com/pricing-plans/"
+  - name: "Standard"
+    eligibility: "All users"
+    rows:
+      - { label: "FPX (B2C)", value: "RM1.00 per transaction" }
+      - { label: "FPX (B2B)", value: "RM2.00 per transaction" }
+    settlement: "Next 1-4 business days"
+    source: "https://www.toyyibpay.com/pricing-plans/"
+  - name: "Card Payments (via Partners)"
+    eligibility: "RM100 onboarding + RM100/year from year 2"
+    rows:
+      - { label: "Local card", value: "1.50%" }
+      - { label: "Foreign card", value: "3.5%" }
+    settlement: "Next 4 business days"
+    source: "https://www.toyyibpay.com/pricing-plans/"
+  - name: "DuitNow QR"
+    eligibility: "All users"
+    rows:
+      - { label: "Fee", value: "1.00% or RM1.00 per transaction" }
+    settlement: "Next 2 business days"
+    source: "https://www.toyyibpay.com/pricing-plans/"
 verified_date: "2026-07-02"
 source: "https://www.toyyibpay.com/pricing-plans/"
 notes: "Flat RM1.00 per FPX B2C transaction (B2B RM2.00; free Santai plan for registered NPOs). Official pricing page now publishes card rates (local 1.50%, foreign 3.5%, via toyyibPay Partners; RM100 onboarding + RM100/yr from year 2) and DuitNow QR (1% or RM1.00). Settlement: FPX next 1-4 business days, DuitNow QR 2, card 4, Santai 10. Excludes SST."

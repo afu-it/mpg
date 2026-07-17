@@ -25,6 +25,21 @@ features:
   api: true
   recurring: true
 popularity: 52
+plans:
+  - name: "Basic Package (DuitNow QR)"
+    eligibility: "QR-only acceptance"
+    rows:
+      - { label: "DuitNow QR (CASA / e-wallets)", value: "0% MDR" }
+      - { label: "DuitNow QR (credit cards)", value: "0.35% (0% promotional rate)" }
+    settlement: "Next business day (transactions before 8pm)"
+    source: "https://www.cimb.com.my/en/business/business-solutions/solutions/merchant-solutions.html"
+  - name: "e-Commerce"
+    eligibility: "Online merchants"
+    rows:
+      - { label: "Payment Link (Visa/MC)", value: "1.00% on-us / 1.10% off-us" }
+      - { label: "Via CIMB e-Commerce Partners", value: "1.50% - 1.80% domestic / 2.80% - 3.00% international" }
+      - { label: "Direct connect (cards, FPX, JomPAY)", value: "Case-by-case" }
+    source: "https://www.cimb.com.my/en/business/business-solutions/solutions/merchant-solutions.html"
 verified_date: "2026-07-02"
 source: "https://www.cimb.com.my/en/business/business-solutions/solutions/merchant-solutions.html"
 notes: "Bank-run online gateway under CIMB's Merchant Solutions, distinct from POS and DuitNow QR products. Three forms: Payment Link (no website, Mastercard/Visa 1.00% on-us / 1.10% off-us), CIMB e-Commerce Partners (hosted gateway, 1.50%-1.80% domestic / 2.80%-3.00% international cards), and Direct Connect to CIMB (direct integration accepting cards, FPX and JomPAY, priced case by case). 3D-Secure; supports recurring and instalment. Requires a CIMB business current account; settled next business day. Card rates are CIMB-published."

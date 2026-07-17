@@ -24,6 +24,19 @@ plugins:
   - WooCommerce
 dev_docs: "https://v3api-docs.paydibs.com/docs/introduction"
 popularity: 42
+plans:
+  - name: "Nexus"
+    eligibility: "Growing eCommerce businesses"
+    rows:
+      - { label: "Signup", value: "Free (local) / USD120 (foreign merchants)" }
+      - { label: "Yearly maintenance", value: "RM300 (waived at RM360,000+ annual sales)" }
+    source: "https://paydibs.com/pricing/"
+  - name: "Payment Gateway Stack"
+    eligibility: "Online businesses, Malaysia and overseas"
+    rows:
+      - { label: "Signup", value: "Free (local) / USD120 (foreign merchants)" }
+      - { label: "Yearly maintenance", value: "RM300 (waived at RM360,000+ annual sales)" }
+    source: "https://paydibs.com/pricing/"
 verified_date: "2026-07-02"
 source: "https://paydibs.com/pricing/"
 notes: "Signup fee, RM300/year maintenance fee and T+1/T+2 settlement are confirmed on the official pricing page; per-transaction MDR rates are not publicly published, so contact sales."

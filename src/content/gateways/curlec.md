@@ -30,6 +30,30 @@ features:
   recurring: true
 skill: setup-curlec
 popularity: 62
+plans:
+  - name: "Basic"
+    eligibility: "Free setup"
+    rows:
+      - { label: "FPX", value: "1.50% or RM1.00, whichever is greater" }
+      - { label: "Local cards", value: "2.40%" }
+      - { label: "Foreign cards", value: "3.30%" }
+      - { label: "E-wallets", value: "1.50%" }
+      - { label: "BNPL (Atome)", value: "6.00%" }
+    source: "https://curlec.com/pricing/"
+  - name: "Premium"
+    eligibility: "RM999 setup, optimised rates"
+    rows:
+      - { label: "FPX", value: "1.00% or RM1.00, whichever is greater" }
+      - { label: "Local cards", value: "2.00%" }
+      - { label: "Foreign cards", value: "3.10%" }
+      - { label: "E-wallets", value: "1.30% (GrabPay 1.50%)" }
+      - { label: "BNPL (Atome)", value: "5.00%" }
+    source: "https://curlec.com/pricing/"
+  - name: "Enterprise"
+    eligibility: "Volume above RM1 million"
+    rows:
+      - { label: "All rates", value: "Personalised pricing, contact sales" }
+    source: "https://curlec.com/pricing/"
 verified_date: "2026-07-02"
 source: "https://curlec.com/pricing/"
 notes: "Basic-plan rates shown: FPX 1.50% (or RM1, whichever greater), credit/debit card 2.40%, foreign card 3.30%, e-wallet 1.50%, BNPL 6.00%. Premium plan lowers card to 2.00% / FPX to 1.00%. A one-time setup fee applies; Enterprise (>RM1M/month) is personalised. Applicable taxes (SST) extra."

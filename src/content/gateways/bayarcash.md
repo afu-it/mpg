@@ -29,6 +29,38 @@ plugins:
   - EasyStore
 dev_docs: "https://docs.bayarcash.com/"
 popularity: 52
+plans:
+  - name: "T+ Plan"
+    eligibility: "Free annual fee"
+    rows:
+      - { label: "FPX", value: "RM1.00 B2C / RM2.00 B2B" }
+      - { label: "Credit card", value: "RM1.00 + 1%" }
+      - { label: "Direct debit", value: "RM1.50" }
+      - { label: "Other channels", value: "1.60% (min RM0.15)" }
+    settlement: "T+2"
+    source: "https://bayarcash.com"
+  - name: "Starter"
+    eligibility: "RM189/year"
+    rows:
+      - { label: "FPX", value: "RM1.20" }
+      - { label: "DuitNow QR", value: "RM0.50" }
+      - { label: "SPayLater / Boost PayFlex", value: "RM0.50" }
+    settlement: "Real-time settlement included"
+    source: "https://bayarcash.com"
+  - name: "Lite"
+    eligibility: "RM2,899/year"
+    rows:
+      - { label: "FPX", value: "RM0.70" }
+      - { label: "DuitNow QR", value: "RM0.50" }
+    settlement: "Real-time settlement included"
+    source: "https://bayarcash.com"
+  - name: "Enterprise"
+    eligibility: "RM12,000/year (incl 24,000 credits)"
+    rows:
+      - { label: "FPX", value: "RM0.20" }
+      - { label: "DuitNow QR", value: "RM0.50" }
+    settlement: "Real-time settlement included"
+    source: "https://bayarcash.com"
 verified_date: "2026-07-02"
 source: "https://bayarcash.com"
 notes: "Free 'T+ Plan' shown: FPX B2C RM1.00 / B2B RM2.00, credit card RM1.00 + 1%, direct debit RM1.50, DuitNow QR 1.60% (min RM0.15); T+1 payout (off-day Friday). Paid annual plans (Starter RM189, Lite RM2,899, Enterprise RM12,000) unlock realtime settlement (Public Bank & Bank Islam) and lower online-banking rates (RM1.20 / RM0.70 / RM0.20) plus DuitNow QR RM0.50. Excludes SST 8%."

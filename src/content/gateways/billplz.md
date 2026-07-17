@@ -38,6 +38,30 @@ plugins:
   - WHMCS
 dev_docs: "https://www.billplz.com/api"
 popularity: 82
+plans:
+  - name: "Basic"
+    eligibility: "Free plan"
+    rows:
+      - { label: "FPX", value: "RM1.25 B2C / RM3.00 B2B" }
+      - { label: "Card", value: "1.8% MYR / 3.8% non-MYR" }
+      - { label: "Wallets (DuitNow QR, TnG, Boost, GrabPay)", value: "1.5%" }
+    settlement: "FPX next business day, cards T+2"
+    source: "https://main.billplz.com/pricing"
+  - name: "Standard"
+    eligibility: "RM999/year"
+    rows:
+      - { label: "FPX", value: "RM0.75 B2C / RM2.00 B2B" }
+      - { label: "Card", value: "1.5% MYR / 3.5% non-MYR" }
+      - { label: "Wallets", value: "1.5%" }
+    settlement: "FPX next business day, cards T+2"
+    source: "https://main.billplz.com/pricing"
+  - name: "Enterprise"
+    eligibility: "Custom pricing, on request"
+    rows:
+      - { label: "Pricing", value: "Contact sales" }
+      - { label: "Includes", value: "Dedicated account management, recurring payments" }
+    settlement: "Real-time payouts (24/7)"
+    source: "https://main.billplz.com/pricing"
 verified_date: "2026-07-02"
 source: "https://main.billplz.com/pricing"
 notes: "Basic (free) plan rates: B2C FPX RM1.25, B2B FPX RM3.00. Premium annual membership lowers these to RM0.75 / RM2.00. Card (MYR) 1.8%, non-MYR 3.8% (T+2 payout). E-wallet 1.5%. BNPL 6–6.5%. FPX payout next business day, guaranteed."

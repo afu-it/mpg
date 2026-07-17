@@ -21,6 +21,26 @@ features:
   api: true
   recurring: false
 popularity: 15
+plans:
+  - name: "SME"
+    eligibility: "For growing businesses"
+    rows:
+      - { label: "Plan price", value: "RM99/month (RM1,188 billed annually)" }
+      - { label: "BNPL", value: "Up to 4 instalments" }
+      - { label: "Moby Credits", value: "100,000/year" }
+    source: "https://moby.my/pricing/"
+  - name: "Enterprise"
+    eligibility: "Multi-store and high volume"
+    rows:
+      - { label: "Plan price", value: "RM149/month (RM1,788 billed annually)" }
+      - { label: "BNPL", value: "Up to 6 instalments" }
+      - { label: "Moby Credits", value: "500,000/year" }
+    source: "https://moby.my/pricing/"
+  - name: "Custom"
+    eligibility: "On request"
+    rows:
+      - { label: "Pricing", value: "Contact sales" }
+    source: "https://moby.my/pricing/"
 verified_date: "2026-07-02"
 source: "https://moby.my/faqs/"
 notes: "The bnpl value is the merchant fee (MDR), not publicly published, so contact sales (onboarding via merchantsupport@moby.my). MOBY offers both conventional and Shariah-compliant (Moby Islamic) BNPL."

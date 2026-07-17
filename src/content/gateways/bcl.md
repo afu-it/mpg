@@ -19,6 +19,24 @@ features:
   recurring: false
 skill: setup-bcl
 popularity: 22
+plans:
+  - name: "Free Plan"
+    eligibility: "RM0"
+    rows:
+      - { label: "FPX", value: "RM1.00 minimum" }
+    source: "https://main.bcl.my/pricing/"
+  - name: "Package Niaga"
+    eligibility: "RM888/year (early bird)"
+    rows:
+      - { label: "FPX", value: "RM1.00 minimum" }
+      - { label: "Free .com domain", value: "Included" }
+    source: "https://main.bcl.my/pricing/"
+  - name: "Package Niaga Pro"
+    eligibility: "RM1,888/year (early bird)"
+    rows:
+      - { label: "FPX", value: "RM0.70 minimum" }
+      - { label: "Free .com/.my/.com.my domain", value: "Included" }
+    source: "https://main.bcl.my/pricing/"
 verified_date: "2026-07-02"
 source: "https://main.bcl.my/pricing/"
 notes: "No-code platform built on top of Bayarcash. FPX fees 'as low as RM1.00'. Paid annual packages (3 tiers; exact prices vary and the MSME Digital Grant MADANI offers up to 50% off). Card/BNPL and settlement run through Bayarcash. Confirm package pricing and channel rates on the site."

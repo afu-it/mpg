@@ -46,6 +46,20 @@ const gateways = defineCollection({
       recurring: z.boolean(), // recurring / subscription billing
     }),
     skill: z.string().optional(), // related setup-* integration skill
+    // published pricing plans/tiers (spec 17): only officially published plans,
+    // each with its exact source URL. Generic label/value rows absorb any plan
+    // shape. The top-level `fees` stay = the default/standard plan (ranking).
+    plans: z
+      .array(
+        z.object({
+          name: z.string(),
+          eligibility: z.string().optional(),
+          rows: z.array(z.object({ label: z.string(), value: z.string() })),
+          settlement: z.string().optional(),
+          source: z.string().url().optional(), // defaults to the gateway source
+        }),
+      )
+      .optional(),
     verified_date: z.string(),
     source: z.string().url(),
     notes: z.string().optional(),

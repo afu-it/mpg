@@ -25,6 +25,20 @@ plugins:
   - OpenCart
 dev_docs: "https://doc.revenuemonster.my/"
 popularity: 60
+plans:
+  - name: "Advanced Plan"
+    eligibility: "SMEs and growing businesses"
+    rows:
+      - { label: "Setup", value: "RM499 one-time" }
+      - { label: "Transaction rates", value: "Not published (contact sales)" }
+      - { label: "Extra settlement account", value: "RM99/account" }
+    settlement: "Typically T+2 business days"
+    source: "https://revenuemonster.my/pricing"
+  - name: "Corporate+ Plan"
+    eligibility: "High-volume merchants"
+    rows:
+      - { label: "All fees", value: "Personalised pricing, contact sales" }
+    source: "https://revenuemonster.my/pricing"
 verified_date: "2026-07-02"
 source: "https://revenuemonster.my/pricing"
 notes: "Setup fee (RM499 one-time) and T+2 settlement are from the official pricing page; per-transaction rates are described only as 'competitive rates' and are not publicly published, so contact sales."

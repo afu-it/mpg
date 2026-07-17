@@ -20,6 +20,20 @@ features:
   api: true
   recurring: false
 popularity: 70
+plans:
+  - name: "Standard"
+    eligibility: "All sellers"
+    rows:
+      - { label: "Transaction fee (3-month instalment)", value: "5% before SST (from 1 Feb 2026)" }
+      - { label: "Transaction fee (other tenures)", value: "4.5% before SST" }
+    source: "https://seller.shopee.com.my/edu/article/16542"
+  - name: "Special SPayLater Programme"
+    eligibility: "Selected sellers, opt-in via Seller Centre"
+    rows:
+      - { label: "Programme fee (3-month)", value: "0% (from 6 May 2026)" }
+      - { label: "Programme fee (6-month)", value: "3%" }
+      - { label: "On top of", value: "4.5% transaction fee, before 8% SST" }
+    source: "https://seller.shopee.com.my/edu/article/16542"
 verified_date: "2026-07-02"
 source: "https://seller.shopee.com.my/edu/article/16542"
 notes: "Merchant transaction fee 4.5% before SST; from 1 Feb 2026 the 3-month instalment tenure is 5% (others stay 4.5%). Fees subject to 8% SST. Auto-enabled for eligible Shopee sellers (no setup step). Sellers receive sales proceeds in full on order completion. Now operated with Monee Capital Malaysia (Shopee financial affiliate)."
