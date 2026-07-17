@@ -33,8 +33,8 @@ const card = "block rounded-md border border-line bg-panel p-4 cursor-pointer ho
   description="Answer four quick questions and get a ranked shortlist of Malaysian payment gateways that fit your needs, cheapest first, with reasons for every pick."
 >
   <div class="mx-auto max-w-2xl">
-    <h1 class="text-2xl font-semibold tracking-tight text-fg">Help me choose</h1>
-    <p class="mt-2 text-muted">
+    <h1 class="text-3xl font-bold tracking-tight text-fg sm:text-4xl">Help me choose</h1>
+    <p class="mt-4 text-muted">
       Answer up to four questions. We will shortlist the gateways that fit, cheapest first.
     </p>
 
@@ -87,23 +87,31 @@ const card = "block rounded-md border border-line bg-panel p-4 cursor-pointer ho
 
     <div id="choose-results" hidden class="mt-8"></div>
 
+    <!-- SEO copy kept verbatim, folded so the wizard stays the page (spec 16 rollout) -->
     <section class="mt-12 border-t border-line pt-6">
-      <h2 class="text-base font-medium text-fg">How the recommendation works</h2>
-      <p class="mt-2 text-sm text-muted">
-        Your answers filter the directory by hard requirements: the payment channels your
-        customers use, recurring billing, whether you want a no-code setup or a developer
-        API, and the kind of account you can open. Matching providers are then ranked by the
-        same estimated blended cost used across this site: officially published FPX, card and
-        e-wallet rates applied to a RM100 transaction. Providers without comparable published
-        rates are shown as quote-based rather than ranked.
-      </p>
-      <h2 class="mt-5 text-base font-medium text-fg">Why results may differ from ads</h2>
-      <p class="mt-2 text-sm text-muted">
-        We only rank on rates a provider publishes on its own site, each with a source link
-        and verified date. Promotional or negotiated rates you see elsewhere are real but not
-        comparable, so they never move the ranking. Shortlist two or three candidates here,
-        then confirm current pricing with the provider before signing up.
-      </p>
+      <details class="group">
+        <summary class="flex cursor-pointer select-none items-center gap-2 text-sm text-muted hover:text-fg [&::-webkit-details-marker]:hidden">
+          <h2 class="font-medium">How the recommendation works</h2>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="size-3.5 transition-transform group-open:rotate-180" aria-hidden="true">
+            <path d="m6 9 6 6 6-6"></path>
+          </svg>
+        </summary>
+        <p class="mt-3 text-sm leading-relaxed text-muted">
+          Your answers filter the directory by hard requirements: the payment channels your
+          customers use, recurring billing, whether you want a no-code setup or a developer
+          API, and the kind of account you can open. Matching providers are then ranked by the
+          same estimated blended cost used across this site: officially published FPX, card and
+          e-wallet rates applied to a RM100 transaction. Providers without comparable published
+          rates are shown as quote-based rather than ranked.
+        </p>
+        <h3 class="mt-5 text-sm font-medium text-fg">Why results may differ from ads</h3>
+        <p class="mt-2 text-sm leading-relaxed text-muted">
+          We only rank on rates a provider publishes on its own site, each with a source link
+          and verified date. Promotional or negotiated rates you see elsewhere are real but not
+          comparable, so they never move the ranking. Shortlist two or three candidates here,
+          then confirm current pricing with the provider before signing up.
+        </p>
+      </details>
     </section>
   </div>
 

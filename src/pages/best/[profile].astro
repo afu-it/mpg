@@ -46,13 +46,13 @@ const otherProfiles = PROFILES.filter((p) => p.slug !== def.slug);
     <span class="text-fg">{def.h1}</span>
   </nav>
 
-  <h1 class="text-2xl font-semibold tracking-tight text-fg">{def.h1}</h1>
-  <p class="mt-2 max-w-3xl text-muted">{def.intro}</p>
+  <h1 class="max-w-3xl text-3xl font-bold tracking-tight text-fg sm:text-4xl">{def.h1}</h1>
+  <p class="mt-4 max-w-3xl text-muted">{def.intro}</p>
   {page.answerLine && <p class="mt-3 max-w-3xl font-medium text-fg">{page.answerLine}</p>}
 
   {
     page.relaxed.length > 0 && (
-      <p class="mt-4 rounded-md border border-line bg-panel px-4 py-3 text-sm text-muted">
+      <p class="mt-4 max-w-3xl text-sm text-muted">
         No provider matched every criterion, so we relaxed: {page.relaxed.join(", ")}.
       </p>
     )
@@ -60,34 +60,32 @@ const otherProfiles = PROFILES.filter((p) => p.slug !== def.slug);
 
   {
     page.ranked.length > 0 && (
-      <section class="mt-8">
-        <h2 class="mb-3 text-sm font-medium uppercase tracking-wide text-muted">
+      <section class="mt-12">
+        <h2 class="mb-3 text-xs font-medium uppercase tracking-wide text-muted">
           Ranked by estimated cost (published rates)
         </h2>
-        <ol class="space-y-3">
+        <ol class="divide-y divide-line border-y border-line">
           {page.ranked.map((m, i) => (
-            <li class="rounded-md border border-line bg-panel p-4">
+            <li class="py-4">
               <div class="flex flex-wrap items-center gap-3">
                 <span class="w-6 text-right font-semibold text-muted">{i + 1}.</span>
                 <Logo slug={m.gateway.slug} name={m.gateway.name} size={26} />
                 <a href={`/gateway/${m.gateway.slug}/`} class="font-medium text-fg hover:underline">
                   {m.gateway.name}
                 </a>
-                <span class="ml-auto text-sm text-fg">
+                <span class="ml-auto text-sm tabular-nums text-fg">
                   ~RM{m.gateway.est_fee_rm100!.toFixed(2)}
                   <span class="text-muted"> / RM100</span>
                 </span>
               </div>
-              <p class="mt-2 pl-9 text-sm text-muted">{m.gateway.tagline}</p>
-              {headlineRates(m.gateway) && (
-                <p class="mt-1 pl-9 text-xs text-muted">{headlineRates(m.gateway)}</p>
-              )}
+              <p class="mt-2 pl-9 text-sm text-muted">
+                {m.gateway.tagline}
+                {headlineRates(m.gateway) && (
+                  <span class="text-xs"> · {headlineRates(m.gateway)}</span>
+                )}
+              </p>
               {m.reasons.length > 0 && (
-                <div class="mt-2 flex flex-wrap gap-2 pl-9">
-                  {m.reasons.map((r) => (
-                    <span class="rounded-full border border-line bg-raised px-2.5 py-0.5 text-xs text-muted">{r}</span>
-                  ))}
-                </div>
+                <p class="mt-1 pl-9 text-xs text-muted">{m.reasons.join(" · ")}</p>
               )}
             </li>
           ))}
@@ -98,17 +96,17 @@ const otherProfiles = PROFILES.filter((p) => p.slug !== def.slug);
 
   {
     page.onRequest.length > 0 && (
-      <section class="mt-8">
-        <h2 class="mb-3 text-sm font-medium uppercase tracking-wide text-muted">
+      <section class="mt-12">
+        <h2 class="mb-3 text-xs font-medium uppercase tracking-wide text-muted">
           Also fits, pricing on request
         </h2>
         <p class="mb-3 max-w-3xl text-sm text-muted">
           These providers match the same needs but publish no comparable rates, so we will not rank
           them by price. Listed by market presence.
         </p>
-        <ul class="space-y-2">
+        <ul class="divide-y divide-line border-y border-line">
           {page.onRequest.map((m) => (
-            <li class="flex items-center gap-3 rounded-md border border-line bg-panel px-4 py-3">
+            <li class="flex items-center gap-3 px-1 py-3">
               <Logo slug={m.gateway.slug} name={m.gateway.name} size={22} />
               <a href={`/gateway/${m.gateway.slug}/`} class="text-fg hover:underline">
                 {m.gateway.name}
@@ -140,12 +138,12 @@ const otherProfiles = PROFILES.filter((p) => p.slug !== def.slug);
     </a>
   </div>
 
-  <section class="mt-10">
-    <h2 class="mb-3 text-sm font-medium uppercase tracking-wide text-muted">FAQ</h2>
-    <div class="space-y-4">
+  <section class="mt-12">
+    <h2 class="mb-3 text-xs font-medium uppercase tracking-wide text-muted">FAQ</h2>
+    <div class="max-w-3xl divide-y divide-line border-y border-line">
       {
         page.faqs.map((f) => (
-          <div class="rounded-md border border-line bg-panel p-4">
+          <div class="py-4">
             <h3 class="font-medium text-fg">{f.q}</h3>
             <p class="mt-1 text-sm text-muted">{f.a}</p>
           </div>
@@ -154,8 +152,8 @@ const otherProfiles = PROFILES.filter((p) => p.slug !== def.slug);
     </div>
   </section>
 
-  <section class="mt-10 border-t border-line pt-6">
-    <h2 class="mb-3 text-sm font-medium uppercase tracking-wide text-muted">More guides</h2>
+  <section class="mt-12 border-t border-line pt-6">
+    <h2 class="mb-3 text-xs font-medium uppercase tracking-wide text-muted">More guides</h2>
     <div class="flex flex-wrap gap-2">
       {
         otherProfiles.map((p) => (

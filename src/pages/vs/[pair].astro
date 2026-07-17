@@ -75,33 +75,33 @@ const crumbLd = breadcrumbLd(String(Astro.site ?? "https://malaysiapg.com.my/"),
     <span class="text-fg">{a.name} vs {b.name}</span>
   </nav>
 
-  <h1 class="text-2xl font-semibold tracking-tight text-fg">
+  <h1 class="max-w-3xl text-3xl font-bold tracking-tight text-fg sm:text-4xl">
     {a.name} vs {b.name}
   </h1>
-  <p class="mt-2 max-w-3xl text-muted">
+  <p class="mt-4 max-w-3xl text-muted">
     Side-by-side fees and features for Malaysian merchants, from each provider's published
     pricing. For the full matrix including supported banks and e-wallets, open the{" "}
     <a href={`/compare/?ids=${a.slug},${b.slug}`} class="text-accent hover:underline">interactive comparison</a>.
   </p>
 
-  <section class="mt-6">
-    <h2 class="mb-3 text-sm font-medium uppercase tracking-wide text-muted">At a glance</h2>
-    <ul class="space-y-2">
+  <section class="mt-10">
+    <h2 class="mb-3 text-xs font-medium uppercase tracking-wide text-muted">At a glance</h2>
+    <ul class="max-w-3xl divide-y divide-line border-y border-line">
       {
         page.verdicts.map((v) => (
-          <li class="rounded-md border border-line bg-panel px-4 py-3 text-sm text-fg">{v}</li>
+          <li class="py-3 text-sm text-fg">{v}</li>
         ))
       }
     </ul>
   </section>
 
-  <section class="mt-8">
-    <h2 class="mb-3 text-sm font-medium uppercase tracking-wide text-muted">Fees</h2>
-    <div class="overflow-x-auto rounded-md border border-line">
+  <section class="mt-12">
+    <h2 class="mb-3 text-xs font-medium uppercase tracking-wide text-muted">Fees</h2>
+    <div class="overflow-x-auto">
       <table class="w-full min-w-[520px] text-sm">
         <thead>
-          <tr class="border-b border-line bg-panel text-left">
-            <th class="px-4 py-3 font-medium text-muted"></th>
+          <tr class="border-b border-line text-left">
+            <th class="py-3 font-medium text-muted"></th>
             <th class="px-4 py-3">
               <a href={`/gateway/${a.slug}/`} class="flex items-center gap-2 font-medium text-fg hover:underline">
                 <Logo slug={a.slug} name={a.name} size={20} /> {a.name}
@@ -114,13 +114,13 @@ const crumbLd = breadcrumbLd(String(Astro.site ?? "https://malaysiapg.com.my/"),
             </th>
           </tr>
         </thead>
-        <tbody>
+        <tbody class="divide-y divide-line border-b border-line">
           {
             page.feeRows.map((r) => {
               const win = winnerOf(r);
               return (
-                <tr class="border-b border-line last:border-b-0">
-                  <td class={`px-4 py-2.5 text-muted ${win ? "align-top" : ""}`}>{r.label}</td>
+                <tr>
+                  <td class={`py-2.5 pr-4 text-muted ${win ? "align-top" : ""}`}>{r.label}</td>
                   <td class={`px-4 py-2.5 ${win === "a" ? "font-semibold [&_span]:!text-accent" : ""}`}>
                     <FeeCell value={r.a} />
                   </td>
@@ -147,15 +147,15 @@ const crumbLd = breadcrumbLd(String(Astro.site ?? "https://malaysiapg.com.my/"),
     </p>
   </section>
 
-  <section class="mt-8">
-    <h2 class="mb-3 text-sm font-medium uppercase tracking-wide text-muted">Features</h2>
-    <div class="overflow-x-auto rounded-md border border-line">
+  <section class="mt-12">
+    <h2 class="mb-3 text-xs font-medium uppercase tracking-wide text-muted">Features</h2>
+    <div class="overflow-x-auto">
       <table class="w-full min-w-[520px] text-sm">
-        <tbody>
+        <tbody class="divide-y divide-line border-y border-line">
           {
             page.featureRows.map((r) => (
-              <tr class="border-b border-line last:border-b-0">
-                <td class="px-4 py-2.5 text-muted">{r.label}</td>
+              <tr>
+                <td class="py-2.5 pr-4 text-muted">{r.label}</td>
                 <td class="px-4 py-2.5 text-fg">{r.a}</td>
                 <td class="px-4 py-2.5 text-fg">{r.b}</td>
               </tr>

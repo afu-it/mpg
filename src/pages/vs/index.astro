@@ -37,8 +37,8 @@ const crumbLd = breadcrumbLd(String(Astro.site ?? "https://malaysiapg.com.my/"),
     <span class="text-fg">Comparisons</span>
   </nav>
 
-  <h1 class="text-2xl font-semibold tracking-tight text-fg">Payment gateway comparisons</h1>
-  <p class="mt-2 max-w-3xl text-muted">
+  <h1 class="max-w-3xl text-3xl font-bold tracking-tight text-fg sm:text-4xl">Payment gateway comparisons</h1>
+  <p class="mt-4 max-w-3xl text-muted">
     Head-to-head pages for {pairs.length} popular pairings of Malaysian payment
     providers, built from the same officially published fees as the rest of the
     directory. Need a custom matchup? Use the{" "}
@@ -46,8 +46,8 @@ const crumbLd = breadcrumbLd(String(Astro.site ?? "https://malaysiapg.com.my/"),
     for any combination of up to four providers.
   </p>
 
-  <section class="mt-8">
-    <h2 class="mb-3 text-sm font-medium uppercase tracking-wide text-muted">Most popular</h2>
+  <section class="mt-10">
+    <h2 class="mb-3 text-xs font-medium uppercase tracking-wide text-muted">Most popular</h2>
     <div class="flex flex-wrap gap-2">
       {
         popular.map((p) => (
@@ -63,7 +63,7 @@ const crumbLd = breadcrumbLd(String(Astro.site ?? "https://malaysiapg.com.my/"),
   </section>
 
   <section class="mt-8">
-    <h2 class="mb-3 text-sm font-medium uppercase tracking-wide text-muted">All comparisons</h2>
+    <h2 class="mb-3 text-xs font-medium uppercase tracking-wide text-muted">All comparisons</h2>
     <div class="flex flex-wrap gap-2">
       {
         pairs.map((p) => (
@@ -79,7 +79,7 @@ const crumbLd = breadcrumbLd(String(Astro.site ?? "https://malaysiapg.com.my/"),
   </section>
 
   <section class="mt-10">
-    <h2 class="mb-3 text-sm font-medium uppercase tracking-wide text-muted">Ranked guides</h2>
+    <h2 class="mb-3 text-xs font-medium uppercase tracking-wide text-muted">Ranked guides</h2>
     <div class="flex flex-wrap gap-2">
       {
         PROFILES.map((p) => (

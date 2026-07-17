@@ -65,10 +65,10 @@ const dayLabel = (d: number) => (d === 0 ? "Same day" : d === 1 ? "Next business
     <span class="text-fg">Fastest settlement</span>
   </nav>
 
-  <h1 class="text-2xl font-semibold tracking-tight text-fg">
+  <h1 class="max-w-3xl text-3xl font-bold tracking-tight text-fg sm:text-4xl">
     Fastest settlement payment gateways in Malaysia
   </h1>
-  <p class="mt-2 max-w-3xl text-muted">
+  <p class="mt-4 max-w-3xl text-muted">
     Settlement is when the money actually reaches your bank account, and it moves your cash
     flow more than a few basis points of fees ever will. Providers below are ranked by their
     officially stated settlement time, using the slowest leg they promise (a "T+1 to T+2"
@@ -76,14 +76,14 @@ const dayLabel = (d: number) => (d === 0 ? "Same day" : d === 1 ? "Next business
   </p>
   {answerLine && <p class="mt-3 max-w-3xl font-medium text-fg">{answerLine}</p>}
 
-  <section class="mt-8">
-    <h2 class="mb-3 text-sm font-medium uppercase tracking-wide text-muted">
+  <section class="mt-12">
+    <h2 class="mb-3 text-xs font-medium uppercase tracking-wide text-muted">
       Ranked by stated settlement (slowest leg)
     </h2>
-    <ol class="space-y-3">
+    <ol class="divide-y divide-line border-y border-line">
       {
         ranked.map((x, i) => (
-          <li class="rounded-md border border-line bg-panel p-4">
+          <li class="py-4">
             <div class="flex flex-wrap items-center gap-3">
               <span class="w-6 text-right font-semibold text-muted">{i + 1}.</span>
               <Logo slug={x.g.slug} name={x.g.name} size={26} />
@@ -106,8 +106,8 @@ const dayLabel = (d: number) => (d === 0 ? "Same day" : d === 1 ? "Next business
     </ol>
   </section>
 
-  <section class="mt-8">
-    <h2 class="mb-3 text-sm font-medium uppercase tracking-wide text-muted">
+  <section class="mt-12">
+    <h2 class="mb-3 text-xs font-medium uppercase tracking-wide text-muted">
       Settlement not stated publicly
     </h2>
     <p class="mb-3 max-w-3xl text-sm text-muted">
@@ -140,8 +140,8 @@ const dayLabel = (d: number) => (d === 0 ? "Same day" : d === 1 ? "Next business
     </a>
   </div>
 
-  <section class="mt-10 border-t border-line pt-6">
-    <h2 class="mb-3 text-sm font-medium uppercase tracking-wide text-muted">More guides</h2>
+  <section class="mt-12 border-t border-line pt-6">
+    <h2 class="mb-3 text-xs font-medium uppercase tracking-wide text-muted">More guides</h2>
     <div class="flex flex-wrap gap-2">
       {
         PROFILES.map((p) => (

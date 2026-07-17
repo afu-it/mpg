@@ -101,7 +101,7 @@ const compareHref =
 
   <article class="max-w-2xl">
     <header>
-      <h1 class="text-2xl font-semibold tracking-tight text-fg">{d.title}</h1>
+      <h1 class="max-w-3xl text-3xl font-bold tracking-tight text-fg sm:text-4xl">{d.title}</h1>
       <p class="mt-2 text-sm text-muted">
         By Afu · Published {d.pubDate}{d.updatedDate ? ` · Updated ${d.updatedDate}` : ""}
       </p>
@@ -201,7 +201,7 @@ const compareHref =
     {
       related.length > 0 && (
         <section class="mt-10 border-t border-line pt-6">
-          <h2 class="mb-3 text-sm font-medium uppercase tracking-wide text-muted">Related guides</h2>
+          <h2 class="mb-3 text-xs font-medium uppercase tracking-wide text-muted">Related guides</h2>
           <ul class="space-y-2">
             {related.map((p) => (
               <li>
