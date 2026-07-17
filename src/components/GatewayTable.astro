@@ -155,10 +155,18 @@ const td = "whitespace-nowrap px-3 py-3 align-middle";
                     E-wallet
                   </span>
                 )}
-                {g.data.mcp === "official" && (
+                {g.data.features.api && g.data.dev_docs && (
+                  <span
+                    class="rounded-full border border-line px-1 py-px text-[9px] font-medium uppercase tracking-wide text-muted"
+                    title="Public developer API documentation"
+                  >
+                    API
+                  </span>
+                )}
+                {g.data.mcp !== "none" && (
                   <span
                     class="rounded-full border border-accent px-1 py-px text-[9px] font-medium uppercase tracking-wide text-accent"
-                    title="Official MCP server: AI-agent ready"
+                    title={g.data.mcp === "official" ? "Official MCP server: AI-agent ready" : "Community MCP server (third-party)"}
                   >
                     MCP
                   </span>
