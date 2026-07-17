@@ -1,5 +1,9 @@
 # LOG — safe diary (append above)
 
+## 2026-07-17 · type: verify
+**Session closed via /safe-code --save (second save, same day).** Tree clean before this bookkeeping commit; everything earlier already pushed + deployed + verified (CSP enforcing, blog live, IndexNow 204 URLs accepted 200 by both endpoints). All AFU follow-ups live in BACKLOG HIGH; resume point = spec 15 slice D or AFU's distribution-round results.
+plain: Sesi ditutup dengan selamat. Semua kerja hari ni dah naik live dan disahkan; senarai tindakan Master tersimpan kemas dalam BACKLOG.
+
 ## 2026-07-17 · type: chore
 **Bing zero-index diagnosis + IndexNow direct push (all 204 URLs).** AFU's Bing reports showed the real upstream problem: Site Explorer EMPTY + Search Performance 0 impressions for 12 days = Bing has not indexed the site at all (so AI Performance 0 citations is expected, not a content problem). Checked: robots.txt clean (* Allow + sitemap), bingbot UA gets 200 — no block; Bing is just slow on a young domain and Cloudflare Crawler Hints alone didn't move it. Fix: hosted AFU's IndexNow API key at /be9f66171aa84e118c136908bf9bedd2.txt (commit bf175a2, deployed, verified live), then POSTed the full sitemap URL list (204) to api.indexnow.org AND www.bing.com/indexnow — both returned 200 (first attempt 403 = key-file propagation delay; retry after ~1 min succeeded). The key file is public by design (IndexNow spec). Watch: Bing Webmaster IndexNow panel should show received URLs within ~a day; Site Explorer should start filling within days; re-check AI Performance mid-August.
 plain: Rupanya Bing belum masukkan website kita dalam senarai dia langsung, sebab tu AI tak petik kita. Dah dibaiki: kita hantar terus kesemua 204 alamat page ke Bing melalui sistem IndexNow, dan Bing sahkan terima. Tengok semula minggu depan.

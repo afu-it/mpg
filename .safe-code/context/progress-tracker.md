@@ -1,6 +1,6 @@
 # Progress Tracker — MPG
 
-last_synced_commit: 06bdc3f
+last_synced_commit: 95f1a38
 context_synced_at: 2026-07-17
 context_selftest: skipped (not first-run)
 
@@ -70,6 +70,9 @@ No server/DB. Deployed (push master → Cloudflare Pages).
 - **Editorial pipeline** (spec 15): keyword backlog = real GSC queries only; intent classification; product truth = the gateways collection (never claim what data doesn't hold); anti-slop passes; SERP windows + em-dash ban + internal-link + sources checks are vitest-enforced (blog.test.ts).
 - **Sitewide trailing-slash fix (2026-07-17)**: all internal links now end with `/` (was: 78 paths × thousands of instances causing a 308 per click — the GSC "Page with redirect 104" source). Codemod over 32 files incl client scripts; dist scan = 0. Also: alt text on decorative logos, moby/paycools taglines lengthened, PayNet + fastest-settlement de-orphaned via glossary related-links, gateway title dedupe (Stripe/OxPay/UOB "Malaysia Malaysia").
 - Baseline squirrel audit 2026-07-17: 80/100 (B); Core SEO/EEAT/Schema/Mobile/i18n/Social/URL = 100. Report: session scratchpad.
+
+## Bing / IndexNow (2026-07-17)
+- Bing had NOT indexed the site as of 2026-07-17 (Site Explorer empty, 0 impressions) despite Crawler Hints since 2026-07-03. Fixed: IndexNow API key hosted at `public/be9f66171aa84e118c136908bf9bedd2.txt` (public by spec); full sitemap (204 URLs) POSTed to api.indexnow.org + www.bing.com/indexnow, both 200. **Capability: after any deploy, changed URLs can be pinged directly** (payload shape in LOG 2026-07-17 chore entry; key + keyLocation from the hosted file). First 403 = key-file propagation, retry after a minute.
 
 ## Decisions (safe summary)
 - **Contribution model (2026-07-02, spec 11):** repo stays PRIVATE; approved applicants get a GitHub collaborator invite; applications arrive via prefilled email (not a backend form). GitHub free gives no branch protection on private repos, so the deploy job is actor-gated (owner-only) as the production safety net. Public-repo fork+PR was offered and declined.

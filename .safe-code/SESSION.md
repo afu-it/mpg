@@ -1,6 +1,6 @@
 # SESSION — working memory
 
-_2026-07-17 (post-save, seo round 3 session)_
+_2026-07-17 petang (post-save #2: blog + audit fixes + CSP + IndexNow)_
 
 ## Carry Forward
 - Live: https://malaysiapg.com.my · 205 pages · vitest 95/95 · CSP ENFORCING (deployed 2026-07-17).

@@ -1,6 +1,6 @@
 # safe-refactor-code — flagged candidates
 
-_2026-07-17 (rev 21)_
+_2026-07-17 petang (rev 22)_
 
 **Guardrail (blog, spec 15):** never hardcode fee numbers in post prose as bare facts — the dated answer box + PostFeeBox are the number carriers (build-time from the gateways collection); prose numbers must be framed against the verification date and re-checked when data changes. Do not "simplify away" the literal pillar routes under src/pages/blog/ — they exist to beat the dynamic [slug] route.
 
