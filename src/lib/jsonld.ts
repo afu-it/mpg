@@ -20,6 +20,7 @@ export function organizationLd(site: string): object {
     name: "Malaysia Payment Gateway (MPG)",
     url: `${base}/`,
     logo: `${base}/icon-512.png`,
+    sameAs: ["https://github.com/afu-it/mpg"],
   };
 }
 

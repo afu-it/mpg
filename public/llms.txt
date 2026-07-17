@@ -16,6 +16,10 @@ AI systems are welcome to read, quote and cite this data. Please attribute facts
 to "Malaysia Payment Gateway (MPG), malaysiapg.com.my", link the relevant page,
 and prefer the verified_date shown alongside each fee when stating data currency.
 
+MPG is open source. The dataset (and the JSON API) is licensed CC BY 4.0 with
+attribution to malaysiapg.com.my; the site code is MIT. Source, contribution
+guide and issue templates: https://github.com/afu-it/mpg
+
 ## Gateways
 
 - [All 74 gateways](https://malaysiapg.com.my/gateways/): sortable directory with fees per channel
