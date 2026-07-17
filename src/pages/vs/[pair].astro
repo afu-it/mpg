@@ -9,6 +9,7 @@ import { getCollection } from "astro:content";
 import Base from "../../layouts/Base.astro";
 import Logo from "../../components/Logo.astro";
 import FeeCell from "../../components/FeeCell.astro";
+import { parseFeeShape, effectiveCost } from "../../lib/fees";
 import { toApiGateway, type GatewayEntryLike } from "../../lib/api";
 import { vsPairs, buildVsPage } from "../../lib/seo-pages";
 import { breadcrumbLd } from "../../lib/jsonld";
@@ -26,6 +27,37 @@ const { a, b } = pair;
 const hasIndicative = [...page.feeRows, ...page.featureRows].some(
   (r) => r.a.includes("*") || r.b.includes("*"),
 );
+// winner highlight (2026-07-17, AFU): bold + colour the cheaper side of a row
+// when BOTH sides publish comparable official figures (indicative * and
+// Contact sales never win). Lower is better for every row in this set.
+const LOWER_BETTER = new Set([
+  "Est. fee / RM100",
+  "FPX",
+  "Cards (local)",
+  "Cards (international)",
+  "E-wallets",
+  "DuitNow QR",
+  "BNPL",
+  "Setup fee",
+  "Monthly / annual fee",
+]);
+function rowCost(label: string, v: string): number {
+  if (label === "Est. fee / RM100") {
+    const m = String(v).match(/RM(\d+(?:\.\d+)?)/);
+    return m ? parseFloat(m[1]) : Infinity;
+  }
+  const shape = parseFeeShape(String(v));
+  if (shape.indicative) return Infinity;
+  return effectiveCost(shape, 100);
+}
+function winnerOf(r: { label: string; a: string; b: string }): "a" | "b" | null {
+  if (!LOWER_BETTER.has(r.label)) return null;
+  const ca = rowCost(r.label, r.a);
+  const cb = rowCost(r.label, r.b);
+  if (!isFinite(ca) || !isFinite(cb) || ca === cb) return null;
+  return ca < cb ? "a" : "b";
+}
+
 const crumbLd = breadcrumbLd(String(Astro.site ?? "https://malaysiapg.com.my/"), [
   { name: "Home", path: "/" },
   { name: "Comparisons", path: "/vs/" },
@@ -84,13 +116,20 @@ const crumbLd = breadcrumbLd(String(Astro.site ?? "https://malaysiapg.com.my/"),
         </thead>
         <tbody>
           {
-            page.feeRows.map((r) => (
-              <tr class="border-b border-line last:border-b-0">
-                <td class="px-4 py-2.5 text-muted">{r.label}</td>
-                <td class="px-4 py-2.5"><FeeCell value={r.a} /></td>
-                <td class="px-4 py-2.5"><FeeCell value={r.b} /></td>
-              </tr>
-            ))
+            page.feeRows.map((r) => {
+              const win = winnerOf(r);
+              return (
+                <tr class="border-b border-line last:border-b-0">
+                  <td class={`px-4 py-2.5 text-muted ${win ? "align-top" : ""}`}>{r.label}</td>
+                  <td class={`px-4 py-2.5 ${win === "a" ? "font-semibold [&_span]:!text-accent" : ""}`}>
+                    <FeeCell value={r.a} />
+                  </td>
+                  <td class={`px-4 py-2.5 ${win === "b" ? "font-semibold [&_span]:!text-accent" : ""}`}>
+                    <FeeCell value={r.b} />
+                  </td>
+                </tr>
+              );
+            })
           }
         </tbody>
       </table>
