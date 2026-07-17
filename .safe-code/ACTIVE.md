@@ -2,17 +2,17 @@
 
 ## Last Session
 status: saved
-saved_at: 2026-07-17 petang (save #2: + Bing IndexNow direct push)
+saved_at: 2026-07-17 malam (save #3: redesign + plans + discovery round 3)
 completed:
-  - CSP flipped to enforcing (specs 13 + 14 CLOSED — AFU smoke clean).
-  - Squirrel baseline 80/B → quick wins: sitewide trailing-slash codemod (fixes GSC "Page with redirect 104"), logo alt text, 2 taglines, 2 orphan pages, "Malaysia Malaysia" title dedupe.
-  - Spec 15 (SEO round 3) slices A-C + images: /blog/ + fees-pricing pillar + 5 GSC-query-driven posts w/ live fee tables, dated answer boxes, Person/Article/FAQ/ImageObject LD, EEAT author bio (interview done), webp hero screenshots, Guides nav + footer pillars. 205 pages, vitest 95/95.
-  - Off-site drafts ready: Threads post (SKILLS/THREADS/output/2026-07-17-mpg-guides-launch.md), MCP registry text (in BACKLOG).
-  - Bing zero-index diagnosed (Site Explorer empty, 0 impressions) → IndexNow key hosted + ALL 204 URLs pushed direct to api.indexnow.org + bing.com/indexnow, both 200. Everything pushed + deployed + live-verified.
+  - Minimalist redesign (spec 16 A-F + dark-sparse full pass): homepage, detail pages (2-col desktop), footer, /gateways, /learn, MethodologyNote.
+  - Spec 17 DONE: plans[] schema + Plans UI; 16 gateways / 46 sourced plans via 7-subagent sweep.
+  - Discovery round 3: 11 new gateways (74 total; Herepay new #1 RM1.07). BNM registry fully reconciled; 30+ names disqualified with reasons.
+  - Blog layer (spec 15 A-C), squirrel quick fixes, CSP enforcing, IndexNow direct push — from earlier saves today, all live.
 pending:
-  - Bing watch (days, AFU): IndexNow panel shows received URLs; Site Explorer starts filling; first organic impressions ~1 week; AI Performance re-check mid-August.
-  - AFU distribution round (BACKLOG HIGH): GSC Request Indexing (7 blog URLs), GSC removal request clerk.malaysiapg.com.my, Bing "AI Performance" check (DUE), post Threads draft, submit MCP registry listings.
-  - AFU: one live sign-in w/ console open post-deploy (CSP now enforcing); 2FA on 5 accounts; Google OAuth secret rotation.
-  - Spec 15 slices D-G: clusters 2-4 posts + pillars, inbound links from /gateway + /learn into posts, BM post subset (hreflang), GSC-hygiene leftovers.
-  - Spec 02 decision still awaiting AFU word (recommend demote approved → suggested, superseded by spec 11).
-next_action: If AFU reports the distribution round done → check GSC/Bing movement; else pick spec 15 slice D (recurring-payments cluster: posts + pillar + live:true flip) — the BM query "maksud recurring payment" makes it the best next cluster.
+  - Spec 16 rollout: sparse rhythm to /compare /choose /best/* /vs/* /learn subpages + blog pages.
+  - Logo round for 10 new gateways (monogram fallback now).
+  - Spec 15 slices D-G (recurring cluster next: BM query "maksud recurring payment").
+  - AFU distribution round (BACKLOG HIGH): GSC Request Indexing (blog + new gateway pages), Clerk-subdomain removal, Threads post, MCP registries; Bing watch (IndexNow accepted 204 URLs; sitemap now 216+).
+  - AFU: one live sign-in w/ console open (CSP enforcing); 2FA; OAuth rotation; spec 02 decision.
+  - Fee-refresh candidates + HLB/Kiple re-verify (BACKLOG).
+next_action: Pick ONE: (a) logo round for the 10 new gateways (fast quality win before anyone sees monograms), (b) spec 16 rollout to remaining pages, or (c) spec 15 slice D. Then IndexNow-ping the changed/new URLs after the next deploy (key file already hosted; payload shape in LOG 2026-07-17).

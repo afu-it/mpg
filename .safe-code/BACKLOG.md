@@ -1,6 +1,6 @@
 # BACKLOG — operational queue
 
-_2026-07-17 (rev 22)_
+_2026-07-17 malam (rev 23)_
 
 - [ ] **AFU security actions (spec 13)**: (1) confirm 2FA on GitHub / Cloudflare / YeahHost / Clerk / Google (TM-002, highest-leverage control); (2) rotate the Google OAuth client secret (pending since 2026-07-02) — Google Cloud Console → credentials → paste new secret into Clerk dashboard. (Item 3 smoke: DONE 2026-07-17, clean.)
 - [ ] **HIGH — AFU distribution round (2026-07-17)**: (1) GSC Request Indexing for /blog/ + pillar + 5 posts (URL list in LOG entry); (2) GSC Removals → prefix request for https://clerk.malaysiapg.com.my/ (indexed empty Clerk page, cosmetic); (3) Bing "AI Performance" checked 2026-07-17: 0 citations BECAUSE Bing had zero-indexed the site — fixed via IndexNow direct push (204 URLs, both endpoints 200); re-check Site Explorer in days, AI Performance mid-August; (4) post the Threads draft (PROJEK/SKILLS/THREADS/output/2026-07-17-mpg-guides-launch.md); (5) submit MCP registry listings (mcp.so / PulseMCP / Smithery / Glama) — full copy-paste text below.
@@ -13,6 +13,11 @@ _2026-07-17 (rev 22)_
 - [~] **Entity corroboration** (AFU-driven): Bing/IndexNow DONE 2026-07-03. REMAINING: GitHub README backlink + repo Website field, MCP registry listings (drafted 2026-07-17, see HIGH item above), Wikidata, community posts (Threads draft ready 2026-07-17; Lowyat/r/malaysia later). Bing "AI Performance" check now DUE (see HIGH item).
 - [x] Spec 07 follow-ups (per-RM100 on /compare, On-request divider, FPX-gating decision: keep) — done 2026-07-03.
 
+- [ ] **HIGH — logo round for 11 new gateways** (herepay has one; kineticpay/leanx/smap-pay/payright/lekirpay/affanpay/edxapay/tulus/qashier/shopeepay-gateway on monogram fallback): official marks, dark-QA, square/circle treatment per house rules.
+- [ ] **Spec 16 rollout remaining**: apply sparse rhythm to /compare /choose /best/* /vs/* /learn subpages + blog pages (headers, spacing, box removal).
+- [ ] Fee-refresh candidates from 2026-07-17 sweeps: ahapay (6% MDR + SST), moby (full txn rates now published: FPX B2C RM2.00, cards 0.99%, DNQR 0.8%+RM0.10), bayarcash (revamped annual-fee plans — top-level fees likely stale), m1pay (full MDR card in application PDF), airwallex MY (unified card: local methods 1.4%+RM0.50), chip (stablecoin 1.5% channel), boost (RM2,000 per-txn limit note), fiuu (RM99 promo signup vs RM999). Also: KineticPay card %, AffanPay rate card, Qashier MY pricing (browser verify), SMAP Pay PayNet status + settlement.
+- [ ] Re-verify **HLB + Kiple** pricing from another network (geo/Cloudflare-blocked from this one, 2026-07-17).
+- [ ] Spec 04 history update: record round-3 disqualified list (resellers/zombies/foreign, in SESSION 2026-07-17 log) + KineticPay reject reversal.
 - [ ] Watch: **FavePay Later** liveness — product fading (not promoted on myfave.com homepage, help section behind login; fee article still live). Re-check on the next liveness sweep; remove if it goes myIOU-pattern dormant.
 - [ ] **Mobi (ex-gomobi) logo** may need a brand refresh to match mobi.xyz branding (current logo is the old gomobi mark).
 - [ ] Revisit UOB/RHB `ewallet: "—"` semantics — both accept e-wallets (unpriced); kept "—" conservatively since acceptance skews in-store/POS.

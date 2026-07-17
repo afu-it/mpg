@@ -1,14 +1,16 @@
 # SESSION — working memory
 
-_2026-07-17 petang (post-save #2: blog + audit fixes + CSP + IndexNow)_
+_2026-07-17 malam (post-save #3: redesign + plans + discovery round 3)_
 
 ## Carry Forward
-- Live: https://malaysiapg.com.my · 205 pages · vitest 95/95 · CSP ENFORCING (deployed 2026-07-17).
-- Blog layer live (spec 15 in-progress, D-G remain): posts = content collection; numbers render LIVE via answer box + PostFeeBox (never hardcode fees in prose); literal pillar routes beat dynamic [slug]; cluster goes live:true only when its pillar page ships; blog.test.ts enforces SERP windows + em-dash ban + links + sources.
-- ALL internal links carry trailing slashes (codemod 2026-07-17) — keep new links slashed; blog.test.ts checks post bodies.
-- Author entity locked (EEAT interview 2026-07-17): "Afu · developer & founder of MPG"; claims = agent-skills repo + official-source verification ONLY (no production-integration claims); sameAs GitHub afu-it + Threads @afwzn.
-- Editorial pipeline for posts = spec 15 §pipeline (GSC backlog only, product truth = gateways collection, anti-slop, quality gate).
-- House rules unchanged: static Astro 7 + Clerk CDN; no em-dashes in prose; fees sourced or "Contact sales"; don't chrome-devtools verify unless AFU asks (AFU asked for screenshots this session).
+- Live: https://malaysiapg.com.my · **74 gateways · 216 pages** · vitest 95/95 · CSP ENFORCING.
+- Design = DARK SPARSE minimalism (locked by AFU): fold/move copy, never delete SEO text; desktop uses full width (2-col grids); est-fee number is the detail-page hero. Rollout to /compare /choose /best /vs /learn-subpages/blog PENDING.
+- plans[] layer live (spec 17 done): official-source plans only, each with source URL; top-level fees = default plan = ranking input.
+- 10 of the 11 new gateways have NO logo (monogram fallback) — logo round is the top quality item.
+- Blog (spec 15): posts = content collection, live answer box + PostFeeBox, blog.test.ts enforces style; slices D-G pending.
+- Tooling prefs (user-preferences.md): curl+UA → Playwright/Lightpanda/Firecrawl; NO chrome-devtools unless asked; Firecrawl key from AFU in-chat only, never stored.
+- IndexNow: key file hosted; after each deploy, POST changed URLs to api.indexnow.org + bing.com/indexnow (payload in LOG).
+- House rules: static Astro 7 + Clerk CDN; no em-dashes; fees sourced or "Contact sales"; trailing slashes on all internal links.
 
 ## Task List
 - (none active — session saved)

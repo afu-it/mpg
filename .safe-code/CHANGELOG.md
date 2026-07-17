@@ -2,6 +2,13 @@
 
 ## [Unreleased]
 
+### Added (2026-07-17, second sitting)
+- 11 new gateways (74 total): Herepay (new cheapest ranked, RM1.07/RM100), KineticPay, LeanX, SMAP Pay, Payright, LekirPay, AffanPay, edxaPay, Tulus Digital, Qashier, ShopeePay (Direct).
+- Plans: 16 gateways now show every published pricing plan side by side (46 plans, all sourced).
+
+### Changed (2026-07-17, second sitting)
+- Minimalist redesign: sparse homepage with live cheapest-5 list, calmer gateway pages with the estimated fee as the headline number and a two-column desktop layout, grouped footer, collapsible filters.
+
 ### Added (2026-07-17)
 - Guides/blog section: `/blog/` hub, fees & pricing pillar, and 5 sourced fee guides (Billplz, toyyibPay, HitPay, Stripe Malaysia, how-fees-work) with live fee tables, dated answer boxes, FAQ, author bio and hero images. Site is 205 pages.
 - "Guides" in the header nav and drawer; topic pillars listed in the footer.

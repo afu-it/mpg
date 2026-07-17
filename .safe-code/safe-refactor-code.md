@@ -1,6 +1,8 @@
 # safe-refactor-code — flagged candidates
 
-_2026-07-17 petang (rev 22)_
+_2026-07-17 malam (rev 23)_
+
+**Guardrail (plans, spec 17):** `plans[]` rows are generic label/value FROM OFFICIAL SOURCES only; top-level `fees` = default plan and stay the ranking input — never derive ranking from plan rows. New-gateway entries without logos use the monogram fallback; never hotlink provider images.
 
 **Guardrail (blog, spec 15):** never hardcode fee numbers in post prose as bare facts — the dated answer box + PostFeeBox are the number carriers (build-time from the gateways collection); prose numbers must be framed against the verification date and re-checked when data changes. Do not "simplify away" the literal pillar routes under src/pages/blog/ — they exist to beat the dynamic [slug] route.
 

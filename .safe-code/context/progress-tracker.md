@@ -5,7 +5,7 @@ context_synced_at: 2026-07-17
 context_selftest: skipped (not first-run)
 
 ## Current Phase
-Pure static directory of **63** Malaysian payment providers, polished, with a
+Pure static directory of **74** Malaysian payment providers, polished, with a
 **/learn** section for devs and a **Jalur Gemilang** dark theme. Categorised by
 how a merchant accesses them (gateway = integrate, bank/e-wallet = merchant
 account, plus BNPL + infrastructure). Sourced fees, popularity-ranked by default.
@@ -14,7 +14,7 @@ No server/DB. Deployed (push master → Cloudflare Pages).
 ## What works now
 - Landing `/`, `/gateways` (sidebar filter + sortable/searchable table + **sort dropdown**, `?category=` deep-links), `/compare` (shareable `?ids=`), `/gateway/<slug>` detail, custom `404`.
 - **Default sort = lowest estimated fee** (gated). `src/lib/fees.ts` computes a unit-correct effective cost on a RM100 basket (`parseFeeShape` → `{pct,fixed,floor}`, `effectiveCost`, `gatewayCost` weighted FPX/card/e-wallet 50/30/20). Only gateways publishing comparable official rates are ranked (18/59); single-channel / indicative-`*` / "Contact sales" gateways show **"On request"** below. Table has an **Est. fee / RM100** column (beside Fixed fee). Dropdown: Lowest fees · Popularity · Lowest FPX/card/e-wallet · Name A-Z/Z-A. (See spec 07.)
-- **63 gateways** across categories: gateway 44, bank 10, ewallet 1 (TNG), bnpl 7, infrastructure 1 (PayNet). Every entry sourced and **fully re-audited against official sources on 2026-07-02** (all verified_date = 2026-07-02; 26 corrected; 21 rankable). Discovery round 2 added BetterPay (rankable), BOLD.Pay, Share Commerce, Antom (official MCP).
+- **74 gateways** across categories: gateway 54, bank 10, ewallet 2 (TNG, ShopeePay Direct), bnpl 7, infrastructure 1 (PayNet). 11 added 2026-07-17 (Herepay + discovery round 3). Every entry sourced and **fully re-audited against official sources on 2026-07-02** (all verified_date = 2026-07-02; 26 corrected; 21 rankable). Discovery round 2 added BetterPay (rankable), BOLD.Pay, Share Commerce, Antom (official MCP).
 - **Categories:** Gateways / Banks / E-wallet / BNPL / Infrastructure (sidebar radio, table/detail/compare badges at text-[8px]).
 - **Access model** (`src/lib/access.ts`): each entry shows "Integrate (API/plugin)" or "Merchant account" (detail strip + compare row); /learn hub has a "Which type do you need?" explainer; category filter accepts `?category=` deep-links from /learn.
 - **/learn** (spec 06): hub + glossary, integration-flow, ai-agents, checklist. Per-gateway "Copy prompt" from `skill:`.
@@ -73,6 +73,12 @@ No server/DB. Deployed (push master → Cloudflare Pages).
 
 ## Bing / IndexNow (2026-07-17)
 - Bing had NOT indexed the site as of 2026-07-17 (Site Explorer empty, 0 impressions) despite Crawler Hints since 2026-07-03. Fixed: IndexNow API key hosted at `public/be9f66171aa84e118c136908bf9bedd2.txt` (public by spec); full sitemap (204 URLs) POSTed to api.indexnow.org + www.bing.com/indexnow, both 200. **Capability: after any deploy, changed URLs can be pinged directly** (payload shape in LOG 2026-07-17 chore entry; key + keyLocation from the hosted file). First 403 = key-file propagation, retry after a minute.
+
+## Plans layer + redesign + discovery round 3 (2026-07-17, sitting 2)
+- **Spec 17 per-plan pricing DONE**: optional `plans[]` on the gateways schema (name/eligibility/rows/settlement/source) + Plans section on detail pages. 16 gateways carry 46 sourced plans (toyyibpay 4, bayarcash 4, swif 4, payhalal 4, billplz/curlec/senangpay/bcl/betterpay/moby 3, others 2). Data from a 7-subagent official-source sweep of all gateways; HLB + Kiple unreachable from this network (re-verify). Ranking still uses top-level fees (= default plan).
+- **Minimalist redesign (spec 16 + AFU "dark sparse" direction)**: oversized-type hero homepage w/ cheapest-5 live list + folded SEO definition; detail page = giant est-fee number, borderless fee list, lg 2-col grid (data left / features+dev rail right), folded banks/methods/AI-prompt; grouped 3-col footer; collapsed /gateways sidebar groups; MethodologyNote shared fine-print; short chips on /learn. Rollout of the same rhythm to /compare /choose /best /vs /learn-subpages/blog still pending.
+- **Discovery round 3 (2026-07-17)**: 4 subagent lenses + AFU finds + Firecrawl sweep → **11 new gateways** (herepay #1 ranking RM1.07; kineticpay [round-2 "restricted" reject REVERSED, now open], leanx, smap-pay, payright, lekirpay published fees; affanpay, edxapay, tulus, qashier, shopeepay-gateway contact-sales). BNM RMA registry (68 entities) fully reconciled vs directory. 30+ disqualified names recorded in spec-04 history territory (resellers of known gateways, zombies, foreign PSPs). New entries have NO logos yet (monogram fallback) — logo round in BACKLOG.
+- Rankable 18 → 24. Cheapest: herepay RM1.07, fasspay RM1.12, toyyibpay/cardbizpay RM1.19, gkash RM1.24.
 
 ## Decisions (safe summary)
 - **Contribution model (2026-07-02, spec 11):** repo stays PRIVATE; approved applicants get a GitHub collaborator invite; applications arrive via prefilled email (not a backend form). GitHub free gives no branch protection on private repos, so the deploy job is actor-gated (owner-only) as the production safety net. Public-repo fork+PR was offered and declined.
