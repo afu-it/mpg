@@ -1,0 +1,21 @@
+Creative Commons Attribution 4.0 International (CC BY 4.0)
+
+The gateway dataset in this repository — the files under
+src/content/gateways/ and their published form at
+https://malaysiapg.com.my/api/gateways.json — is licensed under CC BY 4.0.
+
+You are free to share and adapt this data for any purpose, including
+commercially, provided you give appropriate credit:
+
+  Attribution: "Malaysia Payment Gateway (malaysiapg.com.my)"
+  with a link to https://malaysiapg.com.my/
+
+Full license text: https://creativecommons.org/licenses/by/4.0/legalcode
+
+Notes:
+- Every fee in the dataset carries a `source` URL (the provider's official
+  page) and a `verified_date`. Fees change; always confirm with the provider
+  before making commercial decisions.
+- Provider names and logos are trademarks of their respective owners. They
+  appear in this dataset for identification only and are NOT licensed under
+  CC BY 4.0.

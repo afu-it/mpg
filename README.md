@@ -1,70 +1,50 @@
-# MPG — Malaysia Payment Gateway
+# Malaysia Payment Gateway (MPG)
 
-A minimalist, dark-mode website that lists Malaysian payment gateways in one
-**comparison table** (sortable, filterable, searchable), with a **detail page**
-per gateway. Built with Astro + Tailwind, deployed as a static site.
+**Compare every Malaysian payment gateway's fees — FPX, cards, e-wallets, DuitNow QR and BNPL — from official sources only.**
+
+Live site: **[malaysiapg.com.my](https://malaysiapg.com.my/)**
+
+- **74 gateways**, every fee sourced from the provider's official pricing page with a `verified_date`
+- Ranked by estimated blended cost on a RM100 transaction (FPX/card/e-wallet weighted 50/30/20) — providers without comparable published rates are listed as "on request", never guessed
+- Free JSON API: [`/api/gateways.json`](https://malaysiapg.com.my/api/gateways.json) · per-gateway: `/api/gateways/<slug>.json`
+- MCP server for AI agents: `https://mpg-mcp.afuitdev.workers.dev/mcp` (source in [`mcp/`](mcp/))
+- Guides for merchants and developers at [/learn](https://malaysiapg.com.my/learn/) and [/blog](https://malaysiapg.com.my/blog/)
+
+## The one hard rule
+
+**Fees are never fabricated.** Every figure comes from an official source URL recorded next to it. If a provider does not publish a rate, the entry says `"Contact sales"` (negotiated/unpublished) or `"—"` (not offered). Third-party figures carry a trailing `*` and are excluded from rankings. Fees are indicative and often negotiable by volume — always confirm with the provider before deciding.
 
 ## Stack
 
-- **Astro** (static output) + **Tailwind CSS v4**
-- Data via **Astro Content Collections** (one markdown file per gateway, Zod-validated)
-- **Vitest** for the fee-parsing logic
-- Deploy: **Cloudflare Pages**
+- [Astro 7](https://astro.build/) static output + Tailwind CSS v4 — no server, no database
+- Gateway data = one Markdown file per provider in [`src/content/gateways/`](src/content/gateways/), Zod-validated against [`src/content.config.ts`](src/content.config.ts)
+- Auth (for the contribute flow) = Clerk via CDN, client-side only
+- Deployed on Cloudflare Pages via GitHub Actions
+- Standalone MCP server (Cloudflare Worker) in [`mcp/`](mcp/)
 
-## Develop
+## Run it
 
 ```bash
 npm install
-npm run dev        # local dev server
-npm run build      # build static site to dist/
+npm run dev        # dev server
+npm test           # vitest (fee parsing, ranking, content rules)
+npx astro check    # types + content schema
+npm run build      # static build (219 pages)
 npm run preview    # preview the built site
-npm test           # run unit tests (fee parsing)
-npx astro check    # type + content-schema check
 ```
 
-## Add a new gateway
+## Contributing
 
-This is the whole point of the data model — **no code changes needed**:
+The easiest high-value contribution: **spot a wrong fee and fix it with an official source.** See [CONTRIBUTING.md](CONTRIBUTING.md) — fork, edit the gateway's `.md` file, open a PR. Adding a missing Malaysian gateway is one new file in `src/content/gateways/`, no code required: the table row, detail page and API entry appear automatically at build.
 
-1. Create `src/content/gateways/<slug>.md` (copy an existing one).
-2. Fill the frontmatter (validated against `src/content.config.ts`):
-   - `fees`: `fpx`, `card`, optional `card_intl`, `ewallet`, `duitnowqr`, `setup`, `monthly`
-   - `settlement`, `min_txn`, `channels`, `features` (`no_code`/`api`/`recurring`)
-   - `website`, `source` (URL of where the fees came from), `verified_date`
-   - Use `"Contact sales"` for unpublished/negotiated, `"—"` for not offered.
-3. Write a short overview in the markdown body (shown on the detail page).
-4. (Optional) drop an SVG logo at `src/assets/logos/<slug>.svg` — otherwise a
-   monogram chip is shown automatically.
-5. `npm run build` — the table row and `/gateway/<slug>` page appear automatically.
+## Licensing
 
-## Data & fees disclaimer
+| What | License |
+|---|---|
+| Source code | [MIT](LICENSE) |
+| Gateway dataset (`src/content/gateways/`, JSON API) | [CC BY 4.0](LICENSE-DATA) — attribute "Malaysia Payment Gateway (malaysiapg.com.my)" |
+| Provider logos (`src/assets/logos/`) | Trademarks of their respective owners, used for identification only |
 
-Fees were collected from each provider's **official pricing page** (see each
-gateway's `source` + `verified_date`). They are **indicative** and may change or
-be negotiable by volume — always confirm with the provider before deciding.
-Nothing here is fabricated; unknown values are marked `Contact sales` or `—`.
+## Author
 
-## Deploy (Cloudflare Pages)
-
-**Dashboard (recommended):** connect the git repo in Cloudflare Pages →
-framework preset **Astro** → build command `npm run build` → output dir `dist`.
-
-**CLI:**
-
-```bash
-npm run build
-npx wrangler pages deploy dist --project-name=mpg
-```
-
-## Project layout
-
-```
-src/
-├── content/gateways/   # one .md per gateway (the data)
-├── content.config.ts   # Zod schema
-├── components/         # GatewayTable, TableControls, FeeCell, FeatureBadge, Logo
-├── scripts/table.ts    # sort / filter / search behaviour
-├── lib/fees.ts         # tested fee parsing
-├── layouts/Base.astro
-└── pages/              # index.astro + gateway/[slug].astro
-```
+Built by [Afu](https://github.com/afu-it) · [@afwzn on Threads](https://www.threads.net/@afwzn) · companion skills repo: [malaysia-payment-gateway](https://github.com/afu-it/malaysia-payment-gateway)
