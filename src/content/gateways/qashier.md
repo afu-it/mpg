@@ -1,0 +1,35 @@
+---
+name: Qashier
+website: https://qashier.com/my/
+tagline: "POS-first payments with pay-by-link and DuitNow QR"
+fees:
+  fpx: "—"
+  card: "Contact sales"
+  ewallet: "Contact sales"
+  duitnowqr: "Contact sales"
+  setup: "Contact sales"
+  monthly: "Contact sales"
+settlement: "Contact sales"
+min_txn: "—"
+channels: [card, ewallet, duitnowqr]
+features:
+  no_code: true
+  api: false
+  recurring: false
+popularity: 32
+verified_date: "2026-07-17"
+source: "https://qashier.com/my/my-qashierpay-pricing/"
+notes: "Singapore fintech operating in Malaysia; POS-first (smart terminals, Soundbox) with online acceptance via Pay by Link rather than a full e-commerce gateway. Channels: Visa/Mastercard, DuitNow QR, TNG, GrabPay, ShopeePay, Boost. A Malaysian pricing page exists but is JS-rendered and could not be verified at review time (search-indexed figures suggest local debit 0.5%, credit 1.2%, foreign 2.75%, wallets from 1.5% — treat as unconfirmed), so fees here are Contact sales. Reported 1,500+ MY merchants onboarded around its Soundbox launch. Next-day settlement marketed."
+---
+
+Qashier arrives at payments from the point-of-sale side: its Malaysian
+business centres on smart POS terminals and a payments Soundbox, with online
+acceptance offered through Pay by Link rather than a developer-first
+e-commerce gateway. Cards, DuitNow QR and the major e-wallets are covered in
+one contract.
+
+A Malaysian pricing page exists, but it renders client-side and its figures
+could not be verified for this entry, so rates are listed as Contact sales.
+For retail and F&B merchants who want one provider across counter and link
+payments it is a credible option; pure online stores will find better-fitting
+tools among the API-first gateways here.
