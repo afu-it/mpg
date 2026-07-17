@@ -3,6 +3,7 @@ import "../styles/global.css";
 import { getCollection } from "astro:content";
 import { organizationLd } from "../lib/jsonld";
 import { pairFor } from "../lib/i18n-pages";
+import { CLUSTERS, blogPath } from "../lib/blog";
 // preload the text face so the LCP headline doesn't wait on the CSS → font chain
 import interWoff2 from "@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url";
 
@@ -11,6 +12,8 @@ interface Props {
   description?: string;
   full?: boolean; // full-bleed layout (index with sidebar)
   lang?: "en" | "ms"; // BM pages under /ms/ set "ms" (spec 12 slice G)
+  ogImage?: string; // site-relative 1200x630 social image (blog posts)
+  ogImageAlt?: string;
 }
 
 const {
@@ -18,6 +21,8 @@ const {
   description = "Compare fees and features of 60+ Malaysian payment gateways: FPX, cards, e-wallets, DuitNow QR and BNPL, sourced from official rate cards. Free and independent.",
   full = false,
   lang = "en",
+  ogImage,
+  ogImageAlt,
 } = Astro.props;
 
 // footer date = most recent fee verification across the directory (data-true,
@@ -41,6 +46,9 @@ const orgLd =
 
 // reciprocal hreflang for the curated BM pairs (both sides, x-default = en)
 const i18nPair = pairFor(canonicalPath);
+
+// footer topic pillars (spec 15): only clusters whose pillar page has shipped
+const livePillars = CLUSTERS.filter((c) => c.live);
 ---
 
 <!doctype html>
@@ -61,7 +69,10 @@ const i18nPair = pairFor(canonicalPath);
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content={new URL("/icon-512.png", Astro.site ?? Astro.url)} />
+    <meta property="og:image" content={new URL(ogImage ?? "/icon-512.png", Astro.site ?? Astro.url)} />
+    {ogImage && <meta property="og:image:width" content="1200" />}
+    {ogImage && <meta property="og:image:height" content="630" />}
+    {ogImage && ogImageAlt && <meta property="og:image:alt" content={ogImageAlt} />}
     {orgLd && <script is:inline type="application/ld+json" set:html={orgLd} />}
     {
       i18nPair && (
@@ -104,9 +115,10 @@ const i18nPair = pairFor(canonicalPath);
           <span class="hidden sm:inline">Malaysia Payment Gateway</span>
         </a>
         <nav class="ml-auto flex items-center gap-2 text-sm">
-          <a href="/gateways" class="hidden rounded-md px-2.5 py-1.5 text-muted hover:bg-panel hover:text-fg sm:inline-block">Gateways</a>
-          <a href="/compare" class="hidden rounded-md px-2.5 py-1.5 text-muted hover:bg-panel hover:text-fg sm:inline-block">Compare</a>
-          <a href="/learn" class="hidden rounded-md px-2.5 py-1.5 text-muted hover:bg-panel hover:text-fg sm:inline-block">Learn</a>
+          <a href="/gateways/" class="hidden rounded-md px-2.5 py-1.5 text-muted hover:bg-panel hover:text-fg sm:inline-block">Gateways</a>
+          <a href="/compare/" class="hidden rounded-md px-2.5 py-1.5 text-muted hover:bg-panel hover:text-fg sm:inline-block">Compare</a>
+          <a href="/blog/" class="hidden rounded-md px-2.5 py-1.5 text-muted hover:bg-panel hover:text-fg sm:inline-block">Guides</a>
+          <a href="/learn/" class="hidden rounded-md px-2.5 py-1.5 text-muted hover:bg-panel hover:text-fg sm:inline-block">Learn</a>
           <div id="clerk-auth" class="flex items-center gap-2"></div>
         </nav>
       </div>
@@ -121,7 +133,7 @@ const i18nPair = pairFor(canonicalPath);
     >
       <div class="mb-3 flex items-center justify-between">
         <span class="flex items-center gap-2 font-semibold text-fg">
-          <img src="/logo-white.svg" alt="" width="20" height="20" class="h-5 w-5 object-contain" />
+          <img src="/logo-white.svg" alt="Malaysia Payment Gateway logo" width="20" height="20" class="h-5 w-5 object-contain" />
           Menu
         </span>
         <button
@@ -138,17 +150,18 @@ const i18nPair = pairFor(canonicalPath);
       <nav class="flex flex-col text-sm" aria-label="Mobile">
         {
           [
-            { href: "/gateways", label: "Gateways" },
-            { href: "/compare", label: "Compare" },
-            { href: "/choose", label: "Help me choose" },
-            { href: "/calculator", label: "Fee calculator" },
-            { href: "/fee-changes", label: "Fee changes" },
+            { href: "/gateways/", label: "Gateways" },
+            { href: "/compare/", label: "Compare" },
+            { href: "/choose/", label: "Help me choose" },
+            { href: "/calculator/", label: "Fee calculator" },
+            { href: "/fee-changes/", label: "Fee changes" },
             { href: "/best/payment-gateway-malaysia/", label: "Best gateways" },
             { href: "/vs/", label: "Comparisons" },
-            { href: "/learn", label: "Learn" },
-            { href: "/learn/api", label: "API & MCP" },
-            { href: "/contribute", label: "Contribute" },
-            { href: "/about", label: "About" },
+            { href: "/blog/", label: "Guides" },
+            { href: "/learn/", label: "Learn" },
+            { href: "/learn/api/", label: "API & MCP" },
+            { href: "/contribute/", label: "Contribute" },
+            { href: "/about/", label: "About" },
           ].map((l) => (
             <a href={l.href} class="rounded-md px-2 py-3 text-fg hover:bg-panel">
               {l.label}
@@ -178,27 +191,39 @@ const i18nPair = pairFor(canonicalPath);
         </p>
         <p>Last updated {updated}. MPG is an independent directory, not affiliated with any provider.</p>
         <p class="pt-1">
-          <a href="/choose" class="text-muted underline-offset-2 hover:text-fg hover:underline">Help me choose</a>
+          <a href="/blog/" class="text-muted underline-offset-2 hover:text-fg hover:underline">Guides</a>
+          {
+            livePillars.map((c) => (
+              <>
+                <span class="px-1">·</span>
+                <a href={blogPath(c.slug)} class="text-muted underline-offset-2 hover:text-fg hover:underline">
+                  {c.name}
+                </a>
+              </>
+            ))
+          }
+          <span class="px-1">·</span>
+          <a href="/choose/" class="text-muted underline-offset-2 hover:text-fg hover:underline">Help me choose</a>
           <span class="px-1">·</span>
           <a href="/best/payment-gateway-malaysia/" class="text-muted underline-offset-2 hover:text-fg hover:underline">Best gateways</a>
           <span class="px-1">·</span>
-          <a href="/calculator" class="text-muted underline-offset-2 hover:text-fg hover:underline">Fee calculator</a>
+          <a href="/calculator/" class="text-muted underline-offset-2 hover:text-fg hover:underline">Fee calculator</a>
           <span class="px-1">·</span>
-          <a href="/fee-changes" class="text-muted underline-offset-2 hover:text-fg hover:underline">Fee changes</a>
+          <a href="/fee-changes/" class="text-muted underline-offset-2 hover:text-fg hover:underline">Fee changes</a>
           <span class="px-1">·</span>
           <a href="/vs/" class="text-muted underline-offset-2 hover:text-fg hover:underline">Comparisons</a>
           <span class="px-1">·</span>
-          <a href="/learn/api" class="text-muted underline-offset-2 hover:text-fg hover:underline">API &amp; MCP for developers</a>
+          <a href="/learn/api/" class="text-muted underline-offset-2 hover:text-fg hover:underline">API &amp; MCP for developers</a>
           <span class="px-1">·</span>
-          <a href="/contribute" class="text-muted underline-offset-2 hover:text-fg hover:underline">Contribute</a>
+          <a href="/contribute/" class="text-muted underline-offset-2 hover:text-fg hover:underline">Contribute</a>
           <span class="px-1">·</span>
-          <a href="/about" class="text-muted underline-offset-2 hover:text-fg hover:underline">About</a>
+          <a href="/about/" class="text-muted underline-offset-2 hover:text-fg hover:underline">About</a>
           <span class="px-1">·</span>
-          <a href="/contact" class="text-muted underline-offset-2 hover:text-fg hover:underline">Contact</a>
+          <a href="/contact/" class="text-muted underline-offset-2 hover:text-fg hover:underline">Contact</a>
           <span class="px-1">·</span>
           <a href="/ms/" class="text-muted underline-offset-2 hover:text-fg hover:underline" hreflang="ms" lang="ms">Bahasa Malaysia</a>
           <span class="px-1">·</span>
-          <a href="/privacy" class="text-muted underline-offset-2 hover:text-fg hover:underline">Privacy</a>
+          <a href="/privacy/" class="text-muted underline-offset-2 hover:text-fg hover:underline">Privacy</a>
         </p>
       </div>
     </footer>

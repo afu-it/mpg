@@ -52,4 +52,28 @@ const gateways = defineCollection({
   }),
 });
 
-export const collections = { gateways };
+// Blog posts (spec 15): editorial layer over the same gateway data. Fee claims
+// in prose stay evergreen; live numbers render from the gateways collection via
+// the post template's answer box + fee table, so posts can never drift from the
+// directory. Cluster slugs must exist in src/lib/blog.ts CLUSTERS.
+const posts = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/posts" }),
+  schema: z.object({
+    title: z.string(), // SERP window 30-65 (test-enforced)
+    description: z.string(), // SERP window 110-160 (test-enforced)
+    pubDate: z.string(), // ISO date
+    updatedDate: z.string().optional(),
+    cluster: z.enum(["fees-pricing", "recurring-payments", "fpx-duitnow", "ewallet-bnpl"]),
+    tags: z.array(z.string()).default([]),
+    // gateway slugs whose live fees render in the answer box + fee table
+    gateways: z.array(z.string()).default([]),
+    sources: z.array(z.object({ label: z.string(), url: z.string().url() })).default([]),
+    faq: z.array(z.object({ q: z.string(), a: z.string() })).default([]),
+    // hero/OG image (site-relative, e.g. /blog/billplz-fees-malaysia.webp),
+    // 1200x630; screenshots of our own pages, so no licensing concerns
+    image: z.string().optional(),
+    imageAlt: z.string().optional(),
+  }),
+});
+
+export const collections = { gateways, posts };

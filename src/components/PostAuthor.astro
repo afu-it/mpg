@@ -1,0 +1,25 @@
+---
+// Author bio box (EEAT): rendered at the bottom of every blog post. The Person
+// JSON-LD lives in the post template's Article block; this is the visible half.
+import { AUTHOR } from "../lib/blog";
+---
+
+<aside class="mt-10 rounded-lg border border-line bg-panel p-4">
+  <p class="text-sm font-medium text-fg">
+    Written by {AUTHOR.name} <span class="text-muted">· {AUTHOR.role}</span>
+  </p>
+  <p class="mt-2 text-sm text-muted">{AUTHOR.bio}</p>
+  <p class="mt-2 text-sm">
+    <a
+      href="https://github.com/afu-it/malaysia-payment-gateway"
+      rel="me"
+      class="text-accent underline-offset-2 hover:underline"
+    >
+      GitHub: gateway agent-skills repo
+    </a>
+    <span class="px-1 text-muted">·</span>
+    <a href="https://www.threads.com/@afwzn" rel="me" class="text-accent underline-offset-2 hover:underline">
+      Threads: @afwzn
+    </a>
+  </p>
+</aside>
