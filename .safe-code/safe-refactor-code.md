@@ -1,6 +1,8 @@
 # safe-refactor-code — flagged candidates
 
-_2026-07-03 (rev 20)_
+_2026-07-17 (rev 21)_
+
+**Guardrail (blog, spec 15):** never hardcode fee numbers in post prose as bare facts — the dated answer box + PostFeeBox are the number carriers (build-time from the gateways collection); prose numbers must be framed against the verification date and re-checked when data changes. Do not "simplify away" the literal pillar routes under src/pages/blog/ — they exist to beat the dynamic [slug] route.
 
 ## Resolved
 - Removed unused dependency `@clerk/clerk-js` (auth loads Clerk from CDN via `window.Clerk`).

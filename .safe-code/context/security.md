@@ -11,7 +11,7 @@ install scripts is added, auth changes, or a server/backend is introduced._
 |---|---|---|
 | Source + content data | github.com/afu-it/mpg (PRIVATE) | 63 gateway `.md` files = the product; single author (bus factor 1, confirmed by git-graph run 2026-07-03) |
 | Build + deploy pipeline | `.github/workflows/deploy.yml` | Owner-gated (`github.actor == github.repository_owner`); actions SHA-pinned 2026-07-03 |
-| Response headers | `public/_headers` | HSTS/XFO/nosniff/Referrer/Permissions live; CSP Report-Only since 2026-07-03 |
+| Response headers | `public/_headers` | HSTS/XFO/nosniff/Referrer/Permissions live; CSP ENFORCING since 2026-07-17 (Report-Only 2026-07-03 → clean smoke → flipped) |
 | MCP Worker | `mcp/` → mpg-mcp.afuitdev.workers.dev | Read-only tools, zod-validated, no secrets; deployed manually by AFU |
 | DNS zone + Pages project | Cloudflare account | Also holds the deploy API token's blast radius |
 | Domain registration | YeahHost (malaysiapg.com.my) | Registrar account = DNS root of trust until NS change |
@@ -90,13 +90,13 @@ Capabilities: remote unauthenticated web access; crafted links (`?ids=` etc.); M
 | TM-003 | npm supply chain: compromised dep executes at build (locally or in CI) | Low | High | Medium | Mitigated: `npm ci` + lockfile, tiny dep tree (6 prod deps), actions SHA-pinned (2026-07-03). Habit: review lockfile diffs on updates; run `npm audit` at upgrade time. |
 | TM-004 | Clerk CDN script compromised/malicious → full-page script control on every page | Very low | High | Medium | **Accepted**: inherent to CDN-hotloaded auth (`@latest`, no SRI). CSP cannot stop a compromised *allowed* origin but blocks its exfil to non-allowed hosts (connect-src). Alternative (self-hosted Clerk JS) rejected: loses instant security patches. |
 | TM-005 | Fee-data poisoning via contribution flow (fabricated fees land in the directory) | Low | Medium (reputation) | Low | Mitigated: no write access for applicants (invite-only), sourcing rules on /contribute, owner reviews + owner-gated deploy. TM-001 fix keeps this contained. |
-| TM-006 | XSS on the site via URL params or future scripts | Low | High | Medium | Verified clean today (see boundaries). CSP Report-Only shipped 2026-07-03 as the regression net; flip to enforcing after AFU's live smoke. `'unsafe-inline'` stays (Astro inlines page scripts) so the *load-bearing* directives are connect-src/object-src/base-uri/frame-src. |
+| TM-006 | XSS on the site via URL params or future scripts | Low | High | Medium | Verified clean today (see boundaries). CSP shipped Report-Only 2026-07-03, ENFORCED 2026-07-17 after AFU's clean real-phone + signed-in smoke (regression net active). `'unsafe-inline'` stays (Astro inlines page scripts) so the *load-bearing* directives are connect-src/object-src/base-uri/frame-src. |
 | TM-007 | MCP Worker / JSON API quota abuse (cost/availability DoS) | Med (bots exist) | Low (read-only, free-tier, static origin) | Low | **Accepted**: no rate limit, no auth — public data by design. CF observability enabled; add Worker rate limiting only if bills/quotas show abuse. |
 | TM-008 | Domain impersonation / typosquat (e.g. .com twin) serving altered fees | Low | Low-Med | Low | Watch only. Brand presence (GSC, schema, backlinks) makes the real domain canonical. |
 
 ### Header decisions (scope A closed)
 
-- CSP: **Report-Only shipped 2026-07-03** (see `public/_headers` comment for the flip-to-enforce plan). Target: enforce after AFU's next live auth smoke with clean console.
+- CSP: **ENFORCING since 2026-07-17** (Report-Only 2026-07-03 → AFU clean smoke → flipped; two weeks of zero console violations). Directive list unchanged; see `public/_headers`.
 - `access-control-allow-origin: *`: Cloudflare Pages default; detached site-wide, re-added for `/api/*` only (2026-07-03).
 - COOP/COEP/CORP: **not enabled, deliberate.** No cross-origin isolation need (no SharedArrayBuffer), no sensitive cross-origin data to leak-protect, and COOP variants risk breaking Clerk's Google OAuth popup for zero practical gain here.
 
@@ -109,5 +109,5 @@ Capabilities: remote unauthenticated web access; crafted links (`?ids=` etc.); M
 
 1. Confirm 2FA on GitHub, Cloudflare, YeahHost, Clerk, Google (TM-002).
 2. Rotate the Google OAuth client secret (pending since 2026-07-02) — Google Cloud Console → credentials → rotate; paste new secret into Clerk dashboard.
-3. After next deploy: verify live headers (CSP-Report-Only present, ACAO gone from HTML, still on /api/*), smoke sign-in email + Google + contribute unlock with console open; report violations so CSP can be enforced.
+3. DONE 2026-07-17: smoke was clean → CSP flipped to enforcing. One-time re-check after the enforcing deploy: sign in once on live with console open.
 4. Before inviting any collaborator: execute the TM-001 mitigation.

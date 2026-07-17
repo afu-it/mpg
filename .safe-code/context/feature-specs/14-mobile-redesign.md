@@ -1,5 +1,5 @@
 ---
-status: in-progress   # suggested | approved | in-progress | done | rejected — AFU pre-approved 2026-07-03 ("buat je terus semua tanpa confirmation")
+status: done   # 2026-07-17: AFU real-device smoke confirmed clean; emulation-verified 2026-07-03
 created: 2026-07-03
 ---
 

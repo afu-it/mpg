@@ -1,5 +1,5 @@
 ---
-status: in-progress   # suggested | approved | in-progress | done | rejected — built 2026-07-03, done after AFU live smoke + securityheaders re-scan
+status: done   # 2026-07-17: AFU smoke clean (phone + signed-in), CSP flipped to enforcing; securityheaders.com grade A achieved 2026-07-03
 created: 2026-07-03
 ---
 

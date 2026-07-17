@@ -1,17 +1,14 @@
 # SESSION — working memory
 
-_2026-07-03 (post-save #2, security + seo-round-2 + mobile session)_
+_2026-07-17 (post-save, seo round 3 session)_
 
 ## Carry Forward
-- **Live: https://malaysiapg.com.my** but 12+ local commits UNPUSHED (classifier blocks agent pushes to master; AFU must say "push" or push himself).
-- Pure **static** Astro 7 + Clerk CDN + Tailwind v4 + @astrojs/sitemap. Never `@clerk/astro` / `@astrojs/cloudflare`.
-- **63 gateways, 191 pages** now (glossary terms, calculator, fee-changes, fastest-settlement, alternatives x12 added this session). vitest 83/83.
-- **Security (spec 13)**: canonical doc `context/security.md`. CSP Report-Only (flip after AFU clean smoke). TM-001 trigger before inviting any collaborator.
-- **Mobile (spec 14)**: nav drawer + filter drawer + card-list table live in code; card transform is pure CSS in GatewayTable.astro over the SAME table DOM (don't "simplify" it away; table.ts depends on that DOM). Emulation-verified; AFU real-device smoke pending.
-- Theme = Jalur Gemilang on dark. **No em-dashes in prose**; `"—"` fee placeholder is data. Fees: official plain / third-party ` *` / else "Contact sales". Never fabricate.
-- **Astro whitespace trap**: inline tags on their own source line glue to text; use {" "}.
-- SERP windows: title 30-65, desc 110-160 — glossary + seo-pages registries are test-enforced.
-- **Don't chrome-devtools verify unless AFU asks** (AFU asked this session for mobile).
+- Live: https://malaysiapg.com.my · 205 pages · vitest 95/95 · CSP ENFORCING (deployed 2026-07-17).
+- Blog layer live (spec 15 in-progress, D-G remain): posts = content collection; numbers render LIVE via answer box + PostFeeBox (never hardcode fees in prose); literal pillar routes beat dynamic [slug]; cluster goes live:true only when its pillar page ships; blog.test.ts enforces SERP windows + em-dash ban + links + sources.
+- ALL internal links carry trailing slashes (codemod 2026-07-17) — keep new links slashed; blog.test.ts checks post bodies.
+- Author entity locked (EEAT interview 2026-07-17): "Afu · developer & founder of MPG"; claims = agent-skills repo + official-source verification ONLY (no production-integration claims); sameAs GitHub afu-it + Threads @afwzn.
+- Editorial pipeline for posts = spec 15 §pipeline (GSC backlog only, product truth = gateways collection, anti-slop, quality gate).
+- House rules unchanged: static Astro 7 + Clerk CDN; no em-dashes in prose; fees sourced or "Contact sales"; don't chrome-devtools verify unless AFU asks (AFU asked for screenshots this session).
 
 ## Task List
 - (none active — session saved)

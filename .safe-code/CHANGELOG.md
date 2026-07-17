@@ -1,6 +1,17 @@
 # Changelog — MPG
 
 ## [Unreleased]
+
+### Added (2026-07-17)
+- Guides/blog section: `/blog/` hub, fees & pricing pillar, and 5 sourced fee guides (Billplz, toyyibPay, HitPay, Stripe Malaysia, how-fees-work) with live fee tables, dated answer boxes, FAQ, author bio and hero images. Site is 205 pages.
+- "Guides" in the header nav and drawer; topic pillars listed in the footer.
+
+### Changed (2026-07-17)
+- Content-Security-Policy is now enforcing (was Report-Only).
+- All internal links use trailing slashes (removes a redirect hop per click).
+
+### Fixed (2026-07-17)
+- Duplicate "Malaysia Malaysia" in Stripe/OxPay/UOB page titles; decorative logo alt text; two short meta descriptions; two under-linked pages (PayNet, fastest-settlement).
 ### Added
 - **About, Privacy and Contact pages**: who runs MPG, how fees are sourced and ranked, what data the site does (and does not) collect, and how to reach the maintainer. Linked from the footer.
 - **Comparisons hub** (`/vs/`): every head-to-head page in one index, plus a "Popular comparisons" block on the homepage.

@@ -1,7 +1,7 @@
 # Progress Tracker — MPG
 
-last_synced_commit: 24a15b3
-context_synced_at: 2026-07-03
+last_synced_commit: 06bdc3f
+context_synced_at: 2026-07-17
 context_selftest: skipped (not first-run)
 
 ## Current Phase
@@ -61,9 +61,15 @@ No server/DB. Deployed (push master → Cloudflare Pages).
 
 ## Security layer (2026-07-03, spec 13)
 - Canonical security doc: `context/security.md` (ownership map + threat model TM-001..TM-008 + header decisions). Read it before touching auth, deploy, headers, or inviting collaborators.
-- Headers: HSTS/XFO/nosniff/Referrer/Permissions live; **CSP is Report-Only** (flip to enforcing after AFU's clean live auth smoke); ACAO detached from HTML, `/api/*` only. COOP/COEP/CORP deliberately not enabled.
+- Headers: HSTS/XFO/nosniff/Referrer/Permissions live; **CSP ENFORCING since 2026-07-17** (AFU smoke clean; specs 13+14 closed). ACAO detached from HTML, `/api/*` only. COOP/COEP/CORP deliberately not enabled.
 - Deploy actions SHA-pinned. **TM-001 trigger**: before inviting ANY collaborator, remove `CLOUDFLARE_API_TOKEN` from GH secrets (switch to Pages direct Git integration) or use fork+PR only — any workflow file on any branch can read repo secrets.
 - AFU open: 2FA confirmation on GitHub/Cloudflare/YeahHost/Clerk/Google; Google OAuth secret rotation (pending since 2026-07-02).
+
+## Blog layer (2026-07-17, spec 15 in-progress)
+- **205 pages.** New: `/blog/` hub + `/blog/fees-pricing/` pillar + 5 posts (billplz/toyyibpay/hitpay/stripe pricing + fees-anchor) as content collection `src/content/posts/` (Zod). Registry `src/lib/blog.ts` (4 clusters, 1 live; AUTHOR entity + articleLd/authorLd), template `src/pages/blog/[slug].astro` (dated auto answer box + PostFeeBox render LIVE fees via toApiGateway — prose stays evergreen, numbers can't drift), FAQPage/Article/Person/ImageObject LD, PostAuthor bio (EEAT: Afu, GitHub+Threads sameAs, honest claims only), hero/OG webp screenshots of our own pages in `public/blog/`. Footer lists live pillars; "Guides" in top nav + drawer. Literal pillar routes beat the dynamic [slug] route — a cluster flips `live: true` only when its pillar page ships.
+- **Editorial pipeline** (spec 15): keyword backlog = real GSC queries only; intent classification; product truth = the gateways collection (never claim what data doesn't hold); anti-slop passes; SERP windows + em-dash ban + internal-link + sources checks are vitest-enforced (blog.test.ts).
+- **Sitewide trailing-slash fix (2026-07-17)**: all internal links now end with `/` (was: 78 paths × thousands of instances causing a 308 per click — the GSC "Page with redirect 104" source). Codemod over 32 files incl client scripts; dist scan = 0. Also: alt text on decorative logos, moby/paycools taglines lengthened, PayNet + fastest-settlement de-orphaned via glossary related-links, gateway title dedupe (Stripe/OxPay/UOB "Malaysia Malaysia").
+- Baseline squirrel audit 2026-07-17: 80/100 (B); Core SEO/EEAT/Schema/Mobile/i18n/Social/URL = 100. Report: session scratchpad.
 
 ## Decisions (safe summary)
 - **Contribution model (2026-07-02, spec 11):** repo stays PRIVATE; approved applicants get a GitHub collaborator invite; applications arrive via prefilled email (not a backend form). GitHub free gives no branch protection on private repos, so the deploy job is actor-gated (owner-only) as the production safety net. Public-repo fork+PR was offered and declined.
