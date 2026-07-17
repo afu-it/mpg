@@ -60,7 +60,7 @@ const dayLabel = (d: number) => (d === 0 ? "Same day" : d === 1 ? "Next business
   <nav aria-label="Breadcrumb" class="mb-4 flex items-center gap-2 text-sm text-muted">
     <a href="/" class="hover:text-fg hover:underline">Home</a>
     <span aria-hidden="true">/</span>
-    <a href="/learn" class="hover:text-fg hover:underline">Learn</a>
+    <a href="/learn/" class="hover:text-fg hover:underline">Learn</a>
     <span aria-hidden="true">/</span>
     <span class="text-fg">Fastest settlement</span>
   </nav>
@@ -87,7 +87,7 @@ const dayLabel = (d: number) => (d === 0 ? "Same day" : d === 1 ? "Next business
             <div class="flex flex-wrap items-center gap-3">
               <span class="w-6 text-right font-semibold text-muted">{i + 1}.</span>
               <Logo slug={x.g.slug} name={x.g.name} size={26} />
-              <a href={`/gateway/${x.g.slug}`} class="font-medium text-fg hover:underline">
+              <a href={`/gateway/${x.g.slug}/`} class="font-medium text-fg hover:underline">
                 {x.g.name}
               </a>
               <span class="ml-auto text-sm text-fg">{x.g.settlement}</span>
@@ -118,7 +118,7 @@ const dayLabel = (d: number) => (d === 0 ? "Same day" : d === 1 ? "Next business
       {
         unstated.map((g) => (
           <a
-            href={`/gateway/${g.slug}`}
+            href={`/gateway/${g.slug}/`}
             class="rounded-full border border-line bg-panel px-3 py-1 text-xs text-muted hover:text-fg"
           >
             {g.name}
@@ -132,10 +132,10 @@ const dayLabel = (d: number) => (d === 0 ? "Same day" : d === 1 ? "Next business
     <a href="/learn/glossary/settlement/" class="rounded-md border border-line px-4 py-2 text-sm text-muted hover:text-fg">
       What does T+1 mean?
     </a>
-    <a href="/compare" class="rounded-md border border-line px-4 py-2 text-sm text-muted hover:text-fg">
+    <a href="/compare/" class="rounded-md border border-line px-4 py-2 text-sm text-muted hover:text-fg">
       Compare side by side
     </a>
-    <a href="/gateways" class="rounded-md border border-line px-4 py-2 text-sm text-muted hover:text-fg">
+    <a href="/gateways/" class="rounded-md border border-line px-4 py-2 text-sm text-muted hover:text-fg">
       Browse all providers
     </a>
   </div>

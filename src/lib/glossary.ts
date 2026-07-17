@@ -36,7 +36,8 @@ export const GLOSSARY: GlossaryTerm[] = [
     ],
     related: [
       { label: "Best FPX payment gateways", href: "/best/payment-gateway-fpx/" },
-      { label: "Browse all gateways", href: "/gateways" },
+      { label: "PayNet, the operator behind FPX", href: "/gateway/paynet/" },
+      { label: "Browse all gateways", href: "/gateways/" },
     ],
   },
   {
@@ -53,7 +54,8 @@ export const GLOSSARY: GlossaryTerm[] = [
     ],
     related: [
       { label: "Best DuitNow QR gateways", href: "/best/payment-gateway-duitnow-qr/" },
-      { label: "Compare gateways", href: "/compare" },
+      { label: "PayNet, who runs DuitNow QR", href: "/gateway/paynet/" },
+      { label: "Compare gateways", href: "/compare/" },
     ],
   },
   {
@@ -70,7 +72,7 @@ export const GLOSSARY: GlossaryTerm[] = [
     ],
     related: [
       { label: "Best e-wallet gateways", href: "/best/payment-gateway-ewallet/" },
-      { label: "Help me choose", href: "/choose" },
+      { label: "Help me choose", href: "/choose/" },
     ],
   },
   {
@@ -87,7 +89,7 @@ export const GLOSSARY: GlossaryTerm[] = [
     ],
     related: [
       { label: "BNPL providers in Malaysia", href: "/best/bnpl-malaysia/" },
-      { label: "Browse all providers", href: "/gateways?category=bnpl" },
+      { label: "Browse all providers", href: "/gateways/?category=bnpl" },
     ],
   },
   {
@@ -104,7 +106,7 @@ export const GLOSSARY: GlossaryTerm[] = [
     ],
     related: [
       { label: "Cheapest payment gateways", href: "/best/cheapest-payment-gateway-malaysia/" },
-      { label: "How fees are ranked", href: "/gateways" },
+      { label: "How fees are ranked", href: "/gateways/" },
     ],
   },
   {
@@ -120,8 +122,9 @@ export const GLOSSARY: GlossaryTerm[] = [
       "Settlement speed often differs by channel within the same gateway: FPX may settle faster than cards. If cash flow is tight, weigh a slightly higher fee with faster settlement against the cheapest headline rate.",
     ],
     related: [
-      { label: "Compare settlement side by side", href: "/compare" },
-      { label: "Browse all gateways", href: "/gateways" },
+      { label: "Fastest-settlement gateways ranked", href: "/best/fastest-settlement/" },
+      { label: "Compare settlement side by side", href: "/compare/" },
+      { label: "Browse all gateways", href: "/gateways/" },
     ],
   },
   {
@@ -137,7 +140,7 @@ export const GLOSSARY: GlossaryTerm[] = [
       "A safe handler verifies the signature, checks the amount and currency against your own pending record, marks the order paid exactly once, and returns success. Everything else, including redirect pages, is presentation.",
     ],
     related: [
-      { label: "The safe integration flow", href: "/learn/integration-flow" },
+      { label: "The safe integration flow", href: "/learn/integration-flow/" },
       { label: "Signature verification", href: "/learn/glossary/signature-verification/" },
     ],
   },
@@ -154,8 +157,8 @@ export const GLOSSARY: GlossaryTerm[] = [
       "Skipping this check is the classic Malaysian integration bug: an attacker replays or forges a success callback and walks away with fulfilled goods that were never paid for. Every gateway documents its exact signing recipe; follow it precisely, including field order and encoding.",
     ],
     related: [
-      { label: "The safe integration flow", href: "/learn/integration-flow" },
-      { label: "Production checklist", href: "/learn/checklist" },
+      { label: "The safe integration flow", href: "/learn/integration-flow/" },
+      { label: "Production checklist", href: "/learn/checklist/" },
     ],
   },
   {
@@ -171,7 +174,7 @@ export const GLOSSARY: GlossaryTerm[] = [
       "The standard pattern is to record the gateway's transaction reference the first time you process it, and short-circuit any later event carrying the same reference. Do the check and the state change inside one database transaction to close race windows.",
     ],
     related: [
-      { label: "The safe integration flow", href: "/learn/integration-flow" },
+      { label: "The safe integration flow", href: "/learn/integration-flow/" },
       { label: "Webhooks explained", href: "/learn/glossary/webhook/" },
     ],
   },
@@ -188,8 +191,8 @@ export const GLOSSARY: GlossaryTerm[] = [
       "Going live is a credential swap, not a code rewrite: point your integration at the live endpoints, replace every test key with its production counterpart, and re-run one real end-to-end payment. Leaving a single sandbox key in production is one of the most common launch failures.",
     ],
     related: [
-      { label: "Production checklist", href: "/learn/checklist" },
-      { label: "The safe integration flow", href: "/learn/integration-flow" },
+      { label: "Production checklist", href: "/learn/checklist/" },
+      { label: "The safe integration flow", href: "/learn/integration-flow/" },
     ],
   },
   {
@@ -239,8 +242,8 @@ export const GLOSSARY: GlossaryTerm[] = [
       "This directory tracks MCP support per gateway (official, community or none), and MPG itself ships an MCP server, so an agent can query this directory the same way while choosing a provider.",
     ],
     related: [
-      { label: "Build with AI agents", href: "/learn/ai-agents" },
-      { label: "MPG's own MCP server", href: "/learn/api" },
+      { label: "Build with AI agents", href: "/learn/ai-agents/" },
+      { label: "MPG's own MCP server", href: "/learn/api/" },
     ],
   },
   {
@@ -256,8 +259,8 @@ export const GLOSSARY: GlossaryTerm[] = [
       "Most gateways in this directory link a matching setup skill on their detail page, and every detail page offers a ready copy-paste prompt so you can hand your agent the right starting point in one click.",
     ],
     related: [
-      { label: "Build with AI agents", href: "/learn/ai-agents" },
-      { label: "Browse gateways", href: "/gateways" },
+      { label: "Build with AI agents", href: "/learn/ai-agents/" },
+      { label: "Browse gateways", href: "/gateways/" },
     ],
   },
 ];

@@ -180,7 +180,7 @@ if (dataEl && root) {
       const th = el("th", "min-w-[150px] px-3 py-3 align-bottom");
       const wrap = el("div", "flex flex-col items-center gap-1.5");
       const a = document.createElement("a");
-      a.href = `/gateway/${g.id}`;
+      a.href = `/gateway/${g.id}/`;
       a.className = "flex flex-col items-center gap-1.5 text-fg hover:text-accent";
       a.appendChild(logoNode(g, 28));
       a.appendChild(nameNode(g.name, "text-center font-medium leading-tight"));

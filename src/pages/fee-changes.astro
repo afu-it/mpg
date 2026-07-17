@@ -59,7 +59,7 @@ const KIND_CLASS: Record<string, string> = {
             <li class="rounded-md border border-line bg-panel px-4 py-3">
               <div class="flex flex-wrap items-center gap-2">
                 {c.slug && validSlugs.has(c.slug) ? (
-                  <a href={`/gateway/${c.slug}`} class="font-medium text-fg hover:underline">
+                  <a href={`/gateway/${c.slug}/`} class="font-medium text-fg hover:underline">
                     {c.name}
                   </a>
                 ) : (
@@ -87,10 +87,10 @@ const KIND_CLASS: Record<string, string> = {
       "Contact sales" rather than keep a stale number.
     </p>
     <div class="mt-4 flex flex-wrap gap-3">
-      <a href="/gateways" class="rounded-md border border-line px-4 py-2 text-sm text-muted hover:text-fg">
+      <a href="/gateways/" class="rounded-md border border-line px-4 py-2 text-sm text-muted hover:text-fg">
         Current fees table
       </a>
-      <a href="/calculator" class="rounded-md border border-line px-4 py-2 text-sm text-muted hover:text-fg">
+      <a href="/calculator/" class="rounded-md border border-line px-4 py-2 text-sm text-muted hover:text-fg">
         Fee calculator
       </a>
     </div>

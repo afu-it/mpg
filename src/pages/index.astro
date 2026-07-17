@@ -84,13 +84,13 @@ const jsonLd = JSON.stringify({
     </p>
     <div class="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
       <a
-        href="/compare"
+        href="/compare/"
         class="inline-flex h-11 items-center justify-center rounded-md bg-brand-blue px-8 text-sm font-medium text-white hover:opacity-90"
       >
         Compare side by side
       </a>
       <a
-        href="/gateways"
+        href="/gateways/"
         class="inline-flex h-11 items-center justify-center gap-2.5 rounded-md border border-line px-8 text-sm font-medium text-fg hover:border-accent"
       >
         Browse gateways
@@ -98,7 +98,7 @@ const jsonLd = JSON.stringify({
       </a>
     </div>
     <p class="mt-4 text-sm text-muted">
-      Not sure which to pick? <a href="/choose" class="text-accent underline underline-offset-2">Help me choose →</a>
+      Not sure which to pick? <a href="/choose/" class="text-accent underline underline-offset-2">Help me choose →</a>
     </p>
   </section>
 
@@ -152,7 +152,7 @@ const jsonLd = JSON.stringify({
   <section class="mx-auto max-w-6xl px-4 py-10 sm:px-6">
     <div class="mb-5 flex items-end justify-between">
       <h2 class="text-xl font-semibold text-fg">Popular gateways</h2>
-      <a href="/gateways" class="text-sm text-accent hover:underline">View all {total} →</a>
+      <a href="/gateways/" class="text-sm text-accent hover:underline">View all {total} →</a>
     </div>
     <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {
@@ -160,7 +160,7 @@ const jsonLd = JSON.stringify({
           const { base, note } = splitName(g.data.name);
           return (
             <a
-              href={`/gateway/${g.id}`}
+              href={`/gateway/${g.id}/`}
               class="group flex flex-col gap-3 rounded-xl border border-line bg-panel p-5 transition-colors hover:border-accent"
             >
               <div class="flex items-center gap-3">
@@ -210,7 +210,7 @@ const jsonLd = JSON.stringify({
         compare fees side by side.
       </p>
       <a
-        href="/gateways"
+        href="/gateways/"
         class="mt-2 inline-flex h-11 items-center justify-center rounded-md bg-brand-blue px-8 text-sm font-medium text-white hover:opacity-90"
       >
         Browse all gateways →

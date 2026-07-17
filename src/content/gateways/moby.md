@@ -2,7 +2,7 @@
 name: MOBY
 website: https://moby.my
 logo_round: true
-tagline: "Zero-risk BNPL: merchant paid upfront"
+tagline: "Zero-risk BNPL: the merchant is paid upfront in full"
 logo: /logos/moby.svg
 fees:
   fpx: "—"

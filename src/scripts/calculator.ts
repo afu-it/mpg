@@ -65,7 +65,7 @@ if (raw && amountInput && channelSelect && tbody && note) {
       tr.appendChild(el("td", "px-3 py-2 text-right text-muted", String(i + 1)));
       const nameTd = el("td", "px-3 py-2");
       const link = el("a", "text-fg hover:underline", row.g.name) as HTMLAnchorElement;
-      link.href = `/gateway/${row.g.slug}`;
+      link.href = `/gateway/${row.g.slug}/`;
       nameTd.appendChild(link);
       tr.appendChild(nameTd);
       tr.appendChild(

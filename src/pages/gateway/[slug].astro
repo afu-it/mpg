@@ -74,7 +74,9 @@ const installCmd = d.skill ? skillInstallCommand(d.skill) : null;
 // SERP-friendly title/description: brand base name (notes like "(by Razorpay)"
 // stay out of the title). Taglines run 37-75 chars, so this fixed suffix lands
 // every description inside the 110-160 char SERP window.
-const pageTitle = `${nameBase} Malaysia fees & features | MPG`;
+// avoid "Stripe Malaysia Malaysia" when the brand name already ends in Malaysia
+const titleBrand = nameBase.endsWith(" Malaysia") ? nameBase : `${nameBase} Malaysia`;
+const pageTitle = `${titleBrand} fees & features | MPG`;
 const pageDesc = `${d.tagline} Fees, settlement times and integrations, verified from official sources on MPG.`;
 
 // head-to-head pages featuring this gateway (internal mesh for the /vs pages)
@@ -120,7 +122,7 @@ const detailLd = [
     title={`${nameBase} data (JSON)`}
   />
   {detailLd.map((obj) => <script is:inline type="application/ld+json" set:html={JSON.stringify(obj)} />)}
-  <a href="/gateways" class="text-sm text-muted hover:text-fg">← All gateways</a>
+  <a href="/gateways/" class="text-sm text-muted hover:text-fg">← All gateways</a>
 
   <header class="mt-4 flex flex-wrap items-start justify-between gap-4">
     <div class="flex items-center gap-3">
@@ -296,7 +298,7 @@ const detailLd = [
               <code class="text-fg">{d.skill}</code>
             </a>{" "}
             and the{" "}
-            <a href="/learn/integration-flow" class="text-accent hover:underline">
+            <a href="/learn/integration-flow/" class="text-accent hover:underline">
               safe flow
             </a>
             .

@@ -55,7 +55,7 @@ const jsonld = [
 
 <Base title={def.title} description={def.description}>
   {jsonld.map((obj) => <script is:inline type="application/ld+json" set:html={JSON.stringify(obj)} />)}
-  <a href="/learn" class="text-sm text-muted hover:text-fg">← Learn</a>
+  <a href="/learn/" class="text-sm text-muted hover:text-fg">← Learn</a>
 
   <header class="mt-4 max-w-2xl">
     <h1 class="text-2xl font-semibold tracking-tight text-fg">
@@ -82,7 +82,7 @@ const jsonld = [
           <li class="flex flex-wrap items-center gap-3 rounded-md border border-line bg-panel px-4 py-3">
             <span class="w-5 text-right font-semibold text-muted">{i + 1}.</span>
             <Logo slug={g.slug} name={g.name} size={22} />
-            <a href={`/gateway/${g.slug}`} class="font-medium text-fg hover:underline">
+            <a href={`/gateway/${g.slug}/`} class="font-medium text-fg hover:underline">
               {g.name}
             </a>
             <span class="ml-auto text-sm text-fg">
@@ -104,7 +104,7 @@ const jsonld = [
         <div class="flex max-w-3xl flex-wrap gap-2">
           {onRequest.map((g) => (
             <a
-              href={`/gateway/${g.slug}`}
+              href={`/gateway/${g.slug}/`}
               class="rounded-full border border-line bg-panel px-3 py-1 text-xs text-muted hover:text-fg"
             >
               {g.name}
@@ -124,10 +124,10 @@ const jsonld = [
     <a href="/best/payment-gateway-ecommerce-plugins/" class="rounded-md bg-brand-blue px-4 py-2 text-sm font-medium text-white hover:opacity-90">
       All plugin-ready gateways
     </a>
-    <a href="/learn/integration-flow" class="rounded-md border border-line px-4 py-2 text-sm text-muted hover:text-fg">
+    <a href="/learn/integration-flow/" class="rounded-md border border-line px-4 py-2 text-sm text-muted hover:text-fg">
       The safe integration flow
     </a>
-    <a href="/learn/checklist" class="rounded-md border border-line px-4 py-2 text-sm text-muted hover:text-fg">
+    <a href="/learn/checklist/" class="rounded-md border border-line px-4 py-2 text-sm text-muted hover:text-fg">
       Production checklist
     </a>
   </div>

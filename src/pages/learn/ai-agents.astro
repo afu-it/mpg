@@ -56,7 +56,7 @@ const articleLd = JSON.stringify(techArticleLd(site, "/learn/ai-agents/", 'Build
   description="Install AFU's setup-* skills, paste a ready prompt, and understand what MCP vs API/webhooks unlocks for AI coding tools when integrating a Malaysian gateway."
 >
   <script is:inline type="application/ld+json" set:html={articleLd} />
-  <a href="/learn" class="text-sm text-muted hover:text-fg">← Learn</a>
+  <a href="/learn/" class="text-sm text-muted hover:text-fg">← Learn</a>
 
   <header class="mt-4 max-w-2xl">
     <h1 class="text-2xl font-semibold tracking-tight text-fg">Build with AI agents</h1>
@@ -89,7 +89,7 @@ const articleLd = JSON.stringify(techArticleLd(site, "/learn/ai-agents/", 'Build
       </li>
       <li>
         <strong class="text-fg">3.</strong> Paste it to your agent. The skill enforces
-        the <a href="/learn/integration-flow" class="text-accent hover:underline">safe flow</a>
+        the <a href="/learn/integration-flow/" class="text-accent hover:underline">safe flow</a>
         : verified webhooks, idempotent settlement, no fake-redirect unlock.
       </li>
     </ol>
@@ -109,7 +109,7 @@ const articleLd = JSON.stringify(techArticleLd(site, "/learn/ai-agents/", 'Build
         withSkill.map((g) => (
           <li class="rounded-md border border-line bg-panel p-3">
             <div class="flex items-center justify-between gap-2">
-              <a href={`/gateway/${g.slug}`} class="font-medium text-fg hover:text-accent">
+              <a href={`/gateway/${g.slug}/`} class="font-medium text-fg hover:text-accent">
                 {g.name}
               </a>
               <a

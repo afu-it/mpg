@@ -80,7 +80,7 @@ const presets = [
       {
         presets.map((p) => (
           <a
-            href={`/compare?ids=${p.ids.join(",")}`}
+            href={`/compare/?ids=${p.ids.join(",")}`}
             class="group flex flex-col gap-1 rounded-lg border border-line bg-panel p-3 transition-colors hover:border-accent"
           >
             <h2 class="text-sm font-semibold text-fg">{p.title}</h2>

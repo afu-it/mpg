@@ -52,7 +52,7 @@ const steps = [
 
 <Base title={title} description={description}>
   {jsonld.map((obj) => <script is:inline type="application/ld+json" set:html={JSON.stringify(obj)} />)}
-  <a href="/learn" class="text-sm text-muted hover:text-fg">← Learn</a>
+  <a href="/learn/" class="text-sm text-muted hover:text-fg">← Learn</a>
 
   <header class="mt-4 max-w-2xl">
     <h1 class="text-2xl font-semibold tracking-tight text-fg">How to accept FPX payments</h1>
@@ -83,7 +83,7 @@ const steps = [
           <li class="flex items-center gap-3 rounded-md border border-line bg-panel px-4 py-3">
             <span class="w-5 text-right font-semibold text-muted">{i + 1}.</span>
             <Logo slug={m.gateway.slug} name={m.gateway.name} size={22} />
-            <a href={`/gateway/${m.gateway.slug}`} class="font-medium text-fg hover:underline">
+            <a href={`/gateway/${m.gateway.slug}/`} class="font-medium text-fg hover:underline">
               {m.gateway.name}
             </a>
             <span class="ml-auto text-sm text-muted">
@@ -102,7 +102,7 @@ const steps = [
     <a href="/learn/glossary/fpx/" class="rounded-md border border-line px-4 py-2 text-sm text-muted hover:text-fg">
       What is FPX?
     </a>
-    <a href="/learn/integration-flow" class="rounded-md border border-line px-4 py-2 text-sm text-muted hover:text-fg">
+    <a href="/learn/integration-flow/" class="rounded-md border border-line px-4 py-2 text-sm text-muted hover:text-fg">
       The safe integration flow
     </a>
   </div>

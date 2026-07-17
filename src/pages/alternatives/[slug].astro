@@ -43,9 +43,9 @@ const otherTargets = alternativesTargets(gateways).filter((g) => g.slug !== targ
   <nav aria-label="Breadcrumb" class="mb-4 flex items-center gap-2 text-sm text-muted">
     <a href="/" class="hover:text-fg hover:underline">Home</a>
     <span aria-hidden="true">/</span>
-    <a href="/gateways" class="hover:text-fg hover:underline">Gateways</a>
+    <a href="/gateways/" class="hover:text-fg hover:underline">Gateways</a>
     <span aria-hidden="true">/</span>
-    <a href={`/gateway/${target.slug}`} class="hover:text-fg hover:underline">{page.base}</a>
+    <a href={`/gateway/${target.slug}/`} class="hover:text-fg hover:underline">{page.base}</a>
     <span aria-hidden="true">/</span>
     <span class="text-fg">Alternatives</span>
   </nav>
@@ -68,7 +68,7 @@ const otherTargets = alternativesTargets(gateways).filter((g) => g.slug !== targ
               <div class="flex flex-wrap items-center gap-3">
                 <span class="w-6 text-right font-semibold text-muted">{i + 1}.</span>
                 <Logo slug={m.gateway.slug} name={m.gateway.name} size={26} />
-                <a href={`/gateway/${m.gateway.slug}`} class="font-medium text-fg hover:underline">
+                <a href={`/gateway/${m.gateway.slug}/`} class="font-medium text-fg hover:underline">
                   {m.gateway.name}
                 </a>
                 <span class="ml-auto text-sm text-fg">
@@ -97,7 +97,7 @@ const otherTargets = alternativesTargets(gateways).filter((g) => g.slug !== targ
           {page.onRequest.map((m) => (
             <li class="flex items-center gap-3 rounded-md border border-line bg-panel px-4 py-3">
               <Logo slug={m.gateway.slug} name={m.gateway.name} size={22} />
-              <a href={`/gateway/${m.gateway.slug}`} class="text-fg hover:underline">
+              <a href={`/gateway/${m.gateway.slug}/`} class="text-fg hover:underline">
                 {m.gateway.name}
               </a>
               <span class="ml-auto text-sm text-muted">Contact sales</span>
@@ -110,15 +110,15 @@ const otherTargets = alternativesTargets(gateways).filter((g) => g.slug !== targ
 
   <div class="mt-8 flex flex-wrap gap-3">
     <a
-      href={`/compare?ids=${compareIds}`}
+      href={`/compare/?ids=${compareIds}`}
       class="rounded-md bg-brand-blue px-4 py-2 text-sm font-medium text-white hover:opacity-90"
     >
       Compare {page.base} with the top picks
     </a>
-    <a href={`/gateway/${target.slug}`} class="rounded-md border border-line px-4 py-2 text-sm text-muted hover:text-fg">
+    <a href={`/gateway/${target.slug}/`} class="rounded-md border border-line px-4 py-2 text-sm text-muted hover:text-fg">
       {page.base} details
     </a>
-    <a href="/choose" class="rounded-md border border-line px-4 py-2 text-sm text-muted hover:text-fg">
+    <a href="/choose/" class="rounded-md border border-line px-4 py-2 text-sm text-muted hover:text-fg">
       Answer 4 questions instead
     </a>
   </div>

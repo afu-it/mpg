@@ -1,0 +1,257 @@
+---
+// Blog post pages (spec 15). Prose is evergreen markdown; the dated answer box
+// and fee table render LIVE directory data for the gateways a post declares,
+// so published numbers can never drift from /gateways. Literal pillar routes
+// (fees-pricing.astro, ...) take precedence over this dynamic route.
+export const prerender = true;
+
+import { getCollection, render } from "astro:content";
+import Base from "../../layouts/Base.astro";
+import PostAuthor from "../../components/PostAuthor.astro";
+import PostFeeBox from "../../components/PostFeeBox.astro";
+import { articleLd, blogPath, clusterBySlug } from "../../lib/blog";
+import { breadcrumbLd } from "../../lib/jsonld";
+import { toApiGateway, type GatewayEntryLike } from "../../lib/api";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("posts");
+  return posts.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const d = entry.data;
+const { Content } = await render(entry);
+
+const site = (Astro.site?.href ?? "https://malaysiapg.com.my/").replace(/\/$/, "");
+const path = `/blog/${entry.id}/`;
+const cluster = clusterBySlug(d.cluster);
+
+// dated quick-answer lines (GEO): generated from live data at build time
+const all = (await getCollection("gateways")) as unknown as GatewayEntryLike[];
+const featured = d.gateways
+  .map((s) => all.find((e) => e.id === s))
+  .filter((e): e is GatewayEntryLike => Boolean(e))
+  .map((e) => ({ e, api: toApiGateway(e) }));
+const answerDate = featured
+  .map((f) => f.e.data.verified_date)
+  .sort()
+  .at(-1);
+
+const related = (await getCollection("posts")).filter(
+  (p) => p.id !== entry.id && p.data.cluster === d.cluster,
+);
+
+const postLd = JSON.stringify(
+  articleLd(
+    site,
+    path,
+    d.title,
+    d.description,
+    d.pubDate,
+    d.updatedDate,
+    d.image ? { url: d.image, alt: d.imageAlt } : undefined,
+  ),
+);
+const crumbLd = JSON.stringify(
+  breadcrumbLd(site, [
+    { name: "Home", path: "/" },
+    { name: "Blog", path: "/blog/" },
+    ...(cluster && cluster.live ? [{ name: cluster.name, path: blogPath(cluster.slug) }] : []),
+    { name: d.title },
+  ]),
+);
+const faqLd =
+  d.faq.length > 0
+    ? JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        inLanguage: "en",
+        mainEntity: d.faq.map((f) => ({
+          "@type": "Question",
+          name: f.q,
+          acceptedAnswer: { "@type": "Answer", text: f.a },
+        })),
+      })
+    : null;
+
+const compareHref =
+  featured.length > 1 ? `/compare/?ids=${featured.map((f) => f.e.id).join(",")}` : null;
+---
+
+<Base title={d.title} description={d.description} ogImage={d.image} ogImageAlt={d.imageAlt}>
+  <script is:inline type="application/ld+json" set:html={postLd} />
+  <script is:inline type="application/ld+json" set:html={crumbLd} />
+  {faqLd && <script is:inline type="application/ld+json" set:html={faqLd} />}
+
+  <nav aria-label="Breadcrumb" class="mb-4 flex flex-wrap items-center gap-2 text-sm text-muted">
+    <a href="/" class="hover:text-fg hover:underline">Home</a>
+    <span aria-hidden="true">/</span>
+    <a href="/blog/" class="hover:text-fg hover:underline">Blog</a>
+    {
+      cluster && cluster.live && (
+        <>
+          <span aria-hidden="true">/</span>
+          <a href={blogPath(cluster.slug)} class="hover:text-fg hover:underline">
+            {cluster.name}
+          </a>
+        </>
+      )
+    }
+  </nav>
+
+  <article class="max-w-2xl">
+    <header>
+      <h1 class="text-2xl font-semibold tracking-tight text-fg">{d.title}</h1>
+      <p class="mt-2 text-sm text-muted">
+        By Afu · Published {d.pubDate}{d.updatedDate ? ` · Updated ${d.updatedDate}` : ""}
+      </p>
+      {
+        d.image && (
+          <img
+            src={d.image}
+            alt={d.imageAlt ?? d.title}
+            width="1200"
+            height="630"
+            fetchpriority="high"
+            class="mt-4 w-full rounded-lg border border-line"
+          />
+        )
+      }
+    </header>
+
+    {
+      featured.length > 0 && (
+        <section class="mt-5 rounded-lg border border-line bg-panel p-4" aria-label="Quick answer">
+          <p class="text-xs font-medium uppercase tracking-wide text-muted">
+            Verified rates as of {answerDate}
+          </p>
+          <ul class="mt-2 space-y-1 text-sm text-fg">
+            {featured.map(({ e, api }) => (
+              <li>
+                <strong>{e.data.name}</strong>: FPX {e.data.fees.fpx}, local cards {e.data.fees.card}, e-wallet{" "}
+                {e.data.fees.ewallet}, DuitNow QR {e.data.fees.duitnowqr} · estimated{" "}
+                {api.rankable && api.est_fee_rm100 != null
+                  ? `RM${api.est_fee_rm100.toFixed(2)} per RM100 basket`
+                  : "cost on request"}{" "}
+                · settlement {e.data.settlement}.
+              </li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
+
+    <div class="post-body mt-6 space-y-4 leading-relaxed text-muted">
+      <Content />
+    </div>
+
+    <PostFeeBox slugs={d.gateways} />
+
+    {
+      d.faq.length > 0 && (
+        <section class="mt-8 border-t border-line pt-6">
+          <h2 class="text-lg font-semibold text-fg">Frequently asked questions</h2>
+          <dl class="mt-3 space-y-4">
+            {d.faq.map((f) => (
+              <div>
+                <dt class="font-medium text-fg">{f.q}</dt>
+                <dd class="mt-1 text-sm text-muted">{f.a}</dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+      )
+    }
+
+    <div class="mt-8 flex flex-wrap gap-3">
+      {
+        compareHref && (
+          <a href={compareHref} class="rounded-md bg-accent-strong px-4 py-2 text-sm font-medium text-white hover:opacity-90">
+            Compare these gateways
+          </a>
+        )
+      }
+      <a href="/choose/" class="rounded-md border border-line px-4 py-2 text-sm text-muted hover:text-fg">
+        Help me choose a gateway
+      </a>
+      <a href="/calculator/" class="rounded-md border border-line px-4 py-2 text-sm text-muted hover:text-fg">
+        Fee calculator
+      </a>
+    </div>
+
+    {
+      d.sources.length > 0 && (
+        <section class="mt-8 border-t border-line pt-4 text-xs text-muted">
+          <h2 class="font-medium uppercase tracking-wide">Sources</h2>
+          <ul class="mt-2 space-y-1">
+            {d.sources.map((s) => (
+              <li>
+                <a href={s.url} class="underline-offset-2 hover:text-fg hover:underline">
+                  {s.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
+
+    <PostAuthor />
+
+    {
+      related.length > 0 && (
+        <section class="mt-10 border-t border-line pt-6">
+          <h2 class="mb-3 text-sm font-medium uppercase tracking-wide text-muted">Related guides</h2>
+          <ul class="space-y-2">
+            {related.map((p) => (
+              <li>
+                <a href={`/blog/${p.id}/`} class="text-accent underline-offset-2 hover:underline">
+                  {p.data.title}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
+  </article>
+</Base>
+
+<style is:global>
+  .post-body h2 {
+    margin-top: 1.75rem;
+    font-size: 1.125rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--color-fg, #fafafa);
+  }
+  .post-body h3 {
+    margin-top: 1.25rem;
+    font-weight: 600;
+    color: var(--color-fg, #fafafa);
+  }
+  .post-body ul,
+  .post-body ol {
+    padding-left: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+  }
+  .post-body ul {
+    list-style: disc;
+  }
+  .post-body ol {
+    list-style: decimal;
+  }
+  .post-body a {
+    color: var(--color-accent, #4f86f5);
+    text-underline-offset: 2px;
+  }
+  .post-body a:hover {
+    text-decoration: underline;
+  }
+  .post-body strong {
+    color: var(--color-fg, #fafafa);
+    font-weight: 600;
+  }
+</style>

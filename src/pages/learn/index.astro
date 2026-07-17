@@ -15,37 +15,37 @@ const topComparisons = vsPairs(gateways)
 
 const sections = [
   {
-    href: "/learn/glossary",
+    href: "/learn/glossary/",
     title: "Glossary",
     desc: "Plain-language definitions: FPX, DuitNow QR, MDR, settlement, webhooks, idempotency, MCP and more.",
   },
   {
-    href: "/learn/integration-flow",
+    href: "/learn/integration-flow/",
     title: "The safe integration flow",
     desc: "The order to wire a gateway so a payment can never be faked: pending record → checkout → verify webhook → settle once.",
   },
   {
-    href: "/learn/ai-agents",
+    href: "/learn/ai-agents/",
     title: "Build with AI agents",
     desc: "Install AFU's setup-* skills, paste a ready prompt, and understand what MCP vs API/webhooks unlocks for AI coding tools.",
   },
   {
-    href: "/learn/checklist",
+    href: "/learn/checklist/",
     title: "Production checklist",
     desc: "What to verify before going live: env vars, webhook URLs, replay-safety, separated keys, no fake-redirect unlock.",
   },
   {
-    href: "/learn/api",
+    href: "/learn/api/",
     title: "Data API",
     desc: "Query the whole directory as JSON (fees, estimated cost, channels, features, developer support) from your code or an AI agent. MCP server coming.",
   },
   {
-    href: "/choose",
+    href: "/choose/",
     title: "Help me choose",
     desc: "Answer a few questions and get a ranked shortlist of gateways that fit your needs, cheapest first.",
   },
   {
-    href: "/contribute",
+    href: "/contribute/",
     title: "Contribute",
     desc: "Spot an outdated fee or a missing gateway? Sign up and apply to help keep the directory accurate.",
   },
@@ -82,7 +82,7 @@ const sections = [
           plugin (WooCommerce, Shopify). You control the code.
         </p>
         <p class="mt-2 text-xs text-muted">e.g. CHIP, Billplz, Stripe, Curlec, Fiuu</p>
-        <a href="/gateways?category=gateway" class="mt-2 inline-block text-sm text-accent hover:underline">
+        <a href="/gateways/?category=gateway" class="mt-2 inline-block text-sm text-accent hover:underline">
           Browse gateways →
         </a>
       </div>
@@ -94,7 +94,7 @@ const sections = [
           the bank's own hosted gateway, usually tied to your business account.
         </p>
         <p class="mt-2 text-xs text-muted">e.g. Maybank2u Pay, CIMB, OCBC</p>
-        <a href="/gateways?category=bank" class="mt-2 inline-block text-sm text-accent hover:underline">
+        <a href="/gateways/?category=bank" class="mt-2 inline-block text-sm text-accent hover:underline">
           Browse banks →
         </a>
       </div>
@@ -106,8 +106,8 @@ const sections = [
           Buy-Now-Pay-Later instalments at checkout.
         </p>
         <p class="mt-2 text-xs text-muted">e.g. Touch 'n Go eWallet, Atome</p>
-        <a href="/gateways?category=ewallet" class="mt-2 inline-block text-sm text-accent hover:underline">E-wallet →</a>
-        <a href="/gateways?category=bnpl" class="mt-2 ml-4 inline-block text-sm text-accent hover:underline">BNPL →</a>
+        <a href="/gateways/?category=ewallet" class="mt-2 inline-block text-sm text-accent hover:underline">E-wallet →</a>
+        <a href="/gateways/?category=bnpl" class="mt-2 ml-4 inline-block text-sm text-accent hover:underline">BNPL →</a>
       </div>
     </div>
   </section>
@@ -136,7 +136,7 @@ const sections = [
     <h2 class="text-base font-medium text-fg">Guides: best gateway for your need</h2>
     <p class="mt-1.5 max-w-2xl text-sm text-muted">
       Pre-ranked shortlists for common needs, using the same estimated-cost engine as the
-      directory and the <a href="/choose" class="text-accent hover:underline">Help me choose</a> wizard.
+      directory and the <a href="/choose/" class="text-accent hover:underline">Help me choose</a> wizard.
     </p>
     <div class="mt-4 flex flex-wrap gap-2">
       {

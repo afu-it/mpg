@@ -49,7 +49,7 @@ const crumbLd = breadcrumbLd(String(Astro.site ?? "https://malaysiapg.com.my/"),
   <p class="mt-2 max-w-3xl text-muted">
     Side-by-side fees and features for Malaysian merchants, from each provider's published
     pricing. For the full matrix including supported banks and e-wallets, open the{" "}
-    <a href={`/compare?ids=${a.slug},${b.slug}`} class="text-accent hover:underline">interactive comparison</a>.
+    <a href={`/compare/?ids=${a.slug},${b.slug}`} class="text-accent hover:underline">interactive comparison</a>.
   </p>
 
   <section class="mt-6">
@@ -71,12 +71,12 @@ const crumbLd = breadcrumbLd(String(Astro.site ?? "https://malaysiapg.com.my/"),
           <tr class="border-b border-line bg-panel text-left">
             <th class="px-4 py-3 font-medium text-muted"></th>
             <th class="px-4 py-3">
-              <a href={`/gateway/${a.slug}`} class="flex items-center gap-2 font-medium text-fg hover:underline">
+              <a href={`/gateway/${a.slug}/`} class="flex items-center gap-2 font-medium text-fg hover:underline">
                 <Logo slug={a.slug} name={a.name} size={20} /> {a.name}
               </a>
             </th>
             <th class="px-4 py-3">
-              <a href={`/gateway/${b.slug}`} class="flex items-center gap-2 font-medium text-fg hover:underline">
+              <a href={`/gateway/${b.slug}/`} class="flex items-center gap-2 font-medium text-fg hover:underline">
                 <Logo slug={b.slug} name={b.name} size={20} /> {b.name}
               </a>
             </th>
@@ -124,18 +124,18 @@ const crumbLd = breadcrumbLd(String(Astro.site ?? "https://malaysiapg.com.my/"),
 
   <div class="mt-8 flex flex-wrap gap-3">
     <a
-      href={`/compare?ids=${a.slug},${b.slug}`}
+      href={`/compare/?ids=${a.slug},${b.slug}`}
       class="rounded-md bg-brand-blue px-4 py-2 text-sm font-medium text-white hover:opacity-90"
     >
       Full comparison
     </a>
-    <a href={`/gateway/${a.slug}`} class="rounded-md border border-line px-4 py-2 text-sm text-muted hover:text-fg">
+    <a href={`/gateway/${a.slug}/`} class="rounded-md border border-line px-4 py-2 text-sm text-muted hover:text-fg">
       {a.name} details
     </a>
-    <a href={`/gateway/${b.slug}`} class="rounded-md border border-line px-4 py-2 text-sm text-muted hover:text-fg">
+    <a href={`/gateway/${b.slug}/`} class="rounded-md border border-line px-4 py-2 text-sm text-muted hover:text-fg">
       {b.name} details
     </a>
-    <a href="/choose" class="rounded-md border border-line px-4 py-2 text-sm text-muted hover:text-fg">
+    <a href="/choose/" class="rounded-md border border-line px-4 py-2 text-sm text-muted hover:text-fg">
       Help me choose
     </a>
   </div>

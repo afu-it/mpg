@@ -1,0 +1,72 @@
+---
+// Blog hub (spec 15): every post, newest first, grouped visually by cluster chip.
+export const prerender = true;
+
+import { getCollection } from "astro:content";
+import Base from "../../layouts/Base.astro";
+import { CLUSTERS, blogPath, clusterBySlug } from "../../lib/blog";
+import { breadcrumbLd } from "../../lib/jsonld";
+
+const posts = (await getCollection("posts")).sort((a, b) =>
+  (b.data.updatedDate ?? b.data.pubDate).localeCompare(a.data.updatedDate ?? a.data.pubDate),
+);
+const site = (Astro.site?.href ?? "https://malaysiapg.com.my/").replace(/\/$/, "");
+const crumbLd = JSON.stringify(
+  breadcrumbLd(site, [{ name: "Home", path: "/" }, { name: "Blog" }]),
+);
+const livePillars = CLUSTERS.filter((c) => c.live);
+---
+
+<Base
+  title="Malaysian payment gateway guides & fee breakdowns | MPG"
+  description="Practical guides for choosing and paying less for a Malaysian payment gateway: per-provider fee breakdowns, FPX, DuitNow QR, e-wallets and recurring billing."
+>
+  <script is:inline type="application/ld+json" set:html={crumbLd} />
+
+  <header class="max-w-2xl">
+    <h1 class="text-2xl font-semibold tracking-tight text-fg">MPG guides</h1>
+    <p class="mt-3 text-muted">
+      Practical, sourced write-ups on Malaysian payment gateways. Every fee figure comes from the same
+      verified dataset that powers the{" "}
+      <a href="/gateways/" class="text-accent underline-offset-2 hover:underline">directory</a>, so guides
+      never drift from the live numbers.
+    </p>
+  </header>
+
+  {
+    livePillars.length > 0 && (
+      <section class="mt-6 flex flex-wrap gap-2">
+        {livePillars.map((c) => (
+          <a
+            href={blogPath(c.slug)}
+            class="rounded-full border border-line bg-panel px-3 py-1 text-xs text-muted hover:text-fg"
+          >
+            {c.name}
+          </a>
+        ))}
+      </section>
+    )
+  }
+
+  <section class="mt-8 max-w-2xl space-y-6">
+    {
+      posts.map((p) => {
+        const c = clusterBySlug(p.data.cluster);
+        return (
+          <article class="rounded-lg border border-line bg-panel p-4">
+            <p class="text-xs text-muted">
+              {p.data.updatedDate ?? p.data.pubDate}
+              {c && <span class="ml-2 rounded-full border border-line px-2 py-0.5">{c.name}</span>}
+            </p>
+            <h2 class="mt-2 text-lg font-semibold text-fg">
+              <a href={`/blog/${p.id}/`} class="hover:text-accent">
+                {p.data.title}
+              </a>
+            </h2>
+            <p class="mt-1 text-sm text-muted">{p.data.description}</p>
+          </article>
+        );
+      })
+    }
+  </section>
+</Base>

@@ -1,7 +1,7 @@
 ---
 name: PayCools
 website: https://www.paycools.com.my
-tagline: "BNM-registered gateway with free setup"
+tagline: "BNM-registered Malaysian payment gateway with free setup"
 fees:
   fpx: "Contact sales"
   card: "Contact sales"

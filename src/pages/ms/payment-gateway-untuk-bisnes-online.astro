@@ -110,7 +110,7 @@ const jsonld = [
             <div class="flex flex-wrap items-center gap-3">
               <span class="w-6 text-right font-semibold text-muted">{i + 1}.</span>
               <Logo slug={m.gateway.slug} name={m.gateway.name} size={26} />
-              <a href={`/gateway/${m.gateway.slug}`} class="font-medium text-fg hover:underline">
+              <a href={`/gateway/${m.gateway.slug}/`} class="font-medium text-fg hover:underline">
                 {m.gateway.name}
               </a>
               <span class="ml-auto text-sm text-fg">
@@ -137,7 +137,7 @@ const jsonld = [
           {onRequest.map((m) => (
             <li class="flex items-center gap-3 rounded-md border border-line bg-panel px-4 py-3">
               <Logo slug={m.gateway.slug} name={m.gateway.name} size={22} />
-              <a href={`/gateway/${m.gateway.slug}`} class="text-fg hover:underline">
+              <a href={`/gateway/${m.gateway.slug}/`} class="text-fg hover:underline">
                 {m.gateway.name}
               </a>
               <span class="ml-auto text-sm text-muted">Hubungi jualan</span>
@@ -155,7 +155,7 @@ const jsonld = [
     <a href="/ms/payment-gateway-murah/" class="rounded-md border border-line px-4 py-2 text-sm text-muted hover:text-fg">
       Senarai paling murah
     </a>
-    <a href="/gateways" class="rounded-md border border-line px-4 py-2 text-sm text-muted hover:text-fg">
+    <a href="/gateways/" class="rounded-md border border-line px-4 py-2 text-sm text-muted hover:text-fg">
       Semua {gateways.length} penyedia
     </a>
   </div>

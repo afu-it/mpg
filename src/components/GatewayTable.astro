@@ -121,11 +121,11 @@ const td = "whitespace-nowrap px-3 py-3 align-middle";
             data-no_code={String(g.data.features.no_code)}
             data-api={String(g.data.features.api)}
             data-recurring={String(g.data.features.recurring)}
-            data-href={`/gateway/${g.id}`}
+            data-href={`/gateway/${g.id}/`}
           >
             <td class={`${td} sticky left-0 bg-surface`} data-sort-value={g.data.name.toLowerCase()}>
               <a
-                href={`/gateway/${g.id}`}
+                href={`/gateway/${g.id}/`}
                 class="flex items-center gap-2.5 font-medium text-fg hover:text-accent"
               >
                 <Logo slug={g.id} name={g.data.name} />
