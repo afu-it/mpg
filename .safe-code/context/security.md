@@ -10,7 +10,7 @@ install scripts is added, auth changes, or a server/backend is introduced._
 | Asset | Where | Notes |
 |---|---|---|
 | Source + content data | github.com/afu-it/mpg (PRIVATE) | 63 gateway `.md` files = the product; single author (bus factor 1, confirmed by git-graph run 2026-07-03) |
-| Build + deploy pipeline | `.github/workflows/deploy.yml` | Owner-gated (`github.actor == github.repository_owner`); actions SHA-pinned 2026-07-03 |
+| Build + deploy pipeline | Cloudflare Pages Git integration (project `mpg-site`) | Since 2026-07-17: Cloudflare builds on push; NO GitHub Actions deploy, NO secrets in GitHub (TM-001 closed) |
 | Response headers | `public/_headers` | HSTS/XFO/nosniff/Referrer/Permissions live; CSP ENFORCING since 2026-07-17 (Report-Only 2026-07-03 → clean smoke → flipped) |
 | MCP Worker | `mcp/` → mpg-mcp.afuitdev.workers.dev | Read-only tools, zod-validated, no secrets; deployed manually by AFU |
 | DNS zone + Pages project | Cloudflare account | Also holds the deploy API token's blast radius |
@@ -31,8 +31,9 @@ install scripts is added, auth changes, or a server/backend is introduced._
 ### Access inventory (2026-07-03)
 
 - Push access: AFU only (no collaborators invited yet). Deploy: AFU only (actor gate).
-- GH secrets: `PUBLIC_CLERK_PUBLISHABLE_KEY` (public-by-design), `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`.
-- Clerk `sk_*` is used NOWHERE (client-side auth only) — no server secret to leak.
+- GH secrets: NONE (all three deleted 2026-07-17 when deploys moved to Pages Git integration). `PUBLIC_CLERK_PUBLISHABLE_KEY` (public-by-design) lives as a Pages build env var.
+- Clerk `sk_*` is used nowhere in the repo or site (client-side auth only). Correction 2026-07-17: local `.env` DOES hold a `CLERK_SECRET_KEY` for `clerk` CLI administration only — gitignored, never committed, never in the build.
+- Old Cloudflare deploy API token: pending AFU revocation at dash.cloudflare.com/profile/api-tokens (it also lives in the machine's shell env, not just `.env`).
 - 2FA status on GitHub / Cloudflare / Clerk / Google / YeahHost: **unconfirmed — AFU to verify** (highest-leverage single control for this project).
 
 ## Threat model
@@ -85,7 +86,7 @@ Capabilities: remote unauthenticated web access; crafted links (`?ids=` etc.); M
 
 | ID | Threat | Likelihood | Impact | Priority | Status |
 |---|---|---|---|---|---|
-| TM-001 | Invited collaborator adds/edits a workflow file on any branch → workflow runs with repo secrets → exfiltrates `CLOUDFLARE_API_TOKEN` → deploys arbitrary content / controls Pages. The owner-gate protects the *deploy job*, not *secrets access*. | Low today (zero collaborators) | High | **Medium now, HIGH on first invite** | **Accepted with trigger**: BEFORE inviting the first collaborator, either (a) move deploys to Cloudflare Pages' direct Git integration and delete the CF token from GH secrets, or (b) collaborators contribute via fork + PR only (no write access). Recorded in BACKLOG. |
+| TM-001 | Invited collaborator adds/edits a workflow file on any branch → workflow runs with repo secrets → exfiltrates `CLOUDFLARE_API_TOKEN` → deploys arbitrary content / controls Pages. The owner-gate protects the *deploy job*, not *secrets access*. | Low today (zero collaborators) | High | **Medium now, HIGH on first invite** | **CLOSED 2026-07-17 (spec 19)**: deploys moved to Cloudflare Pages direct Git integration; `deploy.yml` deleted; all GH secrets deleted. Residual: revoke the old CF token (AFU, profile page). Repo is now public; contributions arrive via fork+PR with no write access — GitHub never passes secrets (there are none) to fork PRs. |
 | TM-002 | AFU account takeover (GitHub/Cloudflare/YeahHost/Clerk/Google) via phishing/reuse | Low-Med | Critical (full site/domain control) | HIGH | **AFU action**: confirm 2FA (ideally passkey/TOTP, not SMS) on all five. Single highest-leverage control. |
 | TM-003 | npm supply chain: compromised dep executes at build (locally or in CI) | Low | High | Medium | Mitigated: `npm ci` + lockfile, tiny dep tree (6 prod deps), actions SHA-pinned (2026-07-03). Habit: review lockfile diffs on updates; run `npm audit` at upgrade time. |
 | TM-004 | Clerk CDN script compromised/malicious → full-page script control on every page | Very low | High | Medium | **Accepted**: inherent to CDN-hotloaded auth (`@latest`, no SRI). CSP cannot stop a compromised *allowed* origin but blocks its exfil to non-allowed hosts (connect-src). Alternative (self-hosted Clerk JS) rejected: loses instant security patches. |

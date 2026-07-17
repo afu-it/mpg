@@ -2,6 +2,15 @@
 
 ## [Unreleased]
 
+### Added (2026-07-17, night — open source)
+- MPG is now open source at github.com/afu-it/mpg: MIT-licensed code, CC BY 4.0 gateway dataset, contribution guide and issue templates. Contribute page now points to the public fork-and-PR flow.
+- API and MCP badges on the gateway list; MCP servers verified for all 74 providers (9 total: 5 official, 4 community incl newly found Billplz and iPay88 community servers); 27 developer-docs links added or corrected.
+- Open source and data-licence section on About; dataset schema now carries a machine-readable CC BY 4.0 licence.
+
+### Changed (2026-07-17, night)
+- Minimalist design rhythm extended to the compare, choose, best-of, versus, alternatives, learn and blog pages (no copy removed).
+- Deploys now run through Cloudflare Pages' Git integration; pull requests get automatic preview deployments.
+
 ### Added (2026-07-17, evening)
 - Official logos for all 11 newly added gateways.
 - Three business-type guides: best payment options for physical stores, for digital products and services, and for SaaS subscriptions.

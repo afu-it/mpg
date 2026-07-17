@@ -2,19 +2,18 @@
 
 ## Last Session
 status: saved
-saved_at: 2026-07-17 malam (save #5: logos + business-type pages + dev filter)
+saved_at: 2026-07-17 malam lewat (save #6: spec-16 rollout + dev-verification + OPEN SOURCE + deploy migration + SEO signals)
 completed:
-  - Logo round DONE (11 official marks incl tulus gold-ring HD + LeanX disc per AFU refs); spec 18 business-type profiles (physical/digital/saas) DONE; Developer filter (API+MCP) on /gateways; hero spacing fixed. 219 pages.
-  - FULL fee re-verification (AFU-triggered after catching the AffanPay miss): 7 Firecrawl agents, all 74 gateways, ~20 corrected, 9 fee-changes entries, verified_date 2026-07-17 sitewide, rankable 27, new top-3 herepay/fasspay/m1pay. Never-truncate scraping rule locked in ai-workflow-rules.
-  - Post-save UI fixes live: bordered plans, /vs winner highlight, centered footer, new hero line.
-  - Minimalist redesign (spec 16 A-F + dark-sparse full pass): homepage, detail pages (2-col desktop), footer, /gateways, /learn, MethodologyNote.
-  - Spec 17 DONE: plans[] schema + Plans UI; 16 gateways / 46 sourced plans via 7-subagent sweep.
-  - Discovery round 3: 11 new gateways (74 total; Herepay new #1 RM1.07). BNM registry fully reconciled; 30+ names disqualified with reasons.
-  - Blog layer (spec 15 A-C), squirrel quick fixes, CSP enforcing, IndexNow direct push — from earlier saves today, all live.
+  - Spec 16 rollout DONE (compare/choose/best/vs/alternatives + learn/blog typographic pass; 0 word-count losses; spec closed).
+  - Dev-claims verification: 8 Firecrawl subagents over all 74 gateways; MCP 7→9 (billplz + ipay88 community found), 27 dev_docs fixed, 4 api flips; API + MCP badges (blue accent) on /gateways.
+  - OPEN SOURCE (spec 19 DONE): repo PUBLIC after clean 149-commit secret scan; MIT + CC BY 4.0 + trademark notice; README/CONTRIBUTING/issue templates; /contribute = fork+PR; branch protection on.
+  - Deploy migrated to Cloudflare Pages Git integration (`mpg-site`); deploy.yml + ALL GH secrets deleted; TM-001 CLOSED. Gotchas recorded in MEMORY (wrangler.toml trap, Workers-vs-Pages tab).
+  - SEO signals live: Dataset LD CC BY 4.0 URL, Organization sameAs GitHub, footer GitHub link, /about licence section, llms.txt note; IndexNow pinged. All commits pushed + deployed + live-verified.
 pending:
-  - Spec 16 rollout: sparse rhythm to /compare /choose /best/* /vs/* /learn subpages + blog pages.
-  - Spec 15 slices D-G (recurring cluster next: BM query "maksud recurring payment").
-  - AFU distribution round (BACKLOG HIGH): GSC Request Indexing (blog + new gateway pages), Clerk-subdomain removal, Threads post, MCP registries; Bing watch (IndexNow accepted 204 URLs; sitemap now 216+).
-  - AFU: one live sign-in w/ console open (CSP enforcing); 2FA; OAuth rotation; spec 02 decision.
-  - Fee-refresh candidates + HLB/Kiple re-verify (BACKLOG).
-next_action: Pick ONE: (a) logo round for the 10 new gateways (fast quality win before anyone sees monograms), (b) spec 16 rollout to remaining pages, or (c) spec 15 slice D. Then IndexNow-ping the changed/new URLs after the next deploy (key file already hosted; payload shape in LOG 2026-07-17).
+  - AFU HIGH: revoke old Cloudflare API token (dash.cloudflare.com/profile/api-tokens; also remove from machine shell env).
+  - AFU HIGH: SwiF (swifs.io) looks hacked — decide keep-with-warning vs delist.
+  - AFU distribution round (BACKLOG): GSC Request Indexing, Threads post (open-source story ready), MCP registries (text in BACKLOG, updated to 74), Wikidata, repo Website field.
+  - Delete old `mpg` Pages project after a few stable days.
+  - Spec 15 slices D-G (next: recurring cluster, BM query "maksud recurring payment").
+  - Fee-refresh candidates + HLB/Kiple re-verify + dev-data MED follow-ups (BACKLOG).
+next_action: Spec 15 slice D (recurring cluster) is the next build work; otherwise process AFU distribution-round results. Everything is already pushed + live, no unpushed work except this save's bookkeeping commit.

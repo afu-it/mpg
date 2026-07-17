@@ -1,5 +1,5 @@
 ---
-status: in-progress   # AFU approved ALL slices 2026-07-17 + added E (/learn chip walls) + F (detail-page block pile: AI-prompt box, 18 bank chips, long vs-chips, scattered provenance)
+status: done   # slices A-F 2026-07-17 sitting 2; rollout to compare/choose/best/vs/alternatives/learn/blog done sitting 3
 created: 2026-07-17
 ---
 # Minimalist pass — reduce visual clutter without SEO regression

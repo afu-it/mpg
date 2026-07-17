@@ -6,7 +6,7 @@
 - **Vitest** for the pure logic libs: fee math (`fees.ts`), API shaping (`api.ts`), recommendations (`recommend.ts`), SEO page builders (`seo-pages.ts`).
 - **@astrojs/sitemap** (build-time only, static-safe — NOT an SSR adapter) emits `sitemap-index.xml`; `public/robots.txt` points crawlers at it.
 - **Auth:** `@clerk/clerk-js` (browser SDK) loaded **from Clerk's CDN** in `src/scripts/auth.ts` — client-side only. Frontend-API host is derived from the publishable key.
-- **Hosting:** Cloudflare Pages (static assets). CI: GitHub Actions (`.github/workflows/deploy.yml`) → build + test + `wrangler pages deploy`. The deploy job is gated `if: github.actor == github.repository_owner` (spec 11): only AFU's pushes deploy production; invited collaborators' pushes never auto-deploy.
+- **Hosting:** Cloudflare Pages via **direct Git integration** (project `mpg-site`, since 2026-07-17 spec 19): push `master` → Cloudflare clones, builds (`npm run build` → `dist`) and deploys; PRs get preview deployments. GitHub Actions deploy + all GH secrets REMOVED (TM-001 closed) — no tokens live in GitHub. `PUBLIC_CLERK_PUBLISHABLE_KEY` (public by design) is a Pages build env var. Do NOT re-add a root `wrangler.toml`: its presence makes the Pages build ignore dashboard build command/env vars. Old direct-upload project `mpg` kept domain-less as rollback (delete after stability). Repo is PUBLIC (MIT code / CC BY 4.0 data).
 
 ## Navigation map (where things live)
 - Data: `src/content/gateways/<slug>.md` · schema `src/content.config.ts`

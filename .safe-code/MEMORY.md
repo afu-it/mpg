@@ -1,6 +1,6 @@
 # MEMORY — temporary audit/architecture notes
 
-_2026-07-17 petang (rev 11)_ — squirrel baseline 2026-07-17: 80/B, all category details + deferred items live in BACKLOG; report in session scratchpad (not persisted).
+_2026-07-17 malam lewat (save #6)_ — squirrel baseline 2026-07-17: 80/B, all category details + deferred items live in BACKLOG; report in session scratchpad (not persisted).
 
 ## Security layer (2026-07-03, spec 13)
 - Canonical doc: `context/security.md` (ownership map, TM-001..008, header decisions). Highlights that bite during coding: CSP is **Report-Only** in `public/_headers` (flip after AFU smoke); Cloudflare Pages injects `access-control-allow-origin: *` by default — we detach it and re-add on `/api/*` only; deploy actions are SHA-pinned; XSS-clean verified (URL params allowlisted, `esc()` in choose.ts, textContent-only DOM).
@@ -100,3 +100,6 @@ ever needs a server + DB, these lessons from that build still hold:
 - Cloudflare **Pages Functions** (`/functions/api/*`) + **D1**, separate from the Astro build. Verify Clerk server-side with `@clerk/backend` (`verifyToken`, networked JWKS via `secretKey`).
 - **Type isolation:** `/functions` needs its own `tsconfig.json` (`lib: ES2022`, `types: @cloudflare/workers-types`, `exclude: []`) and the root tsconfig must `exclude: ["functions"]`. Otherwise DOM `Request`/`Response`/`Headers` clash with Workers types (`getAll`/`webSocket` errors). Don't add the `WebWorker` lib — it reintroduces a conflicting `Response`.
 - **Safe-deploy pattern:** Functions check `env.DB && env.CLERK_SECRET_KEY` → 503 when unset, so an inert binding never breaks the live `wrangler pages deploy`.
+
+## Lessons (2026-07-17)
+- **Cloudflare Pages Git-build trap (2026-07-17)**: a root `wrangler.toml` with `pages_build_output_dir` makes the Pages build read config from the FILE and ignore dashboard build command + env vars (log says "Build environment variables: (none found)"). Also: the dashboard's default Connect-to-Git tab creates a WORKER, not a Pages project — use the Pages tab. Publishable Clerk key can be recovered from the live site HTML (public by design).

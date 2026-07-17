@@ -1,6 +1,6 @@
 # safe-refactor-code — flagged candidates
 
-_2026-07-17 malam (rev 24)_
+_2026-07-17 malam lewat (save #6; no new flags this session)_
 
 **Guardrail (plans, spec 17):** `plans[]` rows are generic label/value FROM OFFICIAL SOURCES only; top-level `fees` = default plan and stay the ranking input — never derive ranking from plan rows. New-gateway entries without logos use the monogram fallback; never hotlink provider images.
 
