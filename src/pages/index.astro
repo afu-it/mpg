@@ -8,9 +8,6 @@ import { toApiGateway, type GatewayEntryLike } from "../lib/api";
 
 const gateways = await getCollection("gateways");
 const total = gateways.length;
-const bnplCount = gateways.filter((g) => g.data.category === "bnpl").length;
-const infraCount = gateways.filter((g) => g.data.category === "infrastructure").length;
-const gatewayCount = total - bnplCount - infraCount;
 
 // data teaser: the 5 cheapest ranked gateways, straight from the same engine
 // as /gateways — the homepage shows the product, not marketing sections
@@ -19,7 +16,6 @@ const ranked = (gateways as unknown as GatewayEntryLike[])
   .filter((x) => x.api.rankable && x.api.est_fee_rm100 != null)
   .sort((a, b) => a.api.est_fee_rm100! - b.api.est_fee_rm100!)
   .slice(0, 5);
-const verified = gateways.map((g) => g.data.verified_date).sort().at(-1);
 
 // entity signals for Google (site is new; helps search + AI systems identify it)
 const siteUrl = String(Astro.site);
@@ -62,7 +58,7 @@ const jsonLd = JSON.stringify({
       Every Malaysian payment gateway, compared.
     </h1>
     <p class="mx-auto mt-6 text-base text-muted sm:text-lg">
-      {gatewayCount} gateways · {bnplCount} BNPL providers · fees verified {verified} · free
+      {total} providers · every fee from official sources · free and independent
     </p>
     <div class="mt-10 flex flex-col justify-center gap-3 sm:flex-row">
       <a
