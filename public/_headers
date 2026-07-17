@@ -1,9 +1,8 @@
 # Cloudflare Pages headers (see https://developers.cloudflare.com/pages/configuration/headers/)
 #
-# CSP ships as Report-Only first (spec 13): violations log to the browser console,
-# nothing is blocked. Flip to enforcing (rename to Content-Security-Policy) only
-# after AFU smoke-tests live sign-in (email + Google), the user button, and the
-# contribute form unlock with a clean console.
+# CSP is ENFORCING (flipped 2026-07-17 after AFU's clean live smoke: real-phone
+# drawers/cards/compare + signed-in email/Google/contribute-unlock, zero console
+# violations during the Report-Only window since 2026-07-03).
 # script-src needs 'unsafe-inline' because Astro inlines the small per-page module
 # script; Clerk loads from clerk.malaysiapg.com.my (host decoded from pk_live) and
 # may embed Cloudflare Turnstile (challenges.cloudflare.com). JSON-LD blocks are
@@ -25,7 +24,7 @@
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: camera=(), microphone=(), geolocation=()
   Cache-Control: public, max-age=0, must-revalidate
-  Content-Security-Policy-Report-Only: default-src 'self'; script-src 'self' 'unsafe-inline' https://clerk.malaysiapg.com.my https://challenges.cloudflare.com https://static.cloudflareinsights.com; connect-src 'self' https://clerk.malaysiapg.com.my https://clerk-telemetry.com; img-src 'self' data: https://img.clerk.com; style-src 'self' 'unsafe-inline'; font-src 'self'; worker-src 'self' blob:; frame-src https://challenges.cloudflare.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://clerk.malaysiapg.com.my https://challenges.cloudflare.com https://static.cloudflareinsights.com; connect-src 'self' https://clerk.malaysiapg.com.my https://clerk-telemetry.com; img-src 'self' data: https://img.clerk.com; style-src 'self' 'unsafe-inline'; font-src 'self'; worker-src 'self' blob:; frame-src https://challenges.cloudflare.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'
 
 /api/*
   Access-Control-Allow-Origin: *
