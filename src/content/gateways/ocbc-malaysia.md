@@ -28,7 +28,7 @@ features:
   recurring: false
 dev_docs: "https://api.ocbc.com/"
 popularity: 35
-verified_date: "2026-07-02"
+verified_date: "2026-07-17"
 source: "https://www.ocbc.com.my/business-banking/go-digital/one-collect"
 notes: "OCBC Malaysia's OneCollect is a unified collection product accepting DuitNow QR, FPX online banking, e-wallets (Alipay, WeChat Pay), UnionPay and credit-card-via-QR, plus cross-border PayNow/QRIS/PromptPay. Settled to an OCBC MYR business account; API available. Rates are quoted on application, not published."
 ---

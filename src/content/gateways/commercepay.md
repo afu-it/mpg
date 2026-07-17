@@ -9,7 +9,7 @@ fees:
   card_intl: "Contact sales"
   ewallet: "Contact sales"
   duitnowqr: "Contact sales"
-  bnpl: "From 3.5% (IPP, RM500 setup)"
+  bnpl: "From 3.5% (0% IPP)"
   setup: "RM0"
   monthly: "RM0"
 settlement: "T+1 to T+2 (1-2 business days)"
@@ -39,9 +39,9 @@ plugins:
   - SiteGiant
 dev_docs: "https://docs.commercepay.asia"
 popularity: 26
-verified_date: "2026-07-02"
+verified_date: "2026-07-17"
 source: "https://www.commercepay.asia/faq"
-notes: "Indicative. Gateway fee is per-transaction (fixed or %) but not published; only the Instalment (IPP) rate of 'as low as 3.5%' + RM500 setup is public."
+notes: "IPP re-verified 2026-07-17: 0% instalment MDR 3.50% (3-month) up to 9.70% (36-month); the previously recorded RM500 setup is NOT on the current site (RM300-RM3,000 figures are per-bank minimum transaction amounts). IPP merchant settlement T+1. Indicative. Gateway fee is per-transaction (fixed or %) but not published; only the Instalment (IPP) rate of 'as low as 3.5%' + RM500 setup is public."
 ---
 
 CommercePay (Commerce DotAsia Payments Sdn Bhd) is licensed by Bank Negara Malaysia for online merchant acquiring. It supports FPX/DuitNow online banking, local and international credit/debit cards, e-wallets, recurring payments and an Instalment Payment Plan (IPP / "InstallmentPay Plus").

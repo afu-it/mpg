@@ -9,7 +9,7 @@ fees:
   duitnowqr: "—"
   setup: "RM0"
   monthly: "RM0"
-settlement: "Contact sales"
+settlement: "T+1 (incl weekends, before 10:30am)"
 min_txn: "—"
 channels: [fpx]
 features:
@@ -19,7 +19,7 @@ features:
 popularity: 28
 verified_date: "2026-07-17"
 source: "https://blog.smap.my/"
-notes: "Proprietary FPX gateway by SMAP Solutions Sdn Bhd (1363778-M, Dengkil) built into SMAP, a student-information and fee-management system for sekolah, tadika, taska and tuisyen. Published: RM1.00 flat per FPX transaction with free gateway registration; the SIS side is priced separately (RM270 per 50-student quota block). Positioned explicitly as their own gateway rather than a ToyyibPay/Billplz/Bizappay integration. Settlement timing not published. Effectively requires using the SMAP system, so it suits schools and education operators rather than general merchants. Active through 2026 (LHDN e-Invoice integration, nationwide trainings)."
+notes: "Settlement published (blog, verified 2026-07-17): next-day settlement INCLUDING weekends and public holidays, paid before 10:30am; the RM1 fee can be borne by the organisation or the payer. Proprietary FPX gateway by SMAP Solutions Sdn Bhd (1363778-M, Dengkil) built into SMAP, a student-information and fee-management system for sekolah, tadika, taska and tuisyen. Published: RM1.00 flat per FPX transaction with free gateway registration; the SIS side is priced separately (RM270 per 50-student quota block). Positioned explicitly as their own gateway rather than a ToyyibPay/Billplz/Bizappay integration. Settlement timing not published. Effectively requires using the SMAP system, so it suits schools and education operators rather than general merchants. Active through 2026 (LHDN e-Invoice integration, nationwide trainings)."
 ---
 
 SMAP Pay is the payments half of SMAP, a Malaysian student-information system

@@ -54,7 +54,7 @@ plans:
     rows:
       - { label: "All rates", value: "Personalised pricing, contact sales" }
     source: "https://curlec.com/pricing/"
-verified_date: "2026-07-02"
+verified_date: "2026-07-17"
 source: "https://curlec.com/pricing/"
 notes: "Basic-plan rates shown: FPX 1.50% (or RM1, whichever greater), credit/debit card 2.40%, foreign card 3.30%, e-wallet 1.50%, BNPL 6.00%. Premium plan lowers card to 2.00% / FPX to 1.00%. A one-time setup fee applies; Enterprise (>RM1M/month) is personalised. Applicable taxes (SST) extra."
 ---

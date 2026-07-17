@@ -55,7 +55,7 @@ plans:
       - { label: "Fee", value: "1.00% or RM1.00 per transaction" }
     settlement: "Next 2 business days"
     source: "https://www.toyyibpay.com/pricing-plans/"
-verified_date: "2026-07-02"
+verified_date: "2026-07-17"
 source: "https://www.toyyibpay.com/pricing-plans/"
 notes: "Flat RM1.00 per FPX B2C transaction (B2B RM2.00; free Santai plan for registered NPOs). Official pricing page now publishes card rates (local 1.50%, foreign 3.5%, via toyyibPay Partners; RM100 onboarding + RM100/yr from year 2) and DuitNow QR (1% or RM1.00). Settlement: FPX next 1-4 business days, DuitNow QR 2, card 4, Santai 10. Excludes SST."
 ---

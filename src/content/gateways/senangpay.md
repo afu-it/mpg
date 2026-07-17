@@ -60,7 +60,7 @@ plans:
       - { label: "Rates", value: "Lowest transaction rate, contact sales" }
     settlement: "Faster settlement"
     source: "https://senangpay.com/pricing/"
-verified_date: "2026-07-02"
+verified_date: "2026-07-17"
 source: "https://senangpay.com/pricing/"
 notes: "Official pricing: FPX RM1 or 1.5% whichever higher; local cards RM0.65 or 2.5%; e-wallets RM0.65 or 1.5%; BNPL SPayLater 2.0% / Atome 5.5% / PayLater by Grab 6.0%. Plans: Starter RM199/yr, Advance RM349/yr, Enterprise custom (promo prices run seasonally). Foreign-card rates and any setup fee are quoted per package; settlement timing not published (faster settlement is an Enterprise perk)."
 ---

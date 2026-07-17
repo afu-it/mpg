@@ -27,7 +27,7 @@ plugins:
   - WHMCS
 dev_docs: "https://developer.asiapay.com/"
 popularity: 28
-verified_date: "2026-07-02"
+verified_date: "2026-07-17"
 source: "https://www.asiapay.com.my/"
 notes: "Indicative. No public Malaysia rate card; pricing is setup + monthly + per-transaction, quoted on request."
 ---

@@ -10,8 +10,8 @@ fees:
   ewallet: "1.5%"
   duitnowqr: "1.7%"
   bnpl: "Contact sales"
-  setup: "Contact sales"
-  monthly: "Contact sales"
+  setup: "RM300 (Starter)"
+  monthly: "RM300/yr (Starter)"
 settlement: "T+4"
 min_txn: "—"
 channels: [fpx, card, ewallet, duitnowqr, bnpl]
@@ -75,9 +75,9 @@ plans:
     rows:
       - { label: "All rates", value: "Contact sales" }
     source: "https://swifs.io/pricing/"
-verified_date: "2026-07-02"
+verified_date: "2026-07-17"
 source: "https://swifs.io/pricing/"
-notes: "Now publishes a full 4-tier rate card (values shown = entry Starter tier; rates improve on Popular/Enterprise): FPX B2C RM2.00/RM1.50/RM1.00 (B2B RM3.00/RM2.50/RM2.00), local cards 3.00%/2.50%/1.80%, foreign cards 3.50%/2.70%/2.50%, e-wallets 1.50% all tiers, DuitNow QR 1.70%/1.50%/1.50%. Settlement T+4/T+3/T+2 by tier; minimum settlement RM100. Corporate tier is quote-based. Rates are published as images on the pricing page."
+notes: "Re-verified 2026-07-17 from the official pricing SVGs: Starter = RM300 setup + RM300/yr, T+4; Popular RM450/RM450 T+3; Enterprise RM1500/RM800 T+2; min settlement RM100. Caution: swifs.io shows signs of injected spam pages; the pricing assets themselves look legitimate. Now publishes a full 4-tier rate card (values shown = entry Starter tier; rates improve on Popular/Enterprise): FPX B2C RM2.00/RM1.50/RM1.00 (B2B RM3.00/RM2.50/RM2.00), local cards 3.00%/2.50%/1.80%, foreign cards 3.50%/2.70%/2.50%, e-wallets 1.50% all tiers, DuitNow QR 1.70%/1.50%/1.50%. Settlement T+4/T+3/T+2 by tier; minimum settlement RM100. Corporate tier is quote-based. Rates are published as images on the pricing page."
 ---
 
 **SwiF** (operated by **SwiF Fintech Sdn Bhd**, powered by Syntrino Solutions) is

@@ -5,13 +5,14 @@ logo_round: true
 tagline: "Zero-risk BNPL: the merchant is paid upfront in full"
 logo: /logos/moby.svg
 fees:
-  fpx: "—"
-  card: "—"
-  ewallet: "—"
-  duitnowqr: "—"
-  bnpl: "Contact sales"
+  fpx: "RM2.00"
+  card: "0.99%"
+  card_intl: "3.5%"
+  ewallet: "1.5%"
+  duitnowqr: "0.8% + RM0.10"
+  bnpl: "1.5% - 5%"
   setup: "Contact sales"
-  monthly: "Contact sales"
+  monthly: "RM99/month (SME, billed annually)"
 settlement: "Contact sales"
 min_txn: "—"
 category: bnpl
@@ -41,9 +42,9 @@ plans:
     rows:
       - { label: "Pricing", value: "Contact sales" }
     source: "https://moby.my/pricing/"
-verified_date: "2026-07-02"
-source: "https://moby.my/faqs/"
-notes: "The bnpl value is the merchant fee (MDR), not publicly published, so contact sales (onboarding via merchantsupport@moby.my). MOBY offers both conventional and Shariah-compliant (Moby Islamic) BNPL."
+verified_date: "2026-07-17"
+source: "https://moby.my/pricing/"
+notes: "Full rate card published at /pricing/ (verified 2026-07-17): FPX as-published RM2.00 B2C / RM0.70 B2B (unusual direction but that is what the site states) plus 1.2% CCA; debit AND credit cards 0.99%; foreign card 3.5%; e-wallets 1.5%; DuitNow QR 0.8% + RM0.10/txn; BNPL 1.5% to 5%; credit-card instalments 2.5%-7.5%. Requires a plan subscription (SME RM99/mo or Enterprise RM149/mo, billed annually; list price RM199 struck through); SME includes one free POS terminal (extra RM50/mo/device). The bnpl value is the merchant fee (MDR), not publicly published, so contact sales (onboarding via merchantsupport@moby.my). MOBY offers both conventional and Shariah-compliant (Moby Islamic) BNPL."
 ---
 
 MOBY (Moby Omni) is a Malaysian payments platform whose BNPL product lets customers pay in 2, 3, or 6 interest-free instalments while the merchant gets paid in full upfront ("We Pay First"), removing the merchant's credit risk. MOBY offers both conventional BNPL and a Shariah-compliant option via Moby Islamic, and BNPL can be accepted online (Moby Checkout) or in-store (Moby Terminal).

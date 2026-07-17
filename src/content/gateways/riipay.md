@@ -21,7 +21,7 @@ features:
   api: true
   recurring: false
 popularity: 8
-verified_date: "2026-07-02"
+verified_date: "2026-07-17"
 source: "https://riipay.my/business/"
 notes: "3-instalment BNPL, conventional and Shariah-aware positioning. Official merchant FAQ now says fees vary by industry and monthly turnover (the old 2.5% figure is no longer published), and no settlement timing is published. Zero upfront and zero monthly cost confirmed officially."
 ---

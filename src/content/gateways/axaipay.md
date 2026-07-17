@@ -34,7 +34,7 @@ plugins:
   - VirtueMart
 dev_docs: "https://support.axaipay.com/support/solutions/folders/73000373064"
 popularity: 30
-verified_date: "2026-07-02"
+verified_date: "2026-07-17"
 source: "https://www.axaipay.com/online-payments"
 notes: "Operated by Axai Digital Sdn Bhd, Kuala Lumpur, founded 2019; BNM Registered Merchant Acquirer (Non-bank) with MDEC Malaysia Digital status. Markets no monthly or yearly maintenance fee, pay only per sale; per-transaction rates are quote-only. Supports cards, FPX, DuitNow QR, e-wallets (Alipay+) and BNPL, with WooCommerce/EasyStore/OpenCart/PrestaShop/VirtueMart plugins and a developer support portal."
 ---

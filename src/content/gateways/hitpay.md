@@ -37,7 +37,7 @@ plugins:
   - EasyStore
 dev_docs: "https://docs.hitpayapp.com/apis/overview"
 popularity: 70
-verified_date: "2026-07-02"
+verified_date: "2026-07-17"
 source: "https://www.hitpayapp.com/my/pricing"
 notes: "Official per-wallet rates: TNG 1.9%, GrabPay 2%, Boost 2.1%, Maybank QRPay 2.1%, ShopeePay 2.2%. BNPL: SPayLater 2.2%, Atome 5.5% + RM1, PayLater by Grab 6.5%. A platform fee applies on top for some products (0.2% payment links/invoicing/store; 0.5% Shopify app). Payouts T+2 business days (cards from T+3, processed by Stripe). International cards +2% on foreign-currency transactions."
 ---

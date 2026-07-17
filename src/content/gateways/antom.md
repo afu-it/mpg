@@ -31,7 +31,7 @@ plugins:
   - WooCommerce
 dev_docs: "https://docs.antom.com/"
 popularity: 40
-verified_date: "2026-07-02"
+verified_date: "2026-07-17"
 source: "https://www.antom.com/my/"
 notes: "Ant International's merchant payments brand (2C2P is a sister brand under the same group). No Malaysian rate card is published anywhere; all fees are quoted. Default settlement T+4 working days (W+4/M+4 cycles supported, shorter negotiable). FPX per-transaction limits RM1 to RM30,000, real-time debit, partial refunds up to 365 days. Alipay+ reaches ~2 billion wallet users (Alipay, GCash, Kakao Pay, PayPay and more). Official Antom MCP server open-sourced at github.com/ant-intl/global-antom-mcp. KL Global Development Centre opened at TRX in July 2026."
 ---

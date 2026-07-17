@@ -55,9 +55,9 @@ plans:
       - { label: "E-wallets", value: "1.50%" }
       - { label: "BNPL", value: "6.50%" }
     source: "https://payhalal.my/home_v3/pricing/"
-verified_date: "2026-07-02"
+verified_date: "2026-07-17"
 source: "https://payhalal.my/home_v3/pricing/"
-notes: "Rates shown are the official published Basic (free) tier; lower rates apply on paid tiers (Plus/Pro/Advanced). Settlement period not published; contact sales."
+notes: "FPX B2B published (Basic): 2.50% or RM2.00 (re-verified 2026-07-17). Rates shown are the official published Basic (free) tier; lower rates apply on paid tiers (Plus/Pro/Advanced). Settlement period not published; contact sales."
 ---
 
 PayHalal is a Malaysian Shariah-compliant online payment gateway operated by Souqa Fintech, regulated by Bank Negara Malaysia, PCI-DSS compliant and supervised by Amanie Advisory for Shariah governance. Merchants can accept FPX, credit/debit cards, Shariah-screened e-wallets, DuitNow QR and Islamic BNPL via hosted checkout, payment links (Email/Social Pay), APIs/SDKs and CMS plugins.

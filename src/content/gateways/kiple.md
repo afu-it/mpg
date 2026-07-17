@@ -26,9 +26,28 @@ plugins:
   - Magento
   - PrestaShop
 popularity: 54
-verified_date: "2026-07-02"
+plans:
+  - name: "Starter Package"
+    eligibility: "RM0 one-time fee"
+    rows:
+      - { label: "FPX", value: "RM1.20 B2C / RM2.00 B2B" }
+      - { label: "Local credit card", value: "2.00%" }
+      - { label: "Foreign card", value: "3.70%" }
+      - { label: "DuitNow QR", value: "1.50%" }
+      - { label: "E-wallets", value: "1.7% - 2.0%" }
+    source: "https://kiple.com/sme/"
+  - name: "Standard Package"
+    eligibility: "RM199 promo one-time (normally RM500) + RM29/month (waived above RM8,000 GTV)"
+    rows:
+      - { label: "FPX", value: "RM1.00 B2C / RM1.50 B2B" }
+      - { label: "Local cards", value: "1.50% credit / 1.00% debit" }
+      - { label: "Foreign card", value: "3.20%" }
+      - { label: "DuitNow QR", value: "1.20%" }
+      - { label: "E-wallets", value: "1.50% - 1.80%" }
+    source: "https://kiple.com/sme/"
+verified_date: "2026-07-17"
 source: "https://kiple.com/sme/"
-notes: "Standard Package (shown): FPX B2C RM1.00 / B2B RM1.50, local credit 1.50% / debit 1.00%, foreign cards 3.20%, e-wallets 1.70% (WeChat 1.50%, Alipay 1.80%), DuitNow QR 1.20%, UnionPay 2.80%. Setup RM199 (promo, from RM500); RM29/mo waived if monthly GTV > RM8,000. A new zero-setup Starter Package has higher rates (card 2.00%, DuitNow QR 1.50%). Settlement timing not published."
+notes: "Re-verified 2026-07-17 via Firecrawl (Cloudflare bypass): Standard Package promo values confirmed; page also lists Annual Fee RM500 for Standard, and a Starter Package (RM0 one-time, FPX RM1.20/RM2.00, local credit 2.00%, foreign 3.70%, DNQR 1.50%, wallets 1.7%-2.0%). UnionPay 2.80%, multicurrency 3.80%. Standard Package (shown): FPX B2C RM1.00 / B2B RM1.50, local credit 1.50% / debit 1.00%, foreign cards 3.20%, e-wallets 1.70% (WeChat 1.50%, Alipay 1.80%), DuitNow QR 1.20%, UnionPay 2.80%. Setup RM199 (promo, from RM500); RM29/mo waived if monthly GTV > RM8,000. A new zero-setup Starter Package has higher rates (card 2.00%, DuitNow QR 1.50%). Settlement timing not published."
 ---
 
 Kiple (operated by Kiplepay Sdn Bhd, a Bank Negara Malaysia-regulated e-money issuer and merchant acquirer) offers an online payment gateway plus in-store POS terminals, white-label e-wallet, and eWages payroll. Its SME "Standard Package" carries a one-time fee of RM199 (promotional, normally RM500), an RM500 annual fee, and an RM29 monthly fee that is waived when gross transaction value exceeds RM8,000.

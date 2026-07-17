@@ -20,7 +20,7 @@ features:
   api: true
   recurring: false
 popularity: 75
-verified_date: "2026-07-02"
+verified_date: "2026-07-17"
 source: "https://help.atome.my/hc/en-gb/articles/4405623301145-How-much-will-it-cost-me-as-a-merchant"
 notes: "The bnpl value is the merchant fee (MDR), not the shopper's instalment terms. Atome officially confirms RM0 setup fee and that a per-transaction MDR applies, but the MDR % is not published, so request a quote. A third-party indicatively estimates ~3.5%–4.5% (unofficial)."
 ---

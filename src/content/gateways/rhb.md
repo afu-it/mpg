@@ -24,7 +24,7 @@ features:
   api: true
   recurring: false
 popularity: 48
-verified_date: "2026-07-02"
+verified_date: "2026-07-17"
 source: "https://www.rhbgroup.com/business/partner/merchant-card-terminal/index.html"
 notes: "RHB Bank's eCommerce Payment Gateway runs on Mastercard Payment Gateway Services (MPGS), offering hosted checkout and API for online card acceptance plus DuitNow QR. Requires an RHB business account; rates are quoted on application, not published."
 ---

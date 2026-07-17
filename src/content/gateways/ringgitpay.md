@@ -5,14 +5,14 @@ tagline: "All-in-one payment platform for Malaysian businesses"
 logo: /logos/ringgitpay.svg
 logo_round: true
 fees:
-  fpx: "RM1.20 (B2C) / RM2.20 (B2B)"
-  card: "1.5%"
-  card_intl: "2.0%"
-  ewallet: "1.5%"
+  fpx: "From RM1.00"
+  card: "Contact sales"
+  card_intl: "Contact sales"
+  ewallet: "Contact sales"
   duitnowqr: "Contact sales"
   setup: "RM0"
-  monthly: "RM0–RM1,000/year"
-settlement: "T+2 (approx. 2 days)"
+  monthly: "Contact sales"
+settlement: "Contact sales"
 min_txn: "—"
 category: gateway
 channels: [fpx, card, ewallet, duitnowqr]
@@ -23,9 +23,9 @@ features:
 plugins:
   - WooCommerce
 popularity: 14
-verified_date: "2026-07-02"
+verified_date: "2026-07-17"
 source: "https://ringgitpay.biz/pricing/"
-notes: "Indicative. Only public claim is 'no-cost setup & transaction fee as low as RM 1.00'; per-method rates are quote-based via an interest form."
+notes: "DE-PUBLISHED (2026-07-17): /pricing/ has been stripped to a lead-capture form; the previous rate card (FPX RM1.20/RM2.20, cards 1.5%/2.0%, wallets 1.5%) is gone. Only a no-cost-setup and transaction-fee-as-low-as-RM1.00 claim remains, so fees are downgraded honestly and RinggitPay leaves the ranking. Indicative. Only public claim is 'no-cost setup & transaction fee as low as RM 1.00'; per-method rates are quote-based via an interest form."
 ---
 
 RinggitPay, by Ascertain Technologies Sdn Bhd, is a home-grown Malaysian payment platform covering payment gateway, digital invoicing, payment links, recurring billing (auto debit, e-mandate, subscription plans), hosted payment/booking/checkout pages and dunning/recovery tools.

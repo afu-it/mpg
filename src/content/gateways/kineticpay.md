@@ -35,7 +35,7 @@ plans:
     source: "https://kineticpay.my/"
 verified_date: "2026-07-17"
 source: "https://kineticpay.my/"
-notes: "Collection-form platform + gateway: unlimited payment forms/links, buyer fraud screening (worldwide/custom bans, mandatory buyer profiling at checkout), Facebook/TikTok Pixel + GA4 conversion tracking built in. Published FPX rate 1% + RM1.50; card plan advertised as x% + RM1.50 with the percentage undisclosed. E-wallet, BNPL and international cards listed as coming soon. Pay-per-successful-transaction, no hidden fees claimed. Previously marked restricted in this directory (2026-06-26 discovery round); site now openly onboards merchants via manage.kineticpay.my."
+notes: "Re-verified 2026-07-17: no setup/annual figure published anywhere (site says pay only for successful transactions). Collection-form platform + gateway: unlimited payment forms/links, buyer fraud screening (worldwide/custom bans, mandatory buyer profiling at checkout), Facebook/TikTok Pixel + GA4 conversion tracking built in. Published FPX rate 1% + RM1.50; card plan advertised as x% + RM1.50 with the percentage undisclosed. E-wallet, BNPL and international cards listed as coming soon. Pay-per-successful-transaction, no hidden fees claimed. Previously marked restricted in this directory (2026-06-26 discovery round); site now openly onboards merchants via manage.kineticpay.my."
 ---
 
 KineticPay is a Malaysian collection-form platform with its own payment

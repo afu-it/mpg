@@ -41,7 +41,7 @@ plugins:
   - BigCommerce
 dev_docs: "https://www.airwallex.com/docs/api"
 popularity: 52
-verified_date: "2026-07-02"
+verified_date: "2026-07-17"
 source: "https://www.airwallex.com/my/pricing"
 notes: "Global fintech (HQ Australia) with a BNM-licensed Malaysian entity (Airwallex (Malaysia) Sdn Bhd; MSB Licence 00743). Local FPX + DuitNow are supported alongside 160+ global methods. No setup or monthly fees. Best fit for cross-border / globally-trading MY businesses."
 ---

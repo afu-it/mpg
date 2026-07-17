@@ -26,7 +26,7 @@ features:
   api: true
   recurring: true
 popularity: 36
-verified_date: "2026-07-02"
+verified_date: "2026-07-17"
 source: "https://www.mobi.xyz/"
 notes: "Rebranded: gomobi.io now redirects to mobi.xyz under the Mobi brand (Mobi Asia / Mobiversa), repositioned as pan-Asia payments infrastructure (payins/payouts; MY channels: FPX, e-wallets, DuitNow QR, cards). No pricing published anywhere on the current site, including the previously listed RM0 setup."
 ---

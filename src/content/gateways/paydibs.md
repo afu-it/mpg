@@ -11,7 +11,7 @@ fees:
   bnpl: "Contact sales"
   setup: "Free (local); USD120 (foreign)"
   monthly: "RM300/year (waived if prior-year sales ≥ RM360,000)"
-settlement: "3x weekly (Tue/Wed/Fri)"
+settlement: "Contact sales"
 min_txn: "—"
 category: gateway
 channels: [fpx, card, ewallet, duitnowqr, bnpl]
@@ -37,9 +37,9 @@ plans:
       - { label: "Signup", value: "Free (local) / USD120 (foreign merchants)" }
       - { label: "Yearly maintenance", value: "RM300 (waived at RM360,000+ annual sales)" }
     source: "https://paydibs.com/pricing/"
-verified_date: "2026-07-02"
+verified_date: "2026-07-17"
 source: "https://paydibs.com/pricing/"
-notes: "Signup fee, RM300/year maintenance fee and T+1/T+2 settlement are confirmed on the official pricing page; per-transaction MDR rates are not publicly published, so contact sales."
+notes: "Settlement schedule (previously 3x weekly Tue/Wed/Fri) no longer found anywhere on paydibs.com (re-verified 2026-07-17) so it is downgraded to Contact sales. Signup fee, RM300/year maintenance fee and T+1/T+2 settlement are confirmed on the official pricing page; per-transaction MDR rates are not publicly published, so contact sales."
 ---
 
 Paydibs is a Malaysian payment service provider (Bank Negara-regulated, MSC status, PCI-DSS compliant) offering online and in-store payment acceptance through a single platform. It supports FPX, cards, e-wallets, DuitNow QR, BNPL and a range of international methods, with e-commerce plugins, APIs/SDKs, payment links and physical terminals.

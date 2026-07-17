@@ -22,7 +22,7 @@ features:
 webhooks: true
 dev_docs: "https://developer.paydee.co/"
 popularity: 34
-verified_date: "2026-07-02"
+verified_date: "2026-07-17"
 source: "https://www.paydee.co/"
 notes: "Indicative. No fees published; site cites only 'competitive processing rates'. Channels confirmed via developer docs (FPX, e-wallet, card)."
 ---

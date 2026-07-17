@@ -27,7 +27,7 @@ features:
   recurring: false
 webhooks: true
 popularity: 50
-verified_date: "2026-07-02"
+verified_date: "2026-07-17"
 source: "https://m2upay.maybank2u.com.my/assets/faq/index.html"
 notes: "Bank-direct gateway by Maybank (Malayan Banking Berhad). Two online channels: an Online Banking Payment Gateway (customer debits a Maybank current/savings account, FPX-style, not full multi-bank FPX) and the Cards Payment Gateway branded Maybank eBPG (Visa/Mastercard/Amex, 3D-Secure). Requires a Maybank business current account; settled next business day. No setup fee (confirmed on the FAQ); card and online-banking Merchant Rate is quoted in the Letter of Offer after approval. DuitNow QR via QRPayBiz currently free until further notice. A widely cited RM0.50 online-banking figure is from a third-party guide, not Maybank, so it is not used. SDKs for Java/JavaScript/PHP plus WooCommerce and EasyStore plugins."
 ---

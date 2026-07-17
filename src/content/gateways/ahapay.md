@@ -20,9 +20,9 @@ features:
   api: true
   recurring: false
 popularity: 10
-verified_date: "2026-07-02"
+verified_date: "2026-07-17"
 source: "https://ahapay.my/merchants"
-notes: "The bnpl value is the merchant fee: AhaPay officially states '6% per transaction' with no hidden charges (e.g. RM2,000 sale nets RM1,880). Transaction limits RM50–RM3,500, vary by merchant."
+notes: "From 1 June 2026 an 8% SST applies on the MDR amount (official FAQ; worked example RM2,000 sale nets RM1,870.40). The bnpl value is the merchant fee: AhaPay officially states '6% per transaction' with no hidden charges (e.g. RM2,000 sale nets RM1,880). Transaction limits RM50–RM3,500, vary by merchant."
 ---
 
 AhaPay is a Malaysian Buy Now Pay Later solution (operated by Aharetail Solutions Sdn. Bhd.) for both offline and online stores. Customers scan a QR code at checkout and split the cost into 3 monthly payments interest-free, while the merchant receives guaranteed full payment upfront and AhaPay absorbs the non-payment risk.

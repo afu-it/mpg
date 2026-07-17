@@ -28,7 +28,7 @@ plugins:
   - PrestaShop
 dev_docs: "https://docs.chip-in.asia/"
 popularity: 78
-verified_date: "2026-07-02"
+verified_date: "2026-07-17"
 source: "https://www.chip-in.asia/collect"
 notes: "Official /collect rates: FPX B2C RM1 (B2B RM2), credit cards 2.0% (local debit 1.0%), foreign cards 3.0%, all e-wallets 1.40%, DuitNow QR 1.00% (min RM0.15), Atome BNPL 5.3%, stablecoin 1.50%. Zero setup and monthly fees. Settlement: FPX/DuitNow QR next day; cards/e-wallets every 2 business days; BNPL every Thursday of the following week."
 ---

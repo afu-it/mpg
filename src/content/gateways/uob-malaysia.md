@@ -28,7 +28,7 @@ features:
 webhooks: false
 dev_docs: "https://www.uob.com.my/business/digital/uob-api-services.page"
 popularity: 42
-verified_date: "2026-07-02"
+verified_date: "2026-07-17"
 source: "https://www.uob.com.my/personal/cards/merchant-services.page"
 notes: "UOB Malaysia's merchant services include online card acceptance with hosted checkout, 3D-Secure, tokenisation and recurring billing, plus DuitNow QR, with API services available. Requires a UOB business account; rates are quoted on application, not published."
 ---

@@ -9,7 +9,7 @@ fees:
   card_intl: "3.15%"
   ewallet: "1.3% - 1.5%"
   duitnowqr: "1%"
-  bnpl: "5%–6%"
+  bnpl: "5.5% - 6%"
   setup: "RM99 (promo, from RM999)"
   monthly: "RM99/year"
 settlement: "Weekly (Thu); e-wallets T+2"
@@ -41,7 +41,7 @@ plugins:
   - WHMCS
 dev_docs: "https://e2payprod.gitbook.io/payment-gateway/"
 popularity: 90
-verified_date: "2026-07-02"
+verified_date: "2026-07-17"
 source: "https://booster.fiuu.com/assets/Appendix_20240419.pdf"
 notes: "Official Booster (self-serve) rate card: FPX B2C 2.4% or RM1.00 whichever higher (B2B RM3.00), local cards 2.40%, foreign 3.15%, e-wallets 1.30% (ShopeePay/Maybank QRPay) to 1.50% (TNG), DuitNow QR 1.00% online / 0.80% offline, BNPL 5%-6%. One-time signup RM99 (promo, from RM999); annual RM99 (first year waived). Settled weekly every Thursday; domestic e-wallets T+2. Minimum settlement RM100. Shopify merchants +0.25% MDR. Enterprise rates negotiable."
 ---

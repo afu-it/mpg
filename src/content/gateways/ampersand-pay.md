@@ -31,7 +31,7 @@ features:
   api: true
   recurring: true
 popularity: 38
-verified_date: "2026-07-02"
+verified_date: "2026-07-17"
 source: "https://ampersandpay.com/solutions/mc/"
 notes: "Operated by Ampersand Pay Sdn Bhd (201401028537), Kuala Lumpur, part of the CoherentPlus Group; brand &PAY. BNM Registered Merchant Acquirer (Non-bank). Founded 2014, BNM merchant-acquiring licence 2021, over RM85 million processed in 2024. Covers in-store POS, unattended kiosks and online checkout, with recurring/instalment, tokenisation, payment links, split settlement and MyRESIT e-receipts. Pricing is quote-only; payouts in 2 business days."
 ---

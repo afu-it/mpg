@@ -11,7 +11,7 @@ fees:
   bnpl: "1.6% / RM0.15"
   setup: "RM0"
   monthly: "RM0"
-settlement: "T+1"
+settlement: "T+2 (T+1 for some banks)"
 min_txn: "—"
 channels: [fpx, card, duitnowqr, bnpl]
 features:
@@ -61,9 +61,9 @@ plans:
       - { label: "DuitNow QR", value: "RM0.50" }
     settlement: "Real-time settlement included"
     source: "https://bayarcash.com"
-verified_date: "2026-07-02"
+verified_date: "2026-07-17"
 source: "https://bayarcash.com"
-notes: "Free 'T+ Plan' shown: FPX B2C RM1.00 / B2B RM2.00, credit card RM1.00 + 1%, direct debit RM1.50, DuitNow QR 1.60% (min RM0.15); T+1 payout (off-day Friday). Paid annual plans (Starter RM189, Lite RM2,899, Enterprise RM12,000) unlock realtime settlement (Public Bank & Bank Islam) and lower online-banking rates (RM1.20 / RM0.70 / RM0.20) plus DuitNow QR RM0.50. Excludes SST 8%."
+notes: "Default free plan = T+ Plan (verified 2026-07-17): rates confirmed; plan table says T+2 payout while a site footnote grants T+1 for merchants without Public Bank/Bank Islam accounts. Direct debit RM1.50. All fees exclude 8% SST. Paid annual tiers (Starter RM189 / Lite RM2,899 / Enterprise RM12,000) buy lower FPX rates + realtime settlement. Free 'T+ Plan' shown: FPX B2C RM1.00 / B2B RM2.00, credit card RM1.00 + 1%, direct debit RM1.50, DuitNow QR 1.60% (min RM0.15); T+1 payout (off-day Friday). Paid annual plans (Starter RM189, Lite RM2,899, Enterprise RM12,000) unlock realtime settlement (Public Bank & Bank Islam) and lower online-banking rates (RM1.20 / RM0.70 / RM0.20) plus DuitNow QR RM0.50. Excludes SST 8%."
 ---
 
 Bayarcash (by Web Impian) markets itself as Malaysia's first **realtime-settlement**

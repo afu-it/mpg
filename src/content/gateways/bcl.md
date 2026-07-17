@@ -6,9 +6,9 @@ logo: /logos/bcl.svg
 fees:
   fpx: "RM1.00"
   card: "Contact sales"
-  ewallet: "—"
+  ewallet: "Contact sales"
   duitnowqr: "Contact sales"
-  setup: "Contact sales"
+  setup: "RM0"
   monthly: "RM0"
 settlement: "Contact sales"
 min_txn: "—"
@@ -37,9 +37,9 @@ plans:
       - { label: "FPX", value: "RM0.70 minimum" }
       - { label: "Free .com/.my/.com.my domain", value: "Included" }
     source: "https://main.bcl.my/pricing/"
-verified_date: "2026-07-02"
+verified_date: "2026-07-17"
 source: "https://main.bcl.my/pricing/"
-notes: "No-code platform built on top of Bayarcash. FPX fees 'as low as RM1.00'. Paid annual packages (3 tiers; exact prices vary and the MSME Digital Grant MADANI offers up to 50% off). Card/BNPL and settlement run through Bayarcash. Confirm package pricing and channel rates on the site."
+notes: "Pay-per-transaction: no monthly or setup fees (official FAQ, 2026-07-17). E-wallets (GrabPay/Boost/TnG/Setel) accepted via the Bayarcash integration but unpriced. Niaga Pro plan (RM1,888/yr) drops FPX to RM0.70. No-code platform built on top of Bayarcash. FPX fees 'as low as RM1.00'. Paid annual packages (3 tiers; exact prices vary and the MSME Digital Grant MADANI offers up to 50% off). Card/BNPL and settlement run through Bayarcash. Confirm package pricing and channel rates on the site."
 ---
 
 BCL.my is a **no-code payment platform** built on top of Bayarcash. Instead of an

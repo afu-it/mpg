@@ -41,7 +41,7 @@ plugins:
   - EasyStore
 dev_docs: "https://bitbucket.org/eghl/merchantapi"
 popularity: 82
-verified_date: "2026-07-02"
+verified_date: "2026-07-17"
 source: "https://www.eghl.my/"
 notes: "eGHL still operates under its own brand at eghl.my, but is part of NTT DATA Payment Services and being consolidated into the ADAPTIS platform (alongside iPay88). eGHL publishes no official rate card; all rates shown are third-party/indicative (*) and tiered (Standard/Premium/Corporate), so treat as ranges. Only the channels and weekly W+4 settlement are confirmed on eGHL's own site. Confirm current rates with eGHL."
 ---

@@ -34,7 +34,7 @@ plans:
       - { label: "Programme fee (6-month)", value: "3%" }
       - { label: "On top of", value: "4.5% transaction fee, before 8% SST" }
     source: "https://seller.shopee.com.my/edu/article/16542"
-verified_date: "2026-07-02"
+verified_date: "2026-07-17"
 source: "https://seller.shopee.com.my/edu/article/16542"
 notes: "Merchant transaction fee 4.5% before SST; from 1 Feb 2026 the 3-month instalment tenure is 5% (others stay 4.5%). Fees subject to 8% SST. Auto-enabled for eligible Shopee sellers (no setup step). Sellers receive sales proceeds in full on order completion. Now operated with Monee Capital Malaysia (Shopee financial affiliate)."
 ---
