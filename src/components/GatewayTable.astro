@@ -121,6 +121,7 @@ const td = "whitespace-nowrap px-3 py-3 align-middle";
             data-channels={g.data.channels.join(" ")}
             data-no_code={String(g.data.features.no_code)}
             data-api={String(g.data.features.api)}
+            data-mcp={String(g.data.mcp !== "none")}
             data-recurring={String(g.data.features.recurring)}
             data-href={`/gateway/${g.id}/`}
           >

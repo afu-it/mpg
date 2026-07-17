@@ -17,8 +17,13 @@ const channels = [
 ];
 const features = [
   { key: "no_code", label: "No-code" },
-  { key: "api", label: "API" },
   { key: "recurring", label: "Recurring" },
+];
+// developer group (2026-07-17, owner request): stays visible so devs can
+// instantly list gateways with an API or an MCP server
+const developer = [
+  { key: "api", label: "API" },
+  { key: "mcp", label: "MCP server" },
 ];
 
 const heading = "mb-2 text-xs font-semibold uppercase tracking-wide text-muted";
@@ -80,6 +85,25 @@ const input = "size-3.5 accent-accent";
     <div class="mt-2">
       {
         features.map((f) => (
+          <label class={row}>
+            <input type="checkbox" data-filter-feature={f.key} class={input} />
+            {f.label}
+          </label>
+        ))
+      }
+    </div>
+  </details>
+
+  <details class="group" open>
+    <summary class={summary}>
+      <h2>Developer</h2>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="size-3.5 transition-transform group-open:rotate-180" aria-hidden="true">
+        <path d="m6 9 6 6 6-6"></path>
+      </svg>
+    </summary>
+    <div class="mt-2">
+      {
+        developer.map((f) => (
           <label class={row}>
             <input type="checkbox" data-filter-feature={f.key} class={input} />
             {f.label}
