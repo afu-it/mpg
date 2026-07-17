@@ -1,6 +1,8 @@
 ---
 name: Qashier
 website: https://qashier.com/my/
+logo: /logos/qashier.png
+logo_round: true
 tagline: "POS-first payments with pay-by-link and DuitNow QR"
 fees:
   fpx: "—"

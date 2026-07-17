@@ -1,6 +1,7 @@
 ---
 name: KineticPay
 website: https://kineticpay.my
+logo: /logos/kineticpay.png
 tagline: "Collection forms and FPX payments with fraud screening"
 fees:
   fpx: "1% + RM1.50"

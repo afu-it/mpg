@@ -1,6 +1,7 @@
 ---
 name: AffanPay
 website: https://affanpay.my
+logo: /logos/affanpay.png
 tagline: "Full-channel gateway with T+1 settlement and fast setup"
 fees:
   fpx: "RM1.00"

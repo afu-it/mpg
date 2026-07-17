@@ -1,6 +1,7 @@
 ---
 name: Payright
 website: https://www.payright.my
+logo: /logos/payright.png
 tagline: "Affordable FPX gateway with plans from RM1 per transaction"
 fees:
   fpx: "RM1.50"

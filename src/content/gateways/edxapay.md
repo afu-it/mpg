@@ -1,6 +1,7 @@
 ---
 name: edxaPay
 website: https://edxapay.com
+logo: /logos/edxapay.png
 tagline: "SME payments and terminals with WooCommerce integration"
 fees:
   fpx: "Contact sales"

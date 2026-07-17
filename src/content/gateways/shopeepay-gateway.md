@@ -1,6 +1,7 @@
 ---
 name: ShopeePay (Direct)
 website: https://product.shopeepay.com
+logo: /logos/shopeepay-gateway.png
 tagline: "Direct ShopeePay wallet acceptance with subscription APIs"
 fees:
   fpx: "—"

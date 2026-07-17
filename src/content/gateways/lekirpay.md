@@ -1,6 +1,7 @@
 ---
 name: LekirPay
 website: https://lekirpay.com
+logo: /logos/lekirpay.png
 tagline: "SME payment platform with FPX from RM0.80 per transaction"
 fees:
   fpx: "RM0.80 + RM0.10"

@@ -1,6 +1,8 @@
 ---
 name: SMAP Pay
 website: https://smap.my
+logo: /logos/smap-pay.png
+logo_round: true
 tagline: "School fee collection gateway with flat RM1 FPX"
 fees:
   fpx: "RM1.00"

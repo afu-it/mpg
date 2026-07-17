@@ -1,6 +1,8 @@
 ---
 name: Tulus Digital
 website: https://www.tulus.my
+logo: /logos/tulus.png
+logo_round: true
 tagline: "Islamic social finance collections: zakat, wakaf and infaq"
 fees:
   fpx: "Contact sales"
