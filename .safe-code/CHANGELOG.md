@@ -2,6 +2,14 @@
 
 ## [Unreleased]
 
+### Added (2026-07-17, evening)
+- Official logos for all 11 newly added gateways.
+- Three business-type guides: best payment options for physical stores, for digital products and services, and for SaaS subscriptions.
+- Developer filter on the gateway table: show only providers with an API or an MCP server.
+
+### Changed (2026-07-17, evening)
+- Homepage hero spacing tightened; full fee re-verification of all 74 providers (fees now dated 2026-07-17 sitewide).
+
 ### Added (2026-07-17, second sitting)
 - 11 new gateways (74 total): Herepay (new cheapest ranked, RM1.07/RM100), KineticPay, LeanX, SMAP Pay, Payright, LekirPay, AffanPay, edxaPay, Tulus Digital, Qashier, ShopeePay (Direct).
 - Plans: 16 gateways now show every published pricing plan side by side (46 plans, all sourced).

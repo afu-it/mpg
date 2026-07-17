@@ -1,6 +1,6 @@
 # Progress Tracker — MPG
 
-last_synced_commit: 493d6db
+last_synced_commit: b5b45dc
 context_synced_at: 2026-07-17
 context_selftest: skipped (not first-run)
 
@@ -77,7 +77,8 @@ No server/DB. Deployed (push master → Cloudflare Pages).
 ## Plans layer + redesign + discovery round 3 (2026-07-17, sitting 2)
 - **Spec 17 per-plan pricing DONE**: optional `plans[]` on the gateways schema (name/eligibility/rows/settlement/source) + Plans section on detail pages. 16 gateways carry 46 sourced plans (toyyibpay 4, bayarcash 4, swif 4, payhalal 4, billplz/curlec/senangpay/bcl/betterpay/moby 3, others 2). Data from a 7-subagent official-source sweep of all gateways; HLB + Kiple unreachable from this network (re-verify). Ranking still uses top-level fees (= default plan).
 - **Minimalist redesign (spec 16 + AFU "dark sparse" direction)**: oversized-type hero homepage w/ cheapest-5 live list + folded SEO definition; detail page = giant est-fee number, borderless fee list, lg 2-col grid (data left / features+dev rail right), folded banks/methods/AI-prompt; grouped 3-col footer; collapsed /gateways sidebar groups; MethodologyNote shared fine-print; short chips on /learn. Rollout of the same rhythm to /compare /choose /best /vs /learn-subpages/blog still pending.
-- **Discovery round 3 (2026-07-17)**: 4 subagent lenses + AFU finds + Firecrawl sweep → **11 new gateways** (herepay #1 ranking RM1.07; kineticpay [round-2 "restricted" reject REVERSED, now open], leanx, smap-pay, payright, lekirpay published fees; affanpay, edxapay, tulus, qashier, shopeepay-gateway contact-sales). BNM RMA registry (68 entities) fully reconciled vs directory. 30+ disqualified names recorded in spec-04 history territory (resellers of known gateways, zombies, foreign PSPs). New entries have NO logos yet (monogram fallback) — logo round in BACKLOG.
+- **Spec 18 (business-type profiles) DONE + Developer filter (API/MCP) on /gateways + logo round complete for all 11 new gateways (2026-07-17 evening). 219 pages.**
+- **Discovery round 3 (2026-07-17)**: 4 subagent lenses + AFU finds + Firecrawl sweep → **11 new gateways** (herepay #1 ranking RM1.07; kineticpay [round-2 "restricted" reject REVERSED, now open], leanx, smap-pay, payright, lekirpay published fees; affanpay, edxapay, tulus, qashier, shopeepay-gateway contact-sales). BNM RMA registry (68 entities) fully reconciled vs directory. 30+ disqualified names recorded in spec-04 history territory (resellers of known gateways, zombies, foreign PSPs). All 11 carry official logos (done same day).
 - Rankable 18 → 27 (after the 2026-07-17 full fee re-verification: M1Pay + AffanPay + LeanX + LekirPay + Payright + Moby entered; RinggitPay left after de-publishing its rates). Cheapest: herepay RM1.07, fasspay RM1.12, m1pay RM1.16, toyyibpay/cardbizpay RM1.19.
 - **Full fee re-verification 2026-07-17**: all 74 entries checked field-by-field against official sources by 7 Firecrawl subagents (never-truncate rule after the AffanPay miss); ~20 corrected, 9 /fee-changes entries, verified_date=2026-07-17 sitewide.
 
