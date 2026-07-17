@@ -163,6 +163,42 @@ export const PROFILES: ProfileDef[] = [
       "Running a store on WooCommerce, Shopify or another platform? Every provider below ships a ready-made plugin, so accepting Malaysian payments is configuration, not custom code.",
     faqNoun: "payment gateway with e-commerce plugins",
   },
+  // Business-type profiles (2026-07-17, owner request): who-you-are framing
+  // over the same recommend() engine. Physical = in-person QR/wallet
+  // acceptance; digital = links-first selling; SaaS = recurring + API.
+  {
+    slug: "payment-gateway-physical-store",
+    needs: { channels: ["duitnowqr", "ewallet"], noCode: true },
+    h1: "Payment gateways for physical stores and restaurants",
+    title: "Best payment options for physical stores in Malaysia | MPG",
+    description:
+      "Accept DuitNow QR and e-wallets at your kedai, cafe or restaurant: providers ranked by published cost, plus terminal and QR options worth comparing.",
+    intro:
+      "Walk-in customers pay by scanning: DuitNow QR and e-wallets cover almost every Malaysian phone. Every provider below supports both without code. Also compare terminal-first options on their detail pages (Qashier, edxaPay, Revenue Monster) and the banks' QR packages, where CIMB and Hong Leong currently advertise zero-MDR DuitNow QR tiers.",
+    faqNoun: "payment provider for a physical store",
+  },
+  {
+    slug: "payment-gateway-digital-products",
+    needs: { noCode: true, channels: ["fpx"] },
+    h1: "Payment gateways for digital products and services",
+    title: "Payment gateways for digital products & services | MPG",
+    description:
+      "Sell ebooks, courses and services with payment links and instant FPX checkout: no-code Malaysian gateways ranked by real cost on published rates.",
+    intro:
+      "Selling ebooks, templates, courses or client services needs a payment link and a receipt, not a storefront. Every provider below does this from a dashboard with FPX support; flat-fee providers win on typical digital-product tickets, and most can auto-deliver via webhooks if you later add code.",
+    faqNoun: "payment gateway for digital products",
+  },
+  {
+    slug: "payment-gateway-saas",
+    needs: { recurring: true, developer: true },
+    h1: "Payment gateways for SaaS and subscriptions",
+    title: "Best payment gateways for SaaS products in Malaysia | MPG",
+    description:
+      "Malaysian gateways with recurring billing and a developer API for SaaS: automatic monthly charging, webhooks and costs from published rates.",
+    intro:
+      "SaaS needs card-on-file recurring charging plus a real API for provisioning and dunning. Every provider below supports both. Compare each one's webhook support on its detail page, and weigh settlement speed: subscription cash flow compounds the difference.",
+    faqNoun: "SaaS payment gateway",
+  },
 ];
 
 // trailing slash matches the served URL form; Cloudflare Pages 308-redirects
