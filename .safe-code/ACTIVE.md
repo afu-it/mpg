@@ -2,8 +2,10 @@
 
 ## Last Session
 status: saved
-saved_at: 2026-07-17 malam (save #3: redesign + plans + discovery round 3)
+saved_at: 2026-07-17 malam (save #4: full fee re-verification, 74 gateways, ranking reshuffle)
 completed:
+  - FULL fee re-verification (AFU-triggered after catching the AffanPay miss): 7 Firecrawl agents, all 74 gateways, ~20 corrected, 9 fee-changes entries, verified_date 2026-07-17 sitewide, rankable 27, new top-3 herepay/fasspay/m1pay. Never-truncate scraping rule locked in ai-workflow-rules.
+  - Post-save UI fixes live: bordered plans, /vs winner highlight, centered footer, new hero line.
   - Minimalist redesign (spec 16 A-F + dark-sparse full pass): homepage, detail pages (2-col desktop), footer, /gateways, /learn, MethodologyNote.
   - Spec 17 DONE: plans[] schema + Plans UI; 16 gateways / 46 sourced plans via 7-subagent sweep.
   - Discovery round 3: 11 new gateways (74 total; Herepay new #1 RM1.07). BNM registry fully reconciled; 30+ names disqualified with reasons.
