@@ -29,9 +29,9 @@ features:
   api: true
   recurring: true
 popularity: 30
-verified_date: "2026-07-17"
+verified_date: "2026-10-20"
 source: "https://cardbiz.com.my/cardbiz-payment-services/cardbizpay-rates/"
-notes: "Official rate card: FPX B2C RM1.00 / B2B RM1.50, local cards 1%-2.0%, overseas premium cards 2.40%, e-wallets 1.2% (WeChat 1%, Alipay cross-border 1.5%). Setup waived; annual fee waived for the first year (amount after year 1 not published). A RM1.00 per-transaction settlement fee applies; settlement timing not published. No minimum transaction volume."
+notes: "Official rate card: FPX B2C RM1.00 / B2B RM1.50, local cards 1%-2.0%, overseas premium cards 2.40%, e-wallets 1.2% (WeChat 1%, Alipay cross-border 1.5%). Setup waived; annual fee waived for the first year (amount after year 1 not published). Re-verified 2026-10-20, unchanged. A RM1.00 per-transaction settlement fee applies (refund and chargeback also RM1.00 each); settlement timing not published. No minimum transaction volume."
 ---
 
 CardBizPay is a Malaysian payment gateway from the **Cardbiz Group**, a payments

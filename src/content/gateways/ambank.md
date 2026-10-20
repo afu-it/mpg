@@ -18,6 +18,8 @@ methods:
   - Visa
   - Mastercard
   - MyDebit
+  - UnionPay
+  - JCB
   - FPX online banking
   - DuitNow QR
   - EPP instalment
@@ -26,9 +28,9 @@ features:
   api: false
   recurring: false
 popularity: 58
-verified_date: "2026-07-17"
-source: "https://www.ambankgroup.com/products-and-services/business/digital-solutions"
-notes: "AmBank's merchant business solutions include online (eCommerce) acquiring for cards, FPX and DuitNow QR, alongside POS terminals, eBilling, EPP instalments and DCC. Requires an AmBank business account; rates are quoted on application, not published. Online product details are thinner than dedicated gateways."
+verified_date: "2026-10-20"
+source: "https://www.ambankgroup.com/products-and-services/business/sme/merchant-business-solutions"
+notes: "Source moved 2026-10-20: the old Digital Solutions page now lists only AmAccess banking portals; the Merchant Business Solutions page (Card Payment Acceptance Facility) lists Mastercard, Visa, UnionPay, JCB and MyDebit via Android Terminal, Online (eCommerce) and QR Code, plus eBilling, DCC, hotel pre-authorisation, AmBank Spot and points redemption. FPX and EPP are not named on that page. AmBank's merchant business solutions include online (eCommerce) acquiring for cards, FPX and DuitNow QR, alongside POS terminals, eBilling, EPP instalments and DCC. Requires an AmBank business account; rates are quoted on application, not published. Online product details are thinner than dedicated gateways."
 ---
 
 **AmBank** provides bank merchant acquiring that includes an online (eCommerce)

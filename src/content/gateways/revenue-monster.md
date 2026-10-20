@@ -31,7 +31,7 @@ plans:
     rows:
       - { label: "Setup", value: "RM499 one-time" }
       - { label: "Transaction rates", value: "Not published (contact sales)" }
-      - { label: "Extra settlement account", value: "RM99/account" }
+      - { label: "Extra settlement account", value: "RM99 one-time per account" }
     settlement: "Typically T+2 business days"
     source: "https://revenuemonster.my/pricing"
   - name: "Corporate+ Plan"
@@ -39,7 +39,7 @@ plans:
     rows:
       - { label: "All fees", value: "Personalised pricing, contact sales" }
     source: "https://revenuemonster.my/pricing"
-verified_date: "2026-07-17"
+verified_date: "2026-10-20"
 source: "https://revenuemonster.my/pricing"
 notes: "The previously indicative from-0.8% e-wallet/DuitNow figures are no longer on /pricing (re-verified 2026-07-17) so both are downgraded to Contact sales. Setup fee (RM499 one-time) and T+2 settlement are from the official pricing page; per-transaction rates are described only as 'competitive rates' and are not publicly published, so contact sales."
 ---

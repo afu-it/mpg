@@ -1,38 +1,40 @@
 ---
 name: RHB Bank
-website: https://www.rhbgroup.com
-tagline: "RHB's eCommerce gateway on Mastercard Payment Gateway Services"
+website: https://www.rhbgroup.com/rhbpay
+tagline: "RHB Pay: RHB's bank-owned unified online payment gateway"
 category: bank
 fees:
-  fpx: "—"
+  fpx: "Contact sales"
   card: "Contact sales"
   card_intl: "Contact sales"
   ewallet: "—"
-  duitnowqr: "Contact sales"
+  duitnowqr: "—"
   setup: "Contact sales"
   monthly: "Contact sales"
-settlement: "Contact sales"
+settlement: "Real-time or next day (depends on payment mode)"
 min_txn: "—"
-channels: [card, duitnowqr]
+channels: [fpx, card]
 methods:
   - Visa
   - Mastercard
-  - MyDebit
-  - DuitNow QR
+  - DuitNow Online Banking/Wallets
 features:
   no_code: true
   api: true
   recurring: false
 popularity: 48
-verified_date: "2026-07-17"
-source: "https://www.rhbgroup.com/business/partner/merchant-card-terminal/index.html"
-notes: "RHB Bank's eCommerce Payment Gateway runs on Mastercard Payment Gateway Services (MPGS), offering hosted checkout and API for online card acceptance plus DuitNow QR. Requires an RHB business account; rates are quoted on application, not published."
+verified_date: "2026-10-20"
+source: "https://www.rhbgroup.com/rhbpay"
+notes: "RHB launched RHB Pay on 5 August 2026 (press release https://www.rhbgroup.com/-/media/Files/others/highlights/media-release/M20260807-1.pdf), billed as Malaysia's first bank-owned unified online payment gateway. Phase 1 covers cards, FPX and DuitNow Pay (Online Banking/Wallets) through one API with hosted or self-hosted checkout and settlement into an RHB account, real-time or next day depending on payment mode. E-wallets, DuitNow QR, Direct Debit and AutoDebit are planned for Phase 2, targeted for Q4 2026, so they are marked not offered for now. Aimed at mid-sized enterprises, corporates and government-related bodies. No rates are published (the page cites direct bank pricing with no third-party margin). The older MPGS-based eCommerce Payment Gateway is still described on RHB's merchant terminal page."
 ---
 
-**RHB Bank** runs a bank-operated **eCommerce Payment Gateway** on Mastercard
-Payment Gateway Services (MPGS), giving merchants a hosted checkout and API for
-online card acceptance, alongside DuitNow QR.
+**RHB Bank** runs **RHB Pay**, launched in August 2026 as Malaysia's first
+bank-owned unified online payment gateway. One API covers cards (Visa,
+Mastercard), FPX and DuitNow Pay, with hosted or self-hosted checkout, a merchant
+portal with auto reconciliation, and settlement straight into an RHB account,
+real-time or next day depending on the payment mode.
 
-It accepts Visa, Mastercard and MyDebit with 3D-Secure. Merchants apply with an
-RHB business account, and rates are quoted on approval rather than published, so
-all fees here are "Contact sales".
+E-wallets, DuitNow QR, Direct Debit and AutoDebit are slated for Phase 2 in Q4
+2026. It targets mid-sized enterprises, corporates and government-related
+bodies. Rates are quoted on application rather than published, so all fees here
+are "Contact sales".

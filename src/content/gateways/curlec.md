@@ -38,7 +38,10 @@ plans:
       - { label: "Local cards", value: "2.40%" }
       - { label: "Foreign cards", value: "3.30%" }
       - { label: "E-wallets", value: "1.50%" }
-      - { label: "BNPL (Atome)", value: "6.00%" }
+      - { label: "DuitNow Pay (early access)", value: "1.20% or RM0.30, whichever is greater" }
+      - { label: "Alipay+", value: "2.70%" }
+      - { label: "UPI", value: "2.00%" }
+      - { label: "BNPL", value: "6.00%" }
     source: "https://curlec.com/pricing/"
   - name: "Premium"
     eligibility: "RM999 setup, optimised rates"
@@ -47,16 +50,19 @@ plans:
       - { label: "Local cards", value: "2.00%" }
       - { label: "Foreign cards", value: "3.10%" }
       - { label: "E-wallets", value: "1.30% (GrabPay 1.50%)" }
-      - { label: "BNPL (Atome)", value: "5.00%" }
+      - { label: "DuitNow Pay (early access)", value: "1.00% or RM0.30, whichever is greater" }
+      - { label: "Alipay+", value: "2.50%" }
+      - { label: "UPI", value: "1.80%" }
+      - { label: "BNPL", value: "5.00%" }
     source: "https://curlec.com/pricing/"
   - name: "Enterprise"
     eligibility: "Volume above RM1 million"
     rows:
       - { label: "All rates", value: "Personalised pricing, contact sales" }
     source: "https://curlec.com/pricing/"
-verified_date: "2026-07-17"
+verified_date: "2026-10-20"
 source: "https://curlec.com/pricing/"
-notes: "Basic-plan rates shown: FPX 1.50% (or RM1, whichever greater), credit/debit card 2.40%, foreign card 3.30%, e-wallet 1.50%, BNPL 6.00%. Premium plan lowers card to 2.00% / FPX to 1.00%. A one-time setup fee applies; Enterprise (>RM1M/month) is personalised. Applicable taxes (SST) extra."
+notes: "Basic-plan rates shown: FPX 1.50% (or RM1, whichever greater), credit/debit card 2.40%, foreign card 3.30%, e-wallet 1.50%, BNPL 6.00%. Premium plan lowers card to 2.00% / FPX to 1.00%. A one-time setup fee applies; Enterprise (>RM1M/month) is personalised. Applicable taxes extra. Re-verified 2026-10-20: rates unchanged; the pricing table now also lists DuitNow Pay (PayNet account-to-account, early access for limited businesses; not DuitNow QR) at 1.20% or RM0.30 (Basic) / 1.00% or RM0.30 (Premium), Alipay+ 2.70% / 2.50%, UPI 2.00% / 1.80%, and Apple Pay at standard card pricing. Setup on the table is RM0 Basic / RM999 Premium, but the page FAQ still says RM99 for Basic (inconsistent on the official page). The tax line reads 18% GST, which looks like a template leftover from Razorpay India. DuitNow QR rate is not published."
 ---
 
 Curlec is the Malaysian arm of **Razorpay**, offering a full payments suite:

@@ -12,7 +12,7 @@ fees:
   duitnowqr: "Contact sales"
   setup: "Contact sales"
   monthly: "Contact sales"
-settlement: "Contact sales"
+settlement: "Same-day"
 min_txn: "—"
 channels: [fpx, card, ewallet, duitnowqr]
 methods:
@@ -22,14 +22,16 @@ methods:
   - Mastercard
   - Boost
   - GrabPay
+  - ShopeePay
+  - Touch 'n Go eWallet
 features:
   no_code: true
   api: true
   recurring: true
 popularity: 36
-verified_date: "2026-07-17"
-source: "https://www.mobi.xyz/"
-notes: "Rebranded: gomobi.io now redirects to mobi.xyz under the Mobi brand (Mobi Asia / Mobiversa), repositioned as pan-Asia payments infrastructure (payins/payouts; MY channels: FPX, e-wallets, DuitNow QR, cards). No pricing published anywhere on the current site, including the previously listed RM0 setup."
+verified_date: "2026-10-20"
+source: "https://www.mobi.xyz/product"
+notes: "Rebranded: gomobi.io redirects to mobi.xyz under the Mobi brand (Mobi Asia / Mobiversa), repositioned as pan-Asia payments infrastructure (pay-ins, payouts, settlement) aimed at trading/FX, crypto, fintech, travel and e-commerce businesses. Product page lists Malaysia LIVE with FPX, Boost, DuitNow, ShopeePay, Touch n Go and GrabPay, plus cards. Settlement is marketed as same-day with 365-day availability (fiat or stablecoin via Canis). States it is a BNM Registered Non-Bank Merchant Acquirer. No pricing published anywhere on the current site, including the previously listed RM0 setup. Developer docs still served at gomobi.io/documents."
 ---
 
 **gomobi** (operated by **Mobi Asia Sdn Bhd**, formerly Mobiversa) is a Kuala
@@ -37,6 +39,7 @@ Lumpur merchant acquirer founded in 2014, covering FPX, cards, DuitNow QR and
 e-wallets across softPOS and online checkout. It is unrelated to the **MOBY**
 BNPL provider also listed here.
 
-It markets an **optional or zero setup fee** with low MDR, though per-transaction
-rates are quote-only. Merchant tools include a developer API and recurring
-billing.
+It has since rebranded as **Mobi** (mobi.xyz) and repositioned as pan-Asia
+payments infrastructure for pay-ins and payouts, marketing **same-day
+settlement**. No pricing is published, so all rates are quote-only. Merchant
+tools include a developer API with a sandbox.

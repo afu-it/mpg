@@ -27,9 +27,9 @@ plugins:
   - WHMCS
 dev_docs: "https://developer.asiapay.com/"
 popularity: 28
-verified_date: "2026-07-17"
+verified_date: "2026-10-20"
 source: "https://www.asiapay.com.my/"
-notes: "Indicative. No public Malaysia rate card; pricing is setup + monthly + per-transaction, quoted on request."
+notes: "Indicative. Re-checked 2026-10-20: site still lists Visa, Mastercard, Amex, JCB, Alipay, UnionPay, Boost, GrabPay, DuitNow, FPX, ShopBack, TNG Wallet and TrueMoney, plus Atome, SPayLater and PayLater by Grab; no fees published. No public Malaysia rate card; pricing is setup + monthly + per-transaction, quoted on request."
 ---
 
 AsiaPay's PayDollar is an enterprise-grade payment gateway operating across Asia, with a dedicated Malaysian entity. It supports a broad channel mix including Visa, Mastercard, American Express, JCB, UnionPay, FPX, DuitNow QR, and e-wallets (Boost, GrabPay, TNG Wallet, Alipay, TrueMoney), plus buy-now-pay-later options (Atome, SPayLater, PayLater by Grab).

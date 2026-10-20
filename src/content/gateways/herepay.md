@@ -35,7 +35,7 @@ plans:
       - { label: "Platform charge", value: "RM1 per transaction" }
       - { label: "Includes", value: "Fee and fund management, online store, sales platform and marketplace" }
     source: "https://www.herepay.org/harga/"
-verified_date: "2026-07-17"
+verified_date: "2026-10-20"
 source: "https://www.herepay.org/harga/"
 notes: "Fee-collection platform (school/PIBG fees, infaq, zakat) with a payment gateway: FPX B2C RM0.70 flat (B2B RM2.00), local Visa/Mastercard RM0.70 + 1%. RM0 setup, RM0 monthly, no contract; settlement processed every business day (next-business-day transfer); real-time settlement available as a custom plan (RM2,000/year). Platform charge (Percuma RM0 / Pro RM1 per transaction, capped RM1,999/year) applies on top for its forms product; gateway activation itself is free. E-wallet via strategic partners (unpriced). WooCommerce plugin v1.0.1 supports FPX, DuitNow and Direct Debit, one-off and recurring; Shopify listed as coming soon. Herepay Sdn. Bhd. (1455640-T), Bangsar South KL; site states regulated by PayNet, supported by Cradle and MOSTI."
 ---

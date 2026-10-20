@@ -22,7 +22,7 @@ features:
   api: true
   recurring: false
 popularity: 70
-verified_date: "2026-07-17"
+verified_date: "2026-10-20"
 source: "https://merchantsupport.tngdigital.com.my/hc/en-us/articles/15599821031321-How-much-is-the-MDR"
 notes: "Re-verified 2026-07-17: the published 0.5% MDR applies to TNG eWallet STATIC QR for SME merchants; no DuitNow QR MDR is explicitly published, so that field is downgraded to Contact sales. TNG Digital Sdn Bhd (1256651-M), a Touch 'n Go and Ant Group joint venture; operator of Malaysia's largest e-wallet. Merchant acceptance for Touch 'n Go eWallet and DuitNow QR at a published 0.5% MDR, settling T+1. This entry is the wallet's own merchant-acceptance product, not a full card/FPX gateway; merchants typically also accept TNG via other gateways."
 ---

@@ -8,7 +8,7 @@ fees:
   card: "Contact sales"
   card_intl: "Contact sales"
   ewallet: "—"
-  duitnowqr: "Contact sales"
+  duitnowqr: "RM0"
   setup: "Contact sales"
   monthly: "Contact sales"
 settlement: "Contact sales"
@@ -28,14 +28,25 @@ features:
 webhooks: false
 dev_docs: https://developers.uobgroup.com/en/
 popularity: 42
-verified_date: "2026-07-17"
+plans:
+  - name: "DuitNow QR (UOB business current account)"
+    eligibility: "Malaysian merchants with a UOB business current account, MYR only"
+    rows:
+      - { label: "Subscription", value: "RM0" }
+      - { label: "DuitNow QR (CASA / e-wallet)", value: "No fee until 31 December 2026" }
+      - { label: "DuitNow QR (credit card)", value: "0.25% until 31 December 2026" }
+    settlement: "Credited immediately"
+    source: "https://www.uob.com.my/business/transact/payments/duitnow-qr.page"
+verified_date: "2026-10-20"
 source: "https://www.uob.com.my/personal/cards/merchant-services.page"
-notes: "UOB Malaysia's merchant services include online card acceptance with hosted checkout, 3D-Secure, tokenisation and recurring billing, plus DuitNow QR, with API services available. Requires a UOB business account; rates are quoted on application, not published."
+notes: "Re-verified 2026-10-20. DuitNow QR pricing is now published on the official UOB DuitNow QR page (https://www.uob.com.my/business/transact/payments/duitnow-qr.page): no subscription charge, no fee for CASA or e-wallet funded payments and 0.25% for credit-card funded payments, both until 31 December 2026 (the page does not say what applies after that), static and dynamic QR, cross-border QR on by default, funds credited immediately; requires a UOB business current account. The duitnowqr value is the CASA/e-wallet rate. Online card gateway (hosted checkout, tokenisation, recurring collections) and POS terminals (cards, e-wallets, BNPL, UOB 0% Instalment Payment Plan) remain quote-only; no MDR, setup or monthly fee published. UOB's developer portal returned an error (503) on 2026-10-20. Earlier: UOB Malaysia's merchant services include online card acceptance with hosted checkout, 3D-Secure, tokenisation and recurring billing, plus DuitNow QR, with API services available."
 ---
 
 **UOB Malaysia** provides bank merchant services with an online card-acceptance
 gateway, offering hosted checkout, 3D-Secure, tokenisation and recurring billing,
 plus DuitNow QR, with documented API services.
 
-Merchants apply with a UOB business account, and rates are quoted on approval
-rather than published, so all fees here are "Contact sales".
+Merchants apply with a UOB business account. Card and setup rates are quoted on
+approval rather than published, so they stay "Contact sales". DuitNow QR is the
+exception: UOB publishes no fee for bank-account and e-wallet payments and 0.25%
+for credit-card payments, both until 31 December 2026.

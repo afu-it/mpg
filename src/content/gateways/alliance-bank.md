@@ -25,9 +25,9 @@ features:
   api: true
   recurring: true
 popularity: 42
-verified_date: "2026-07-17"
+verified_date: "2026-10-20"
 source: "https://www.alliancebank.com.my/business/SME/alliance-merchant-solutions"
-notes: "Publishes an MDR floor: \"rates as low as 0.5%\" (FAQ, 2026-07-17) with 0% IPP up to 60 months; no per-channel rate card, so fees stay Contact sales. Requires an Alliance Business Current Account for settlement. Alliance Bank's Merchant Solutions include an online payment gateway for card and e-wallet acceptance with recurring billing, settled to an Alliance Bank business current account (required). Rates are quoted on application, not published."
+notes: "Re-checked 2026-10-20: page still says \"MDR rates as low as 0.5%\" and \"0% interest up to 60 months\"; the online Payment Gateway is described as accepting \"all major credit cards and debit cards\", while e-wallets are named for the terminal. Publishes an MDR floor: \"rates as low as 0.5%\" (FAQ, 2026-07-17) with 0% IPP up to 60 months; no per-channel rate card, so fees stay Contact sales. Requires an Alliance Business Current Account for settlement. Alliance Bank's Merchant Solutions include an online payment gateway for card and e-wallet acceptance with recurring billing, settled to an Alliance Bank business current account (required). Rates are quoted on application, not published."
 ---
 
 **Alliance Bank** offers a bank-run merchant payment gateway for online **card and

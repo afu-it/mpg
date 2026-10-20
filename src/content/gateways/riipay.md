@@ -21,9 +21,9 @@ features:
   api: true
   recurring: false
 popularity: 8
-verified_date: "2026-07-17"
+verified_date: "2026-10-20"
 source: "https://riipay.my/business/"
-notes: "3-instalment BNPL, conventional and Shariah-aware positioning. Official merchant FAQ now says fees vary by industry and monthly turnover (the old 2.5% figure is no longer published), and no settlement timing is published. Zero upfront and zero monthly cost confirmed officially."
+notes: "3-instalment BNPL, conventional and Shariah-aware positioning. Official merchant FAQ now says fees vary by industry and monthly turnover (the old 2.5% figure is no longer published), and no settlement timing is published. Zero upfront and zero monthly cost confirmed officially. Re-verified 2026-10-20 (business page and merchant FAQ unchanged). As a BNPL provider it falls under the Consumer Credit Act 2025, which requires a Consumer Credit Commission licence (application window for existing providers reported to close 30 Nov 2026); Riipay's licence status is not published."
 ---
 
 Riipay is a Malaysian Buy Now Pay Later provider that lets shoppers split a purchase into 3 monthly instalments at 0% interest, paying just one-third upon checkout via debit or credit card. For merchants, Riipay positions itself as a way to increase cart size, reach new customers, and get paid in full upfront while the customer stretches their payments.

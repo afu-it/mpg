@@ -9,7 +9,7 @@ fees:
   card: "—"
   ewallet: "—"
   duitnowqr: "—"
-  bnpl: "3.0%–4.0% *"
+  bnpl: "Contact sales"
   setup: "Contact sales"
   monthly: "Contact sales"
 settlement: "Within 5 working days"
@@ -21,13 +21,13 @@ features:
   api: true
   recurring: false
 popularity: 66
-verified_date: "2026-07-17"
+verified_date: "2026-10-20"
 source: "https://www.grab.com/my/merchant/checkout-solutions/"
-notes: "The bnpl value is the merchant fee (MDR), not the shopper's instalment terms. Grab does not publish the PayLater merchant MDR officially; merchants apply for a rate. Settlement within 5 working days is official. A third-party indicatively estimates ~3%–4% (unofficial)."
+notes: "The bnpl value is the merchant fee (MDR), not the shopper instalment terms. Grab does not publish the PayLater merchant MDR officially; merchants apply for a rate, so it is Contact sales (an earlier unofficial third-party estimate of about 3% to 4% was removed from the fee field on 2026-10-20). Settlement within 5 working days (T+5) is official. Shopper-side fees changed from 1 June 2026: 4 instalments interest-free for VIP brands, otherwise 1.5% per instalment; 8 and 12 instalments 1.5% per instalment. From August 2026 Grab is trialling PayLater at any DuitNow QR merchant for whitelisted users."
 ---
 
-PayLater by Grab is the Buy Now, Pay Later option within the Grab app and at participating online and in-store merchants. Shoppers can pay in full next month (interest-free) or split a purchase into 4, 8 or 12 instalments (the 4-instalment plan is interest-free for VIP brands).
+PayLater by Grab is the Buy Now, Pay Later option within the Grab app and at participating online and in-store merchants. Shoppers can pay in full next month (interest-free) or split a purchase into 4, 8 or 12 instalments (the 4-instalment plan is interest-free for VIP brands; other plans carry 1.5% per instalment from 1 June 2026).
 
 For merchants, Grab charges a per-transaction service fee, but the merchant discount rate is not published anywhere on its official Malaysian site; businesses apply via the merchant form, after which a Grab representative provides pricing, so the merchant fee is shown as "Contact sales". Grab does officially state that merchants are settled within 5 working days with no repayment risk.
 
-Integration is merchant-friendly: Grab offers no-code pre-built plugins (Shopify, WooCommerce, Magento, EasyStore, Wix) and DuitNow QR, as well as a direct API. The only specific MDR figures available (roughly 3%–4%) come from a third-party comparison and should be treated as indicative.
+Integration is merchant-friendly: Grab offers no-code pre-built plugins (Shopify, WooCommerce, Magento, EasyStore, Wix) and DuitNow QR, as well as a direct API. Since August 2026 Grab has been trialling PayLater payments at any DuitNow QR merchant for selected users.

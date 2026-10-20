@@ -23,7 +23,7 @@ features:
 plugins:
   - WooCommerce
 popularity: 14
-verified_date: "2026-07-17"
+verified_date: "2026-10-20"
 source: "https://ringgitpay.biz/pricing/"
 notes: "DE-PUBLISHED (2026-07-17): /pricing/ has been stripped to a lead-capture form; the previous rate card (FPX RM1.20/RM2.20, cards 1.5%/2.0%, wallets 1.5%) is gone. Only a no-cost-setup and transaction-fee-as-low-as-RM1.00 claim remains, so fees are downgraded honestly and RinggitPay leaves the ranking. Indicative. Only public claim is 'no-cost setup & transaction fee as low as RM 1.00'; per-method rates are quote-based via an interest form."
 ---

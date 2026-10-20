@@ -9,7 +9,7 @@ fees:
   card: "—"
   ewallet: "—"
   duitnowqr: "—"
-  bnpl: "3.5%–4.5% *"
+  bnpl: "Contact sales"
   setup: "RM0"
   monthly: "Contact sales"
 settlement: "T+2–T+3 *"
@@ -21,9 +21,9 @@ features:
   api: true
   recurring: false
 popularity: 75
-verified_date: "2026-07-17"
+verified_date: "2026-10-20"
 source: "https://help.atome.my/hc/en-gb/articles/4405623301145-How-much-will-it-cost-me-as-a-merchant"
-notes: "The bnpl value is the merchant fee (MDR), not the shopper's instalment terms. Atome officially confirms RM0 setup fee and that a per-transaction MDR applies, but the MDR % is not published, so request a quote. A third-party indicatively estimates ~3.5%–4.5% (unofficial)."
+notes: "Re-checked 2026-10-20 (help article last edited 2025-05-16): Atome still says no setup fees and an MDR per transaction, quoted by its Business Development team, so bnpl is now Contact sales instead of the unofficial third-party range. The bnpl value is the merchant fee (MDR), not the shopper's instalment terms. Atome officially confirms RM0 setup fee and that a per-transaction MDR applies, but the MDR % is not published, so request a quote. A third-party indicatively estimates ~3.5%–4.5% (unofficial)."
 ---
 
 Atome is one of Malaysia's largest Buy Now, Pay Later providers, letting shoppers split a purchase into 3 interest-free instalments at checkout (pay 1/3 upfront, the rest over the following 60 days), with longer Pay-in-6/9/12-month plans also offered.

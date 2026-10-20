@@ -9,8 +9,8 @@ fees:
   ewallet: "Contact sales"
   duitnowqr: "Contact sales"
   bnpl: "Contact sales"
-  setup: "Free (local); USD120 (foreign)"
-  monthly: "RM300/year (waived if prior-year sales ≥ RM360,000)"
+  setup: "Contact sales"
+  monthly: "Contact sales"
 settlement: "Contact sales"
 min_txn: "—"
 category: gateway
@@ -24,26 +24,13 @@ plugins:
   - WooCommerce
 dev_docs: "https://v3api-docs.paydibs.com/docs/introduction"
 popularity: 42
-plans:
-  - name: "Nexus"
-    eligibility: "Growing eCommerce businesses"
-    rows:
-      - { label: "Signup", value: "Free (local) / USD120 (foreign merchants)" }
-      - { label: "Yearly maintenance", value: "RM300 (waived at RM360,000+ annual sales)" }
-    source: "https://paydibs.com/pricing/"
-  - name: "Payment Gateway Stack"
-    eligibility: "Online businesses, Malaysia and overseas"
-    rows:
-      - { label: "Signup", value: "Free (local) / USD120 (foreign merchants)" }
-      - { label: "Yearly maintenance", value: "RM300 (waived at RM360,000+ annual sales)" }
-    source: "https://paydibs.com/pricing/"
-verified_date: "2026-07-17"
-source: "https://paydibs.com/pricing/"
-notes: "Settlement schedule (previously 3x weekly Tue/Wed/Fri) no longer found anywhere on paydibs.com (re-verified 2026-07-17) so it is downgraded to Contact sales. Signup fee, RM300/year maintenance fee and T+1/T+2 settlement are confirmed on the official pricing page; per-transaction MDR rates are not publicly published, so contact sales."
+verified_date: "2026-10-20"
+source: "https://paydibs.com/payment-gateway-stack/"
+notes: "Site relaunched in October 2026 and the old /pricing/ page now returns 404 (checked 2026-10-20). No signup fee, maintenance fee, settlement time or per-transaction rate is published anywhere on paydibs.com, so the previously listed Free/USD120 signup and RM300/year maintenance fee are downgraded to Contact sales. The Service Agreement says Paydibs acts as the authorised agent of Adyen Malaysia Sdn. Bhd. for acquiring, and fees are set in each merchant's schedule. BNPL is no longer mentioned on the relaunched site; channel list left unchanged pending confirmation."
 ---
 
 Paydibs is a Malaysian payment service provider (Bank Negara-regulated, MSC status, PCI-DSS compliant) offering online and in-store payment acceptance through a single platform. It supports FPX, cards, e-wallets, DuitNow QR, BNPL and a range of international methods, with e-commerce plugins, APIs/SDKs, payment links and physical terminals.
 
 It targets Malaysian businesses from startups and SMEs up to enterprises that want local support, broad local payment coverage and fast settlement.
 
-The official pricing page confirms free signup for local merchants (USD120 for foreign), no monthly fee, a RM300/year maintenance fee (waived above RM360,000 annual sales), and T+1/T+2 settlement. Per-transaction rates for all channels are not publicly published, so contact sales.
+Paydibs relaunched its website in October 2026 and removed its public pricing page. No signup fee, maintenance fee, settlement time or per-transaction rate is published any more, so every fee here is contact sales. Its Service Agreement states that Paydibs acts as the authorised agent of Adyen Malaysia for card acquiring.

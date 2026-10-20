@@ -19,9 +19,9 @@ features:
   api: false
   recurring: false
 popularity: 26
-verified_date: "2026-07-17"
+verified_date: "2026-10-20"
 source: "https://www.tulus.my/soalan-lazim"
-notes: "Islamic social-finance collection platform by Tulus Digital Sdn Bhd (Shah Alam): zakat, wakaf, infaq and sedekah for Islamic organisations and NGOs, with funds settling to institutional bank accounts. Authorised agent of state zakat authorities (PPZ-MAIWP, Lembaga Zakat Selangor); Zakat Pahang's TULUS channel runs on it; AEON Bank zakat partnership (March 2026). Consumer apps on iOS/Android; organisations onboard to collect. No fees published. Sister product SnapNPay serves payment-exchange use cases."
+notes: "Re-verified 2026-10-20: site live, no closure or rebrand notice, still no fees published. FAQ confirms FPX checkout and e-wallet payment only where the zakat body allows it; zakat payments are non-refundable. Homepage (https://www.tulus.my/) now lists 11 zakat institutions (including LZS, PPZ-MAIWP, MAIJ and TBS), 917 registered mosques, surau and orphanages, a Tulus payment gateway and per-collector QR for institutions, a Syariah-compliance confirmation of the app and gateway by Lariba Consulting dated 19 Aug 2026, and the footer line An Acture company. Earlier: Islamic social-finance collection platform by Tulus Digital Sdn Bhd (Shah Alam): zakat, wakaf, infaq and sedekah for Islamic organisations and NGOs, with funds settling to institutional bank accounts. Authorised agent of state zakat authorities (PPZ-MAIWP, Lembaga Zakat Selangor); Zakat Pahang's TULUS channel runs on it; AEON Bank zakat partnership (March 2026). Consumer apps on iOS/Android; organisations onboard to collect. No fees published. Sister product SnapNPay serves payment-exchange use cases."
 ---
 
 Tulus Digital runs collection infrastructure for Malaysia's Islamic social

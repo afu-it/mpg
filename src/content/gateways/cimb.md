@@ -40,9 +40,9 @@ plans:
       - { label: "Via CIMB e-Commerce Partners", value: "1.50% - 1.80% domestic / 2.80% - 3.00% international" }
       - { label: "Direct connect (cards, FPX, JomPAY)", value: "Case-by-case" }
     source: "https://www.cimb.com.my/en/business/business-solutions/solutions/merchant-solutions.html"
-verified_date: "2026-07-17"
+verified_date: "2026-10-20"
 source: "https://www.cimb.com.my/en/business/business-solutions/solutions/merchant-solutions.html"
-notes: "Bank-run online gateway under CIMB's Merchant Solutions, distinct from POS and DuitNow QR products. Three forms: Payment Link (no website, Mastercard/Visa 1.00% on-us / 1.10% off-us), CIMB e-Commerce Partners (hosted gateway, 1.50%-1.80% domestic / 2.80%-3.00% international cards), and Direct Connect to CIMB (direct integration accepting cards, FPX and JomPAY, priced case by case). 3D-Secure; supports recurring and instalment. Requires a CIMB business current account; settled next business day. Card rates are CIMB-published."
+notes: "Bank-run online gateway under CIMB's Merchant Solutions, distinct from POS and DuitNow QR products. Three forms: Payment Link (no website, Mastercard/Visa 1.00% on-us / 1.10% off-us), CIMB e-Commerce Partners (hosted gateway, 1.50%-1.80% domestic / 2.80%-3.00% international cards), and Direct Connect to CIMB (direct integration accepting cards, FPX and JomPAY, priced case by case). 3D-Secure; supports recurring and instalment. Requires a CIMB business current account; settled next business day. Card rates are CIMB-published. Re-verified 2026-10-20, unchanged."
 ---
 
 **CIMB e-Commerce** is CIMB's bank-operated online payment gateway, part of its

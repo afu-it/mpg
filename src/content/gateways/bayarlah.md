@@ -28,9 +28,9 @@ features:
 webhooks: true
 dev_docs: "https://doc.bayarlah.my/"
 popularity: 23
-verified_date: "2026-07-17"
-source: "https://www.bayarlah.my/about"
-notes: "Operated by Beez Fintech Sdn Bhd, trading as bayarlah; BNM Registered Merchant Acquirer (Non-bank). Unified DuitNow QR and e-wallet acceptance, primarily in-store, with cross-border WeChat Pay, Alipay+ (coming soon) and a Smart Terminal for cards (coming soon). Pricing quote-only; documented API and webhooks."
+verified_date: "2026-10-20"
+source: "https://www.bayarlah.my/ourstory"
+notes: "Operated by Beez Fintech Sdn Bhd, trading as bayarlah; BNM Registered Merchant Acquirer (Non-bank). Unified DuitNow QR and e-wallet acceptance, primarily in-store, with cross-border WeChat Pay, Alipay+ (coming soon) and a Smart Terminal for cards (coming soon). Pricing quote-only; documented API and webhooks. Re-checked 2026-10-20: /about now redirects to /ourstory, which says it is an official PayNet participant with 18,000 merchants and lists Cross-Border DNQR and Cross-Border Weixin Pay launches; the Coming soon labels for Alipay+ and the Smart Terminal are no longer shown, and card acceptance is not described."
 ---
 
 **bayarlah** (operated by **Beez Fintech Sdn Bhd**) is a Bank Negara Malaysia

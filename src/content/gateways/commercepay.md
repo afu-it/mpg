@@ -39,9 +39,20 @@ plugins:
   - SiteGiant
 dev_docs: "https://docs.commercepay.asia"
 popularity: 26
-verified_date: "2026-07-17"
+plans:
+  - name: "Credit Card Instalment Payment Plan (0% IPP)"
+    eligibility: "RM500 one-time setup; 9 banks; per-bank minimum amounts RM300 to RM3,000"
+    rows:
+      - { label: "3 months", value: "3.50% MDR" }
+      - { label: "6 months", value: "4.00% MDR" }
+      - { label: "12 months", value: "5.00% MDR" }
+      - { label: "24 months", value: "7.50% MDR" }
+      - { label: "36 months", value: "9.70% MDR" }
+    settlement: "T+1 (full amount, any tenure)"
+    source: "https://www.commercepay.asia/credit-card-ipp"
+verified_date: "2026-10-20"
 source: "https://www.commercepay.asia/faq"
-notes: "IPP re-verified 2026-07-17: 0% instalment MDR 3.50% (3-month) up to 9.70% (36-month); the previously recorded RM500 setup is NOT on the current site (RM300-RM3,000 figures are per-bank minimum transaction amounts). IPP merchant settlement T+1. Indicative. Gateway fee is per-transaction (fixed or %) but not published; only the Instalment (IPP) rate of 'as low as 3.5%' + RM500 setup is public."
+notes: "Re-verified 2026-10-20. Gateway: no setup or annual maintenance fee (FAQ); per-transaction fee (fixed or %) is not published, so channel rates are Contact sales. Settlement 1-2 business days (features section; the homepage hero says 1-3). IPP (credit-card-ipp page): 0% instalment MDR 3.50% (3-month), 4.00% (6), 5.00% (12), 7.50% (24), 9.70% (36), 9 banks, T+1 settlement; the homepage states a one-time IPP setup fee of RM500 (this corrects the July note that said RM500 was gone). RM300-RM3,000 figures are per-bank minimum transaction amounts. New since May 2026: BInfinite loyalty (earn/redeem BPoints at checkout, no setup fee). BNM-licensed merchant acquirer."
 ---
 
 CommercePay (Commerce DotAsia Payments Sdn Bhd) is licensed by Bank Negara Malaysia for online merchant acquiring. It supports FPX/DuitNow online banking, local and international credit/debit cards, e-wallets, recurring payments and an Instalment Payment Plan (IPP / "InstallmentPay Plus").

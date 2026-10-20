@@ -31,9 +31,9 @@ plugins:
   - OpenCart
   - EasyStore
 popularity: 30
-verified_date: "2026-07-17"
+verified_date: "2026-10-20"
 source: "https://macrokiosk.com/boldpay-payment-gateway"
-notes: "MACROKIOSK Berhad (est. 2000, KL; GMO Payment Gateway invested in 2016 but the founders reacquired full ownership in 2020). No rates published anywhere; pricing is per Sales Order. BNPL via Atome. Payment requests can be sent over SMS, WhatsApp, Viber, LINE and RCS. Certified digitalisation partner under Geran Digital PMKS Madani (50% matching grant up to RM5,000). API access via the boldpass.com merchant portal (docs gated behind an enquiry form)."
+notes: "Re-verified 2026-10-20: page live, still no published rates; channels listed are cards, online banking, e-wallets, BNPL and direct carrier billing. MACROKIOSK Berhad (est. 2000, KL; GMO Payment Gateway invested in 2016 but the founders reacquired full ownership in 2020). No rates published anywhere; pricing is per Sales Order. BNPL via Atome. Payment requests can be sent over SMS, WhatsApp, Viber, LINE and RCS. Certified digitalisation partner under Geran Digital PMKS Madani (50% matching grant up to RM5,000). API access via the boldpass.com merchant portal (docs gated behind an enquiry form)."
 ---
 
 BOLD.Pay is the payment arm of **MACROKIOSK**, the KL messaging-technology firm

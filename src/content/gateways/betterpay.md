@@ -44,13 +44,14 @@ plans:
   - name: "Starter"
     eligibility: "Free setup"
     rows:
-      - { label: "FPX (B2C)", value: "RM1.00 per transaction" }
+      - { label: "FPX", value: "RM1.00 B2C / RM2.00 B2B" }
     settlement: "T+1"
     source: "https://www.betterpay.me/v2/pricing.html"
   - name: "Lite"
     eligibility: "RM300 setup"
     rows:
-      - { label: "FPX (B2C)", value: "RM1.00" }
+      - { label: "FPX", value: "RM1.00 B2C / RM2.00 B2B" }
+      - { label: "DuitNow QR", value: "1.20%" }
       - { label: "Local cards", value: "1.90% (T+2)" }
       - { label: "International cards", value: "4.00% (T+2)" }
       - { label: "E-wallets", value: "1.20% - 1.50%" }
@@ -66,9 +67,9 @@ plans:
       - { label: "E-wallets", value: "1.20% - 2.70%" }
     settlement: "Instant bank-transfer settlement (cards T+2)"
     source: "https://www.betterpay.me/v2/pricing.html"
-verified_date: "2026-07-17"
+verified_date: "2026-10-20"
 source: "https://www.betterpay.me/v2/pricing.html"
-notes: "Pay Direct Technology Sdn Bhd. Plans: Starter (RM0 setup, FPX-only), Lite (RM300 setup), Pro (RM500 setup, instant bank-transfer settlement, FPX B2B RM2.00, DuitNow QR 1.00%). Values shown are the published Lite-tier rates: FPX RM1.00 B2C, local cards 1.90%, international 4.00%, main e-wallets 1.50% (WeChat 1.20%, Alipay 2.70%), DuitNow QR 1.20%, BNPL Atome 5.50% / GrabPayLater 5.00%-6.50%. Shopify adds a 0.50% surcharge. No monthly fee."
+notes: "Pay Direct Technology Sdn Bhd. Re-verified 2026-10-20, rates unchanged. Plans: Starter (RM0 setup, FPX-only, FPX B2C RM1.00 / B2B RM2.00), Lite (RM300 setup, FPX B2B RM2.00), Pro (RM500 setup, instant bank-transfer settlement, FPX B2B RM2.00, DuitNow QR 1.00%). Values shown are the published Lite-tier rates: FPX RM1.00 B2C, local cards 1.90%, international 4.00%, main e-wallets 1.50% (WeChat 1.20%, Alipay 2.70%), DuitNow QR 1.20%, BNPL Atome 5.50% / GrabPayLater 5.00%-6.50%. UnionPay and Diners Club 3.00%. Apple Pay / Google Pay 1.90% on Pro. Shopify adds a 0.50% surcharge. No monthly fee."
 ---
 
 BetterPay (Pay Direct Technology Sdn Bhd) is a Malaysian gateway whose pitch is

@@ -31,7 +31,7 @@ features:
   recurring: false
 dev_docs: "https://develop.hsbc.com/api-overview/digital-merchant-services"
 popularity: 42
-verified_date: "2026-07-17"
+verified_date: "2026-10-20"
 source: "https://www.business.hsbc.com.my/en-gb/solutions/hsbc-omni-collect"
 notes: "HSBC Malaysia's Omni Collect is an omnichannel merchant collection product accepting cards, FPX, DuitNow QR and major e-wallets (Alipay, Boost, GrabPay, Touch n Go, MCash, Maybank QRPay) with a single consolidated settlement and digital merchant APIs. Requires an HSBC business relationship; rates are quoted on application, not published."
 ---

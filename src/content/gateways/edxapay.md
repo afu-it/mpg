@@ -20,9 +20,9 @@ features:
 plugins:
   - WooCommerce
 popularity: 26
-verified_date: "2026-07-17"
-source: "https://edxapay.com"
-notes: "Edxapay Sdn Bhd (MDEC MD-status, since 2022): online acceptance (FPX, Visa/Mastercard, TnG, Boost, DuitNow QR) plus physical products (terminals, DuitNow QR soundbox, POS). Free sign-up claimed with tiered plans, but no rates published anywhere, so all fees are Contact sales. WooCommerce plugin in the WordPress.org directory; active hiring and social channels. Settlement terms not published."
+verified_date: "2026-10-20"
+source: "https://edxapay.com/product-lineup/"
+notes: "RISK (2026-10-20): edxapay.com and its product lineup no longer list any online payment gateway; it now markets only card terminals, vending-machine QR, DuitNow QR soundbox, NoQue POS and the Xiibit soundbox engine (an April 2025 archive shows the same, so online acceptance has not been marketed for some time). The WooCommerce plugin (edxapay-for-woocommerce 1.0.3) was last updated April 2023, tested only to WordPress 6.2, with 0 active installs. Online gateway status unconfirmed. Edxapay Sdn Bhd (MDEC MD-status, since 2022): online acceptance (FPX, Visa/Mastercard, TnG, Boost, DuitNow QR) plus physical products (terminals, DuitNow QR soundbox, POS). Free sign-up claimed with tiered plans, but no rates published anywhere, so all fees are Contact sales. WooCommerce plugin in the WordPress.org directory; active hiring and social channels. Settlement terms not published."
 ---
 
 edxaPay is an MDEC MD-status payments and IT solutions company serving
