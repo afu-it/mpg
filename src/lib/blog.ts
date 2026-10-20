@@ -29,7 +29,7 @@ export const CLUSTERS: BlogCluster[] = [
     description:
       "Subscription and recurring billing in Malaysia explained: which gateways support card-on-file charging, what it costs, and how auto-debit works.",
     blurb: "Subscription billing and auto-charging in Malaysia.",
-    live: false,
+    live: true,
   },
   {
     slug: "fpx-duitnow",
