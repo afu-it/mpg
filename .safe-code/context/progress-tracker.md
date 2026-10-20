@@ -1,11 +1,11 @@
 # Progress Tracker — MPG
 
-last_synced_commit: 3227262
+last_synced_commit: dbc67c7
 context_synced_at: 2026-10-20
 context_selftest: skipped (not first-run)
 
 ## Current Phase
-Pure static directory of **74** Malaysian payment providers, polished, with a
+Pure static directory of **73** Malaysian payment providers, polished, with a
 **/learn** section for devs and a **Jalur Gemilang** dark theme. Categorised by
 how a merchant accesses them (gateway = integrate, bank/e-wallet = merchant
 account, plus BNPL + infrastructure). Sourced fees, popularity-ranked by default.
