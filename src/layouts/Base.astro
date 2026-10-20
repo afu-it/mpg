@@ -184,51 +184,79 @@ const livePillars = CLUSTERS.filter((c) => c.live);
     }
 
     <footer class="border-t border-line">
-      <div class="mx-auto w-full max-w-6xl px-4 py-10 sm:px-6">
-        <div class="grid gap-8 text-xs sm:grid-cols-3">
+      <div class="mx-auto w-full max-w-6xl px-4 pt-12 sm:px-6">
+        <div class="flex flex-col gap-5 rounded-xl border border-line bg-panel p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8">
           <div>
-            <p class="mb-2 font-medium uppercase tracking-wide text-fg/70">Tools</p>
-            <ul class="space-y-1.5 text-muted">
-              <li><a href="/choose/" class="hover:text-fg hover:underline">Help me choose</a></li>
-              <li><a href="/calculator/" class="hover:text-fg hover:underline">Fee calculator</a></li>
-              <li><a href="/best/payment-gateway-malaysia/" class="hover:text-fg hover:underline">Best gateways</a></li>
-              <li><a href="/vs/" class="hover:text-fg hover:underline">Comparisons</a></li>
-              <li><a href="/fee-changes/" class="hover:text-fg hover:underline">Fee changes</a></li>
+            <p class="text-lg font-semibold text-white">Spotted a fee change?</p>
+            <p class="mt-1 max-w-md text-sm text-muted">
+              Every rate links to its official source. If a provider updates its pricing, tell us and we will re-check it.
+            </p>
+          </div>
+          <div class="flex gap-3">
+            <a href="/contribute/" class="inline-flex h-10 items-center rounded-md bg-brand-blue px-5 text-sm font-medium text-white hover:opacity-90">Report a change</a>
+            <a href="https://github.com/afu-it/mpg" target="_blank" rel="noopener noreferrer" class="inline-flex h-10 items-center rounded-md border border-line px-5 text-sm text-fg hover:border-accent">GitHub</a>
+          </div>
+        </div>
+      </div>
+      <div class="mx-auto grid w-full max-w-6xl gap-10 px-4 py-12 sm:px-6 md:grid-cols-[1.4fr_2fr]">
+        <div class="max-w-xs">
+          <a href="/" class="flex items-center gap-2 font-semibold text-white">
+            <img src="/logo-white.svg" alt="" width="22" height="22" class="h-[22px] w-[22px] object-contain" />
+            Malaysia Payment Gateway
+          </a>
+          <p class="mt-3 text-sm leading-relaxed text-muted">
+            An independent directory of Malaysian payment gateway fees, each one taken from the provider's official pricing page.
+          </p>
+          <p class="mt-5 flex items-center gap-2 text-xs text-muted">
+            <span class="size-1.5 rounded-full bg-emerald-400" aria-hidden="true"></span>
+            Fees last verified {updated}
+          </p>
+        </div>
+        <div class="grid grid-cols-2 gap-8 text-sm sm:grid-cols-3">
+          <div>
+            <p class="mb-3 text-xs font-medium uppercase tracking-wider text-white">Tools</p>
+            <ul class="space-y-2 text-muted">
+              <li><a href="/choose/" class="hover:text-white">Help me choose</a></li>
+              <li><a href="/calculator/" class="hover:text-white">Fee calculator</a></li>
+              <li><a href="/best/payment-gateway-malaysia/" class="hover:text-white">Best gateways</a></li>
+              <li><a href="/vs/" class="hover:text-white">Comparisons</a></li>
+              <li><a href="/fee-changes/" class="hover:text-white">Fee changes</a></li>
             </ul>
           </div>
           <div>
-            <p class="mb-2 font-medium uppercase tracking-wide text-fg/70">Guides</p>
-            <ul class="space-y-1.5 text-muted">
-              <li><a href="/blog/" class="hover:text-fg hover:underline">All guides</a></li>
+            <p class="mb-3 text-xs font-medium uppercase tracking-wider text-white">Guides</p>
+            <ul class="space-y-2 text-muted">
+              <li><a href="/blog/" class="hover:text-white">All guides</a></li>
               {
                 livePillars.map((c) => (
                   <li>
-                    <a href={blogPath(c.slug)} class="hover:text-fg hover:underline">
+                    <a href={blogPath(c.slug)} class="hover:text-white">
                       {c.name}
                     </a>
                   </li>
                 ))
               }
-              <li><a href="/learn/" class="hover:text-fg hover:underline">Learn</a></li>
-              <li><a href="/learn/api/" class="hover:text-fg hover:underline">API &amp; MCP</a></li>
+              <li><a href="/learn/" class="hover:text-white">Learn</a></li>
+              <li><a href="/learn/api/" class="hover:text-white">API &amp; MCP</a></li>
             </ul>
           </div>
           <div>
-            <p class="mb-2 font-medium uppercase tracking-wide text-fg/70">Site</p>
-            <ul class="space-y-1.5 text-muted">
-              <li><a href="/about/" class="hover:text-fg hover:underline">About</a></li>
-              <li><a href="/contact/" class="hover:text-fg hover:underline">Contact</a></li>
-              <li><a href="/contribute/" class="hover:text-fg hover:underline">Contribute</a></li>
-              <li><a href="https://github.com/afu-it/mpg" target="_blank" rel="noopener noreferrer" class="hover:text-fg hover:underline">GitHub</a></li>
-              <li><a href="/ms/" class="hover:text-fg hover:underline" hreflang="ms" lang="ms">Bahasa Malaysia</a></li>
-              <li><a href="/privacy/" class="hover:text-fg hover:underline">Privacy</a></li>
+            <p class="mb-3 text-xs font-medium uppercase tracking-wider text-white">Site</p>
+            <ul class="space-y-2 text-muted">
+              <li><a href="/about/" class="hover:text-white">About</a></li>
+              <li><a href="/contact/" class="hover:text-white">Contact</a></li>
+              <li><a href="/contribute/" class="hover:text-white">Contribute</a></li>
+              <li><a href="/ms/" class="hover:text-white" hreflang="ms" lang="ms">Bahasa Malaysia</a></li>
+              <li><a href="/privacy/" class="hover:text-white">Privacy</a></li>
             </ul>
           </div>
         </div>
-        <p class="mt-6 border-t border-line pt-4 text-xs text-muted">
-          Fees are indicative; always confirm with the provider. Last updated {updated} · MPG is an
-          independent directory, not affiliated with any provider.
-        </p>
+      </div>
+      <div class="border-t border-line">
+        <div class="mx-auto flex w-full max-w-6xl flex-col gap-2 px-4 py-5 text-xs text-muted sm:flex-row sm:justify-between sm:px-6">
+          <span>© {new Date().getFullYear()} MPG · Code MIT · Data CC BY 4.0</span>
+          <span>Fees are indicative; always confirm with the provider. Not affiliated with any provider.</span>
+        </div>
       </div>
     </footer>
 
