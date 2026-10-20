@@ -5,6 +5,7 @@ import { getCollection } from "astro:content";
 import Base from "../layouts/Base.astro";
 import Logo from "../components/Logo.astro";
 import FlagMY from "../components/FlagMY.astro";
+import manropeWoff2 from "@fontsource-variable/manrope/files/manrope-latin-wght-normal.woff2?url";
 import { toApiGateway, type GatewayEntryLike } from "../lib/api";
 
 const gateways = await getCollection("gateways");
@@ -52,13 +53,14 @@ const jsonLd = JSON.stringify({
     href="/api/gateways.json"
     title="MPG gateways data (JSON)"
   />
+  <link slot="head" rel="preload" href={manropeWoff2} as="font" type="font/woff2" crossorigin />
   <script is:inline type="application/ld+json" set:html={jsonLd} />
 
   <!-- hero: one message, oversized type, nothing else competing; full-bleed ASCII wake behind it -->
   <div class="relative overflow-hidden">
   <canvas data-wake aria-hidden="true" class="pointer-events-none absolute inset-0 block h-full w-full text-muted opacity-60"></canvas>
   <section class="relative mx-auto w-full max-w-4xl px-4 pb-16 pt-10 text-center sm:px-6 md:pt-16">
-    <h1 class="text-4xl font-bold leading-[1.05] tracking-[-0.03em] text-white sm:text-6xl md:text-7xl">
+    <h1 class="bg-gradient-to-b from-white via-white to-white/60 bg-clip-text font-display text-4xl font-medium leading-[1.05] tracking-[-0.05em] text-transparent sm:text-6xl md:text-7xl">
       Every <span class="whitespace-nowrap">Malaysian<FlagMY class="ml-[0.15em] inline-block h-[0.8em] w-auto -translate-y-[0.05em] align-baseline" /></span> payment gateway, compared.
     </h1>
     <p class="mx-auto mt-6 max-w-2xl text-balance text-base text-muted sm:text-lg">
