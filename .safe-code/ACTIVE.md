@@ -11,11 +11,11 @@ completed:
   - Bizappay delisted (AFU: service closed); /gateway/bizappay/ 301 -> /gateways/ via public/_redirects; 73 providers.
   - Old `mpg` Pages project deleted (live domain confirmed on mpg-site); repo Website field set; mcp dev-deps bump type-checked + committed.
 pending:
-  - PUSH to master = deploy (7 local commits); needs AFU OK.
+  - PUSH to master = deploy (all local commits since 4f8f3fc); needs AFU OK.
   - AFU HIGH: revoke old Cloudflare API token in the dashboard (no tool here has token-list permission; already absent from shell env).
   - AFU: reply to Kiple (draft given in chat; ask affiliate terms). Joining an affiliate programme contradicts /about "no affiliate links" claim; needs a disclosure decision first.
   - AFU distribution round: GSC Request Indexing (incl. new recurring posts), Threads post, MCP registries, Wikidata.
   - Spec 15 slices E-G (fpx-duitnow, ewallet-bnpl clusters; inbound links; BM subset incl "maksud recurring payment" in slice F).
   - Data follow-ups: eGHL now redirects to NTT DATA Pay (ADAPTIS) brand/website/source pass; MOBY channels still [bnpl] though it publishes FPX/card/wallet/QR; Kiple QR/e-wallet rows unlabeled on pricing page; Fiuu BNPL kept in channels but unpriced; SwiF re-check ~2027-01 (delist if still dormant).
   - Repo node_modules (root + mcp) were installed on another OS; on this Mac run `npm ci` before tests/build.
-next_action: Get AFU OK to push the 7 local commits (deploys the recurring cluster + fee refresh), then Spec 15 slice E.
+next_action: Get AFU OK to push the local commits (deploys the recurring cluster + fee refresh), then Spec 15 slice E.
