@@ -1,5 +1,5 @@
 ---
-status: in-progress   # approved by AFU 2026-07-17 ("buat lah semua"); slices A-C + images DONE same day; D-G remain
+status: in-progress   # approved by AFU 2026-07-17 ("buat lah semua"); slices A-C + images DONE same day; D DONE 2026-10-20 (EN only, BM in F); E-G remain
 created: 2026-07-17
 ---
 # SEO Round 3 — Blog content layer + topic pillars (GSC-driven)

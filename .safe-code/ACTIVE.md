@@ -2,18 +2,19 @@
 
 ## Last Session
 status: saved
-saved_at: 2026-07-17 malam lewat (save #6: spec-16 rollout + dev-verification + OPEN SOURCE + deploy migration + SEO signals)
+saved_at: 2026-10-20 (save #7: --continue, all pending items run in parallel)
 completed:
-  - Spec 16 rollout DONE (compare/choose/best/vs/alternatives + learn/blog typographic pass; 0 word-count losses; spec closed).
-  - Dev-claims verification: 8 Firecrawl subagents over all 74 gateways; MCP 7→9 (billplz + ipay88 community found), 27 dev_docs fixed, 4 api flips; API + MCP badges (blue accent) on /gateways.
-  - OPEN SOURCE (spec 19 DONE): repo PUBLIC after clean 149-commit secret scan; MIT + CC BY 4.0 + trademark notice; README/CONTRIBUTING/issue templates; /contribute = fork+PR; branch protection on.
-  - Deploy migrated to Cloudflare Pages Git integration (`mpg-site`); deploy.yml + ALL GH secrets deleted; TM-001 CLOSED. Gotchas recorded in MEMORY (wrangler.toml trap, Workers-vs-Pages tab).
-  - SEO signals live: Dataset LD CC BY 4.0 URL, Organization sameAs GitHub, footer GitHub link, /about licence section, llms.txt note; IndexNow pinged. All commits pushed + deployed + live-verified.
+  - Spec 15 slice D DONE: /blog/recurring-payments/ pillar + 3 EN posts (what-is, billing, gateway compare), cluster live.
+  - Fee/data refresh 2026-10-20 on 16 gateways (Fiuu Aug-2026 card, Airwallex intl increase, MOBY repricing, M1Pay plan fees unpublished, CHIP SPayLater+stablecoin, SMAP Pay API, SecurePay docs, HLB + Kiple re-verified); 5 fee-change log entries.
+  - Kiple vendor email (2026-10-12) applied: recurring true (also public at kiple.com/payments/), MBSB added to FPX banks (email-only source, noted).
+  - SwiF re-checked: spam gone, keep with dormancy warning; body fixed (it publishes a rate card).
+  - Old `mpg` Pages project deleted (live domain confirmed on mpg-site); repo Website field set; mcp dev-deps bump type-checked + committed.
 pending:
-  - AFU HIGH: revoke old Cloudflare API token (dash.cloudflare.com/profile/api-tokens; also remove from machine shell env).
-  - AFU HIGH: SwiF (swifs.io) looks hacked — decide keep-with-warning vs delist.
-  - AFU distribution round (BACKLOG): GSC Request Indexing, Threads post (open-source story ready), MCP registries (text in BACKLOG, updated to 74), Wikidata, repo Website field.
-  - Delete old `mpg` Pages project after a few stable days.
-  - Spec 15 slices D-G (next: recurring cluster, BM query "maksud recurring payment").
-  - Fee-refresh candidates + HLB/Kiple re-verify + dev-data MED follow-ups (BACKLOG).
-next_action: Spec 15 slice D (recurring cluster) is the next build work; otherwise process AFU distribution-round results. Everything is already pushed + live, no unpushed work except this save's bookkeeping commit.
+  - PUSH to master = deploy (4 local commits); needs AFU OK.
+  - AFU HIGH: revoke old Cloudflare API token in the dashboard (no tool here has token-list permission; already absent from shell env).
+  - AFU: reply to Kiple (draft given in chat; ask affiliate terms). Joining an affiliate programme contradicts /about "no affiliate links" claim; needs a disclosure decision first.
+  - AFU distribution round: GSC Request Indexing (incl. new recurring posts), Threads post, MCP registries, Wikidata.
+  - Spec 15 slices E-G (fpx-duitnow, ewallet-bnpl clusters; inbound links; BM subset incl "maksud recurring payment" in slice F).
+  - Data follow-ups: eGHL now redirects to NTT DATA Pay (ADAPTIS) brand/website/source pass; MOBY channels still [bnpl] though it publishes FPX/card/wallet/QR; Kiple QR/e-wallet rows unlabeled on pricing page; Fiuu BNPL kept in channels but unpriced; SwiF re-check ~2027-01 (delist if still dormant).
+  - Repo node_modules (root + mcp) were installed on another OS; on this Mac run `npm ci` before tests/build.
+next_action: Get AFU OK to push the 4 local commits (deploys the recurring cluster + fee refresh), then Spec 15 slice E.

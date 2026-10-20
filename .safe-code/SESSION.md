@@ -1,15 +1,13 @@
 # SESSION — working memory
 
-_2026-07-17 malam lewat (post-save #6)_
+_2026-10-20 (post-save #7)_
 
 ## Carry Forward
-- Live: https://malaysiapg.com.my · 74 gateways · 219 pages · **OPEN SOURCE at github.com/afu-it/mpg** (MIT code / CC BY 4.0 data).
-- Deploy = push master → **Cloudflare Pages Git integration** (`mpg-site`); PRs get previews. NO GitHub Actions, NO GH secrets. Never re-add a root wrangler.toml (breaks Pages build config).
-- MCP verified 2026-07-17: 9 gateways (5 official + 4 community); badges API/MCP live on /gateways.
-- Design = dark sparse minimalism, spec 16 fully rolled out sitewide.
-- Scraping hard rule: NEVER truncate scraped pages before extracting facts.
-- House rules: static Astro 7 + Clerk CDN; no em-dashes; fees sourced or Contact sales; trailing slashes everywhere.
-- AFU pending: revoke old CF token; SwiF hacked-site decision; distribution round.
+- Live: https://malaysiapg.com.my · 74 gateways · 222 pages · OPEN SOURCE at github.com/afu-it/mpg (MIT code / CC BY 4.0 data). Repo owner account is afu-it; gh default account on this Mac is red-eagle-digital, so use `GH_TOKEN=$(gh auth token --user afu-it)` for repo ops.
+- Deploy = push master → Cloudflare Pages Git integration (`mpg-site`, only Pages project for MPG now). Never re-add a root wrangler.toml.
+- node_modules in the shared checkout come from another OS; verify in a fresh copy or run `npm ci` first.
+- House rules: static Astro 7 + Clerk CDN; no em-dashes; fees sourced or Contact sales; trailing slashes everywhere; never truncate scraped pages.
+- Vendor-confirmed data format: "Vendor confirmation via email to MPG, <date>" in notes, no sender details.
 
 ## Task List
 - (none active — session saved)

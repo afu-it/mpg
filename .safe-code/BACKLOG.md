@@ -1,6 +1,6 @@
 # BACKLOG — operational queue
 
-_2026-07-17 malam lewat (rev 25)_
+_2026-10-20 (rev 26)_
 
 - [ ] **AFU security actions (spec 13)**: (1) confirm 2FA on GitHub / Cloudflare / YeahHost / Clerk / Google (TM-002, highest-leverage control); (2) rotate the Google OAuth client secret (pending since 2026-07-02) — Google Cloud Console → credentials → paste new secret into Clerk dashboard. (Item 3 smoke: DONE 2026-07-17, clean.)
 - [ ] **HIGH — AFU distribution round (2026-07-17)**: (1) GSC Request Indexing for /blog/ + pillar + 5 posts (URL list in LOG entry); (2) GSC Removals → prefix request for https://clerk.malaysiapg.com.my/ (indexed empty Clerk page, cosmetic); (3) Bing "AI Performance" checked 2026-07-17: 0 citations BECAUSE Bing had zero-indexed the site — fixed via IndexNow direct push (204 URLs, both endpoints 200); re-check Site Explorer in days, AI Performance mid-August; (4) post the Threads draft (PROJEK/SKILLS/THREADS/output/2026-07-17-mpg-guides-launch.md); (5) submit MCP registry listings (mcp.so / PulseMCP / Smithery / Glama) — full copy-paste text below.
@@ -16,12 +16,12 @@ _2026-07-17 malam lewat (rev 25)_
 - [x] **Logo round for 11 new gateways** — DONE 2026-07-17 (official marks, house-style processing, playwright-verified).
 - [x] **Spec 16 rollout** — DONE 2026-07-17 sitting 3 (compare/choose/best/vs/alternatives + learn/blog typographic pass; 0 word-count losses).
 - [ ] **HIGH — AFU: revoke old Cloudflare deploy API token** at dash.cloudflare.com/profile/api-tokens (GH secrets already deleted; token also lives in the machine's shell env — remove there too).
-- [ ] **HIGH — SwiF site (swifs.io) looks compromised** (homepage noindex + pirated-software spam posts, likely hacked WordPress; found 2026-07-17 dev-verification round). AFU decide: keep listed with a warning or delist until clean. We currently link to it.
+- [x] (2026-10-20: spam gone, kept with dormancy warning; re-check ~2027-01, delist if still dormant) **HIGH — SwiF site (swifs.io) looks compromised** (homepage noindex + pirated-software spam posts, likely hacked WordPress; found 2026-07-17 dev-verification round). AFU decide: keep listed with a warning or delist until clean. We currently link to it.
 - [ ] Delete old direct-upload Pages project `mpg` (domain-less rollback) after a few stable days on `mpg-site`.
-- [ ] MED dev-data follow-ups (2026-07-17 round): RinggitPay api:true evidence weak (no docs anywhere) — revisit; SecurePay GitBook says "last updated 5 years ago" — staleness check; eGHL public docs = Bitbucket PHP SDK only (full spec is merchant-only PDF).
-- [ ] Announce open-source: Threads post (repo + CC BY story), add repo Website field -> malaysiapg.com.my, submit to Google Dataset Search-adjacent lists once indexed.
-- [ ] Fee-refresh candidates from 2026-07-17 sweeps: ahapay (6% MDR + SST), moby (full txn rates now published: FPX B2C RM2.00, cards 0.99%, DNQR 0.8%+RM0.10), bayarcash (revamped annual-fee plans — top-level fees likely stale), m1pay (full MDR card in application PDF), airwallex MY (unified card: local methods 1.4%+RM0.50), chip (stablecoin 1.5% channel), boost (RM2,000 per-txn limit note), fiuu (RM99 promo signup vs RM999). Also: KineticPay card %, AffanPay rate card, Qashier MY pricing (browser verify), SMAP Pay PayNet status + settlement.
-- [ ] Re-verify **HLB + Kiple** pricing from another network (geo/Cloudflare-blocked from this one, 2026-07-17).
+- [x] (2026-10-20: RinggitPay api kept, plugin evidence; SecurePay dev_docs to /docs/; eGHL unchanged) MED dev-data follow-ups (2026-07-17 round): RinggitPay api:true evidence weak (no docs anywhere) — revisit; SecurePay GitBook says "last updated 5 years ago" — staleness check; eGHL public docs = Bitbucket PHP SDK only (full spec is merchant-only PDF).
+- [ ] Announce open-source (Website field DONE 2026-10-20): Threads post (repo + CC BY story), submit to Google Dataset Search-adjacent lists once indexed.
+- [x] (2026-10-20 refresh round, commit c82ec21) Fee-refresh candidates from 2026-07-17 sweeps: ahapay (6% MDR + SST), moby (full txn rates now published: FPX B2C RM2.00, cards 0.99%, DNQR 0.8%+RM0.10), bayarcash (revamped annual-fee plans — top-level fees likely stale), m1pay (full MDR card in application PDF), airwallex MY (unified card: local methods 1.4%+RM0.50), chip (stablecoin 1.5% channel), boost (RM2,000 per-txn limit note), fiuu (RM99 promo signup vs RM999). Also: KineticPay card %, AffanPay rate card, Qashier MY pricing (browser verify), SMAP Pay PayNet status + settlement.
+- [x] (2026-10-20) Re-verify **HLB + Kiple** pricing from another network (geo/Cloudflare-blocked from this one, 2026-07-17).
 - [ ] Spec 04 history update: record round-3 disqualified list (resellers/zombies/foreign, in SESSION 2026-07-17 log) + KineticPay reject reversal.
 - [ ] Watch: **FavePay Later** liveness — product fading (not promoted on myfave.com homepage, help section behind login; fee article still live). Re-check on the next liveness sweep; remove if it goes myIOU-pattern dormant.
 - [ ] **Mobi (ex-gomobi) logo** may need a brand refresh to match mobi.xyz branding (current logo is the old gomobi mark).
@@ -55,3 +55,11 @@ _2026-07-17 malam lewat (rev 25)_
 - [x] Collapsible Filters sidebar on mobile — done 2026-07-03 (spec 14: left drawer + card-list table + nav drawer).
 - [x] Build `/learn` section (spec 06) — done 2026-06-25 (commit 65e192b).
 - [x] Upgrade several favicon-grade logos to real brand assets — done for NTT DATA, PayHalal, RinggitPay, Bizappay, AsiaPay, Revenue Monster (2026-06-25).
+
+- [ ] **eGHL rebrand pass** (2026-10-20): eghl.my 301s to my.nttdatapay.com (ADAPTIS e-commerce); update website/source/notes and re-check fees.
+- [ ] MOBY `channels` still `[bnpl]` but it now publishes FPX/card/e-wallet/DuitNow QR rates; widen channels + methods.
+- [ ] Kiple pricing page shows QR/e-wallet rows as logos only; confirm which rate maps to which logo. Fiuu BNPL in channels but unpriced on Aug 2026 card.
+- [ ] **Kiple affiliate / Master Merchant Program**: AFU asked; decide disclosure policy first (/about says no affiliate links, not paid by any provider).
+- [ ] Old Cloudflare API token revoke: AFU in dashboard (MCP + wrangler OAuth lack token permissions).
+- [ ] retro: tool economy — shared checkout node_modules installed on another OS (broken .bin, wrong native bindings); every agent had to build its own fresh copy. Run `npm ci` once on this Mac or document it in AGENTS.md.
+- [ ] retro: information access — gh default account is red-eagle-digital, repo is afu-it; first `gh repo edit` 404'd.
