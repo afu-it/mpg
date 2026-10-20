@@ -1,6 +1,6 @@
 # Malaysia Payment Gateway (MPG)
 
-> Free, independent directory comparing 73 Malaysian payment gateways: FPX, card,
+> Free, independent directory comparing 71 Malaysian payment gateways: FPX, card,
 > e-wallet, DuitNow QR and BNPL fees, settlement times and developer features.
 > Every fee is verified against the provider's official pricing page and carries a
 > verified_date and source URL. Fees with a trailing * are third-party/indicative.
@@ -22,7 +22,7 @@ guide and issue templates: https://github.com/afu-it/mpg
 
 ## Gateways
 
-- [All 73 gateways](https://malaysiapg.com.my/gateways/): sortable directory with fees per channel
+- [All 71 gateways](https://malaysiapg.com.my/gateways/): sortable directory with fees per channel
 - [Gateway detail pages](https://malaysiapg.com.my/gateway/toyyibpay/): one page per provider at /gateway/<slug>/ with the full fee table, settlement, source URL and verified date
 - [Side-by-side compare tool](https://malaysiapg.com.my/compare/): shareable ?ids= comparisons
 - [Head-to-head pages](https://malaysiapg.com.my/vs/): /vs/<a>-vs-<b>/ for popular pairs

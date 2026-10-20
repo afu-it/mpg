@@ -20,6 +20,20 @@ export interface FeeChange {
 export const FEE_CHANGES: FeeChange[] = [
   {
     observed: "2026-10-20",
+    slug: null,
+    name: "Directory",
+    kind: "listing",
+    what: "FavePay Later removed from the directory: Fave discontinued it on 30 September 2022 and now offers bank card instalments instead.",
+  },
+  {
+    observed: "2026-10-20",
+    slug: null,
+    name: "Directory",
+    kind: "listing",
+    what: "edxaPay removed from the directory: it no longer markets an online gateway and its WooCommerce plugin points to a payment server that no longer exists (71 providers listed).",
+  },
+  {
+    observed: "2026-10-20",
     slug: "bcl",
     name: "BCL",
     kind: "published",

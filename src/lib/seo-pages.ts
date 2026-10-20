@@ -174,7 +174,7 @@ export const PROFILES: ProfileDef[] = [
     description:
       "Accept DuitNow QR and e-wallets at your kedai, cafe or restaurant: providers ranked by published cost, plus terminal and QR options worth comparing.",
     intro:
-      "Walk-in customers pay by scanning: DuitNow QR and e-wallets cover almost every Malaysian phone. Every provider below supports both without code. Also compare terminal-first options on their detail pages (Qashier, edxaPay, Revenue Monster) and the banks' QR packages, where CIMB and Hong Leong currently advertise zero-MDR DuitNow QR tiers.",
+      "Walk-in customers pay by scanning: DuitNow QR and e-wallets cover almost every Malaysian phone. Every provider below supports both without code. Also compare terminal-first options on their detail pages (Qashier, Revenue Monster) and the banks' QR packages, where CIMB and Hong Leong currently advertise zero-MDR DuitNow QR tiers.",
     faqNoun: "payment provider for a physical store",
   },
   {
