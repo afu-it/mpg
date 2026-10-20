@@ -23,3 +23,6 @@ Thumbs.db
 
 # clerk deploy artifact (DNS zone export)
 /clerk-*.zone
+
+# Playwright MCP snapshots (work artifacts)
+/.playwright-mcp/
