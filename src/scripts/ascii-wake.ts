@@ -1,6 +1,6 @@
-// Footer ASCII wake (vanilla port of 21st.dev "background-ascii-wake" by
-// nikolas-sapa). A faint, seeded scatter of monospace glyphs sits behind the
-// footer; the pointer stamps "heat" into the cells it crosses and each cell
+// ASCII wake (vanilla port of 21st.dev "background-ascii-wake" by
+// nikolas-sapa), mounted on every <canvas data-wake> (homepage hero, footer).
+// A faint, seeded scatter of monospace glyphs sits behind the section; the pointer stamps "heat" into the cells it crosses and each cell
 // decays back to the ambient floor. Fast passes leave thin, quick-fading
 // trails; slow passes leave fat, lingering blobs. The rAF loop only runs while
 // some cell is still warm, so an idle footer costs nothing.
@@ -19,11 +19,11 @@ function mulberry32(seed: number) {
   };
 }
 
-const canvas = document.getElementById("footer-wake") as HTMLCanvasElement | null;
-const host = canvas?.parentElement;
-const ctx = canvas?.getContext("2d");
+function mount(canvas: HTMLCanvasElement) {
+  const host = canvas.parentElement;
+  const ctx = canvas.getContext("2d");
+  if (!host || !ctx) return;
 
-if (canvas && host && ctx) {
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const fg = getComputedStyle(canvas).color;
 
@@ -119,7 +119,7 @@ if (canvas && host && ctx) {
     if (!raf) raf = requestAnimationFrame(loop);
   };
 
-  // listen on the footer itself: the canvas sits behind the links
+  // listen on the host section: the canvas sits behind its content
   const onPointerMove = (e: PointerEvent) => {
     const rect = canvas.getBoundingClientRect();
     const x = e.clientX - rect.left;
@@ -165,3 +165,5 @@ if (canvas && host && ctx) {
     }, 150);
   });
 }
+
+document.querySelectorAll<HTMLCanvasElement>("canvas[data-wake]").forEach(mount);

@@ -184,7 +184,7 @@ const livePillars = CLUSTERS.filter((c) => c.live);
     }
 
     <footer class="relative overflow-hidden border-t border-line bg-[radial-gradient(ellipse_60%_80%_at_50%_0%,rgba(255,255,255,0.13),transparent_70%)]">
-      <canvas id="footer-wake" aria-hidden="true" class="pointer-events-none absolute inset-0 block h-full w-full text-muted opacity-60"></canvas>
+      <canvas data-wake aria-hidden="true" class="pointer-events-none absolute inset-0 block h-full w-full text-muted opacity-60"></canvas>
       <div class="relative mx-auto w-full max-w-6xl px-4 pt-10 sm:px-6">
         <div class="flex flex-col gap-3 rounded-lg border border-line bg-panel px-5 py-3 sm:flex-row sm:items-center sm:justify-between">
           <p class="text-sm text-muted">
@@ -263,7 +263,7 @@ const livePillars = CLUSTERS.filter((c) => c.live);
       import "../scripts/progress.ts";
       import "../scripts/auth.ts";
       import "../scripts/nav.ts";
-      import "../scripts/footer-wake.ts";
+      import "../scripts/ascii-wake.ts";
     </script>
   </body>
 </html>

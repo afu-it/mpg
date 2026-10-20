@@ -54,8 +54,10 @@ const jsonLd = JSON.stringify({
   />
   <script is:inline type="application/ld+json" set:html={jsonLd} />
 
-  <!-- hero: one message, oversized type, nothing else competing -->
-  <section class="mx-auto w-full max-w-4xl px-4 pb-16 pt-10 text-center sm:px-6 md:pt-16">
+  <!-- hero: one message, oversized type, nothing else competing; full-bleed ASCII wake behind it -->
+  <div class="relative overflow-hidden">
+  <canvas data-wake aria-hidden="true" class="pointer-events-none absolute inset-0 block h-full w-full text-muted opacity-60"></canvas>
+  <section class="relative mx-auto w-full max-w-4xl px-4 pb-16 pt-10 text-center sm:px-6 md:pt-16">
     <h1 class="text-4xl font-bold leading-[1.05] tracking-[-0.03em] text-white sm:text-6xl md:text-7xl">
       Every <span class="whitespace-nowrap">Malaysian<FlagMY class="ml-[0.15em] inline-block h-[0.8em] w-auto -translate-y-[0.05em] align-baseline" /></span> payment gateway, compared.
     </h1>
@@ -77,6 +79,7 @@ const jsonLd = JSON.stringify({
       </a>
     </div>
   </section>
+  </div>
 
   <!-- the product itself, quietly: cheapest ranked right now -->
   <section class="mx-auto w-full max-w-xl px-4 pb-20 sm:px-6">
