@@ -25,9 +25,9 @@ features:
   api: true
   recurring: true
 popularity: 48
-verified_date: "2026-07-17"
+verified_date: "2026-10-20"
 source: "https://www.hlb.com.my/en/business-banking/group-sme-banking/deposit/merchant-services/e-commerce-payment.html"
-notes: "DNQR RM0 re-verified 2026-07-17 (zero fees for CASA, e-wallet and credit-card-funded DuitNow QR until further notice; settlement next business day per BizBuddy FAQ). Card MDR still unpublished. Hong Leong Bank's eCommerce Payment gateway runs on Mastercard Payment Gateway Services (MPGS) for online card acceptance, with FPX and DuitNow QR. DuitNow QR is waived until further notice. Requires an HLB business account; card and online-banking rates are quoted on application, not published."
+notes: "Re-verified 2026-10-20 (pages loaded directly, no geo block this time). eCommerce page: MPGS gateway, no additional charge for existing HLB merchants to use MPGS, otherwise no fees published. HLB notice hlb.com.my/en/personal-banking/news-updates/hlb-zero-duitnow-qr-fees-for-merchants.html still states ZERO DuitNow QR fees until further notice for CASA, e-wallet and credit-card-funded payments. Card and FPX MDR still unpublished. Earlier: DNQR RM0 re-verified 2026-07-17 (zero fees for CASA, e-wallet and credit-card-funded DuitNow QR until further notice; settlement next business day per BizBuddy FAQ). Card MDR still unpublished. Hong Leong Bank's eCommerce Payment gateway runs on Mastercard Payment Gateway Services (MPGS) for online card acceptance, with FPX and DuitNow QR. DuitNow QR is waived until further notice. Requires an HLB business account; card and online-banking rates are quoted on application, not published."
 ---
 
 **Hong Leong Bank** offers a bank-run **eCommerce Payment** gateway on Mastercard

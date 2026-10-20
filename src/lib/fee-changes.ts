@@ -19,6 +19,41 @@ export interface FeeChange {
 
 export const FEE_CHANGES: FeeChange[] = [
   {
+    observed: "2026-10-20",
+    slug: "fiuu",
+    name: "Fiuu",
+    kind: "decrease",
+    what: "New rate card dated 17 Aug 2026: FPX 1% (min RM1.20, max RM2.00), local cards 2.00% + RM0.45, DuitNow QR 1.05%, setup RM0 and RM99/year with the first year waived; foreign cards rise to 4.01% + RM0.84 and BNPL leaves the rate card.",
+  },
+  {
+    observed: "2026-10-20",
+    slug: "airwallex",
+    name: "Airwallex",
+    kind: "increase",
+    what: "Fee schedule updated 14 Oct 2026: international cards now 3.80% + RM0.50 (accounts verified before that date keep 2.95%); local methods 1.4% + RM0.50 and domestic cards 1.90% + RM0.50 unchanged.",
+  },
+  {
+    observed: "2026-10-20",
+    slug: "moby",
+    name: "MOBY",
+    kind: "increase",
+    what: "Plans repriced: SME RM99 to RM149/month and Enterprise RM149 to RM199/month, with fewer credits; BNPL now published at 1.5% (pay in full) to 6% (instalments).",
+  },
+  {
+    observed: "2026-10-20",
+    slug: "m1pay",
+    name: "M1Pay",
+    kind: "unpublished",
+    what: "The RM399 setup and RM100/yr plan no longer appear on the redesigned site and are blank in the application form; per-transaction rates (cards 1.8%, FPX RM0.80 B2C) are unchanged.",
+  },
+  {
+    observed: "2026-10-20",
+    slug: "chip",
+    name: "CHIP",
+    kind: "published",
+    what: "Pricing moved to /pricing: SPayLater BNPL added at 1.4%, a stablecoin channel at 1.5%, and the RM0.15 DuitNow QR minimum is no longer shown.",
+  },
+  {
     observed: "2026-07-17",
     slug: null,
     name: "Directory",

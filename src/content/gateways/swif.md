@@ -77,7 +77,7 @@ plans:
     source: "https://swifs.io/pricing/"
 verified_date: "2026-07-17"
 source: "https://swifs.io/pricing/"
-notes: "Re-verified 2026-07-17 from the official pricing SVGs: Starter = RM300 setup + RM300/yr, T+4; Popular RM450/RM450 T+3; Enterprise RM1500/RM800 T+2; min settlement RM100. Caution: swifs.io shows signs of injected spam pages; the pricing assets themselves look legitimate. Now publishes a full 4-tier rate card (values shown = entry Starter tier; rates improve on Popular/Enterprise): FPX B2C RM2.00/RM1.50/RM1.00 (B2B RM3.00/RM2.50/RM2.00), local cards 3.00%/2.50%/1.80%, foreign cards 3.50%/2.70%/2.50%, e-wallets 1.50% all tiers, DuitNow QR 1.70%/1.50%/1.50%. Settlement T+4/T+3/T+2 by tier; minimum settlement RM100. Corporate tier is quote-based. Rates are published as images on the pricing page."
+notes: "Re-verified 2026-07-17 from the official pricing SVGs: Starter = RM300 setup + RM300/yr, T+4; Popular RM450/RM450 T+3; Enterprise RM1500/RM800 T+2; min settlement RM100. 2026-10-20: injected spam pages removed and noindex lifted; site content not updated since Nov 2025, so confirm SwiF is still onboarding merchants before signing up. Now publishes a full 4-tier rate card (values shown = entry Starter tier; rates improve on Popular/Enterprise): FPX B2C RM2.00/RM1.50/RM1.00 (B2B RM3.00/RM2.50/RM2.00), local cards 3.00%/2.50%/1.80%, foreign cards 3.50%/2.70%/2.50%, e-wallets 1.50% all tiers, DuitNow QR 1.70%/1.50%/1.50%. Settlement T+4/T+3/T+2 by tier; minimum settlement RM100. Corporate tier is quote-based. Rates are published as images on the pricing page."
 ---
 
 **SwiF** (operated by **SwiF Fintech Sdn Bhd**, powered by Syntrino Solutions) is
@@ -86,5 +86,6 @@ e-wallets (GrabPay, ShopeePay, Touch 'n Go, Boost, Alipay+, WeChat Pay) and BNPL
 (Atome, PayLater by Grab, SPayLater).
 
 It ships plugins for WooCommerce, WordPress, Shopify, Magento, EasyStore and
-CS-Cart, plus auto-debit for recurring payments. Pricing is quote-only, so all
-rates show as "Contact sales".
+CS-Cart, plus auto-debit for recurring payments. It publishes a four-tier rate
+card (Starter, Popular, Enterprise, Corporate); the figures shown are the entry
+Starter tier.

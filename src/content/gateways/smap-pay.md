@@ -1,6 +1,6 @@
 ---
 name: SMAP Pay
-website: https://smap.my
+website: https://smappay.com
 logo: /logos/smap-pay.png
 logo_round: true
 tagline: "School fee collection gateway with flat RM1 FPX"
@@ -16,21 +16,23 @@ min_txn: "—"
 channels: [fpx]
 features:
   no_code: true
-  api: false
+  api: true
   recurring: false
 popularity: 28
-verified_date: "2026-07-17"
-source: "https://blog.smap.my/"
-notes: "Settlement published (blog, verified 2026-07-17): next-day settlement INCLUDING weekends and public holidays, paid before 10:30am; the RM1 fee can be borne by the organisation or the payer. Proprietary FPX gateway by SMAP Solutions Sdn Bhd (1363778-M, Dengkil) built into SMAP, a student-information and fee-management system for sekolah, tadika, taska and tuisyen. Published: RM1.00 flat per FPX transaction with free gateway registration; the SIS side is priced separately (RM270 per 50-student quota block). Positioned explicitly as their own gateway rather than a ToyyibPay/Billplz/Bizappay integration. Settlement timing not published. Effectively requires using the SMAP system, so it suits schools and education operators rather than general merchants. Active through 2026 (LHDN e-Invoice integration, nationwide trainings)."
+webhooks: true
+verified_date: "2026-10-20"
+source: "https://blog.smap.my/smap-pay/"
+notes: "Re-verified 2026-10-20. Official SMAP Pay guide (blog.smap.my/smap-pay): free registration, RM1 per successful FPX transaction (borne by the organisation or added to the payer), settlement next day INCLUDING weekends and public holidays, paid before 10:30am. SMAP Pay now also runs as a standalone gateway at smappay.com, operated by SMAP Pay Sdn Bhd (SSM 202501038016, Dengkil): FPX B2C and B2B, a REST API (createBill) with callback and redirect URLs, sandbox keys and hosted checkout. A prepaid wallet option charges RM1 per manual top-up. PayNet status: neither site states that SMAP Pay is a PayNet FPX acquirer, and its terms say it integrates with third-party payment processors and banks; acquirer status unverified. smappay.com does not publish a price list; the RM1 fee comes from the SMAP guide."
 ---
 
 SMAP Pay is the payments half of SMAP, a Malaysian student-information system
 used by sekolah, tadika, taska and tuisyen operators. Instead of integrating a
-third-party gateway, SMAP Solutions built its own FPX rail and prices it at a
+third-party gateway, SMAP Solutions built its own FPX gateway and prices it at a
 flat RM1.00 per transaction with free gateway registration.
 
-The catch is scope: SMAP Pay lives inside the SMAP ecosystem, so it is a fit
-for education operators who want fee management, student records and
-collections in one place, not for general e-commerce. Within that vertical it
-competes directly with Herepay and toyyibPay on price, and the platform shows
-steady development, including LHDN e-Invoice integration in 2026.
+SMAP Pay has since been spun out as a standalone FPX gateway at smappay.com,
+with B2C and B2B online banking, a simple REST API with callbacks and hosted
+checkout. Settlement is next day including weekends and public holidays. It is
+still FPX-only, so it fits schools, education operators and simple collections
+better than full e-commerce, and it competes with Herepay and toyyibPay on
+price.

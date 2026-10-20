@@ -8,9 +8,9 @@ fees:
   card_intl: "2.8%"
   ewallet: "1% - 1.2%"
   duitnowqr: "Contact sales"
-  setup: "RM399"
-  monthly: "RM100/yr"
-settlement: "T+1 (FPX) / T+2 (cards, e-wallets)"
+  setup: "Contact sales"
+  monthly: "Contact sales"
+settlement: "T+1 (FPX, DuitNow QR, MyDebit) / T+2 (cards, e-wallets)"
 min_txn: "—"
 channels: [fpx, card, ewallet, duitnowqr]
 methods:
@@ -25,16 +25,17 @@ features:
 webhooks: true
 dev_docs: "https://www.m1pay.com.my/assets/documents/M1Pay_IntegrationGuideline.pdf"
 popularity: 18
-verified_date: "2026-07-17"
+verified_date: "2026-10-20"
 source: "https://www.m1pay.com.my/assets/documents/Form-A1M1Pay.pdf"
-notes: "Full MDR table published (application-form PDF Appendix C + homepage plan, verified 2026-07-17): FPX B2C RM0.80 / B2B RM1.30; domestic card 1.8% eCom (1.7% POS), foreign 2.8%; wallets Boost/TnG 1.2% eCom, ShopeePay 1.2%, Maybank QRPay 1%, Alipay 2%; DuitNow QR rate blank in the PDF. Setup RM399 one-time, maintenance RM100/yr, settlement fee RM0. RM8/month inactive fee if no card transaction in a calendar month. Operated by MobilityOne Sdn Bhd, a KL-based fintech. Advertises free settlement at T+2 with no minimum amount or trading limit. Pricing is entirely quote-based; no per-transaction rates are published, so all fee fields are Contact sales."
+notes: "MDR table from the official application form PDF, Schedule 3 Appendix C (re-verified 2026-10-20; PDF dated May 2023, unchanged): FPX B2C RM0.80 / B2B RM1.30 per transaction; domestic credit card 1.8% eCom (1.7% POS), foreign card 2.8%; MyDebit 1% (POS only); e-wallets eCom: eM-ONEi 1%, Boost 1.2%, Touch n Go 1.2%, ShopeePay 1.2%, WeChat Pay 1.2%, Maybank QRPay 1%, Alipay 2%; the DuitNow QR rate is left blank in the PDF. RM8/month inactive fee if no credit card transaction in a calendar month. Payout terms: FPX, MyDebit and DuitNow QR T+1 business day; credit card and e-wallets T+2 business days. Setup and maintenance fee fields are blank in the PDF, and the redesigned m1pay.com.my homepage (checked 2026-10-20) no longer shows the RM399 setup / RM100 per year plan seen on 2026-07-17, so both are now Contact sales. Operated by MobilityOne Sdn Bhd, a KL-based fintech."
 ---
 
 M1Pay is a Malaysian payment gateway by **MobilityOne Sdn Bhd**, offering FPX
 online banking, credit/debit cards, MyDebit, e-wallets (including MobilityOne's
 own eM-ONEi) and DuitNow QR through a merchant portal with invoicing.
 
-It targets SMEs, enterprises and social-media sellers. Settlement is advertised
-as free at **T+2** with no minimum settlement amount and no trading limit.
-M1Pay does **not publish standard rates**; pricing is handled by its sales team,
-so every fee here is "Contact sales".
+It targets SMEs, enterprises and social-media sellers. Its merchant application
+form publishes a full MDR table: FPX **RM0.80** (B2C), domestic cards **1.8%**
+online, foreign cards 2.8% and most e-wallets 1% to 1.2%. Setup, maintenance and
+DuitNow QR pricing are not published, so those are "Contact sales". Payouts run
+T+1 for FPX and DuitNow QR and T+2 for cards and e-wallets.

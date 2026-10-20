@@ -20,9 +20,9 @@ features:
   api: true
   recurring: false
 popularity: 36
-verified_date: "2026-07-17"
+verified_date: "2026-10-20"
 source: "https://affanpay.my/"
-notes: "Published rate card on the homepage (Transparent Pricing): FPX/DuitNow Online Banking RM1.00 B2C / RM2.00 B2B, DuitNow QR 0.8%, e-wallets (TNG/ShopeePay/Boost and more) 1.5%, cards 1.75% local / 2.4% foreign; QR, wallet and card channels marked subject to approval. No monthly charges, pay only on successful collections; T+1 settlement; 24-hour merchant setup. Custom enterprise rates on request. Claims 10,000+ active merchants, RM50M+ monthly volume, 6+ years (unverified marketing claims). Payment links, QR codes and dashboard for no-code use; REST API with sandbox and public repos. Sister product Bayar.io (phone-as-terminal DuitNow QR)."
+notes: "Re-verified 2026-10-20, rate card unchanged. Published rate card on the homepage (Transparent Pricing): FPX/DuitNow Online Banking RM1.00 B2C / RM2.00 B2B, DuitNow QR 0.8%, e-wallets (TNG/ShopeePay/Boost and more) 1.5%, cards 1.75% local / 2.4% foreign; QR, wallet and card channels marked subject to approval. No monthly charges, pay only on successful collections; T+1 settlement; 24-hour merchant setup. Custom enterprise rates on request. Claims 10,000+ active merchants, RM50M+ monthly volume, 6+ years (unverified marketing claims). Payment links, QR codes and dashboard for no-code use; REST API with sandbox and public repos. Sister product Bayar.io (phone-as-terminal DuitNow QR)."
 ---
 
 AffanPay markets itself as a complete Malaysian acceptance stack: FPX across

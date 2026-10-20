@@ -19,9 +19,9 @@ features:
   api: true
   recurring: false
 popularity: 32
-verified_date: "2026-07-17"
+verified_date: "2026-10-20"
 source: "https://qashier.com/my/mdr-rates"
-notes: "MY rate card found at /my/mdr-rates (old my-qashierpay-pricing URL 404s; verified 2026-07-17): ONLINE Visa/MC from 1.40% + RM0.65, DuitNow from 1.0%, setup RM500 (WooCommerce and API only); IN-STORE cards from 0.50%, DuitNow from 0.60%, Soundbox QR 0.6% local / 2.75% cross-border. Prices exclude SST. Hardware: QashierXS from RM999, Soundbox RM179. Singapore fintech operating in Malaysia; POS-first (smart terminals, Soundbox) with online acceptance via Pay by Link rather than a full e-commerce gateway. Channels: Visa/Mastercard, DuitNow QR, TNG, GrabPay, ShopeePay, Boost. A Malaysian pricing page exists but is JS-rendered and could not be verified at review time (search-indexed figures suggest local debit 0.5%, credit 1.2%, foreign 2.75%, wallets from 1.5% — treat as unconfirmed), so fees here are Contact sales. Reported 1,500+ MY merchants onboarded around its Soundbox launch. Next-day settlement marketed."
+notes: "Re-verified 2026-10-20 on /my/mdr-rates (now server-rendered, readable without a browser). ONLINE: Visa/Mastercard from 1.40% + RM0.65, DuitNow from 1.0%, setup fee RM500 (WooCommerce and API only). IN-STORE: Visa/Mastercard from 0.50%, DuitNow from 0.60%, Buy Now Pay Later from 5.50% + RM1.50. Soundbox QR device RM179 with MDR 0.6% local and 2.75% cross-border (the FAQ separately says cross-border QR starts from 0.8%, so treat cross-border as variable). QashierXS terminal from RM999. Prices exclude SST. Acquiring is through Bank Simpanan Nasional (BSN), a BNM-registered merchant acquirer. Online e-wallet rates, monthly fees and settlement timing are not published, so those stay Contact sales. Qashier Sdn Bhd (1412076-X), Kuala Lumpur; POS-first, with online acceptance via pay-by-link, WooCommerce/Shopify and API."
 ---
 
 Qashier arrives at payments from the point-of-sale side: its Malaysian
@@ -30,8 +30,10 @@ acceptance offered through Pay by Link rather than a developer-first
 e-commerce gateway. Cards, DuitNow QR and the major e-wallets are covered in
 one contract.
 
-A Malaysian pricing page exists, but it renders client-side and its figures
-could not be verified for this entry, so rates are listed as Contact sales.
+Its Malaysian MDR page publishes starting rates: online cards from 1.40% +
+RM0.65 and DuitNow from 1.0% (RM500 setup for WooCommerce and API), with
+in-store cards from 0.50%. Online e-wallet rates and settlement timing are not
+published, so those show as Contact sales.
 For retail and F&B merchants who want one provider across counter and link
 payments it is a credible option; pure online stores will find better-fitting
 tools among the API-first gateways here.
