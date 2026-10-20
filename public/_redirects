@@ -1,0 +1,3 @@
+# Delisted gateways: send old detail pages to the directory
+/gateway/bizappay/ /gateways/ 301
+/gateway/bizappay /gateways/ 301

@@ -4,7 +4,7 @@
 
 Live site: **[malaysiapg.com.my](https://malaysiapg.com.my/)**
 
-- **74 gateways**, every fee sourced from the provider's official pricing page with a `verified_date`
+- **73 gateways**, every fee sourced from the provider's official pricing page with a `verified_date`
 - Ranked by estimated blended cost on a RM100 transaction (FPX/card/e-wallet weighted 50/30/20) — providers without comparable published rates are listed as "on request", never guessed
 - Free JSON API: [`/api/gateways.json`](https://malaysiapg.com.my/api/gateways.json) · per-gateway: `/api/gateways/<slug>.json`
 - MCP server for AI agents: `https://mpg-mcp.afuitdev.workers.dev/mcp` (source in [`mcp/`](mcp/))

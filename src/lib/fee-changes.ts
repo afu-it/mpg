@@ -20,6 +20,13 @@ export interface FeeChange {
 export const FEE_CHANGES: FeeChange[] = [
   {
     observed: "2026-10-20",
+    slug: null,
+    name: "Directory",
+    kind: "listing",
+    what: "Bizappay removed from the directory after the service closed (73 providers listed).",
+  },
+  {
+    observed: "2026-10-20",
     slug: "fiuu",
     name: "Fiuu",
     kind: "decrease",
