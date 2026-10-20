@@ -27,3 +27,9 @@ Thumbs.db
 # Playwright MCP snapshots (work artifacts)
 /.playwright-mcp/
 /.safe-code/.last-save
+
+# Local-only: editor/agent config and the safe-code project brain (hidden from the public repo 2026-10-20)
+/.cursor/
+/.vscode/
+/.github/copilot-instructions.md
+/.safe-code/
