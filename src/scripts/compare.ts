@@ -169,7 +169,8 @@ if (dataEl && root) {
       return;
     }
 
-    const table = el("table", "w-full min-w-[560px] border-collapse text-sm");
+    // columns keep a fixed width so a short shortlist stays compact instead of spreading across the page
+    const table = el("table", "w-auto min-w-[560px] border-collapse text-sm");
 
     // header
     const thead = el("thead");
@@ -177,7 +178,7 @@ if (dataEl && root) {
     // corner cell sticks with the label column; narrower on phones (spec 14)
     htr.appendChild(el("th", "sticky left-0 z-10 w-28 bg-surface px-3 py-3 text-left align-bottom sm:w-40"));
     gws.forEach((g) => {
-      const th = el("th", "min-w-[150px] px-3 py-3 align-bottom");
+      const th = el("th", "w-44 min-w-[150px] px-3 py-3 align-bottom");
       const wrap = el("div", "flex flex-col items-center gap-1.5");
       const a = document.createElement("a");
       a.href = `/gateway/${g.id}/`;
