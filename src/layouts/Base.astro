@@ -183,8 +183,9 @@ const livePillars = CLUSTERS.filter((c) => c.live);
       )
     }
 
-    <footer class="border-t border-line bg-[radial-gradient(ellipse_60%_80%_at_50%_0%,rgba(255,255,255,0.13),transparent_70%)]">
-      <div class="mx-auto w-full max-w-6xl px-4 pt-10 sm:px-6">
+    <footer class="relative overflow-hidden border-t border-line bg-[radial-gradient(ellipse_60%_80%_at_50%_0%,rgba(255,255,255,0.13),transparent_70%)]">
+      <canvas id="footer-wake" aria-hidden="true" class="pointer-events-none absolute inset-0 block h-full w-full text-muted opacity-60"></canvas>
+      <div class="relative mx-auto w-full max-w-6xl px-4 pt-10 sm:px-6">
         <div class="flex flex-col gap-3 rounded-lg border border-line bg-panel px-5 py-3 sm:flex-row sm:items-center sm:justify-between">
           <p class="text-sm text-muted">
             <span class="font-medium text-white">Spotted a fee change?</span> Tell us and we will re-check it against the official source.
@@ -192,7 +193,7 @@ const livePillars = CLUSTERS.filter((c) => c.live);
           <a href="/contribute/" class="inline-flex h-8 shrink-0 items-center self-start rounded-md bg-brand-blue px-4 text-xs font-medium text-white hover:opacity-90 sm:self-auto">Report a change</a>
         </div>
       </div>
-      <div class="mx-auto grid w-full max-w-6xl gap-10 px-4 py-12 sm:px-6 md:grid-cols-[1.4fr_2fr]">
+      <div class="relative mx-auto grid w-full max-w-6xl gap-10 px-4 py-12 sm:px-6 md:grid-cols-[1.4fr_2fr]">
         <div class="max-w-xs">
           <a href="/" class="flex items-center gap-2 font-semibold text-white">
             <img src="/logo-white.svg" alt="" width="22" height="22" class="h-[22px] w-[22px] object-contain" />
@@ -250,7 +251,7 @@ const livePillars = CLUSTERS.filter((c) => c.live);
           </div>
         </div>
       </div>
-      <div class="border-t border-line">
+      <div class="relative border-t border-line">
         <div class="mx-auto flex w-full max-w-6xl flex-col gap-2 px-4 py-5 text-xs text-muted sm:flex-row sm:justify-between sm:px-6">
           <span>© {new Date().getFullYear()} Malaysia Payment Gateway. Open source, open data.</span>
           <span>Fees are indicative; always confirm with the provider. Not affiliated with any provider.</span>
@@ -262,6 +263,7 @@ const livePillars = CLUSTERS.filter((c) => c.live);
       import "../scripts/progress.ts";
       import "../scripts/auth.ts";
       import "../scripts/nav.ts";
+      import "../scripts/footer-wake.ts";
     </script>
   </body>
 </html>
