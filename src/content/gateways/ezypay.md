@@ -10,7 +10,7 @@ fees:
   duitnowqr: "—"
   setup: "Contact sales"
   monthly: "Contact sales"
-settlement: "Contact sales"
+settlement: "T+3 holding, then weekly or monthly payout"
 min_txn: "—"
 category: gateway
 channels: [card]
@@ -28,7 +28,7 @@ dev_docs: https://developer.ezypay.com/docs/supported-payment-methods
 popularity: 10
 verified_date: "2026-10-21"
 source: "https://www.ezypay.com/pricing-plan"
-notes: "Verified 2026-10-21 on https://www.ezypay.com/my, https://www.ezypay.com/pricing-plan and https://developer.ezypay.com/docs/supported-payment-methods. The pricing page publishes no rates (it ends in a contact form), so all fees are Contact sales. Ezypay's developer docs list Malaysia as: Bank Direct Debit \"No\", cards \"Visa, Mastercard\", Apple Pay and Google Pay \"currently under beta testing\", wallets \"No\". So although the Malaysia page says \"subscription & direct debit\", recurring collection in Malaysia runs on cards; FPX, DuitNow QR and e-wallets are not offered. Charges must be in MYR (no cross-border currency), and 3D Secure is not supported. Ezypay is sold mainly through software partners (gym and studio membership systems) or its API; it has a Kuala Lumpur office (Vista Tower, The Intermark)."
+notes: "Verified 2026-10-21 on https://www.ezypay.com/my, https://www.ezypay.com/pricing-plan and https://developer.ezypay.com/docs/supported-payment-methods. The pricing page publishes no rates (it ends in a contact form), so all fees are Contact sales. Ezypay's developer docs list Malaysia as: Bank Direct Debit \"No\", cards \"Visa, Mastercard\", Apple Pay and Google Pay \"currently under beta testing\", wallets \"No\". So although the Malaysia page says \"subscription & direct debit\", recurring collection in Malaysia runs on cards; FPX, DuitNow QR and e-wallets are not offered. Charges must be in MYR (no cross-border currency), and 3D Secure is not supported. Ezypay is sold mainly through software partners (gym and studio membership systems) or its API; it has a Kuala Lumpur office (Vista Tower, The Intermark). Settlement: 3 business day holding period (T+3), then settled weekly or monthly on a day the merchant picks (https://developer.ezypay.com/docs/settlement, checked 2026-10-21)."
 ---
 
 Ezypay is an Australian-founded subscription billing platform (since 1996) with

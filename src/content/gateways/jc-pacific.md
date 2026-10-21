@@ -39,5 +39,6 @@ notes: "J&C Pacific Sdn Bhd; BNM Registered Merchant Acquirer (Non-bank). Card a
 Merchant Acquirer** providing card acceptance, e-wallets and DuitNow QR for retail
 and online merchants.
 
-It supports Visa, Mastercard, American Express and MyDebit through a merchant
-API. Pricing is quote-only, so all rates here are "Contact sales".
+It supports Visa, Mastercard, American Express and MyDebit, and runs its own
+online gateway (JCPG). No public API docs are published; integration is set up
+with their team. Pricing is quote-only, so all rates here are "Contact sales".

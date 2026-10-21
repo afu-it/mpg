@@ -1,7 +1,7 @@
 ---
 name: Public Bank
 website: https://www.pbebank.com
-tagline: "Public Bank's online gateway on CyberSource Secure Acceptance"
+tagline: "Public Bank's bank-run online card gateway"
 category: bank
 fees:
   fpx: "—"
@@ -23,10 +23,9 @@ methods:
   - E-wallet
 features:
   no_code: true
-  api: true
+  api: false
   recurring: true
-webhooks: true
-dev_docs: "https://developer.cybersource.com/docs/cybs/en-us/sa/developer/all/sa-hosted/secure-acceptance.html"
+webhooks: false
 popularity: 45
 verified_date: "2026-10-20"
 source: "https://apply.pbebank.com/MOSOnboardApp"
@@ -35,13 +34,13 @@ bnm:
   entity: "Public Bank Berhad"
   checked: "2026-10-21"
   evidence: "https://www.bnm.gov.my/regulations/fsp-directory?p_p_id=com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet_INSTANCE_jXC730NRlqU0&p_p_lifecycle=0&p_p_state=normal&p_p_mode=view&p_r_p_tag=merchant-acquirer"
-notes: "Public Bank Berhad's Merchant Online Service is its online card-acceptance gateway, built on Visa/CyberSource Secure Acceptance (hosted checkout and API). Accepts Visa, Mastercard, UnionPay, JCB, MyDebit and e-wallets with 3D-Secure, recurring/tokenisation. Requires a Public Bank business account; rates are quoted on application, not published."
+notes: "Public Bank Berhad's Merchant Online Service is its online card-acceptance gateway. The official onboarding form (apply.pbebank.com/MOSOnboardApp) lists e-Commerce, Recurring and E-Wallet Acceptance, with Visa, Mastercard, UnionPay, JCB and MyDebit. Public Bank publishes no integration docs; specs come after approval. Requires a Public Bank business account; rates are quoted on application, not published."
 ---
 
 **Public Bank** offers a bank-run online payment gateway, its **Merchant Online
-Service**, built on Visa CyberSource Secure Acceptance with a hosted checkout and
-API. It accepts Visa, Mastercard, UnionPay, JCB, MyDebit and e-wallets under
-3D-Secure, with recurring billing and tokenisation.
+Service**. Its onboarding form lists e-commerce, recurring billing and e-wallet
+acceptance, with Visa, Mastercard, UnionPay, JCB and MyDebit. Public Bank
+publishes no integration docs; the technical details come after approval.
 
 Merchants apply with a Public Bank business account, and rates are quoted on
 approval rather than published, so all fees here are "Contact sales".

@@ -9,7 +9,7 @@ satu tempat. Ia menerima **DuitNow QR** (bayar dengan imbas kod QR), FPX
 (bayaran terus dari akaun bank online), dan bayaran QR dari luar negara melalui
 Alipay, UnionPay, NETS, QRIS, PromptPay dan PayNow.
 
-Duit masuk secara automatik ke akaun perniagaan MYR OCBC, dan API (cara sistem
-anda bercakap terus dengan sistem bank) tersedia untuk disambung. OCBC siarkan caj setiap transaksi 0.6% untuk DuitNow QR (dibayar dari akaun bank
+Duit masuk secara automatik ke akaun perniagaan MYR OCBC. API awam OCBC cuma
+untuk hantar bayaran keluar; tiada API awam untuk terima bayaran di Malaysia. OCBC siarkan caj setiap transaksi 0.6% untuk DuitNow QR (dibayar dari akaun bank
 atau kad kredit), yang dikenakan sejak tempoh pengecualian tamat pada 30
 September 2026. Kadar lain diberi semasa permohonan.

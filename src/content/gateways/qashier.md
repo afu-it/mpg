@@ -11,7 +11,7 @@ fees:
   duitnowqr: "From 1.0%"
   setup: "RM500 (online: WooCommerce & API)"
   monthly: "Contact sales"
-settlement: "Contact sales"
+settlement: "T+1"
 min_txn: "—"
 channels: [card, ewallet, duitnowqr]
 features:
@@ -21,7 +21,7 @@ features:
 popularity: 32
 verified_date: "2026-10-20"
 source: "https://qashier.com/my/mdr-rates"
-notes: "Re-verified 2026-10-20 on /my/mdr-rates (now server-rendered, readable without a browser). ONLINE: Visa/Mastercard from 1.40% + RM0.65, DuitNow from 1.0%, setup fee RM500 (WooCommerce and API only). IN-STORE: Visa/Mastercard from 0.50%, DuitNow from 0.60%, Buy Now Pay Later from 5.50% + RM1.50. Soundbox QR device RM179 with MDR 0.6% local and 2.75% cross-border (the FAQ separately says cross-border QR starts from 0.8%, so treat cross-border as variable). QashierXS terminal from RM999. Prices exclude SST. Acquiring is through Bank Simpanan Nasional (BSN), a BNM-registered merchant acquirer. Online e-wallet rates, monthly fees and settlement timing are not published, so those stay Contact sales. Qashier Sdn Bhd (1412076-X), Kuala Lumpur; POS-first, with online acceptance via pay-by-link, WooCommerce/Shopify and API."
+notes: "Re-verified 2026-10-20 on /my/mdr-rates (now server-rendered, readable without a browser). ONLINE: Visa/Mastercard from 1.40% + RM0.65, DuitNow from 1.0%, setup fee RM500 (WooCommerce and API only). IN-STORE: Visa/Mastercard from 0.50%, DuitNow from 0.60%, Buy Now Pay Later from 5.50% + RM1.50. Soundbox QR device RM179 with MDR 0.6% local and 2.75% cross-border (the FAQ separately says cross-border QR starts from 0.8%, so treat cross-border as variable). QashierXS terminal from RM999. Prices exclude SST. Acquiring is through Bank Simpanan Nasional (BSN), a BNM-registered merchant acquirer. Online e-wallet rates, monthly fees and settlement timing are not published, so those stay Contact sales. Qashier Sdn Bhd (1412076-X), Kuala Lumpur; POS-first, with online acceptance via pay-by-link, WooCommerce/Shopify and API. Settlement: QashierPay pays out T+1, the next business day (https://qashier.com/my/order-qashierpay/, checked 2026-10-21)."
 ---
 
 Qashier arrives at payments from the point-of-sale side: its Malaysian

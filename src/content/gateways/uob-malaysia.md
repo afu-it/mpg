@@ -23,10 +23,9 @@ methods:
   - Tokenisation
 features:
   no_code: true
-  api: true
+  api: false
   recurring: true
 webhooks: false
-dev_docs: https://developers.uobgroup.com/en/
 popularity: 42
 plans:
   - name: "DuitNow QR (UOB business current account)"
@@ -55,7 +54,8 @@ instant_settlement:
 
 **UOB Malaysia** provides bank merchant services with an online card-acceptance
 gateway, offering hosted checkout, 3D-Secure, tokenisation and recurring billing,
-plus DuitNow QR, with documented API services.
+plus DuitNow QR. UOB publishes no public integration docs for taking payments;
+the specs are shared after a merchant is approved.
 
 Merchants apply with a UOB business account. Card and setup rates are quoted on
 approval rather than published, so they stay "Contact sales". DuitNow QR is the

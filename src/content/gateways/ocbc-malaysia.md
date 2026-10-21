@@ -27,9 +27,8 @@ methods:
   - Credit card via DuitNow QR
 features:
   no_code: true
-  api: true
+  api: false
   recurring: false
-dev_docs: https://api.ocbc.com/store
 popularity: 35
 verified_date: "2026-10-20"
 source: "https://www.ocbc.com.my/iwov-resources/my/ocbc/personal/pdf/help-and-support/general/Fees_Charges_EN.pdf"
@@ -51,7 +50,8 @@ instant_settlement:
 accepting **DuitNow QR**, FPX online banking, and cross-border QR payments via
 Alipay, UnionPay, NETS, QRIS, PromptPay and PayNow.
 
-Funds settle automatically to an OCBC MYR business account, and an API is
-available for integration. OCBC publishes a 0.6% merchant discount rate on
+Funds settle automatically to an OCBC MYR business account. OCBC's public API
+store covers outgoing payments only; there is no public API for collecting
+payments in Malaysia. OCBC publishes a 0.6% merchant discount rate on
 DuitNow QR (bank-account or credit-card funded), which applies since the waiver
 ended on 30 September 2026. Other rates are quoted on application.

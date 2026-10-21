@@ -23,7 +23,7 @@ features:
   api: true
   recurring: false
 webhooks: true
-dev_docs: "https://www.m1pay.com.my/assets/documents/M1Pay_IntegrationGuideline.pdf"
+dev_docs: "https://www.m1pay.com.my/#/docs"
 popularity: 18
 verified_date: "2026-10-20"
 source: "https://www.m1pay.com.my/assets/documents/Form-A1M1Pay.pdf"

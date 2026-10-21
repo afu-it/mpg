@@ -16,8 +16,8 @@ notes: "Disemak semula pada 2026-10-20. Harga DuitNow QR kini disiarkan di halam
 terima kad, yang menawarkan halaman checkout (halaman bayar) yang disediakan,
 3D-Secure (pengesahan tambahan seperti kod OTP), simpanan kad secara selamat
 (tokenisation) dan caj berulang automatik, serta DuitNow QR (bayar dengan imbas
-kod QR), dengan perkhidmatan API (cara sistem anda bercakap terus dengan sistem
-bank) yang didokumenkan.
+kod QR). UOB tidak siarkan dokumen teknikal untuk sambung sistem terima bayaran;
+butirannya diberi selepas peniaga diluluskan.
 
 Peniaga memohon dengan akaun perniagaan UOB. Kadar kad dan setup tidak disiarkan, cuma diberi selepas diluluskan, jadi ia kekal "Hubungi jualan". Kecuali DuitNow QR: UOB siarkan tiada caj untuk bayaran dari akaun bank dan e-wallet, dan 0.25% untuk bayaran kad kredit, kedua-duanya sehingga 31 Disember
 2026.

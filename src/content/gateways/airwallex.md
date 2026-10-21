@@ -10,7 +10,7 @@ fees:
   duitnowqr: "1.4% + RM0.50"
   setup: "RM0"
   monthly: "RM0"
-settlement: "Contact sales"
+settlement: "T+3 (FPX)"
 min_txn: "—"
 channels: [fpx, card, ewallet, duitnowqr, bnpl]
 methods:
@@ -48,7 +48,7 @@ bnm:
   entity: "Airwallex (Malaysia) Sdn. Bhd."
   checked: "2026-10-21"
   evidence: "https://www.airwallex.com/my"
-notes: "Re-verified 2026-10-20 on the official MY pricing page and the MY fee schedule (https://www.airwallex.com/en-my/terms/fee-schedule, last updated 14 October 2026). Domestic cards and wallets (Visa, Mastercard, Amex, Apple Pay, Google Pay) 1.90% + RM0.50; international cards 3.80% + RM0.50 (shown on the pricing page as +1.90%; customers who completed due diligence before 14 October 2026 pay 2.95%, up from the +1.05% surcharge listed on 2026-07-17); local payment methods (FPX, DuitNow, GrabPay, TNG, Boost and 160+ others) 1.4% + RM0.50. The RM0.50 is a gateway fee per attempted or actual transaction. Other published fees: refund RM0.50, chargeback RM60, subscription management 0.5% (0.4% for customers onboarded before 1 December 2025), 2.00% FX conversion fee on payment settlement. All fees exclude SST. No setup or monthly fees. Global fintech (HQ Australia) with a BNM-licensed Malaysian entity (Airwallex (Malaysia) Sdn Bhd; MSB Licence 00743, also an e-money issuer and registered merchant acquirer). Best fit for cross-border / globally-trading MY businesses."
+notes: "Re-verified 2026-10-20 on the official MY pricing page and the MY fee schedule (https://www.airwallex.com/en-my/terms/fee-schedule, last updated 14 October 2026). Domestic cards and wallets (Visa, Mastercard, Amex, Apple Pay, Google Pay) 1.90% + RM0.50; international cards 3.80% + RM0.50 (shown on the pricing page as +1.90%; customers who completed due diligence before 14 October 2026 pay 2.95%, up from the +1.05% surcharge listed on 2026-07-17); local payment methods (FPX, DuitNow, GrabPay, TNG, Boost and 160+ others) 1.4% + RM0.50. The RM0.50 is a gateway fee per attempted or actual transaction. Other published fees: refund RM0.50, chargeback RM60, subscription management 0.5% (0.4% for customers onboarded before 1 December 2025), 2.00% FX conversion fee on payment settlement. All fees exclude SST. No setup or monthly fees. Global fintech (HQ Australia) with a BNM-licensed Malaysian entity (Airwallex (Malaysia) Sdn Bhd; MSB Licence 00743, also an e-money issuer and registered merchant acquirer). Best fit for cross-border / globally-trading MY businesses. Settlement: FPX settles T+3 business days (Airwallex FPX docs, https://www.airwallex.com/docs/payments/payment-methods/apac/fpx, checked 2026-10-21)."
 ---
 
 Airwallex is a global payments and financial-platform provider with a
