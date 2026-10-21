@@ -56,6 +56,12 @@ if (pk && mount) {
   }
 
   if (host) {
+    // a click before Clerk finishes loading opens the modal as soon as it is ready
+    let pendingSignUp = false;
+    mount.querySelector("[data-signup]")?.addEventListener("click", () => (pendingSignUp = true), {
+      once: true,
+    });
+
     const script = document.createElement("script");
     script.async = true;
     script.crossOrigin = "anonymous";
@@ -66,12 +72,27 @@ if (pk && mount) {
       const Clerk = (window as any).Clerk;
       if (!Clerk) return;
       await Clerk.load({ appearance });
+      const openSignUp = () =>
+        Clerk.openSignUp({ afterSignUpUrl: href("/"), afterSignInUrl: href("/") });
 
       let signedIn: boolean | null = null;
       const render = () => {
         const isIn = !!Clerk.user;
         if (isIn === signedIn) return; // re-render only on state flip
         signedIn = isIn;
+        // remembered so the next page can hide the server-rendered button before Clerk loads
+        try {
+          localStorage.setItem("mpg-signed-in", isIn ? "1" : "0");
+        } catch {
+          /* storage blocked: the button just shows until Clerk answers */
+        }
+
+        // keep the server-rendered button when signed out: no flash on page load
+        const existing = mount.querySelector<HTMLButtonElement>("[data-signup]");
+        if (!isIn && existing) {
+          existing.style.visibility = "";
+          return;
+        }
         mount.innerHTML = "";
 
         if (isIn) {
@@ -79,16 +100,22 @@ if (pk && mount) {
           mount.appendChild(el);
           Clerk.mountUserButton(el, { afterSignOutUrl: href("/") });
         } else {
+          // after sign-out: rebuild the same button the layout renders
           const btn = document.createElement("button");
+          btn.type = "button";
+          btn.dataset.signup = "";
           btn.textContent = T.signUp;
           btn.className =
             "whitespace-nowrap rounded-md bg-brand-blue px-3 py-1.5 font-medium text-white hover:opacity-90";
-          btn.addEventListener("click", () =>
-            Clerk.openSignUp({ afterSignUpUrl: href("/"), afterSignInUrl: href("/") }),
-          );
           mount.appendChild(btn);
         }
       };
+
+      // one delegated handler covers the server-rendered button and any rebuilt one
+      mount.addEventListener("click", (e) => {
+        if ((e.target as HTMLElement).closest("[data-signup]")) openSignUp();
+      });
+      if (pendingSignUp) openSignUp();
 
       render();
       Clerk.addListener(render);

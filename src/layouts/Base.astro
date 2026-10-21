@@ -22,6 +22,7 @@ const T = tr(locale, {
     description:
       "Compare fees and features of 70+ Malaysian payment gateways: FPX, cards, e-wallets, DuitNow QR and BNPL, sourced from official rate cards. Free and independent.",
     logoAlt: "Malaysia Payment Gateway logo",
+    signUp: "Sign up",
     openMenu: "Open menu",
     closeMenu: "Close menu",
     siteMenu: "Site menu",
@@ -59,6 +60,7 @@ const T = tr(locale, {
     description:
       "Bandingkan fee dan ciri lebih 70 payment gateway Malaysia: FPX, kad, e-wallet, DuitNow QR dan BNPL. Semua kadar diambil dari senarai harga rasmi setiap gateway. Percuma, dan kami tiada kaitan dengan mana-mana gateway.",
     logoAlt: "Logo Malaysia Payment Gateway",
+    signUp: "Daftar",
     openMenu: "Buka menu",
     closeMenu: "Tutup menu",
     siteMenu: "Menu laman",
@@ -217,7 +219,28 @@ const livePillars = CLUSTERS.filter((c) => c.live);
           <a href={l("/compare/")} class="hidden rounded-md px-2.5 py-1.5 text-muted hover:bg-panel hover:text-fg sm:inline-block">{T.compare}</a>
           <a href={l("/blog/")} class="hidden rounded-md px-2.5 py-1.5 text-muted hover:bg-panel hover:text-fg sm:inline-block">{T.guides}</a>
           <a href={l("/learn/")} class="hidden rounded-md px-2.5 py-1.5 text-muted hover:bg-panel hover:text-fg sm:inline-block">{T.learn}</a>
-          <div id="clerk-auth" class="flex items-center gap-2"></div>
+          <!-- the Sign up button is server-rendered so it never blinks in on each page load;
+               auth.ts wires it to Clerk, or swaps in the UserButton when signed in. The inline
+               script hides it on first paint for visitors who were signed in last time. -->
+          {
+            import.meta.env.PUBLIC_CLERK_PUBLISHABLE_KEY && (
+              <div id="clerk-auth" class="flex items-center gap-2">
+                <button
+                  type="button"
+                  data-signup
+                  class="whitespace-nowrap rounded-md bg-brand-blue px-3 py-1.5 font-medium text-white hover:opacity-90"
+                >
+                  {T.signUp}
+                </button>
+                <script is:inline>
+                  try {
+                    if (localStorage.getItem("mpg-signed-in") === "1")
+                      document.querySelector("#clerk-auth [data-signup]").style.visibility = "hidden";
+                  } catch (e) {}
+                </script>
+              </div>
+            )
+          }
         </nav>
       </div>
     </header>
