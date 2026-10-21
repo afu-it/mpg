@@ -1,6 +1,8 @@
 ---
 // Renders a provider logo from src/assets/logos/<slug>.{svg,png,webp} if present,
 // otherwise a clean monogram chip. No broken images, no 404s.
+// Pass `compact` in tight rows (the gateway table): a square
+// `<slug>-mark.{svg,png,webp}` is used there when the main logo is a wide wordmark.
 // Square logos get subtly rounded corners; logos flagged `logo_round` in their
 // frontmatter are cropped to a full circle.
 import { getCollection } from "astro:content";
@@ -10,8 +12,9 @@ interface Props {
   slug: string;
   name: string;
   size?: number;
+  compact?: boolean;
 }
-const { slug, name, size = 22 } = Astro.props;
+const { slug, name, size = 22, compact = false } = Astro.props;
 
 // metadata import (not ?url) so each <img> gets intrinsic width/height
 // attributes — the browser then reserves the right box and avoids layout shift
@@ -25,7 +28,7 @@ for (const [path, mod] of Object.entries(logos)) {
   const key = path.split("/").pop()!.replace(/\.\w+$/, "");
   if (!bySlug[key] || path.endsWith(".svg")) bySlug[key] = mod.default;
 }
-const logo = bySlug[slug];
+const logo = (compact && bySlug[`${slug}-mark`]) || bySlug[slug];
 
 const roundSlugs = new Set(
   (await getCollection("gateways")).filter((g) => g.data.logo_round).map((g) => g.id),

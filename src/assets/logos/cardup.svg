@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- CardUp mark (the "U" with its shadow), redrawn from the official cardup.my favicon -->
+  <rect width="64" height="64" fill="#50465F"/>
+  <path d="M19 10h6.5v22.5c0 5 2.9 8 6.5 8s6.5-3 6.5-8V10H45v22.5C45 41.3 39.6 47 32 47s-13-5.7-13-14.5z" fill="#fff"/>
+  <ellipse cx="32" cy="54" rx="13" ry="2" fill="#8C7BA8"/>
+</svg>

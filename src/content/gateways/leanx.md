@@ -1,8 +1,7 @@
 ---
 name: LeanX
 website: https://leanx.io
-logo: /logos/leanx.png
-logo_round: true
+logo: /logos/leanx.svg
 tagline: "Unified payment platform with billing, payouts and store"
 fees:
   fpx: "RM1.50"
