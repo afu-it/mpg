@@ -1,7 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import { gatewayCost, effectiveCostAt, REF_TICKET } from "../lib/fees";
-import { splitName } from "../lib/name";
+import { splitName, stripParens } from "../lib/name";
 import Logo from "./Logo.astro";
 import FeeCell from "./FeeCell.astro";
 import FeatureBadge from "./FeatureBadge.astro";
@@ -93,16 +93,22 @@ const feeCols = [
 const COLS = 3 + feeCols.length + 2; // gateway + est fee + fixed fee + fee cols + settlement + recurring
 
 const th =
-  "whitespace-nowrap px-3 py-2 text-left align-bottom font-medium text-muted";
+  "whitespace-nowrap px-2.5 py-2 text-left align-bottom font-medium text-muted";
 const sortBtn =
   "group inline-flex items-center gap-1 hover:text-fg aria-[sort]:text-fg";
-const td = "whitespace-nowrap px-3 py-3 align-middle";
+const td = "whitespace-nowrap px-2.5 py-2 align-middle";
 ---
 
-<p class="mb-3 text-sm text-muted">
-  {T.showing} <span id="gw-count" class="text-fg">{total}</span> {T.of(total)}{" "}
-  · <span class="text-fg">{rankedCount}</span> {T.comparable}
-</p>
+<div class="mb-3 space-y-3">
+  <slot name="controls" />
+  <div class="flex flex-wrap items-center gap-x-3 gap-y-2">
+    <slot name="chips" />
+    <p class="text-sm text-muted">
+      {T.showing} <span id="gw-count" class="text-fg">{total}</span> {T.of(total)}{" "}
+      · <span class="text-fg">{rankedCount}</span> {T.comparable}
+    </p>
+  </div>
+</div>
 
 <div class="gw-scroll max-h-[calc(100dvh-8rem)] overflow-auto rounded-md border border-line">
   <table id="gw-table" class="w-full border-collapse text-sm">
@@ -178,19 +184,16 @@ const td = "whitespace-nowrap px-3 py-3 align-middle";
             data-recurring={String(g.data.features.recurring)}
             data-href={localizePath(`/gateway/${g.id}/`, locale)}
           >
-            <td class={`px-3 py-2.5 align-middle sticky left-0 z-10 w-[15rem] min-w-[15rem] bg-surface`} data-sort-value={g.data.name.toLowerCase()}>
+            <td class={`px-2.5 py-2 align-middle sticky left-0 z-10 w-[12.5rem] min-w-[12.5rem] bg-surface`} data-sort-value={g.data.name.toLowerCase()}>
               <a
                 href={`/gateway/${g.id}/`}
                 class="flex items-center gap-2.5 font-medium text-fg hover:text-accent"
               >
-                <Logo slug={g.id} name={g.data.name} />
+                <Logo slug={g.id} name={g.data.name} compact />
                 {/* name, then the note (if any), then badges that may wrap, so the
                     sticky first column stays narrow instead of growing to the longest row */}
                 <span class="flex min-w-0 flex-col gap-1">
                 <span class="font-bold leading-tight">{splitName(g.data.name).base}</span>
-                {splitName(g.data.name).note && (
-                  <span class="-mt-0.5 text-xs font-normal leading-tight text-muted">{splitName(g.data.name).note}</span>
-                )}
                 <span class="flex flex-wrap items-center gap-1">
                 {g.data.category === "bnpl" && (
                   <span class="rounded-full bg-brand-red px-1 py-px text-[8px] font-medium uppercase tracking-tight text-white">
@@ -247,11 +250,11 @@ const td = "whitespace-nowrap px-3 py-3 align-middle";
                 <span class="text-muted" title={T.onRequestTitle}>{T.onRequest}</span>
               )}
             </td>
-            <td class="gw-minor min-w-[11rem] max-w-[15rem] px-3 py-2.5 align-middle" data-sort-value={String(effectiveCostAt(g.data.fees.monthly, REF_TICKET))}>
-              <FeeCell value={g.data.fees.setup} />
+            <td class="gw-minor min-w-[8rem] max-w-[13rem] px-2.5 py-2 align-middle" data-sort-value={String(effectiveCostAt(g.data.fees.monthly, REF_TICKET))}>
+              <FeeCell value={stripParens(g.data.fees.setup)} />
               {/* the recurring fee goes on its own line so long notes wrap instead of widening the column */}
               {g.data.fees.monthly !== g.data.fees.setup && (
-                <span class="mt-0.5 block text-xs leading-snug text-muted">/ {g.data.fees.monthly}</span>
+                <span class="mt-0.5 block text-xs leading-snug text-muted">/ {stripParens(g.data.fees.monthly)}</span>
               )}
             </td>
             {feeCols.map((c) => {
@@ -262,12 +265,12 @@ const td = "whitespace-nowrap px-3 py-3 align-middle";
                   data-label={c.label}
                   data-sort-value={String(effectiveCostAt(v, REF_TICKET))}
                 >
-                  <FeeCell value={v} />
+                  <FeeCell value={stripParens(v)} />
                 </td>
               );
             })}
             <td class={td} data-label={T.settlement} data-sort-value={g.data.settlement.toLowerCase()}>
-              <FeeCell value={g.data.settlement} />
+              <FeeCell value={stripParens(g.data.settlement)} />
             </td>
             <td class={`${td} gw-minor`} data-sort-value={g.data.features.recurring ? "0" : "1"}>
               <FeatureBadge on={g.data.features.recurring} label={T.recurring} />
@@ -312,6 +315,21 @@ const td = "whitespace-nowrap px-3 py-3 align-middle";
   }
   .gw-scroll::-webkit-scrollbar-corner {
     background: transparent;
+  }
+  /* vertical dividers between columns (desktop table only; mobile cards reset below) */
+  @media (min-width: 768px) {
+    #gw-table td + td {
+      border-left: 1px solid var(--color-line);
+    }
+    /* zebra rows, counted over visible gateway rows only so filters and the
+       divider band don't break the pattern; tds carry it so the sticky name
+       cell stripes too */
+    #gw-table tbody tr:nth-child(even of :not([hidden]):not([data-divider])) td {
+      background-color: color-mix(in oklab, var(--color-line) 35%, var(--color-surface));
+    }
+    #gw-table tbody tr:not([data-divider]):hover td {
+      background-color: color-mix(in oklab, var(--color-line) 60%, var(--color-surface));
+    }
   }
   /* sort direction arrow driven by aria-sort on the parent <th> */
   th[aria-sort="ascending"] .sort-arrow::after {

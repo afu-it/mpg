@@ -34,6 +34,8 @@ const T = tr(locale, {
     nameAsc: "Name A-Z",
     nameDesc: "Name Z-A",
     search: "Search gateway…",
+    clearAll: "Clear all",
+    removeFilter: "Remove filter",
     searchLabel: "Search payment gateways by name",
   },
   ms: {
@@ -57,6 +59,8 @@ const T = tr(locale, {
     nameAsc: "Nama A-Z",
     nameDesc: "Nama Z-A",
     search: "Cari gateway…",
+    clearAll: "Kosongkan semua",
+    removeFilter: "Buang penapis",
     searchLabel: "Cari payment gateway ikut nama",
   },
 });
@@ -124,14 +128,34 @@ const shortlists = [
 
     <!-- main: full remaining width -->
     <div class="min-w-0 flex-1 px-4 py-6 sm:px-6">
-      <div class="mb-5 flex flex-wrap items-center gap-3">
-        <div class="mr-auto">
-          <h1 class="text-2xl font-semibold tracking-tight text-fg">
-            {T.h1}
-          </h1>
-          <p class="mt-1 text-sm text-muted">
-            {T.lead}
-          </p>
+      <div class="mb-4 max-w-3xl">
+        <h1 class="text-2xl font-semibold tracking-tight text-fg">
+          {T.h1}
+        </h1>
+        <p class="mt-1 text-sm text-muted">
+          {T.lead}
+        </p>
+      </div>
+
+      <!-- toolbar: search + sort, then active-filter chips and the count, directly above the table -->
+      <GatewayTable>
+        <div slot="controls" class="flex w-full flex-wrap items-center gap-3 sm:flex-nowrap">
+        <!-- search: the main control, grows to fill the row; "/" focuses it -->
+        <div class="relative w-full sm:order-first sm:flex-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted" aria-hidden="true">
+            <circle cx="11" cy="11" r="7"></circle>
+            <path d="m20 20-3.5-3.5"></path>
+          </svg>
+          <input
+            id="gw-search"
+            type="search"
+            placeholder={T.search}
+            autocomplete="off"
+            aria-label={T.searchLabel}
+            aria-keyshortcuts="/"
+            class="h-10 w-full rounded-md border border-line bg-panel pl-9 pr-10 text-fg placeholder:text-muted focus:border-accent focus:outline-none"
+          />
+          <kbd class="pointer-events-none absolute right-2.5 top-1/2 hidden -translate-y-1/2 rounded border border-line px-1.5 text-xs text-muted sm:block" aria-hidden="true">/</kbd>
         </div>
         <!-- mobile: open the filter drawer -->
         <button
@@ -139,7 +163,7 @@ const shortlists = [
           id="gw-filters-open"
           aria-controls="gw-filters"
           aria-expanded="false"
-          class="inline-flex h-11 w-full items-center justify-center gap-2 rounded-md border border-line bg-panel px-3 text-sm text-muted transition-colors hover:border-accent hover:text-fg md:hidden"
+          class="inline-flex h-10 shrink-0 items-center justify-center gap-2 rounded-md border border-line bg-panel px-3 text-sm text-muted transition-colors hover:border-accent hover:text-fg md:hidden"
         >
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4" aria-hidden="true">
             <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
@@ -147,14 +171,14 @@ const shortlists = [
           {T.filters}
           <span id="gw-filters-count" hidden class="rounded-full bg-brand-blue px-2 py-0.5 text-xs font-medium text-white"></span>
         </button>
-        <!-- sort dropdown: sits to the left of the search box -->
-        <div id="gw-sort" class="relative w-full sm:w-auto">
+        <!-- sort dropdown: right of the search box -->
+        <div id="gw-sort" class="relative min-w-0 flex-1 sm:flex-none">
           <button
             type="button"
             id="gw-sort-trigger"
             aria-haspopup="menu"
             aria-expanded="false"
-            class="inline-flex h-9 w-full items-center justify-start gap-1.5 rounded-md border border-line bg-panel px-3 text-sm text-muted transition-colors hover:border-accent hover:text-fg focus:border-accent focus:outline-none sm:w-48"
+            class="inline-flex h-10 w-full items-center justify-start gap-1.5 rounded-md border border-line bg-panel px-3 text-sm text-muted transition-colors hover:border-accent hover:text-fg focus:border-accent focus:outline-none sm:w-60"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -174,7 +198,7 @@ const shortlists = [
               <path d="m21 8-4-4-4 4"></path>
               <path d="M17 4v16"></path>
             </svg>
-            <span class="text-muted/80">{T.sort}</span>
+            <span class="hidden text-muted/80 sm:inline">{T.sort}</span>
             <span id="gw-sort-label" class="min-w-0 flex-1 truncate text-left text-fg">{T.lowest}</span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -194,7 +218,7 @@ const shortlists = [
             role="menu"
             aria-label={T.sortGateways}
             hidden
-            class="absolute left-0 z-20 mt-1 w-full min-w-[12rem] overflow-hidden rounded-md border border-line bg-panel py-1 shadow-lg"
+            class="absolute left-0 z-40 mt-1 w-full min-w-[12rem] overflow-hidden rounded-md border border-line bg-panel py-1 shadow-lg"
           >
             {
               [
@@ -235,17 +259,21 @@ const shortlists = [
             }
           </ul>
         </div>
-        <input
-          id="gw-search"
-          type="search"
-          placeholder={T.search}
-          autocomplete="off"
-          aria-label={T.searchLabel}
-          class="h-9 w-full rounded-md border border-line bg-panel px-3 text-fg placeholder:text-muted focus:border-accent sm:w-72"
-        />
-      </div>
-
-      <GatewayTable />
+        </div>
+        <div slot="chips" id="gw-chips" hidden class="contents" data-remove-label={T.removeFilter}>
+          <ul id="gw-chip-list" class="contents" aria-label={T.filters}></ul>
+          <button type="button" id="gw-chips-clear" class="text-sm text-muted underline-offset-2 hover:text-fg hover:underline">{T.clearAll}</button>
+          <span class="text-line" aria-hidden="true">|</span>
+          <template id="gw-chip-tpl">
+          <li>
+            <button type="button" class="inline-flex h-7 items-center gap-1.5 rounded-full border border-line bg-panel pl-3 pr-2 text-xs text-fg transition-colors hover:border-accent">
+              <span data-chip-label></span>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="size-3.5 text-muted" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"></path></svg>
+            </button>
+          </li>
+          </template>
+        </div>
+      </GatewayTable>
 
       <nav aria-labelledby="gw-shortlists" class="mt-10 border-t border-line pt-6">
         <h2 id="gw-shortlists" class="mb-3 text-xs font-medium uppercase tracking-wide text-muted">{T.shortlists}</h2>

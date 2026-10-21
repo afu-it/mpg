@@ -89,6 +89,7 @@ if (table && table.tBodies[0]) {
     if (emptyEl) emptyEl.hidden = visible !== 0;
     updateDivider();
     updateFilterCount();
+    renderChips();
   }
 
   // mobile Filters button badge: how many filters differ from the default state
@@ -100,6 +101,56 @@ if (table && table.tBodies[0]) {
     filterCountEl.textContent = String(n);
     filterCountEl.hidden = n === 0;
   }
+
+  // active-filter chips under the search bar: one per non-default filter,
+  // clicking a chip clears that filter; "Clear all" mirrors the sidebar reset
+  const chipsRoot = document.getElementById("gw-chips");
+  const chipList = document.getElementById("gw-chip-list");
+  const chipTpl = document.getElementById("gw-chip-tpl") as HTMLTemplateElement | null;
+  const labelOf = (i: HTMLInputElement) => (i.closest("label")?.textContent ?? "").replace(/\s+/g, " ").trim();
+  function renderChips() {
+    if (!chipsRoot || !chipList || !chipTpl) return;
+    const active: { label: string; clear: () => void }[] = [];
+    const cat = categoryInputs.find((i) => i.checked);
+    if (cat && cat.value !== "gateway") {
+      active.push({
+        label: labelOf(cat),
+        clear: () => {
+          const def = categoryInputs.find((i) => i.value === "gateway");
+          if (def) def.checked = true;
+        },
+      });
+    }
+    for (const i of [...channelInputs, ...featureInputs]) {
+      if (i.checked) active.push({ label: labelOf(i), clear: () => (i.checked = false) });
+    }
+    const removeLabel = chipsRoot.dataset.removeLabel ?? "Remove filter";
+    chipList.replaceChildren(
+      ...active.map((a) => {
+        const li = chipTpl.content.firstElementChild!.cloneNode(true) as HTMLElement;
+        li.querySelector("[data-chip-label]")!.textContent = a.label;
+        const btn = li.querySelector("button")!;
+        btn.setAttribute("aria-label", `${removeLabel}: ${a.label}`);
+        btn.addEventListener("click", () => {
+          a.clear();
+          applyFilters();
+          search?.focus();
+        });
+        return li;
+      }),
+    );
+    chipsRoot.hidden = active.length === 0;
+  }
+  document.getElementById("gw-chips-clear")?.addEventListener("click", () => resetBtn?.click());
+
+  // "/" jumps to the search box, unless the user is already typing somewhere
+  document.addEventListener("keydown", (e) => {
+    if (e.key !== "/" || e.metaKey || e.ctrlKey || e.altKey) return;
+    const el = e.target as HTMLElement | null;
+    if (el && (el.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName))) return;
+    e.preventDefault();
+    search?.focus();
+  });
 
   categoryInputs.forEach((i) => i.addEventListener("change", applyFilters));
   channelInputs.forEach((i) => i.addEventListener("change", applyFilters));
