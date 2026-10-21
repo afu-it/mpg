@@ -38,6 +38,11 @@ plans:
     source: "https://info.mpay.my/faq/"
 verified_date: "2026-07-17"
 source: "https://info.mpay.my/faq/"
+bnm:
+  roles: [merchant-acquirer, emoney-issuer]
+  entity: "ManagePay Services Sdn Bhd"
+  checked: "2026-10-21"
+  evidence: "https://www.bnm.gov.my/regulations/fsp-directory?p_p_id=com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet_INSTANCE_jXC730NRlqU0&p_p_lifecycle=0&p_p_state=normal&p_p_mode=view&p_r_p_tag=merchant-acquirer-nonbank"
 notes: "Official FAQ: MDR 3.0% (Lite) / 2.5% (Pro); one-time start-up RM399 (currently waived during pre-launch promo); RM10/mo Lite, RM30/mo Pro (waived above RM3k/RM10k monthly volume); T+1 settlement with a Sponsor Bank account. Minimum charge RM0.60 overrides MDR on transactions below RM30; RM1 bank-transfer fee, RM100 minimum transfer."
 ---
 

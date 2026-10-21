@@ -31,6 +31,11 @@ features:
 popularity: 30
 verified_date: "2026-10-20"
 source: "https://cardbiz.com.my/cardbiz-payment-services/cardbizpay-rates/"
+bnm:
+  roles: [merchant-acquirer]
+  entity: "CardBiz Payment Services Sdn. Bhd"
+  checked: "2026-10-21"
+  evidence: "https://www.bnm.gov.my/regulations/fsp-directory?p_p_id=com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet_INSTANCE_jXC730NRlqU0&p_p_lifecycle=0&p_p_state=normal&p_p_mode=view&p_r_p_tag=merchant-acquirer-nonbank"
 notes: "Official rate card: FPX B2C RM1.00 / B2B RM1.50, local cards 1%-2.0%, overseas premium cards 2.40%, e-wallets 1.2% (WeChat 1%, Alipay cross-border 1.5%). Setup waived; annual fee waived for the first year (amount after year 1 not published). Re-verified 2026-10-20, unchanged. A RM1.00 per-transaction settlement fee applies (refund and chargeback also RM1.00 each); settlement timing not published. No minimum transaction volume."
 ---
 

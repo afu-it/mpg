@@ -22,6 +22,11 @@ features:
 popularity: 58
 verified_date: "2026-10-20"
 source: "https://revpay.com.my/interchange.php"
+bnm:
+  roles: [merchant-acquirer]
+  entity: "Revenue Harvest Sdn Bhd"
+  checked: "2026-10-21"
+  evidence: "https://revpay.com.my"
 notes: "Indicative. Merchant rates not published; only BNM interchange floor rates shown (domestic credit 0.60%, domestic debit 0.10% or 37 sen). These are network rates, not RevPay's merchant fee."
 ---
 

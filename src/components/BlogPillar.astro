@@ -1,0 +1,125 @@
+---
+// Shared layout for a blog topic (pillar) page: short header, the 3 cheapest
+// relevant gateways as live tiles, the topic's posts as cards, related tools.
+import Base from "../layouts/Base.astro";
+import Logo from "./Logo.astro";
+import PostCard from "./PostCard.astro";
+import { clusterBySlug, clusterText } from "../lib/blog";
+import { getLocale, tr, formatDate } from "../i18n/locale";
+import { postCards } from "../lib/blog-cards";
+import { breadcrumbLd } from "../lib/jsonld";
+
+interface Props {
+  cluster: string;
+  heading: string;
+  intro: string;
+  topLabel: string;
+  top: { slug: string; name: string; est: number }[];
+  seeAll: { href: string; label: string };
+  tools: { href: string; label: string }[];
+  verified?: string;
+}
+const { cluster: slug, heading, intro, topLabel, top, seeAll, tools, verified } = Astro.props;
+const locale = getLocale(Astro);
+const T = tr(locale, {
+  en: {
+    home: "Home",
+    blog: "Blog",
+    allGuides: "← All guides",
+    breadcrumb: "Breadcrumb",
+    est: "Est. fee per RM100 sale",
+    verified: "verified",
+    guides: "Guides",
+    tools: "Tools",
+  },
+  ms: {
+    home: "Utama",
+    blog: "Blog",
+    allGuides: "← Semua panduan",
+    breadcrumb: "Laluan halaman",
+    est: "Anggaran caj bagi jualan RM100",
+    verified: "disemak",
+    guides: "Panduan",
+    tools: "Alat",
+  },
+});
+const cluster = clusterText(clusterBySlug(slug)!, locale);
+const cards = await postCards(slug, locale);
+const verifiedShown = verified && locale === "ms" ? formatDate(verified, locale) : verified;
+
+const site = (Astro.site?.href ?? "https://malaysiapg.com.my/").replace(/\/$/, "");
+const crumbLd = JSON.stringify(
+  breadcrumbLd(site, [
+    { name: T.home, path: "/" },
+    { name: T.blog, path: "/blog/" },
+    { name: cluster.name },
+  ]),
+);
+---
+
+<Base title={cluster.title} description={cluster.description}>
+  <script is:inline type="application/ld+json" set:html={crumbLd} />
+
+  <nav aria-label={T.breadcrumb} class="mb-4 flex items-center gap-2 text-sm text-muted">
+    <a href="/blog/" class="hover:text-fg">{T.allGuides}</a>
+  </nav>
+
+  <header class="max-w-2xl">
+    <h1 class="text-3xl font-bold tracking-tight text-fg sm:text-4xl">{heading}</h1>
+    <p class="mt-2 text-muted">{intro}</p>
+  </header>
+
+  {
+    top.length > 0 && (
+      <section class="mt-8">
+        <div class="flex items-baseline justify-between gap-4">
+          <h2 class="text-xs font-medium uppercase tracking-widest text-muted">{topLabel}</h2>
+          <a href={seeAll.href} class="text-sm text-accent hover:underline">
+            {seeAll.label} →
+          </a>
+        </div>
+        <ol class="mt-3 grid gap-3 sm:grid-cols-3">
+          {top.map((g, i) => (
+            <li>
+              <a
+                href={`/gateway/${g.slug}/`}
+                class="flex items-center gap-3 rounded-xl border border-line bg-panel p-4 hover:border-muted"
+              >
+                <span class="w-4 text-sm tabular-nums text-muted">{i + 1}</span>
+                <Logo slug={g.slug} name={g.name} size={28} />
+                <span class="min-w-0 flex-1 truncate font-medium text-fg">{g.name}</span>
+                <span class="tabular-nums text-fg">RM{g.est.toFixed(2)}</span>
+              </a>
+            </li>
+          ))}
+        </ol>
+        <p class="mt-2 text-xs text-muted">
+          {T.est}{verifiedShown && <> · {T.verified} {verifiedShown}</>}
+        </p>
+      </section>
+    )
+  }
+
+  <section class="mt-10">
+    <h2 class="text-xs font-medium uppercase tracking-widest text-muted">{T.guides}</h2>
+    <div class="mt-3 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {cards.map((c) => <PostCard card={c} showCluster={false} />)}
+    </div>
+  </section>
+
+  <section class="mt-10">
+    <h2 class="text-xs font-medium uppercase tracking-widest text-muted">{T.tools}</h2>
+    <div class="mt-3 flex flex-wrap gap-2">
+      {
+        tools.map((t) => (
+          <a
+            href={t.href}
+            class="rounded-full border border-line px-3 py-1 text-sm text-muted hover:border-muted hover:text-fg"
+          >
+            {t.label}
+          </a>
+        ))
+      }
+    </div>
+  </section>
+</Base>

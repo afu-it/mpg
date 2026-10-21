@@ -10,7 +10,70 @@ import Logo from "../../components/Logo.astro";
 import { toApiGateway, type GatewayEntryLike } from "../../lib/api";
 import { parseSettlementDays } from "../../lib/settlement";
 import { breadcrumbLd } from "../../lib/jsonld";
-import { PROFILES } from "../../lib/seo-pages";
+import { PROFILES, profileCopy } from "../../lib/seo-pages";
+import { getLocale, tr, formatDate } from "../../i18n/locale";
+
+const locale = getLocale(Astro);
+const T = tr(locale, {
+  en: {
+    title: "Fastest settlement payment gateways in Malaysia | MPG",
+    description:
+      "Malaysian payment gateways ranked by officially stated settlement speed: who pays out T+1, who takes a week, and who does not say. Worst-case ranked.",
+    home: "Home",
+    learn: "Learn",
+    breadcrumb: "Breadcrumb",
+    crumb: "Fastest settlement",
+    h1: "Fastest settlement payment gateways in Malaysia",
+    lead: 'Settlement is when the money actually reaches your bank account, and it moves your cash flow more than a few basis points of fees ever will. Providers below are ranked by their officially stated settlement time, using the slowest leg they promise (a "T+1 to T+2" provider ranks as T+2, never flattered).',
+    answer: (date: string, name: string, settlement: string) =>
+      `As of ${date}, the fastest officially stated settlement among Malaysian payment providers is ${name} at ${settlement}.`,
+    instantH: "Real-time or same-day payout",
+    instantP:
+      "These gateways say on their own page that money can reach your bank instantly or on the same day, sometimes only on a paid plan, an add-on or for some payment methods. The condition is shown under each name.",
+    source: "Source",
+    rankedH: "Ranked by stated settlement (slowest leg)",
+    sameDay: "Same day",
+    nextDay: "Next business day",
+    upTo: (d: number) => `Up to ${d} business days`,
+    estFee: "est. fee",
+    unstatedH: "Settlement not stated publicly",
+    unstatedP:
+      "These providers publish no official settlement time (or only a third-party figure), so we will not rank them on it. Listed by market presence; ask when you request a quote.",
+    whatT1: "What does T+1 mean?",
+    compare: "Compare side by side",
+    browse: "Browse all providers",
+    more: "More guides",
+  },
+  ms: {
+    title: "Payment gateway dengan duit masuk paling cepat di Malaysia | MPG",
+    description:
+      "Payment gateway Malaysia disusun ikut tempoh duit masuk ke akaun yang dinyatakan secara rasmi: siapa bayar T+1, siapa ambil seminggu, dan siapa tak beritahu.",
+    home: "Utama",
+    learn: "Belajar",
+    breadcrumb: "Laluan halaman",
+    crumb: "Duit masuk paling cepat",
+    h1: "Payment gateway dengan duit masuk paling cepat di Malaysia",
+    lead: 'Tempoh duit masuk ialah bila duit jualan betul-betul sampai ke akaun bank anda. Ini lebih beri kesan pada aliran tunai anda berbanding beza kecil dalam caj. T+1 bermaksud sehari bekerja selepas jualan. Gateway di bawah disusun ikut tempoh duit masuk rasmi mereka, guna tempoh paling lambat yang dijanjikan (gateway yang tulis "T+1 hingga T+2" dikira T+2, supaya tak nampak lebih cepat daripada sebenarnya).',
+    answer: (date: string, name: string, settlement: string) =>
+      `Sehingga ${date}, tempoh duit masuk paling cepat yang dinyatakan secara rasmi antara payment gateway Malaysia ialah ${name}, iaitu ${settlement}.`,
+    instantH: "Duit masuk serta-merta atau hari yang sama",
+    instantP:
+      "Gateway ini tulis di laman rasmi mereka bahawa duit boleh masuk ke bank anda serta-merta atau pada hari yang sama. Kadang-kadang cuma untuk pelan berbayar, tambahan berbayar atau cara bayar tertentu. Syaratnya ditulis di bawah setiap nama.",
+    source: "Sumber",
+    rankedH: "Disusun ikut tempoh duit masuk (ambil yang paling lambat)",
+    sameDay: "Hari yang sama",
+    nextDay: "Hari bekerja berikutnya",
+    upTo: (d: number) => `Sehingga ${d} hari bekerja`,
+    estFee: "anggaran caj",
+    unstatedH: "Tempoh duit masuk tak disiarkan",
+    unstatedP:
+      "Gateway ini tak siarkan tempoh duit masuk rasmi (atau cuma ada angka pihak ketiga), jadi kami tak susun ikut tempoh ini. Senarai ini ikut siapa lebih dikenali di pasaran. Tanya mereka bila minta sebut harga.",
+    whatT1: "Apa maksud T+1?",
+    compare: "Banding sebelah-menyebelah",
+    browse: "Lihat semua gateway",
+    more: "Panduan lain",
+  },
+});
 
 const entries = (await getCollection("gateways")) as unknown as GatewayEntryLike[];
 const gateways = entries.map(toApiGateway).filter((g) => g.category !== "infrastructure");
@@ -28,14 +91,14 @@ const unstated = parsed
 const site = (Astro.site?.href ?? "https://malaysiapg.com.my/").replace(/\/$/, "");
 const top = ranked[0];
 const answerLine = top
-  ? `As of ${asOf}, the fastest officially stated settlement among Malaysian payment providers is ${top.g.name} at ${top.g.settlement}.`
+  ? T.answer(asOf && locale === "ms" ? formatDate(asOf, locale) : String(asOf), top.g.name, top.g.settlement)
   : undefined;
 
 const jsonld = [
   {
     "@context": "https://schema.org",
     "@type": "ItemList",
-    name: "Fastest settlement payment gateways in Malaysia",
+    name: T.h1,
     itemListElement: ranked.map((x, i) => ({
       "@type": "ListItem",
       position: i + 1,
@@ -44,41 +107,73 @@ const jsonld = [
     })),
   },
   breadcrumbLd(site, [
-    { name: "Home", path: "/" },
-    { name: "Learn", path: "/learn/" },
-    { name: "Fastest settlement" },
+    { name: T.home, path: "/" },
+    { name: T.learn, path: "/learn/" },
+    { name: T.crumb },
   ]),
 ];
 
-const dayLabel = (d: number) => (d === 0 ? "Same day" : d === 1 ? "Next business day" : `Up to ${d} business days`);
+// real-time / same-day payout (reader request 2026-10-21): only gateways whose
+// own page says so (gateway.instant_settlement, quoted with source)
+const instant = (entries as (GatewayEntryLike & {
+  data: GatewayEntryLike["data"] & {
+    instant_settlement?: { detail: string; detail_ms: string; quote: string; source: string; checked: string };
+  };
+})[])
+  .filter((e) => e.data.instant_settlement)
+  .map((e) => ({ g: toApiGateway(e), s: e.data.instant_settlement! }))
+  .sort((a, b) => b.g.popularity - a.g.popularity || a.g.name.localeCompare(b.g.name));
+
+const dayLabel = (d: number) => (d === 0 ? T.sameDay : d === 1 ? T.nextDay : T.upTo(d));
 ---
 
-<Base
-  title="Fastest settlement payment gateways in Malaysia | MPG"
-  description="Malaysian payment gateways ranked by officially stated settlement speed: who pays out T+1, who takes a week, and who does not say. Worst-case ranked."
->
-  <nav aria-label="Breadcrumb" class="mb-4 flex items-center gap-2 text-sm text-muted">
-    <a href="/" class="hover:text-fg hover:underline">Home</a>
+<Base title={T.title} description={T.description}>
+  <nav aria-label={T.breadcrumb} class="mb-4 flex items-center gap-2 text-sm text-muted">
+    <a href="/" class="hover:text-fg hover:underline">{T.home}</a>
     <span aria-hidden="true">/</span>
-    <a href="/learn/" class="hover:text-fg hover:underline">Learn</a>
+    <a href="/learn/" class="hover:text-fg hover:underline">{T.learn}</a>
     <span aria-hidden="true">/</span>
-    <span class="text-fg">Fastest settlement</span>
+    <span class="text-fg">{T.crumb}</span>
   </nav>
 
-  <h1 class="max-w-3xl text-3xl font-bold tracking-tight text-fg sm:text-4xl">
-    Fastest settlement payment gateways in Malaysia
-  </h1>
-  <p class="mt-4 max-w-3xl text-muted">
-    Settlement is when the money actually reaches your bank account, and it moves your cash
-    flow more than a few basis points of fees ever will. Providers below are ranked by their
-    officially stated settlement time, using the slowest leg they promise (a "T+1 to T+2"
-    provider ranks as T+2, never flattered).
-  </p>
+  <h1 class="max-w-3xl text-3xl font-bold tracking-tight text-fg sm:text-4xl">{T.h1}</h1>
+  <p class="mt-4 max-w-3xl text-muted">{T.lead}</p>
   {answerLine && <p class="mt-3 max-w-3xl font-medium text-fg">{answerLine}</p>}
+
+  {
+    instant.length > 0 && (
+      <section class="mt-12">
+        <h2 class="mb-3 text-xs font-medium uppercase tracking-wide text-muted">{T.instantH}</h2>
+        <p class="mb-3 max-w-3xl text-sm text-muted">{T.instantP}</p>
+        <ul class="divide-y divide-line border-y border-line">
+          {instant.map((x) => (
+            <li class="py-4">
+              <div class="flex flex-wrap items-center gap-3">
+                <Logo slug={x.g.slug} name={x.g.name} size={26} />
+                <a href={`/gateway/${x.g.slug}/`} class="font-medium text-fg hover:underline">
+                  {x.g.name}
+                </a>
+              </div>
+              <p class="mt-2 pl-9 text-sm text-fg">{locale === "ms" ? x.s.detail_ms : x.s.detail}</p>
+              <blockquote class="mt-2 ml-9 border-l-2 border-line pl-3 text-sm italic text-muted" lang="en">
+                "{x.s.quote}"
+              </blockquote>
+              <p class="mt-1 pl-9 text-xs text-muted">
+                {T.source}:{" "}
+                <a href={x.s.source} target="_blank" rel="noopener noreferrer" class="hover:text-fg hover:underline" data-l10n="off">
+                  {new URL(x.s.source).hostname.replace(/^www\./, "")}
+                </a>
+              </p>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
 
   <section class="mt-12">
     <h2 class="mb-3 text-xs font-medium uppercase tracking-wide text-muted">
-      Ranked by stated settlement (slowest leg)
+      {T.rankedH}
     </h2>
     <ol class="divide-y divide-line border-y border-line">
       {
@@ -96,7 +191,7 @@ const dayLabel = (d: number) => (d === 0 ? "Same day" : d === 1 ? "Next business
               {dayLabel(x.days)}
               {x.g.est_fee_rm100 != null && (
                 <>
-                  {" · "}est. fee ~RM{x.g.est_fee_rm100.toFixed(2)} / RM100
+                  {" · "}{T.estFee} ~RM{x.g.est_fee_rm100.toFixed(2)} / RM100
                 </>
               )}
             </p>
@@ -108,12 +203,9 @@ const dayLabel = (d: number) => (d === 0 ? "Same day" : d === 1 ? "Next business
 
   <section class="mt-12">
     <h2 class="mb-3 text-xs font-medium uppercase tracking-wide text-muted">
-      Settlement not stated publicly
+      {T.unstatedH}
     </h2>
-    <p class="mb-3 max-w-3xl text-sm text-muted">
-      These providers publish no official settlement time (or only a third-party figure), so
-      we will not rank them on it. Listed by market presence; ask when you request a quote.
-    </p>
+    <p class="mb-3 max-w-3xl text-sm text-muted">{T.unstatedP}</p>
     <div class="flex flex-wrap gap-2">
       {
         unstated.map((g) => (
@@ -130,18 +222,18 @@ const dayLabel = (d: number) => (d === 0 ? "Same day" : d === 1 ? "Next business
 
   <div class="mt-8 flex flex-wrap gap-3">
     <a href="/learn/glossary/settlement/" class="rounded-md border border-line px-4 py-2 text-sm text-muted hover:text-fg">
-      What does T+1 mean?
+      {T.whatT1}
     </a>
     <a href="/compare/" class="rounded-md border border-line px-4 py-2 text-sm text-muted hover:text-fg">
-      Compare side by side
+      {T.compare}
     </a>
     <a href="/gateways/" class="rounded-md border border-line px-4 py-2 text-sm text-muted hover:text-fg">
-      Browse all providers
+      {T.browse}
     </a>
   </div>
 
   <section class="mt-12 border-t border-line pt-6">
-    <h2 class="mb-3 text-xs font-medium uppercase tracking-wide text-muted">More guides</h2>
+    <h2 class="mb-3 text-xs font-medium uppercase tracking-wide text-muted">{T.more}</h2>
     <div class="flex flex-wrap gap-2">
       {
         PROFILES.map((p) => (
@@ -149,7 +241,7 @@ const dayLabel = (d: number) => (d === 0 ? "Same day" : d === 1 ? "Next business
             href={`/best/${p.slug}/`}
             class="rounded-full border border-line bg-panel px-3 py-1 text-xs text-muted hover:text-fg"
           >
-            {p.h1}
+            {profileCopy(p, locale).h1}
           </a>
         ))
       }

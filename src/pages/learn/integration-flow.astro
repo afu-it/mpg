@@ -4,93 +4,184 @@ export const prerender = true;
 import Base from "../../layouts/Base.astro";
 import { techArticleLd } from "../../lib/jsonld";
 import FlowDiagram from "../../components/FlowDiagram.astro";
+import { getLocale, localizePath, tr } from "../../i18n/locale";
 
-const paymentFlow = [
-  { title: "CUSTOMER", body: ['Clicks "Pay" on your site'] },
-  { via: "create order", title: "YOUR BACKEND", body: ["Writes a PENDING order (unique reference)"] },
-  { via: "request checkout", title: "GATEWAY", body: ["Returns a hosted checkout URL"] },
-  { via: "redirect", title: "CUSTOMER PAYS", body: ["FPX / card / e-wallet / DuitNow QR"] },
-  { via: "bank authorises", title: "GATEWAY", body: ["Sends a SIGNED webhook to your backend"] },
-  {
-    via: "webhook",
-    title: "YOUR BACKEND  (the trust gate)",
-    emphasis: true,
-    body: [
-      "1. verify the signature",
-      "2. re-fetch the real state from the gateway",
-      "3. match reference + amount + status",
-      "4. mark paid ONCE  (idempotent)",
+type FlowStep = { title: string; body?: string[]; via?: string; emphasis?: boolean };
+const locale = getLocale(Astro);
+const T = tr(locale, {
+  en: {
+    title: "The safe integration flow | MPG Learn",
+    h1: "The safe integration flow",
+    description:
+      "The correct order to wire a Malaysian payment gateway so a payment can never be faked: pending record, verified webhook, idempotent settlement.",
+    back: "← Learn",
+    lead: "Every gateway differs in API, but the secure shape is the same. Follow this order and a payment can't be spoofed.",
+    caption:
+      "How one payment flows. The money is only trusted at the double-lined gate, after the gateway's signed webhook is verified and re-fetched. Never from the browser redirect.",
+    stepByStep: "Step by step",
+    rulesH: "The two rules that matter most",
+    rule1Strong: "Never unlock paid access from a redirect alone.",
+    rule1: "The browser can be replayed or faked. Only a verified webhook + re-fetched provider state should grant access.",
+    rule2Strong: "Keep secrets server-side.",
+    rule2: "Secret keys and signature verification live on your backend, never in client code or the repo.",
+    testsH: "Tests to write",
+    paymentFlow: [
+      { title: "CUSTOMER", body: ['Clicks "Pay" on your site'] },
+      { via: "create order", title: "YOUR BACKEND", body: ["Writes a PENDING order (unique reference)"] },
+      { via: "request checkout", title: "GATEWAY", body: ["Returns a hosted checkout URL"] },
+      { via: "redirect", title: "CUSTOMER PAYS", body: ["FPX / card / e-wallet / DuitNow QR"] },
+      { via: "bank authorises", title: "GATEWAY", body: ["Sends a SIGNED webhook to your backend"] },
+      {
+        via: "webhook",
+        title: "YOUR BACKEND  (the trust gate)",
+        emphasis: true,
+        body: [
+          "1. verify the signature",
+          "2. re-fetch the real state from the gateway",
+          "3. match reference + amount + status",
+          "4. mark paid ONCE  (idempotent)",
+        ],
+      },
+      { via: "confirmed", title: "UNLOCK ACCESS", body: ["Show success to the customer"] },
+    ] as FlowStep[],
+    steps: [
+      {
+        n: 1,
+        title: "Create a local pending payment",
+        body: "Before sending the customer anywhere, write your own order/payment row with status pending and a unique reference. This is the record you'll later confirm; never rely on the gateway's memory alone.",
+      },
+      {
+        n: 2,
+        title: "Redirect to checkout (or open the hosted page)",
+        body: "Hand off to the gateway's hosted checkout / payment link with your reference and amount. Let the gateway handle the card/FPX/e-wallet UI, so you collect nothing sensitive.",
+      },
+      {
+        n: 3,
+        title: "Verify the webhook signature",
+        body: "When the gateway calls your backend, verify the signature/checksum (usually HMAC with your secret) before reading anything. An unverified callback is untrusted input, so reject it.",
+      },
+      {
+        n: 4,
+        title: "Re-fetch the state from the provider",
+        body: "Don't trust the webhook body's status at face value. Call the gateway's API to read the authoritative payment state for that reference.",
+      },
+      {
+        n: 5,
+        title: "Match provider + reference + amount + currency + status",
+        body: "Confirm the payment maps to your pending record on every field. A mismatch (wrong amount, wrong currency, unknown reference) means do not fulfil.",
+      },
+      {
+        n: 6,
+        title: "Mark paid, idempotently",
+        body: "Flip your record to paid and unlock access. If the same event arrives again (gateways retry), detect it by reference and do nothing the second time. No double-fulfilment, no double-counting.",
+      },
+    ],
+    tests: [
+      "Invalid signature → rejected, nothing fulfilled.",
+      "Duplicate webhook event → processed once only (idempotent).",
+      "Wrong amount or currency → not marked paid.",
     ],
   },
-  { via: "confirmed", title: "UNLOCK ACCESS", body: ["Show success to the customer"] },
-];
-
-const steps = [
-  {
-    n: 1,
-    title: "Create a local pending payment",
-    body: "Before sending the customer anywhere, write your own order/payment row with status pending and a unique reference. This is the record you'll later confirm; never rely on the gateway's memory alone.",
+  ms: {
+    title: "Langkah integrasi yang selamat | MPG Belajar",
+    h1: "Langkah integrasi yang selamat",
+    description:
+      "Susunan yang betul untuk sambung payment gateway Malaysia supaya bayaran tak boleh dipalsukan: simpan rekod pesanan dulu, semak webhook, kira bayaran sekali sahaja.",
+    back: "← Belajar",
+    lead: "API setiap gateway (cara sistem anda bercakap dengan gateway) tak sama. Tapi langkah selamatnya tetap sama. Ikut susunan ini, dan orang tak boleh palsukan bayaran.",
+    caption:
+      "Begini perjalanan satu bayaran. Bayaran hanya dikira sah di kotak bergaris dua. Masa itu webhook (mesej automatik dari gateway) sudah disemak dan status sudah ditanya semula kepada gateway. Pelanggan balik ke laman anda belum bermaksud dia dah bayar.",
+    stepByStep: "Langkah demi langkah",
+    rulesH: "Dua peraturan paling penting",
+    rule1Strong: "Jangan buka akses berbayar hanya sebab pelanggan balik ke laman anda.",
+    rule1: "Apa yang berlaku di browser boleh diulang atau dipalsukan. Buka akses hanya selepas webhook disemak dan status ditanya semula kepada gateway.",
+    rule2Strong: "Simpan rahsia di server.",
+    rule2: "Key rahsia dan semakan signature mesti ada di backend (server) anda sahaja. Jangan letak dalam kod yang berjalan di browser pelanggan atau dalam repo kod projek.",
+    testsH: "Ujian yang perlu ditulis",
+    paymentFlow: [
+      { title: "PELANGGAN", body: ['Klik "Bayar" di laman anda'] },
+      { via: "cipta pesanan", title: "BACKEND ANDA", body: ["Simpan pesanan berstatus menunggu (rujukan unik)"] },
+      { via: "minta checkout", title: "GATEWAY", body: ["Beri URL halaman bayaran gateway"] },
+      { via: "hantar ke halaman bayaran", title: "PELANGGAN BAYAR", body: ["FPX / kad / e-wallet / DuitNow QR"] },
+      { via: "bank luluskan", title: "GATEWAY", body: ["Hantar webhook yang ada signature ke backend"] },
+      {
+        via: "webhook",
+        title: "BACKEND ANDA  (pintu semakan)",
+        emphasis: true,
+        body: [
+          "1. semak signature",
+          "2. tanya semula status sebenar dari gateway",
+          "3. padankan rujukan + jumlah + status",
+          "4. tanda dibayar sekali sahaja",
+        ],
+      },
+      { via: "disahkan", title: "BUKA AKSES", body: ["Tunjuk bayaran berjaya kepada pelanggan"] },
+    ] as FlowStep[],
+    steps: [
+      {
+        n: 1,
+        title: "Cipta rekod bayaran \"menunggu\" dalam sistem anda",
+        body: "Sebelum hantar pelanggan ke halaman bayaran, simpan dulu rekod pesanan dalam sistem anda. Letak status menunggu dan satu nombor rujukan unik. Rekod inilah yang anda sahkan nanti. Jangan bergantung pada rekod gateway sahaja.",
+      },
+      {
+        n: 2,
+        title: "Hantar pelanggan ke halaman checkout (bayaran) gateway",
+        body: "Hantar pelanggan ke halaman checkout atau payment link gateway, bersama nombor rujukan dan jumlah bayaran. Biar gateway yang tunjuk pilihan kad/FPX/e-wallet. Jadi anda tak perlu simpan maklumat sensitif pelanggan langsung.",
+      },
+      {
+        n: 3,
+        title: "Semak signature webhook",
+        body: "Bila gateway hantar mesej ke backend anda, semak signature/checksum dulu sebelum baca apa-apa. Signature ialah kod rahsia yang buktikan mesej itu betul-betul dari gateway (biasanya HMAC dengan key rahsia anda). Callback yang tak lepas semakan tak boleh dipercayai. Tolak terus.",
+      },
+      {
+        n: 4,
+        title: "Tanya semula status dari gateway",
+        body: "Jangan terus percaya status dalam mesej webhook. Tanya gateway sendiri melalui API mereka untuk dapatkan status bayaran sebenar bagi nombor rujukan itu.",
+      },
+      {
+        n: 5,
+        title: "Padankan gateway + rujukan + jumlah + mata wang + status",
+        body: "Pastikan setiap maklumat bayaran sama dengan rekod menunggu anda. Kalau ada yang tak sama (jumlah salah, mata wang salah, rujukan tak dikenali), jangan hantar barang.",
+      },
+      {
+        n: 6,
+        title: "Tanda dibayar, sekali sahaja",
+        body: "Tukar rekod kepada dibayar dan buka akses. Gateway memang selalu hantar mesej yang sama lebih sekali. Kalau nombor rujukan itu dah ditanda dibayar, abaikan mesej kedua. Maksudnya, barang tak dihantar dua kali dan jualan tak dikira dua kali.",
+      },
+    ],
+    tests: [
+      "Signature tak sah → ditolak, tiada barang dihantar.",
+      "Webhook yang sama sampai dua kali → diproses sekali sahaja.",
+      "Jumlah atau mata wang salah → tidak ditanda dibayar.",
+    ],
   },
-  {
-    n: 2,
-    title: "Redirect to checkout (or open the hosted page)",
-    body: "Hand off to the gateway's hosted checkout / payment link with your reference and amount. Let the gateway handle the card/FPX/e-wallet UI, so you collect nothing sensitive.",
-  },
-  {
-    n: 3,
-    title: "Verify the webhook signature",
-    body: "When the gateway calls your backend, verify the signature/checksum (usually HMAC with your secret) before reading anything. An unverified callback is untrusted input, so reject it.",
-  },
-  {
-    n: 4,
-    title: "Re-fetch the state from the provider",
-    body: "Don't trust the webhook body's status at face value. Call the gateway's API to read the authoritative payment state for that reference.",
-  },
-  {
-    n: 5,
-    title: "Match provider + reference + amount + currency + status",
-    body: "Confirm the payment maps to your pending record on every field. A mismatch (wrong amount, wrong currency, unknown reference) means do not fulfil.",
-  },
-  {
-    n: 6,
-    title: "Mark paid, idempotently",
-    body: "Flip your record to paid and unlock access. If the same event arrives again (gateways retry), detect it by reference and do nothing the second time. No double-fulfilment, no double-counting.",
-  },
-];
-
-const tests = [
-  "Invalid signature → rejected, nothing fulfilled.",
-  "Duplicate webhook event → processed once only (idempotent).",
-  "Wrong amount or currency → not marked paid.",
-];
+});
+const { paymentFlow, steps, tests } = T;
 const site = (Astro.site?.href ?? "https://malaysiapg.com.my/").replace(/\/$/, "");
-const articleLd = JSON.stringify(techArticleLd(site, "/learn/integration-flow/", 'The safe integration flow', 'The correct order to wire a Malaysian payment gateway so a payment can never be faked: pending record, verified webhook, idempotent settlement.'));
+const articleLd = JSON.stringify(techArticleLd(site, localizePath("/learn/integration-flow/", locale), T.h1, T.description));
 ---
 
 <Base
-  title="The safe integration flow | MPG Learn"
-  description="The correct order to wire a Malaysian payment gateway so a payment can never be faked: pending record, verified webhook, idempotent settlement."
+  title={T.title}
+  description={T.description}
 >
   <script is:inline type="application/ld+json" set:html={articleLd} />
-  <a href="/learn/" class="text-sm text-muted hover:text-fg">← Learn</a>
+  <a href="/learn/" class="text-sm text-muted hover:text-fg">{T.back}</a>
 
   <header class="mt-4 max-w-2xl">
     <h1 class="max-w-3xl text-3xl font-bold tracking-tight text-fg sm:text-4xl">
-      The safe integration flow
+      {T.h1}
     </h1>
-    <p class="mt-2 text-muted">
-      Every gateway differs in API, but the secure shape is the same. Follow this
-      order and a payment can't be spoofed.
-    </p>
+    <p class="mt-2 text-muted">{T.lead}</p>
   </header>
 
   <FlowDiagram
     steps={paymentFlow}
-    caption="How one payment flows. The money is only trusted at the double-lined gate, after the gateway's signed webhook is verified and re-fetched. Never from the browser redirect."
+    caption={T.caption}
   />
 
   <h2 class="mt-8 max-w-2xl text-sm font-medium uppercase tracking-wide text-muted">
-    Step by step
+    {T.stepByStep}
   </h2>
   <ol class="mt-3 max-w-2xl space-y-3">
     {
@@ -109,23 +200,21 @@ const articleLd = JSON.stringify(techArticleLd(site, "/learn/integration-flow/",
   </ol>
 
   <section class="mt-8 max-w-2xl rounded-md border border-accent/40 bg-panel p-5">
-    <h2 class="text-base font-medium text-fg">The two rules that matter most</h2>
+    <h2 class="text-base font-medium text-fg">{T.rulesH}</h2>
     <ul class="mt-2 space-y-1.5 text-sm text-muted">
       <li>
-        <strong class="text-fg">Never unlock paid access from a redirect alone.</strong>{" "}
-        The browser can be replayed or faked. Only a verified webhook + re-fetched
-        provider state should grant access.
+        <strong class="text-fg">{T.rule1Strong}</strong>{" "}
+        {T.rule1}
       </li>
       <li>
-        <strong class="text-fg">Keep secrets server-side.</strong> Secret keys and
-        signature verification live on your backend, never in client code or the repo.
+        <strong class="text-fg">{T.rule2Strong}</strong> {T.rule2}
       </li>
     </ul>
   </section>
 
   <section class="mt-8 max-w-2xl">
     <h2 class="mb-3 text-xs font-medium uppercase tracking-wide text-muted">
-      Tests to write
+      {T.testsH}
     </h2>
     <ul class="space-y-2 rounded-md border border-line p-4 text-sm text-muted">
       {tests.map((t) => <li>• {t}</li>)}

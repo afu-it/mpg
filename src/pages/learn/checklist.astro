@@ -3,72 +3,152 @@ export const prerender = true;
 
 import Base from "../../layouts/Base.astro";
 import { techArticleLd } from "../../lib/jsonld";
+import { getLocale, localizePath, tr } from "../../i18n/locale";
 
-const groups = [
-  {
-    title: "Credentials & config",
-    items: [
-      "Live (production) keys set in the server environment, never in the repo or client.",
-      "Sandbox and live keys kept separate; no test key in production.",
-      "All secrets in environment variables / a secret manager (gitignored .env).",
+const locale = getLocale(Astro);
+const T = tr(locale, {
+  en: {
+    title: "Production checklist | MPG Learn",
+    h1: "Production checklist",
+    description:
+      "What to verify before taking a Malaysian payment gateway live: keys, webhook URLs, replay-safety, separated credentials, and no fake-redirect unlock.",
+    back: "← Learn",
+    lead: "Run through this before flipping a gateway to live. Skipping any line is how payments get faked or money goes missing.",
+    newPre: "New to any of these terms? See the",
+    glossary: "glossary",
+    orLet: ", or let an",
+    agent: "AI agent",
+    handle: "handle the wiring.",
+    groups: [
+      {
+        title: "Credentials & config",
+        items: [
+          "Live (production) keys set in the server environment, never in the repo or client.",
+          "Sandbox and live keys kept separate; no test key in production.",
+          "All secrets in environment variables / a secret manager (gitignored .env).",
+        ],
+      },
+      {
+        title: "Webhooks",
+        items: [
+          "Webhook/callback URL registered in BOTH sandbox and live dashboards.",
+          "Signature/checksum verification enforced on every callback.",
+          "Endpoint is replay-safe: duplicate events settle the order only once.",
+        ],
+      },
+      {
+        title: "Payment integrity",
+        items: [
+          "Paid access is granted only after a verified webhook + re-fetched provider state, never from a redirect alone.",
+          "Amount, currency, reference and status matched against your pending record before fulfilling.",
+          "A sandbox payment completes end-to-end and unlocks correctly.",
+        ],
+      },
+      {
+        title: "Data & operations",
+        items: [
+          "Database migrations applied (orders/payments tables, indexes on the gateway reference).",
+          "Failed and pending payments are handled and visible, not just successes.",
+          "Refund / reconciliation path understood for the chosen gateway.",
+        ],
+      },
     ],
   },
-  {
-    title: "Webhooks",
-    items: [
-      "Webhook/callback URL registered in BOTH sandbox and live dashboards.",
-      "Signature/checksum verification enforced on every callback.",
-      "Endpoint is replay-safe: duplicate events settle the order only once.",
+  ms: {
+    title: "Senarai semak sebelum lancar | MPG Belajar",
+    h1: "Senarai semak sebelum lancar",
+    description:
+      "Perkara yang perlu disemak sebelum payment gateway mula terima duit sebenar: key, URL webhook, bayaran tak dikira dua kali, key ujian dan live diasingkan, dan pesanan tak dibuka hanya sebab pelanggan balik ke laman anda.",
+    back: "← Belajar",
+    lead: "Semak semua ini sebelum gateway anda mula terima duit sebenar (mod live). Terlepas satu baris pun, bayaran palsu boleh lepas atau duit boleh hilang.",
+    newPre: "Ada istilah yang tak faham? Lihat",
+    glossary: "glosari",
+    orLet: ", atau biar",
+    agent: "AI agent",
+    handle: "buat kerja integrasi untuk anda.",
+    groups: [
+      {
+        title: "Key & tetapan",
+        items: [
+          "Key live (kunci untuk terima duit sebenar) disimpan dalam tetapan server sahaja. Jangan letak dalam kod projek atau di browser pelanggan.",
+          "Key sandbox (untuk ujian) dan key live diasingkan. Tiada key ujian dalam sistem sebenar.",
+          "Semua key rahsia disimpan dalam environment variable (tetapan rahsia di server) atau pengurus rahsia, contohnya fail .env yang tak dimuat naik ke git.",
+        ],
+      },
+      {
+        title: "Webhook",
+        items: [
+          "URL webhook/callback (alamat yang gateway hantar mesej bila pelanggan dah bayar) didaftarkan dalam dashboard sandbox dan juga dashboard live.",
+          "Signature/checksum (kod rahsia yang buktikan mesej itu betul-betul dari gateway) disemak pada setiap callback.",
+          "Mesej yang sama mungkin sampai lebih sekali. Pesanan tetap dikira dibayar sekali sahaja.",
+        ],
+      },
+      {
+        title: "Bayaran yang sah",
+        items: [
+          "Pelanggan dapat barang atau akses hanya selepas webhook disemak dan status bayaran ditanya semula kepada gateway. Pelanggan balik ke laman anda sahaja belum cukup.",
+          "Sebelum hantar barang, padankan jumlah, mata wang, nombor rujukan dan status dengan rekod pesanan anda.",
+          "Cuba satu bayaran dalam sandbox dari mula hingga habis. Pastikan pesanan dibuka dengan betul.",
+        ],
+      },
+      {
+        title: "Data & operasi",
+        items: [
+          "Pangkalan data (tempat simpan rekod) sudah siap: ada jadual pesanan/bayaran dan indeks pada nombor rujukan gateway.",
+          "Bayaran yang gagal dan yang masih menunggu juga diurus dan boleh dilihat. Jangan urus yang berjaya sahaja.",
+          "Anda tahu cara buat refund (pulangkan duit) dan cara padankan rekod bayaran dengan duit yang masuk (reconciliation) untuk gateway yang dipilih.",
+        ],
+      },
     ],
   },
-  {
-    title: "Payment integrity",
-    items: [
-      "Paid access is granted only after a verified webhook + re-fetched provider state, never from a redirect alone.",
-      "Amount, currency, reference and status matched against your pending record before fulfilling.",
-      "A sandbox payment completes end-to-end and unlocks correctly.",
-    ],
-  },
-  {
-    title: "Data & operations",
-    items: [
-      "Database migrations applied (orders/payments tables, indexes on the gateway reference).",
-      "Failed and pending payments are handled and visible, not just successes.",
-      "Refund / reconciliation path understood for the chosen gateway.",
-    ],
-  },
-];
+});
+const groups = T.groups;
+const total = groups.reduce((n, g) => n + g.items.length, 0);
+const UI = tr(locale, {
+  en: { done: "done", reset: "Clear ticks", saved: "Your ticks stay in this browser." },
+  ms: { done: "siap", reset: "Padam tanda", saved: "Tanda anda disimpan dalam browser ini." },
+});
 const site = (Astro.site?.href ?? "https://malaysiapg.com.my/").replace(/\/$/, "");
-const articleLd = JSON.stringify(techArticleLd(site, "/learn/checklist/", 'Production checklist', 'What to verify before taking a Malaysian payment gateway live: keys, webhook URLs, replay-safety, separated credentials, and no fake-redirect unlock.'));
+const articleLd = JSON.stringify(techArticleLd(site, localizePath("/learn/checklist/", locale), T.h1, T.description));
 ---
 
 <Base
-  title="Production checklist | MPG Learn"
-  description="What to verify before taking a Malaysian payment gateway live: keys, webhook URLs, replay-safety, separated credentials, and no fake-redirect unlock."
+  title={T.title}
+  description={T.description}
 >
   <script is:inline type="application/ld+json" set:html={articleLd} />
-  <a href="/learn/" class="text-sm text-muted hover:text-fg">← Learn</a>
+  <a href="/learn/" class="text-sm text-muted hover:text-fg">{T.back}</a>
 
   <header class="mt-4 max-w-2xl">
-    <h1 class="max-w-3xl text-3xl font-bold tracking-tight text-fg sm:text-4xl">Production checklist</h1>
-    <p class="mt-2 text-muted">
-      Run through this before flipping a gateway to live. Skipping any line is how
-      payments get faked or money goes missing.
-    </p>
+    <h1 class="max-w-3xl text-3xl font-bold tracking-tight text-fg sm:text-4xl">{T.h1}</h1>
+    <p class="mt-2 text-muted">{T.lead}</p>
   </header>
 
-  <div class="mt-8 max-w-2xl space-y-6">
+  <div class="sticky top-14 z-10 -mx-4 mt-6 border-b border-line bg-surface/90 px-4 py-3 backdrop-blur sm:mx-0 sm:rounded-xl sm:border sm:bg-panel/90">
+    <div class="flex items-center justify-between gap-3 text-sm">
+      <span class="text-fg"><span id="ck-count" class="font-semibold">0</span> / {total} {UI.done}</span>
+      <button id="ck-reset" type="button" class="text-xs text-muted hover:text-fg">{UI.reset}</button>
+    </div>
+    <div class="mt-2 h-1.5 overflow-hidden rounded-full bg-raised">
+      <div id="ck-bar" class="h-full w-0 rounded-full bg-accent transition-[width] duration-300"></div>
+    </div>
+  </div>
+
+  <div class="mt-6 grid gap-4 lg:grid-cols-2">
     {
-      groups.map((g) => (
-        <section>
-          <h2 class="mb-2 text-sm font-medium uppercase tracking-wide text-muted">
+      groups.map((g, gi) => (
+        <section class="rounded-xl border border-line bg-panel p-5">
+          <h2 class="flex items-center gap-2 font-semibold text-fg">
+            <span class="grid size-6 place-items-center rounded-full bg-raised text-xs text-muted">{gi + 1}</span>
             {g.title}
           </h2>
-          <ul class="divide-y divide-line overflow-hidden rounded-md border border-line">
-            {g.items.map((item) => (
-              <li class="flex gap-3 px-4 py-3 text-sm">
-                <span class="select-none text-accent" aria-hidden="true">☐</span>
-                <span class="text-fg">{item}</span>
+          <ul class="mt-3 space-y-1">
+            {g.items.map((item, ii) => (
+              <li>
+                <label class="flex cursor-pointer items-start gap-3 rounded-lg px-2 py-2 text-sm text-fg hover:bg-raised has-[:checked]:text-muted has-[:checked]:line-through">
+                  <input type="checkbox" data-ck={`${gi}-${ii}`} class="ck mt-0.5 size-4 shrink-0 accent-[var(--color-accent)]" />
+                  <span>{item}</span>
+                </label>
               </li>
             ))}
           </ul>
@@ -76,12 +156,39 @@ const articleLd = JSON.stringify(techArticleLd(site, "/learn/checklist/", 'Produ
       ))
     }
   </div>
+  <p class="mt-3 text-xs text-muted">{UI.saved}</p>
+
+  <script>
+    // ticks are a per-reader convenience: kept in localStorage, page works without it
+    const KEY = "mpg-checklist";
+    const boxes = [...document.querySelectorAll<HTMLInputElement>("input.ck")];
+    const count = document.getElementById("ck-count");
+    const bar = document.getElementById("ck-bar");
+    let saved: string[] = [];
+    try {
+      saved = JSON.parse(localStorage.getItem(KEY) ?? "[]");
+    } catch {}
+    for (const b of boxes) b.checked = saved.includes(b.dataset.ck ?? "");
+    function update() {
+      const on = boxes.filter((b) => b.checked);
+      if (count) count.textContent = String(on.length);
+      if (bar) bar.style.width = `${boxes.length ? (on.length / boxes.length) * 100 : 0}%`;
+      try {
+        localStorage.setItem(KEY, JSON.stringify(on.map((b) => b.dataset.ck)));
+      } catch {}
+    }
+    boxes.forEach((b) => b.addEventListener("change", update));
+    document.getElementById("ck-reset")?.addEventListener("click", () => {
+      boxes.forEach((b) => (b.checked = false));
+      update();
+    });
+    update();
+  </script>
 
   <p class="mt-8 max-w-2xl text-sm text-muted">
-    New to any of these terms? See the{" "}
-    <a href="/learn/glossary/" class="text-accent hover:underline">glossary</a>, or
-    let an{" "}
-    <a href="/learn/ai-agents/" class="text-accent hover:underline">AI agent</a>{" "}
-    handle the wiring.
+    {T.newPre}{" "}
+    <a href="/learn/glossary/" class="text-accent hover:underline">{T.glossary}</a>{T.orLet}{" "}
+    <a href="/learn/ai-agents/" class="text-accent hover:underline">{T.agent}</a>{" "}
+    {T.handle}
   </p>
 </Base>

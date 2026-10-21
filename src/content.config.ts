@@ -1,6 +1,7 @@
 import { defineCollection } from "astro:content";
 import { glob } from "astro/loaders";
 import { z } from "zod";
+import { BNM_ROLES } from "./lib/bnm";
 
 const gateways = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./src/content/gateways" }),
@@ -63,6 +64,41 @@ const gateways = defineCollection({
     verified_date: z.string(),
     source: z.string().url(),
     notes: z.string().optional(),
+    // Bank Negara Malaysia regulatee lists (src/lib/bnm.ts). Set ONLY when an
+    // official source ties this brand to the BNM-listed company (its own site,
+    // terms or footer, or the BNM row naming the brand). Inferred links and
+    // regulated partners do not count. Absent = not found under its own name.
+    bnm: z
+      .object({
+        roles: z.array(z.enum(BNM_ROLES)).min(1),
+        entity: z.string().min(1), // legal name exactly as BNM lists it
+        checked: z.string().regex(/^\d{4}-\d{2}-\d{2}$/), // date the BNM list was checked
+        evidence: z.string().url(), // official page confirming brand -> entity
+      })
+      .optional(),
+    // Reader requests (2026-10-21). Set ONLY when the gateway's own page says so,
+    // quoted verbatim; absent = not stated or not allowed (never inferred).
+    // no_ssm: an individual can sign up without SSM business registration.
+    no_ssm: z
+      .object({
+        detail: z.string().min(1), // plain English, incl. limits (caps, fewer methods)
+        detail_ms: z.string().min(1),
+        quote: z.string().min(1), // verbatim official sentence
+        source: z.string().url(),
+        checked: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+      })
+      .optional(),
+    // instant_settlement: real-time, instant or same-day payout to the merchant's
+    // bank, even if only on a plan, add-on or for some methods (say which in detail)
+    instant_settlement: z
+      .object({
+        detail: z.string().min(1),
+        detail_ms: z.string().min(1),
+        quote: z.string().min(1),
+        source: z.string().url(),
+        checked: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+      })
+      .optional(),
   }),
 });
 
@@ -90,4 +126,42 @@ const posts = defineCollection({
   }),
 });
 
-export const collections = { gateways, posts };
+// Bahasa Malaysia text for a gateway (same filename as src/content/gateways/).
+// Only the reader-facing prose is translated; fees, rails, dates and sources
+// always come from the English entry, so the two languages can never disagree
+// on a number. A missing file or field falls back to English.
+const gatewaysMs = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/gateways-ms" }),
+  schema: z.object({
+    tagline: z.string(),
+    settlement: z.string().optional(),
+    min_txn: z.string().optional(),
+    notes: z.string().optional(),
+    // matched to the English plans by position: same count, same order
+    plans: z
+      .array(
+        z.object({
+          name: z.string().optional(),
+          eligibility: z.string().optional(),
+          // one label/value per English row, in order (omit value to keep the English figure)
+          rows: z.array(z.object({ label: z.string(), value: z.string().optional() })).optional(),
+          settlement: z.string().optional(),
+        }),
+      )
+      .optional(),
+  }),
+});
+
+// Bahasa Malaysia version of a blog post (same filename as src/content/posts/).
+// Dates, cluster, gateways and sources come from the English post.
+const postsMs = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/posts-ms" }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    faq: z.array(z.object({ q: z.string(), a: z.string() })).default([]),
+    imageAlt: z.string().optional(),
+  }),
+});
+
+export const collections = { gateways, posts, gatewaysMs, postsMs };

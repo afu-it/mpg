@@ -1,72 +1,119 @@
 ---
-// Blog hub (spec 15): every post, newest first, grouped visually by cluster chip.
+// Blog hub (spec 15): newest post as a wide feature card, the rest in a
+// full-width grid of PostCards (card data + covers: lib/blog-cards.ts).
 export const prerender = true;
 
-import { getCollection } from "astro:content";
 import Base from "../../layouts/Base.astro";
-import { CLUSTERS, blogPath, clusterBySlug } from "../../lib/blog";
+import Logo from "../../components/Logo.astro";
+import PostCard from "../../components/PostCard.astro";
+import { CLUSTERS, blogPath } from "../../lib/blog";
+import { getLocale, tr } from "../../i18n/locale";
+import { fmtDate, postCards } from "../../lib/blog-cards";
 import { breadcrumbLd } from "../../lib/jsonld";
 
-const posts = (await getCollection("posts")).sort((a, b) =>
-  (b.data.updatedDate ?? b.data.pubDate).localeCompare(a.data.updatedDate ?? a.data.pubDate),
-);
+const locale = getLocale(Astro);
+const T = tr(locale, {
+  en: {
+    home: "Home",
+    blog: "Blog",
+    title: "Malaysian payment gateway guides & fee breakdowns | MPG",
+    description:
+      "Practical guides for choosing and paying less for a Malaysian payment gateway: per-provider fee breakdowns, FPX, DuitNow QR, e-wallets and recurring billing.",
+    h1: "Guides",
+    lead: "Fee breakdowns and how-tos, using the same verified numbers as the",
+    directory: "directory",
+    topics: "Topics",
+    latest: "Latest",
+    mins: (n: number) => `${n} min read`,
+  },
+  ms: {
+    home: "Utama",
+    blog: "Blog",
+    title: "Panduan payment gateway Malaysia & pecahan fee | MPG",
+    description:
+      "Panduan mudah untuk pilih payment gateway Malaysia dan bayar caj lebih murah: pecahan fee setiap gateway, FPX, DuitNow QR, e-wallet dan caj berulang.",
+    h1: "Panduan",
+    lead: "Pecahan fee dan panduan langkah demi langkah. Semua angka sama dengan yang kami semak dalam",
+    directory: "direktori",
+    topics: "Topik",
+    latest: "Terbaru",
+    mins: (n: number) => `${n} min baca`,
+  },
+});
+const cards = await postCards(undefined, locale);
 const site = (Astro.site?.href ?? "https://malaysiapg.com.my/").replace(/\/$/, "");
 const crumbLd = JSON.stringify(
-  breadcrumbLd(site, [{ name: "Home", path: "/" }, { name: "Blog" }]),
+  breadcrumbLd(site, [{ name: T.home, path: "/" }, { name: T.blog }]),
 );
 const livePillars = CLUSTERS.filter((c) => c.live);
+const [featured, ...rest] = cards;
 ---
 
 <Base
-  title="Malaysian payment gateway guides & fee breakdowns | MPG"
-  description="Practical guides for choosing and paying less for a Malaysian payment gateway: per-provider fee breakdowns, FPX, DuitNow QR, e-wallets and recurring billing."
+  title={T.title}
+  description={T.description}
 >
   <script is:inline type="application/ld+json" set:html={crumbLd} />
 
-  <header class="max-w-2xl">
-    <h1 class="max-w-3xl text-3xl font-bold tracking-tight text-fg sm:text-4xl">MPG guides</h1>
-    <p class="mt-3 text-muted">
-      Practical, sourced write-ups on Malaysian payment gateways. Every fee figure comes from the same
-      verified dataset that powers the{" "}
-      <a href="/gateways/" class="text-accent underline-offset-2 hover:underline">directory</a>, so guides
-      never drift from the live numbers.
-    </p>
+  <header class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+    <div class="max-w-2xl">
+      <h1 class="text-3xl font-bold tracking-tight text-fg sm:text-4xl">{T.h1}</h1>
+      <p class="mt-2 text-muted">
+        {T.lead}{" "}
+        <a href="/gateways/" class="text-accent underline-offset-2 hover:underline">{T.directory}</a>.
+      </p>
+    </div>
+    <nav aria-label={T.topics} class="flex flex-wrap gap-2">
+      {
+        livePillars.map((c) => (
+          <a
+            href={blogPath(c.slug)}
+            class="rounded-full border border-line px-3 py-1 text-sm text-muted hover:border-muted hover:text-fg"
+          >
+            {locale === "ms" ? c.nameMs : c.name}
+          </a>
+        ))
+      }
+    </nav>
   </header>
 
   {
-    livePillars.length > 0 && (
-      <section class="mt-6 flex flex-wrap gap-2">
-        {livePillars.map((c) => (
-          <a
-            href={blogPath(c.slug)}
-            class="rounded-full border border-line bg-panel px-3 py-1 text-xs text-muted hover:text-fg"
-          >
-            {c.name}
-          </a>
-        ))}
-      </section>
+    featured && (
+      <a
+        href={featured.href}
+        class="group mt-8 grid overflow-hidden rounded-xl border border-line bg-panel hover:border-muted md:grid-cols-[1.1fr_1fr]"
+      >
+        <div
+          class={`relative flex min-h-48 items-center justify-center gap-3 bg-gradient-to-br ${featured.tint} to-panel p-8`}
+          aria-hidden="true"
+        >
+          {featured.logos.map((l) => (
+            <span class="grid size-14 place-items-center rounded-2xl bg-surface/80 shadow-lg ring-1 ring-white/10 sm:size-16">
+              <Logo slug={l.slug} name={l.name} size={34} />
+            </span>
+          ))}
+        </div>
+        <div class="flex flex-col justify-center p-6 sm:p-8">
+          <p class="text-xs font-medium uppercase tracking-widest text-accent">{T.latest}</p>
+          <h2 class="mt-3 text-balance text-2xl font-semibold leading-snug text-fg group-hover:text-white sm:text-3xl">
+            {featured.title}
+          </h2>
+          <p class="mt-3 line-clamp-2 text-muted">{featured.description}</p>
+          <p class="mt-5 text-sm text-muted">
+            {featured.cluster && <span class="text-fg">{locale === "ms" ? featured.cluster.nameMs : featured.cluster.name}</span>}
+            <span class="mx-1.5">·</span>
+            <time datetime={featured.date}>{fmtDate(featured.date, locale)}</time>
+            <span class="mx-1.5">·</span>
+            {T.mins(featured.mins)}
+          </p>
+        </div>
+      </a>
     )
   }
 
-  <section class="mt-8 max-w-2xl space-y-6">
+  <section class="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
     {
-      posts.map((p) => {
-        const c = clusterBySlug(p.data.cluster);
-        return (
-          <article class="rounded-lg border border-line bg-panel p-4">
-            <p class="text-xs text-muted">
-              {p.data.updatedDate ?? p.data.pubDate}
-              {c && <span class="ml-2 rounded-full border border-line px-2 py-0.5">{c.name}</span>}
-            </p>
-            <h2 class="mt-2 text-lg font-semibold text-fg">
-              <a href={`/blog/${p.id}/`} class="hover:text-accent">
-                {p.data.title}
-              </a>
-            </h2>
-            <p class="mt-1 text-sm text-muted">{p.data.description}</p>
-          </article>
-        );
-      })
+      rest.map((c) => <PostCard card={c} />)
     }
   </section>
 </Base>

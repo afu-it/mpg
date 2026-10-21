@@ -31,7 +31,18 @@ webhooks: false
 popularity: 60
 verified_date: "2026-10-20"
 source: "https://myboost.co/business/payment-gateway"
+bnm:
+  roles: [merchant-acquirer]
+  entity: "Boost Connect Sdn Bhd (formerly known as Apigate Sdn Bhd)"
+  checked: "2026-10-21"
+  evidence: "https://myboost.co/business/payment-gateway"
 notes: "Re-verified 2026-10-20 (all rates unchanged): per-transaction limit RM2,000 confirmed in the FAQ, applying to online banking and all cards including MyDebit but not to DuitNow QR. Government FPX also listed: C2G RM0.50, B2G RM1.00. International cards accepted on request and subject to approval, settled in MYR. Previously (2026-07-17): local debit (MyDebit/Visa/MC) 1.25% vs credit 2.00%; wallets Boost 1.20%, GrabPay/TnG/ShopeePay 1.30%; FPX B2B RM2.00, FPX refund RM0.70; min settlement RM100. Operated by Boost Connect Sdn Bhd (1259684-W, formerly Apigate), an Axiata fintech and BNM Registered Merchant Acquirer (Non-bank). Published online rate card: FPX CASA B2C RM1.00 (B2B RM2.00), local credit card 2.00% (local debit 1.25%), foreign card 4.00%, DuitNow QR 0.85%, Boost e-wallet 1.20% (GrabPay/TNG/ShopeePay 1.30%). Setup RM499 waived during introductory period, RM499 annual fee. Refund RM0.70 (online banking), chargeback RM50, per-transaction limit RM2,000 on banking and cards, minimum settlement RM100."
+no_ssm:
+  detail: "Individuals can sign up, but only for DuitNow QR online. Cards are for registered businesses."
+  detail_ms: "Individu boleh daftar, tapi untuk DuitNow QR online sahaja. Kad untuk perniagaan berdaftar."
+  quote: "Individual merchants can subscribe to our DNQR online as per the current offering."
+  source: https://myboost.co/business/payment-gateway
+  checked: "2026-10-21"
 ---
 
 **Boost** is the Axiata-owned Malaysian fintech, and its online payment gateway

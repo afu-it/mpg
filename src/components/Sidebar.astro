@@ -1,29 +1,60 @@
 ---
 // Filter sidebar, wired up by src/scripts/table.ts.
+import { getLocale, tr } from "../i18n/locale";
+const T = tr(getLocale(Astro), {
+  en: {
+    gateway: "Gateways", bank: "Banks", ewallet: "E-wallet", infrastructure: "Infrastructure", all: "All",
+    card: "Card", no_code: "No-code", recurring: "Recurring", mcp: "MCP server",
+    category: "Category", channels: "Channels", features: "Features", developer: "Developer",
+    reset: "Reset filters",
+    regulation: "Regulation", bnm: "On BNM register",
+    signup: "Sign-up & payout", no_ssm: "No SSM needed", instant: "Same-day payout",
+  },
+  ms: {
+    gateway: "Gateway", bank: "Bank", ewallet: "E-wallet", infrastructure: "Infrastruktur", all: "Semua",
+    card: "Kad", no_code: "Tanpa kod", recurring: "Recurring", mcp: "Server MCP",
+    category: "Kategori", channels: "Cara bayar", features: "Ciri", developer: "Developer",
+    reset: "Set semula penapis",
+    regulation: "Kawal selia", bnm: "Dalam senarai BNM",
+    signup: "Daftar & duit masuk", no_ssm: "Tanpa SSM", instant: "Duit masuk hari sama",
+  },
+});
 const categories = [
-  { key: "gateway", label: "Gateways" },
-  { key: "bank", label: "Banks" },
-  { key: "ewallet", label: "E-wallet" },
+  { key: "gateway", label: T.gateway },
+  { key: "bank", label: T.bank },
+  { key: "ewallet", label: T.ewallet },
   { key: "bnpl", label: "BNPL" },
-  { key: "infrastructure", label: "Infrastructure" },
-  { key: "all", label: "All" },
+  { key: "infrastructure", label: T.infrastructure },
+  { key: "all", label: T.all },
 ];
 const channels = [
   { key: "fpx", label: "FPX" },
-  { key: "card", label: "Card" },
-  { key: "ewallet", label: "E-wallet" },
+  { key: "card", label: T.card },
+  { key: "ewallet", label: T.ewallet },
   { key: "duitnowqr", label: "DuitNow QR" },
   { key: "bnpl", label: "BNPL" },
 ];
 const features = [
-  { key: "no_code", label: "No-code" },
-  { key: "recurring", label: "Recurring" },
+  { key: "no_code", label: T.no_code },
+  { key: "recurring", label: T.recurring },
 ];
 // developer group (2026-07-17, owner request): stays visible so devs can
 // instantly list gateways with an API or an MCP server
 const developer = [
   { key: "api", label: "API" },
-  { key: "mcp", label: "MCP server" },
+  { key: "mcp", label: T.mcp },
+];
+
+// regulation group (2026-10-21, owner request): gateways whose own company is on
+// Bank Negara's register; matched through data-bnm like the other features
+const regulation = [{ key: "bnm", label: T.bnm }];
+
+// sign-up & payout group (2026-10-21, reader requests): individuals without SSM
+// registration, and real-time / same-day payout; both set only from a quoted
+// official page (data-no_ssm / data-instant)
+const signup = [
+  { key: "no_ssm", label: T.no_ssm },
+  { key: "instant", label: T.instant },
 ];
 
 const heading = "mb-2 text-xs font-semibold uppercase tracking-wide text-muted";
@@ -39,7 +70,7 @@ const input = "size-3.5 accent-accent";
 
 <div class="space-y-6">
   <div>
-    <h2 class={heading}>Category</h2>
+    <h2 class={heading}>{T.category}</h2>
     {
       categories.map((c) => (
         <label class={row}>
@@ -58,7 +89,7 @@ const input = "size-3.5 accent-accent";
 
   <details class="group">
     <summary class={summary}>
-      <h2>Channels</h2>
+      <h2>{T.channels}</h2>
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="size-3.5 transition-transform group-open:rotate-180" aria-hidden="true">
         <path d="m6 9 6 6 6-6"></path>
       </svg>
@@ -77,7 +108,7 @@ const input = "size-3.5 accent-accent";
 
   <details class="group">
     <summary class={summary}>
-      <h2>Features</h2>
+      <h2>{T.features}</h2>
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="size-3.5 transition-transform group-open:rotate-180" aria-hidden="true">
         <path d="m6 9 6 6 6-6"></path>
       </svg>
@@ -96,7 +127,45 @@ const input = "size-3.5 accent-accent";
 
   <details class="group" open>
     <summary class={summary}>
-      <h2>Developer</h2>
+      <h2>{T.signup}</h2>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="size-3.5 transition-transform group-open:rotate-180" aria-hidden="true">
+        <path d="m6 9 6 6 6-6"></path>
+      </svg>
+    </summary>
+    <div class="mt-2">
+      {
+        signup.map((f) => (
+          <label class={row}>
+            <input type="checkbox" data-filter-feature={f.key} class={input} />
+            {f.label}
+          </label>
+        ))
+      }
+    </div>
+  </details>
+
+  <details class="group" open>
+    <summary class={summary}>
+      <h2>{T.regulation}</h2>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="size-3.5 transition-transform group-open:rotate-180" aria-hidden="true">
+        <path d="m6 9 6 6 6-6"></path>
+      </svg>
+    </summary>
+    <div class="mt-2">
+      {
+        regulation.map((f) => (
+          <label class={row}>
+            <input type="checkbox" data-filter-feature={f.key} class={input} />
+            {f.label}
+          </label>
+        ))
+      }
+    </div>
+  </details>
+
+  <details class="group" open>
+    <summary class={summary}>
+      <h2>{T.developer}</h2>
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="size-3.5 transition-transform group-open:rotate-180" aria-hidden="true">
         <path d="m6 9 6 6 6-6"></path>
       </svg>
@@ -118,6 +187,6 @@ const input = "size-3.5 accent-accent";
     type="button"
     class="rounded-md border border-line px-3 py-1.5 text-xs text-muted hover:text-fg"
   >
-    Reset filters
+    {T.reset}
   </button>
 </div>

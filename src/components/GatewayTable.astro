@@ -6,6 +6,56 @@ import Logo from "./Logo.astro";
 import FeeCell from "./FeeCell.astro";
 import FeatureBadge from "./FeatureBadge.astro";
 import MethodologyNote from "./MethodologyNote.astro";
+import { getLocale, localizePath, tr } from "../i18n/locale";
+import { bnmBadge } from "../lib/bnm";
+
+const locale = getLocale(Astro);
+const T = tr(locale, {
+  en: {
+    showing: "Showing",
+    of: (total: number) => `of ${total} gateways`,
+    comparable: "with comparable published pricing",
+    gateway: "Gateway",
+    estTitle: "Estimated processing fee on a RM100 transaction, blending FPX/card/e-wallet (50/30/20). Indicative; see note below.",
+    est: "Est. fee / RM100",
+    fixedTitle: "Setup / recurring",
+    fixed: "Fixed fee",
+    card: "Card",
+    settlement: "Settlement",
+    recurring: "Recurring",
+    divider: "Pricing on request · no comparable published rates · ordered by popularity",
+    bank: "Bank",
+    apiTitle: "Public developer API documentation",
+    mcpOfficial: "Official MCP server: AI-agent ready",
+    mcpCommunity: "Community MCP server (third-party)",
+    estCellTitle: "Estimated blended fee on a RM100 transaction",
+    onRequestTitle: "No comparable published pricing — contact the provider for a quote",
+    onRequest: "On request",
+    empty: "No gateways match your filters.",
+  },
+  ms: {
+    showing: "Menunjukkan",
+    of: (total: number) => `daripada ${total} gateway`,
+    comparable: "ada harga rasmi yang boleh dibandingkan",
+    gateway: "Gateway",
+    estTitle: "Anggaran caj bagi jualan RM100, campuran FPX/kad/e-wallet (50/30/20). Sekadar panduan, baca nota di bawah.",
+    est: "Anggaran caj / RM100",
+    fixedTitle: "Fee setup / fee bulanan",
+    fixed: "Fee tetap",
+    card: "Kad",
+    settlement: "Duit masuk",
+    recurring: "Recurring",
+    divider: "Harga atas permintaan · tiada kadar rasmi untuk dibandingkan · disusun ikut populariti",
+    bank: "Bank",
+    apiTitle: "Dokumentasi API terbuka untuk developer",
+    mcpOfficial: "Server MCP rasmi, AI agent boleh guna terus",
+    mcpCommunity: "Server MCP komuniti (pihak ketiga)",
+    estCellTitle: "Anggaran caj campuran bagi jualan RM100",
+    onRequestTitle: "Tiada harga rasmi untuk dibandingkan. Hubungi gateway untuk dapatkan sebut harga",
+    onRequest: "Atas permintaan",
+    empty: "Tiada gateway yang ikut penapis yang anda pilih.",
+  },
+});
 
 // Each gateway gets a blended effective cost (RM on a RM100 transaction) and a
 // `rankable` flag. Only gateways that publish official rates for a comparable
@@ -34,7 +84,7 @@ const rm = (n: number) => `RM${n.toFixed(2)}`;
 // header cells: label + whether sortable + sort type
 const feeCols = [
   { key: "fpx", label: "FPX" },
-  { key: "card", label: "Card" },
+  { key: "card", label: T.card },
   { key: "ewallet", label: "E-wallet" },
   { key: "duitnowqr", label: "DuitNow QR" },
   { key: "bnpl", label: "BNPL" },
@@ -50,17 +100,17 @@ const td = "whitespace-nowrap px-3 py-3 align-middle";
 ---
 
 <p class="mb-3 text-sm text-muted">
-  Showing <span id="gw-count" class="text-fg">{total}</span> of {total} gateways
-  · <span class="text-fg">{rankedCount}</span> with comparable published pricing
+  {T.showing} <span id="gw-count" class="text-fg">{total}</span> {T.of(total)}{" "}
+  · <span class="text-fg">{rankedCount}</span> {T.comparable}
 </p>
 
-<div class="overflow-x-auto rounded-md border border-line">
+<div class="gw-scroll max-h-[calc(100dvh-8rem)] overflow-auto rounded-md border border-line">
   <table id="gw-table" class="w-full border-collapse text-sm">
-    <thead class="border-b border-line bg-panel">
+    <thead class="sticky top-0 z-20 border-b border-line bg-panel">
       <tr>
-        <th scope="col" class={`${th} sticky left-0 z-10 bg-panel`} aria-sort="none">
+        <th scope="col" class={`${th} sticky left-0 z-30 bg-panel`} aria-sort="none">
           <button type="button" class={sortBtn} data-sort-type="text">
-            Gateway <span class="sort-arrow text-accent" aria-hidden="true"></span>
+            {T.gateway} <span class="sort-arrow text-accent" aria-hidden="true"></span>
           </button>
         </th>
         <th scope="col" class={th} aria-sort="none">
@@ -68,14 +118,14 @@ const td = "whitespace-nowrap px-3 py-3 align-middle";
             type="button"
             class={sortBtn}
             data-sort-type="num"
-            title="Estimated processing fee on a RM100 transaction, blending FPX/card/e-wallet (50/30/20). Indicative; see note below."
+            title={T.estTitle}
           >
-            Est. fee / RM100 <span class="sort-arrow text-accent" aria-hidden="true"></span>
+            {T.est} <span class="sort-arrow text-accent" aria-hidden="true"></span>
           </button>
         </th>
         <th scope="col" class={th} aria-sort="none">
-          <button type="button" class={sortBtn} data-sort-type="num" title="Setup / recurring">
-            Fixed fee <span class="sort-arrow text-accent" aria-hidden="true"></span>
+          <button type="button" class={sortBtn} data-sort-type="num" title={T.fixedTitle}>
+            {T.fixed} <span class="sort-arrow text-accent" aria-hidden="true"></span>
           </button>
         </th>
         {
@@ -89,12 +139,12 @@ const td = "whitespace-nowrap px-3 py-3 align-middle";
         }
         <th scope="col" class={th} aria-sort="none">
           <button type="button" class={sortBtn} data-sort-type="text">
-            Settlement <span class="sort-arrow text-accent" aria-hidden="true"></span>
+            {T.settlement} <span class="sort-arrow text-accent" aria-hidden="true"></span>
           </button>
         </th>
         <th scope="col" class={th} aria-sort="none">
           <button type="button" class={sortBtn} data-sort-type="num">
-            Recurring <span class="sort-arrow text-accent" aria-hidden="true"></span>
+            {T.recurring} <span class="sort-arrow text-accent" aria-hidden="true"></span>
           </button>
         </th>
       </tr>
@@ -107,7 +157,7 @@ const td = "whitespace-nowrap px-3 py-3 align-middle";
           {i === firstOnRequest && (
             <tr id="gw-divider" data-divider class="border-b border-line/60">
               <td colspan={COLS} class="bg-panel px-3 py-1.5 text-[11px] uppercase tracking-wide text-muted">
-                Pricing on request · no comparable published rates · ordered by popularity
+                {T.divider}
               </td>
             </tr>
           )}
@@ -122,24 +172,26 @@ const td = "whitespace-nowrap px-3 py-3 align-middle";
             data-no_code={String(g.data.features.no_code)}
             data-api={String(g.data.features.api)}
             data-mcp={String(g.data.mcp !== "none")}
+            data-bnm={String(Boolean(g.data.bnm))}
+            data-no_ssm={String(Boolean(g.data.no_ssm))}
+            data-instant={String(Boolean(g.data.instant_settlement))}
             data-recurring={String(g.data.features.recurring)}
-            data-href={`/gateway/${g.id}/`}
+            data-href={localizePath(`/gateway/${g.id}/`, locale)}
           >
-            <td class={`${td} sticky left-0 bg-surface`} data-sort-value={g.data.name.toLowerCase()}>
+            <td class={`px-3 py-2.5 align-middle sticky left-0 z-10 w-[15rem] min-w-[15rem] bg-surface`} data-sort-value={g.data.name.toLowerCase()}>
               <a
                 href={`/gateway/${g.id}/`}
                 class="flex items-center gap-2.5 font-medium text-fg hover:text-accent"
               >
                 <Logo slug={g.id} name={g.data.name} />
-                {(() => {
-                  const { base, note } = splitName(g.data.name);
-                  return (
-                    <span>
-                      {base}
-                      {note && <span class="ml-1 text-xs font-normal text-muted">{note}</span>}
-                    </span>
-                  );
-                })()}
+                {/* name, then the note (if any), then badges that may wrap, so the
+                    sticky first column stays narrow instead of growing to the longest row */}
+                <span class="flex min-w-0 flex-col gap-1">
+                <span class="font-bold leading-tight">{splitName(g.data.name).base}</span>
+                {splitName(g.data.name).note && (
+                  <span class="-mt-0.5 text-xs font-normal leading-tight text-muted">{splitName(g.data.name).note}</span>
+                )}
+                <span class="flex flex-wrap items-center gap-1">
                 {g.data.category === "bnpl" && (
                   <span class="rounded-full bg-brand-red px-1 py-px text-[8px] font-medium uppercase tracking-tight text-white">
                     BNPL
@@ -147,7 +199,7 @@ const td = "whitespace-nowrap px-3 py-3 align-middle";
                 )}
                 {g.data.category === "bank" && (
                   <span class="rounded-full border border-line px-1 py-px text-[8px] font-medium uppercase tracking-tight text-muted">
-                    Bank
+                    {T.bank}
                   </span>
                 )}
                 {g.data.category === "ewallet" && (
@@ -155,10 +207,23 @@ const td = "whitespace-nowrap px-3 py-3 align-middle";
                     E-wallet
                   </span>
                 )}
+                {g.data.bnm && (() => {
+                  // compact marker only: the row is already a link, so the BNM list link lives on the detail page
+                  const b = bnmBadge(g.data.bnm, locale);
+                  return (
+                    <span
+                      class="rounded-full border border-line px-1 py-px text-[9px] font-medium uppercase tracking-wide text-muted"
+                      title={b.title}
+                      aria-label={`${b.text}: ${b.title}`}
+                    >
+                      BNM
+                    </span>
+                  );
+                })()}
                 {g.data.features.api && g.data.dev_docs && (
                   <span
                     class="rounded-full border border-line px-1 py-px text-[9px] font-medium uppercase tracking-wide text-muted"
-                    title="Public developer API documentation"
+                    title={T.apiTitle}
                   >
                     API
                   </span>
@@ -166,24 +231,27 @@ const td = "whitespace-nowrap px-3 py-3 align-middle";
                 {g.data.mcp !== "none" && (
                   <span
                     class="rounded-full border border-accent px-1 py-px text-[9px] font-medium uppercase tracking-wide text-accent"
-                    title={g.data.mcp === "official" ? "Official MCP server: AI-agent ready" : "Community MCP server (third-party)"}
+                    title={g.data.mcp === "official" ? T.mcpOfficial : T.mcpCommunity}
                   >
                     MCP
                   </span>
                 )}
+                </span>
+                </span>
               </a>
             </td>
             <td class={td} data-sort-value={rankable ? String(cost) : "Infinity"}>
               {rankable ? (
-                <span class="font-medium text-fg" title="Estimated blended fee on a RM100 transaction">{rm(cost)}</span>
+                <span class="font-medium text-fg" title={T.estCellTitle}>{rm(cost)}</span>
               ) : (
-                <span class="text-muted" title="No comparable published pricing — contact the provider for a quote">On request</span>
+                <span class="text-muted" title={T.onRequestTitle}>{T.onRequest}</span>
               )}
             </td>
-            <td class={`${td} gw-minor`} data-sort-value={String(effectiveCostAt(g.data.fees.monthly, REF_TICKET))}>
+            <td class="gw-minor min-w-[11rem] max-w-[15rem] px-3 py-2.5 align-middle" data-sort-value={String(effectiveCostAt(g.data.fees.monthly, REF_TICKET))}>
               <FeeCell value={g.data.fees.setup} />
+              {/* the recurring fee goes on its own line so long notes wrap instead of widening the column */}
               {g.data.fees.monthly !== g.data.fees.setup && (
-                <span class="ml-1 text-xs text-muted">/ {g.data.fees.monthly}</span>
+                <span class="mt-0.5 block text-xs leading-snug text-muted">/ {g.data.fees.monthly}</span>
               )}
             </td>
             {feeCols.map((c) => {
@@ -198,11 +266,11 @@ const td = "whitespace-nowrap px-3 py-3 align-middle";
                 </td>
               );
             })}
-            <td class={td} data-label="Settlement" data-sort-value={g.data.settlement.toLowerCase()}>
+            <td class={td} data-label={T.settlement} data-sort-value={g.data.settlement.toLowerCase()}>
               <FeeCell value={g.data.settlement} />
             </td>
             <td class={`${td} gw-minor`} data-sort-value={g.data.features.recurring ? "0" : "1"}>
-              <FeatureBadge on={g.data.features.recurring} label="Recurring" />
+              <FeatureBadge on={g.data.features.recurring} label={T.recurring} />
             </td>
           </tr>
           </>
@@ -212,13 +280,39 @@ const td = "whitespace-nowrap px-3 py-3 align-middle";
   </table>
 
   <p id="gw-empty" hidden class="px-3 py-8 text-center text-muted">
-    No gateways match your filters.
+    {T.empty}
   </p>
 </div>
 
-<MethodologyNote />
+<MethodologyNote bnm />
 
 <style>
+  /* the table scrolls inside its own box so the sideways scrollbar stays on screen
+     (macOS hides overlay scrollbars until you scroll, and the page bottom is 60 rows away) */
+  /* Chrome ignores ::-webkit-scrollbar once scrollbar-width/color is set, and the
+     standard properties keep macOS overlay (hidden) bars, so only Firefox gets them */
+  @supports not selector(::-webkit-scrollbar) {
+    .gw-scroll {
+      scrollbar-width: thin;
+      scrollbar-color: var(--color-muted) transparent;
+    }
+  }
+  .gw-scroll::-webkit-scrollbar {
+    height: 10px;
+    width: 10px;
+  }
+  .gw-scroll::-webkit-scrollbar-thumb {
+    background: #52525b;
+    border-radius: 999px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
+  .gw-scroll::-webkit-scrollbar-thumb:hover {
+    background-color: var(--color-muted);
+  }
+  .gw-scroll::-webkit-scrollbar-corner {
+    background: transparent;
+  }
   /* sort direction arrow driven by aria-sort on the parent <th> */
   th[aria-sort="ascending"] .sort-arrow::after {
     content: "↑";

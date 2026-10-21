@@ -2,7 +2,7 @@
 import "../styles/global.css";
 import { getCollection } from "astro:content";
 import { organizationLd } from "../lib/jsonld";
-import { pairFor } from "../lib/i18n-pages";
+import { getLocale, localizePath, stripLocale, tr } from "../i18n/locale";
 import { CLUSTERS, blogPath } from "../lib/blog";
 // preload the text face so the LCP headline doesn't wait on the CSS → font chain
 import interWoff2 from "@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url";
@@ -11,19 +11,95 @@ interface Props {
   title?: string;
   description?: string;
   full?: boolean; // full-bleed layout (index with sidebar)
-  lang?: "en" | "ms"; // BM pages under /ms/ set "ms" (spec 12 slice G)
   ogImage?: string; // site-relative 1200x630 social image (blog posts)
   ogImageAlt?: string;
 }
 
+const locale = getLocale(Astro);
+const T = tr(locale, {
+  en: {
+    title: "MPG · Malaysia Payment Gateways",
+    description:
+      "Compare fees and features of 70+ Malaysian payment gateways: FPX, cards, e-wallets, DuitNow QR and BNPL, sourced from official rate cards. Free and independent.",
+    logoAlt: "Malaysia Payment Gateway logo",
+    openMenu: "Open menu",
+    closeMenu: "Close menu",
+    siteMenu: "Site menu",
+    menu: "Menu",
+    langSwitch: "Language",
+    gateways: "Gateways",
+    compare: "Compare",
+    guides: "Guides",
+    learn: "Learn",
+    choose: "Help me choose",
+    calculator: "Fee calculator",
+    feeChanges: "Fee changes",
+    best: "Best gateways",
+    comparisons: "Comparisons",
+    api: "API & MCP",
+    contribute: "Contribute",
+    about: "About",
+    contact: "Contact",
+    privacy: "Privacy",
+    tools: "Tools",
+    site: "Site",
+    allGuides: "All guides",
+    spotted: "Spotted a fee change?",
+    spottedText: "Tell us and we will re-check it against the official source.",
+    reportChange: "Report a change",
+    blurb:
+      "An independent directory of Malaysian payment gateway fees, each one taken from the provider's official pricing page.",
+    verified: "Fees last verified",
+    github: "Open source on GitHub",
+    rights: "Malaysia Payment Gateway. Open source, open data.",
+    disclaimer: "Fees are indicative; always confirm with the provider. Not affiliated with any provider.",
+  },
+  ms: {
+    title: "MPG · Payment Gateway Malaysia",
+    description:
+      "Bandingkan fee dan ciri lebih 70 payment gateway Malaysia: FPX, kad, e-wallet, DuitNow QR dan BNPL. Semua kadar diambil dari senarai harga rasmi setiap gateway. Percuma, dan kami tiada kaitan dengan mana-mana gateway.",
+    logoAlt: "Logo Malaysia Payment Gateway",
+    openMenu: "Buka menu",
+    closeMenu: "Tutup menu",
+    siteMenu: "Menu laman",
+    menu: "Menu",
+    langSwitch: "Bahasa",
+    gateways: "Gateway",
+    compare: "Bandingkan",
+    guides: "Panduan",
+    learn: "Belajar",
+    choose: "Bantu saya pilih",
+    calculator: "Kalkulator fee",
+    feeChanges: "Perubahan fee",
+    best: "Gateway terbaik",
+    comparisons: "Perbandingan",
+    api: "API & MCP",
+    contribute: "Sumbang data",
+    about: "Tentang",
+    contact: "Hubungi",
+    privacy: "Privasi",
+    tools: "Alat",
+    site: "Laman",
+    allGuides: "Semua panduan",
+    spotted: "Nampak fee berubah?",
+    spottedText: "Beritahu kami, nanti kami semak semula dengan sumber rasmi.",
+    reportChange: "Lapor perubahan",
+    blurb:
+      "Senarai fee payment gateway Malaysia yang dibuat secara bebas. Setiap fee diambil dari laman harga rasmi gateway itu sendiri.",
+    verified: "Fee terakhir disemak",
+    github: "Kod terbuka di GitHub",
+    rights: "Malaysia Payment Gateway. Kod dan data terbuka untuk semua.",
+    disclaimer: "Fee di sini sebagai panduan sahaja, sila sahkan dengan gateway sebelum daftar. Kami tiada kaitan dengan mana-mana gateway.",
+  },
+});
 const {
-  title = "MPG · Malaysia Payment Gateways",
-  description = "Compare fees and features of 70+ Malaysian payment gateways: FPX, cards, e-wallets, DuitNow QR and BNPL, sourced from official rate cards. Free and independent.",
+  title = T.title,
+  description = T.description,
   full = false,
-  lang = "en",
   ogImage,
   ogImageAlt,
 } = Astro.props;
+const l = (path: string) => localizePath(path, locale);
 
 // footer date = most recent fee verification across the directory (data-true,
 // and Google reads it as the page's freshness signal)
@@ -34,25 +110,28 @@ const updated = (await getCollection("gateways"))
 
 // canonical: https + trailing slash, matching the sitemap's URL form exactly
 // (Google had picked the http:// duplicate of the homepage without this)
-const canonicalPath = Astro.url.pathname.endsWith("/")
-  ? Astro.url.pathname
-  : Astro.url.pathname + "/";
+// BM pages render from the English source, so Astro.url may lack the /ms prefix:
+// derive the shared path once, then each language's URL from it
+const basePath = stripLocale(
+  Astro.url.pathname.endsWith("/") ? Astro.url.pathname : Astro.url.pathname + "/",
+);
+const canonicalPath = localizePath(basePath, locale);
 const canonical = new URL(canonicalPath, Astro.site);
+const enUrl = new URL(basePath, Astro.site);
+const msUrl = new URL(localizePath(basePath, "ms"), Astro.site);
 
 // sitewide Organization entity (same @id as the homepage graph, so they merge);
 // the homepage already emits it inside its WebSite graph — skip the duplicate
 const orgLd =
   canonicalPath === "/" ? null : JSON.stringify(organizationLd(String(Astro.site ?? Astro.url.origin)));
 
-// reciprocal hreflang for the curated BM pairs (both sides, x-default = en)
-const i18nPair = pairFor(canonicalPath);
 
 // footer topic pillars (spec 15): only clusters whose pillar page has shipped
 const livePillars = CLUSTERS.filter((c) => c.live);
 ---
 
 <!doctype html>
-<html lang={lang}>
+<html lang={locale}>
   <head>
     <meta charset="utf-8" />
     <!-- ?v= busts sticky favicon caches; bump it when the brand mark changes -->
@@ -74,15 +153,15 @@ const livePillars = CLUSTERS.filter((c) => c.live);
     {ogImage && <meta property="og:image:height" content="630" />}
     {ogImage && ogImageAlt && <meta property="og:image:alt" content={ogImageAlt} />}
     {orgLd && <script is:inline type="application/ld+json" set:html={orgLd} />}
-    {
-      i18nPair && (
-        <>
-          <link rel="alternate" hreflang="en" href={new URL(i18nPair.en, Astro.site)} />
-          <link rel="alternate" hreflang="ms" href={new URL(i18nPair.ms, Astro.site)} />
-          <link rel="alternate" hreflang="x-default" href={new URL(i18nPair.en, Astro.site)} />
-        </>
-      )
-    }
+    {/* Microsoft Clarity (heatmaps + session replay); production only, disclosed on /privacy/ */}
+    {import.meta.env.PROD && (
+      <script is:inline set:html={`(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i+"?ref=bwt";y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","z0t04pywub");`} />
+    )}
+    <!-- every page exists in both languages: reciprocal hreflang, x-default = en -->
+    <link rel="alternate" hreflang="en" href={enUrl} />
+    <link rel="alternate" hreflang="ms" href={msUrl} />
+    <link rel="alternate" hreflang="x-default" href={enUrl} />
+    <meta property="og:locale" content={locale === "ms" ? "ms_MY" : "en_MY"} />
     <slot name="head" />
   </head>
   <body class="flex min-h-screen flex-col tabular-nums">
@@ -99,7 +178,7 @@ const livePillars = CLUSTERS.filter((c) => c.live);
         <button
           type="button"
           id="nav-open"
-          aria-label="Open menu"
+          aria-label={T.openMenu}
           aria-controls="nav-drawer"
           aria-expanded="false"
           class="-ml-2 mr-1 flex size-11 items-center justify-center rounded-md text-muted hover:bg-panel hover:text-fg sm:hidden"
@@ -108,17 +187,36 @@ const livePillars = CLUSTERS.filter((c) => c.live);
             <path d="M4 6h16M4 12h16M4 18h16"></path>
           </svg>
         </button>
-        <a href="/" class="flex items-center gap-2 font-semibold tracking-tight text-fg">
+        <a href={l("/")} class="flex items-center gap-2 font-semibold tracking-tight text-fg">
           <!-- dark theme uses the white mark; the coloured /logo.svg is reserved for the future light mode -->
-          <img src="/logo-white.svg" alt="Malaysia Payment Gateway logo" width="22" height="22" class="h-[22px] w-[22px] object-contain" />
+          <img src="/logo-white.svg" alt={T.logoAlt} width="22" height="22" class="h-[22px] w-[22px] object-contain" />
           <span class="sm:hidden">MPG</span>
           <span class="hidden sm:inline">Malaysia Payment Gateway</span>
         </a>
         <nav class="ml-auto flex items-center gap-2 text-sm">
-          <a href="/gateways/" class="hidden rounded-md px-2.5 py-1.5 text-muted hover:bg-panel hover:text-fg sm:inline-block">Gateways</a>
-          <a href="/compare/" class="hidden rounded-md px-2.5 py-1.5 text-muted hover:bg-panel hover:text-fg sm:inline-block">Compare</a>
-          <a href="/blog/" class="hidden rounded-md px-2.5 py-1.5 text-muted hover:bg-panel hover:text-fg sm:inline-block">Guides</a>
-          <a href="/learn/" class="hidden rounded-md px-2.5 py-1.5 text-muted hover:bg-panel hover:text-fg sm:inline-block">Learn</a>
+          <!-- language switch: same page in the other language; data-l10n="off" keeps the middleware off these links -->
+          <div role="group" aria-label={T.langSwitch} class="mr-1 flex items-center rounded-full border border-line p-0.5 text-xs font-medium">
+            <a
+              data-l10n="off"
+              href={enUrl.pathname}
+              hreflang="en"
+              lang="en"
+              aria-current={locale === "en" ? "true" : undefined}
+              class={`rounded-full px-2.5 py-1 ${locale === "en" ? "bg-raised text-fg" : "text-muted hover:text-fg"}`}
+            >EN</a>
+            <a
+              data-l10n="off"
+              href={msUrl.pathname}
+              hreflang="ms"
+              lang="ms"
+              aria-current={locale === "ms" ? "true" : undefined}
+              class={`rounded-full px-2.5 py-1 ${locale === "ms" ? "bg-raised text-fg" : "text-muted hover:text-fg"}`}
+            >BM</a>
+          </div>
+          <a href={l("/gateways/")} class="hidden rounded-md px-2.5 py-1.5 text-muted hover:bg-panel hover:text-fg sm:inline-block">{T.gateways}</a>
+          <a href={l("/compare/")} class="hidden rounded-md px-2.5 py-1.5 text-muted hover:bg-panel hover:text-fg sm:inline-block">{T.compare}</a>
+          <a href={l("/blog/")} class="hidden rounded-md px-2.5 py-1.5 text-muted hover:bg-panel hover:text-fg sm:inline-block">{T.guides}</a>
+          <a href={l("/learn/")} class="hidden rounded-md px-2.5 py-1.5 text-muted hover:bg-panel hover:text-fg sm:inline-block">{T.learn}</a>
           <div id="clerk-auth" class="flex items-center gap-2"></div>
         </nav>
       </div>
@@ -129,17 +227,17 @@ const livePillars = CLUSTERS.filter((c) => c.live);
     <aside
       id="nav-drawer"
       class="fixed inset-y-0 left-0 z-40 w-80 max-w-[85vw] -translate-x-full overflow-y-auto border-r border-line bg-surface px-4 py-4 transition-transform duration-200 data-[open]:translate-x-0 motion-reduce:transition-none sm:hidden"
-      aria-label="Site menu"
+      aria-label={T.siteMenu}
     >
       <div class="mb-3 flex items-center justify-between">
         <span class="flex items-center gap-2 font-semibold text-fg">
-          <img src="/logo-white.svg" alt="Malaysia Payment Gateway logo" width="20" height="20" class="h-5 w-5 object-contain" />
-          Menu
+          <img src="/logo-white.svg" alt={T.logoAlt} width="20" height="20" class="h-5 w-5 object-contain" />
+          {T.menu}
         </span>
         <button
           type="button"
           id="nav-close"
-          aria-label="Close menu"
+          aria-label={T.closeMenu}
           class="flex size-11 items-center justify-center rounded-md text-muted hover:bg-panel hover:text-fg"
         >
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="size-5" aria-hidden="true">
@@ -150,21 +248,21 @@ const livePillars = CLUSTERS.filter((c) => c.live);
       <nav class="flex flex-col text-sm" aria-label="Mobile">
         {
           [
-            { href: "/gateways/", label: "Gateways" },
-            { href: "/compare/", label: "Compare" },
-            { href: "/choose/", label: "Help me choose" },
-            { href: "/calculator/", label: "Fee calculator" },
-            { href: "/fee-changes/", label: "Fee changes" },
-            { href: "/best/payment-gateway-malaysia/", label: "Best gateways" },
-            { href: "/vs/", label: "Comparisons" },
-            { href: "/blog/", label: "Guides" },
-            { href: "/learn/", label: "Learn" },
-            { href: "/learn/api/", label: "API & MCP" },
-            { href: "/contribute/", label: "Contribute" },
-            { href: "/about/", label: "About" },
-          ].map((l) => (
-            <a href={l.href} class="rounded-md px-2 py-3 text-fg hover:bg-panel">
-              {l.label}
+            { href: "/gateways/", label: T.gateways },
+            { href: "/compare/", label: T.compare },
+            { href: "/choose/", label: T.choose },
+            { href: "/calculator/", label: T.calculator },
+            { href: "/fee-changes/", label: T.feeChanges },
+            { href: "/best/payment-gateway-malaysia/", label: T.best },
+            { href: "/vs/", label: T.comparisons },
+            { href: "/blog/", label: T.guides },
+            { href: "/learn/", label: T.learn },
+            { href: "/learn/api/", label: T.api },
+            { href: "/contribute/", label: T.contribute },
+            { href: "/about/", label: T.about },
+          ].map((n) => (
+            <a href={l(n.href)} class="rounded-md px-2 py-3 text-fg hover:bg-panel">
+              {n.label}
             </a>
           ))
         }
@@ -188,73 +286,72 @@ const livePillars = CLUSTERS.filter((c) => c.live);
       <div class="relative mx-auto w-full max-w-6xl px-4 pt-10 sm:px-6">
         <div class="flex flex-col gap-3 rounded-lg border border-line bg-panel px-5 py-3 sm:flex-row sm:items-center sm:justify-between">
           <p class="text-sm text-muted">
-            <span class="font-medium text-white">Spotted a fee change?</span> Tell us and we will re-check it against the official source.
+            <span class="font-medium text-white">{T.spotted}</span> {T.spottedText}
           </p>
-          <a href="/contribute/" class="inline-flex h-8 shrink-0 items-center self-start rounded-md bg-brand-blue px-4 text-xs font-medium text-white hover:opacity-90 sm:self-auto">Report a change</a>
+          <a href={l("/contribute/")} class="inline-flex h-8 shrink-0 items-center self-start rounded-md bg-brand-blue px-4 text-xs font-medium text-white hover:opacity-90 sm:self-auto">{T.reportChange}</a>
         </div>
       </div>
       <div class="relative mx-auto grid w-full max-w-6xl gap-10 px-4 py-12 sm:px-6 md:grid-cols-[1.4fr_2fr]">
         <div class="max-w-xs">
-          <a href="/" class="flex items-center gap-2 font-semibold text-white">
+          <a href={l("/")} class="flex items-center gap-2 font-semibold text-white">
             <img src="/logo-white.svg" alt="" width="22" height="22" class="h-[22px] w-[22px] object-contain" />
             Malaysia Payment Gateway
           </a>
           <p class="mt-3 text-sm leading-relaxed text-muted">
-            An independent directory of Malaysian payment gateway fees, each one taken from the provider's official pricing page.
+            {T.blurb}
           </p>
           <p class="mt-5 flex items-center gap-2 text-xs text-muted">
             <span class="size-1.5 rounded-full bg-emerald-400" aria-hidden="true"></span>
-            Fees last verified {updated}
+            {T.verified} {updated}
           </p>
           <a href="https://github.com/afu-it/mpg" target="_blank" rel="noopener noreferrer" class="mt-4 inline-flex items-center gap-2 rounded-md border border-line px-3 py-1.5 text-xs text-fg hover:border-accent">
             <svg viewBox="0 0 16 16" class="size-3.5" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" /></svg>
-            Open source on GitHub
+            {T.github}
           </a>
         </div>
         <div class="grid grid-cols-2 gap-8 text-sm sm:grid-cols-3">
           <div>
-            <p class="mb-3 text-xs font-medium uppercase tracking-wider text-white">Tools</p>
+            <p class="mb-3 text-xs font-medium uppercase tracking-wider text-white">{T.tools}</p>
             <ul class="space-y-2 text-muted">
-              <li><a href="/choose/" class="hover:text-white">Help me choose</a></li>
-              <li><a href="/calculator/" class="hover:text-white">Fee calculator</a></li>
-              <li><a href="/best/payment-gateway-malaysia/" class="hover:text-white">Best gateways</a></li>
-              <li><a href="/vs/" class="hover:text-white">Comparisons</a></li>
-              <li><a href="/fee-changes/" class="hover:text-white">Fee changes</a></li>
+              <li><a href={l("/choose/")} class="hover:text-white">{T.choose}</a></li>
+              <li><a href={l("/calculator/")} class="hover:text-white">{T.calculator}</a></li>
+              <li><a href={l("/best/payment-gateway-malaysia/")} class="hover:text-white">{T.best}</a></li>
+              <li><a href={l("/vs/")} class="hover:text-white">{T.comparisons}</a></li>
+              <li><a href={l("/fee-changes/")} class="hover:text-white">{T.feeChanges}</a></li>
             </ul>
           </div>
           <div>
-            <p class="mb-3 text-xs font-medium uppercase tracking-wider text-white">Guides</p>
+            <p class="mb-3 text-xs font-medium uppercase tracking-wider text-white">{T.guides}</p>
             <ul class="space-y-2 text-muted">
-              <li><a href="/blog/" class="hover:text-white">All guides</a></li>
+              <li><a href={l("/blog/")} class="hover:text-white">{T.allGuides}</a></li>
               {
                 livePillars.map((c) => (
                   <li>
-                    <a href={blogPath(c.slug)} class="hover:text-white">
-                      {c.name}
+                    <a href={l(blogPath(c.slug))} class="hover:text-white">
+                      {locale === "ms" ? c.nameMs : c.name}
                     </a>
                   </li>
                 ))
               }
-              <li><a href="/learn/" class="hover:text-white">Learn</a></li>
-              <li><a href="/learn/api/" class="hover:text-white">API &amp; MCP</a></li>
+              <li><a href={l("/learn/")} class="hover:text-white">{T.learn}</a></li>
+              <li><a href={l("/learn/api/")} class="hover:text-white">{T.api}</a></li>
             </ul>
           </div>
           <div>
-            <p class="mb-3 text-xs font-medium uppercase tracking-wider text-white">Site</p>
+            <p class="mb-3 text-xs font-medium uppercase tracking-wider text-white">{T.site}</p>
             <ul class="space-y-2 text-muted">
-              <li><a href="/about/" class="hover:text-white">About</a></li>
-              <li><a href="/contact/" class="hover:text-white">Contact</a></li>
-              <li><a href="/contribute/" class="hover:text-white">Contribute</a></li>
-              <li><a href="/ms/" class="hover:text-white" hreflang="ms" lang="ms">Bahasa Malaysia</a></li>
-              <li><a href="/privacy/" class="hover:text-white">Privacy</a></li>
+              <li><a href={l("/about/")} class="hover:text-white">{T.about}</a></li>
+              <li><a href={l("/contact/")} class="hover:text-white">{T.contact}</a></li>
+              <li><a href={l("/contribute/")} class="hover:text-white">{T.contribute}</a></li>
+              <li><a href={l("/privacy/")} class="hover:text-white">{T.privacy}</a></li>
             </ul>
           </div>
         </div>
       </div>
       <div class="relative border-t border-line">
         <div class="mx-auto flex w-full max-w-6xl flex-col gap-2 px-4 py-5 text-xs text-muted sm:flex-row sm:justify-between sm:px-6">
-          <span>© {new Date().getFullYear()} Malaysia Payment Gateway. Open source, open data.</span>
-          <span>Fees are indicative; always confirm with the provider. Not affiliated with any provider.</span>
+          <span>© {new Date().getFullYear()} {T.rights}</span>
+          <span>{T.disclaimer}</span>
         </div>
       </div>
     </footer>

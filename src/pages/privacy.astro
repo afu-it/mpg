@@ -4,90 +4,162 @@ export const prerender = true;
 import Base from "../layouts/Base.astro";
 import { breadcrumbLd } from "../lib/jsonld";
 
+import { getLocale, tr, formatDate } from "../i18n/locale";
+
+const locale = getLocale(Astro);
+const T = tr(locale, {
+  en: {
+    home: "Home",
+    crumb: "Privacy",
+    title: "Privacy policy · Malaysia Payment Gateway (MPG)",
+    description:
+      "What data MPG collects: Cloudflare page counts, Microsoft Clarity heatmaps and session replays, optional Clerk sign-in. No ads and no selling of data.",
+    h1: "Privacy",
+    lead: "You can use the whole site without an account. We collect as little as we can.",
+    effective: "Effective",
+    collectH: "What we collect",
+    collect: [
+      {
+        title: "Anonymous page views",
+        desc: "Cloudflare Web Analytics. No cookies, no fingerprinting. We see totals, not people.",
+      },
+      {
+        title: "How the site is used",
+        desc: "Microsoft Clarity records clicks, scrolling and mouse movement as heatmaps and session replays, so we can see which parts confuse people. It sets cookies and hides what you type.",
+      },
+      {
+        title: "Your account, if you sign up",
+        desc: "Clerk handles sign-in and keeps your email (and name and photo with Google sign-in). Only used to identify contributors.",
+      },
+      {
+        title: "Emails you send us",
+        desc: "The contribute form opens your own mail app. Kept only to manage contributions.",
+      },
+    ],
+    neverH: "What we never do",
+    never: ["Ads", "Selling your data", "Recording what you type into forms"],
+    whoH: "Who else is involved",
+    who1: "Cloudflare hosts the site and counts page views. Microsoft runs Clarity.",
+    who2: "runs sign-in. Each follows its own privacy policy.",
+    otherH: "Other websites",
+    other: "Gateway pages link to provider sites. Their privacy rules are their own.",
+    yoursH: "Your data, your call",
+    yours: "To see or delete what we hold about you,",
+    contactUs: "contact us",
+  },
+  ms: {
+    home: "Utama",
+    crumb: "Privasi",
+    title: "Dasar privasi · Malaysia Payment Gateway (MPG)",
+    description:
+      "Data apa yang MPG kumpul: kiraan pelawat Cloudflare, heatmap dan rakaman sesi Microsoft Clarity, daftar masuk Clerk jika anda mahu. Tiada iklan dan data tidak dijual.",
+    h1: "Privasi",
+    lead: "Anda boleh guna seluruh laman ini tanpa akaun. Kami kumpul data sesedikit yang boleh.",
+    effective: "Berkuat kuasa",
+    collectH: "Apa yang kami kumpul",
+    collect: [
+      {
+        title: "Kiraan pelawat tanpa nama",
+        desc: "Cloudflare Web Analytics. Tiada cookie, tiada pengecaman peranti. Kami nampak jumlah sahaja, bukan siapa orangnya.",
+      },
+      {
+        title: "Cara orang guna laman ini",
+        desc: "Microsoft Clarity rakam klik, scroll dan gerak tetikus sebagai heatmap dan rakaman sesi, supaya kami nampak bahagian mana yang mengelirukan. Clarity letak cookie dan sembunyikan apa yang anda taip.",
+      },
+      {
+        title: "Akaun anda, jika anda daftar",
+        desc: "Clerk uruskan daftar masuk dan simpan email anda (serta nama dan gambar jika guna Google). Hanya untuk kenal pasti penyumbang.",
+      },
+      {
+        title: "Email yang anda hantar",
+        desc: "Borang sumbangan buka app email anda sendiri. Disimpan hanya untuk urus sumbangan.",
+      },
+    ],
+    neverH: "Apa yang kami tak akan buat",
+    never: ["Iklan", "Jual data anda", "Rakam apa yang anda taip dalam borang"],
+    whoH: "Pihak lain yang terlibat",
+    who1: "Cloudflare host laman ini dan kira pelawat. Microsoft jalankan Clarity.",
+    who2: "uruskan daftar masuk. Setiap satu ikut dasar privasi masing-masing.",
+    otherH: "Laman web lain",
+    other: "Halaman gateway ada link ke laman rasmi gateway. Laman itu ikut dasar privasi mereka sendiri.",
+    yoursH: "Data anda, keputusan anda",
+    yours: "Untuk lihat atau padam data anda yang kami simpan,",
+    contactUs: "hubungi kami",
+  },
+});
+
 const crumbLd = breadcrumbLd(String(Astro.site ?? "https://malaysiapg.com.my/"), [
-  { name: "Home", path: "/" },
-  { name: "Privacy" },
+  { name: T.home, path: "/" },
+  { name: T.crumb },
 ]);
-const effective = "2026-07-03";
+const effective = "2026-10-21";
+const effectiveShown = locale === "ms" ? formatDate(effective, locale) : effective;
+
+const collect = T.collect;
+const never = T.never;
 ---
 
 <Base
-  title="Privacy policy · Malaysia Payment Gateway (MPG)"
-  description="What data MPG collects and does not collect: cookieless Cloudflare analytics, optional Clerk sign-in, no ads, no tracking pixels and no selling of data."
+  title={T.title}
+  description={T.description}
 >
   <script is:inline type="application/ld+json" set:html={JSON.stringify(crumbLd)} />
-  <nav aria-label="Breadcrumb" class="mb-4 flex items-center gap-2 text-sm text-muted">
-    <a href="/" class="hover:text-fg hover:underline">Home</a>
-    <span aria-hidden="true">/</span>
-    <span class="text-fg">Privacy</span>
-  </nav>
 
-  <div class="mx-auto max-w-2xl">
-    <h1 class="text-2xl font-semibold tracking-tight text-fg">Privacy policy</h1>
-    <p class="mt-2 text-sm text-muted">Effective {effective}</p>
-    <p class="mt-3 text-muted">
-      MPG is a static comparison directory. You can read everything on this site
-      without an account, and we collect as little as the site can function with.
-    </p>
+  <header class="max-w-2xl">
+    <h1 class="text-3xl font-bold tracking-tight text-fg sm:text-4xl">{T.h1}</h1>
+    <p class="mt-2 text-muted">{T.lead}</p>
+    <p class="mt-1 text-xs text-muted">{T.effective} {effectiveShown}</p>
+  </header>
 
-    <section class="mt-8">
-      <h2 class="text-lg font-semibold text-fg">What we collect</h2>
-      <ul class="mt-3 list-disc space-y-2 pl-5 text-muted">
-        <li>
-          <span class="text-fg">Anonymous usage analytics.</span> We use Cloudflare
-          Web Analytics, which is cookieless and does not fingerprint or track you
-          across sites. We see aggregate page views, not individuals.
-        </li>
-        <li>
-          <span class="text-fg">Account details, only if you sign up.</span> Sign-in
-          is handled by Clerk. If you create an account (needed only for the
-          contribute application), Clerk processes your email address and, if you
-          use Google sign-in, your name and profile picture. We use this solely to
-          identify contributors.
-        </li>
-        <li>
-          <span class="text-fg">Email you send us.</span> The contribute form opens
-          your own mail app; the application arrives as a normal email and is kept
-          only for managing contributions.
-        </li>
-      </ul>
-    </section>
+  <section class="mt-8">
+    <h2 class="text-xs font-medium uppercase tracking-widest text-muted">{T.collectH}</h2>
+    <div class="mt-3 grid gap-3 md:grid-cols-3">
+      {
+        collect.map((c) => (
+          <div class="rounded-xl border border-line bg-panel p-5">
+            <h3 class="font-semibold text-fg">{c.title}</h3>
+            <p class="mt-1 text-sm text-muted">{c.desc}</p>
+          </div>
+        ))
+      }
+    </div>
+  </section>
 
-    <section class="mt-8">
-      <h2 class="text-lg font-semibold text-fg">What we do not do</h2>
-      <ul class="mt-3 list-disc space-y-2 pl-5 text-muted">
-        <li>No advertising, ad networks or tracking pixels.</li>
-        <li>No selling or sharing of personal data with third parties.</li>
-        <li>No cookies set by MPG itself; only Clerk sets cookies, and only to keep you signed in.</li>
-      </ul>
-    </section>
+  <section class="mt-10">
+    <h2 class="text-xs font-medium uppercase tracking-widest text-muted">{T.neverH}</h2>
+    <ul class="mt-3 grid gap-3 md:grid-cols-3">
+      {
+        never.map((n) => (
+          <li class="flex items-start gap-2 rounded-xl border border-line bg-panel p-5 text-sm text-fg">
+            <span class="text-muted" aria-hidden="true">✕</span>
+            {n}
+          </li>
+        ))
+      }
+    </ul>
+  </section>
 
-    <section class="mt-8">
-      <h2 class="text-lg font-semibold text-fg">Service providers</h2>
-      <p class="mt-3 text-muted">
-        The site is served by Cloudflare Pages (hosting and CDN) and Cloudflare Web
-        Analytics. Authentication is provided by{" "}
-        <a href="https://clerk.com/legal/privacy" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">Clerk</a>.
-        Each processes data under its own privacy policy.
+  <section class="mt-10 grid gap-6 md:grid-cols-3">
+    <div>
+      <h2 class="font-semibold text-fg">{T.whoH}</h2>
+      <p class="mt-1 text-sm text-muted">
+        {T.who1}{" "}
+        <a href="https://clerk.com/legal/privacy" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">Clerk</a>{" "}
+        {T.who2}
       </p>
-    </section>
-
-    <section class="mt-8">
-      <h2 class="text-lg font-semibold text-fg">External links</h2>
-      <p class="mt-3 text-muted">
-        Gateway entries link to provider websites and official rate cards. Those
-        sites have their own privacy practices, which we do not control.
+    </div>
+    <div>
+      <h2 class="font-semibold text-fg">{T.otherH}</h2>
+      <p class="mt-1 text-sm text-muted">
+        {T.other}
       </p>
-    </section>
-
-    <section class="mt-8">
-      <h2 class="text-lg font-semibold text-fg">Your choices</h2>
-      <p class="mt-3 text-muted">
-        You can browse without signing in. To delete an account or ask what is
-        held about you, reach us via the{" "}
-        <a href="/about/#contact" class="text-accent hover:underline">contact section on the About page</a>{" "}
-        and we will handle it promptly.
+    </div>
+    <div>
+      <h2 class="font-semibold text-fg">{T.yoursH}</h2>
+      <p class="mt-1 text-sm text-muted">
+        {T.yours}{" "}
+        <a href="/contact/" class="text-accent hover:underline">{T.contactUs}</a>.
       </p>
-    </section>
-  </div>
+    </div>
+  </section>
 </Base>

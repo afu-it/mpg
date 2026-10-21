@@ -62,6 +62,11 @@ plans:
     source: "https://senangpay.com/pricing/"
 verified_date: "2026-10-20"
 source: "https://senangpay.com/pricing/"
+bnm:
+  roles: [merchant-acquirer, emoney-issuer]
+  entity: "Simplepay Gateway Sdn Bhd"
+  checked: "2026-10-21"
+  evidence: "https://senangpay.com/privacy-policy/"
 notes: "Official pricing: FPX RM1 or 1.5% whichever higher; local cards RM0.65 or 2.5%; e-wallets RM0.65 or 1.5%; BNPL SPayLater 2.0% / Atome 5.5% / PayLater by Grab 6.0%. Plans: Starter RM199/yr, Advance RM349/yr, Enterprise custom (promo prices run seasonally). Foreign-card rates and any setup fee are quoted per package; settlement timing not published (faster settlement is an Enterprise perk). Re-verified 2026-10-20: rates unchanged; the pricing page says JCB cards and Boost/ShopBack are not yet available on the new senangPay-DOKU platform (to be added later), and the Raya RAMADAN26 promo banner is still shown."
 ---
 

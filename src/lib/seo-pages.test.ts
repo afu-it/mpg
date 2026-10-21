@@ -71,6 +71,19 @@ describe("PROFILES registry", () => {
       for (const s of [p.h1, p.title, p.description, p.intro, p.faqNoun]) expect(s).not.toMatch(/[—–]/);
   });
 
+  it("carries complete Bahasa Malaysia copy inside the SERP windows", () => {
+    for (const p of PROFILES) {
+      for (const s of [p.ms.h1, p.ms.title, p.ms.description, p.ms.intro, p.ms.faqNoun]) {
+        expect(s.length, p.slug).toBeGreaterThan(0);
+        expect(s, p.slug).not.toMatch(/[—–]/);
+      }
+      expect(p.ms.title.length, p.slug).toBeGreaterThanOrEqual(30);
+      expect(p.ms.title.length, p.slug).toBeLessThanOrEqual(65);
+      expect(p.ms.description.length, p.slug).toBeGreaterThanOrEqual(110);
+      expect(p.ms.description.length, p.slug).toBeLessThanOrEqual(160);
+    }
+  });
+
   it("profilePath builds the /best/ url with a trailing slash", () => {
     expect(profilePath("payment-gateway-fpx")).toBe("/best/payment-gateway-fpx/");
   });
@@ -301,5 +314,49 @@ describe("alternativesTargets + buildAlternativesPage", () => {
     expect(list["@type"]).toBe("ItemList");
     expect(list.itemListElement[0].url).toMatch(/\/$/);
     expect(faq["@type"]).toBe("FAQPage");
+  });
+});
+
+describe("buildProfilePage data-built answers (SEO round 2026-10)", () => {
+  const fees = (fpx: string, card: string, ewallet: string, duitnowqr?: string) => ({ fpx, card, ewallet, duitnowqr });
+  const flat = gw({ slug: "flat", channels: ["fpx", "card", "ewallet"], fees: fees("RM1.00", "1.5%", "1.5%"), est_fee_rm100: 1.25, features: allFeatures });
+  const pctGw = gw({ slug: "pct", channels: ["fpx", "card", "ewallet"], fees: fees("0.5%", "1.6%", "1.6%"), est_fee_rm100: 1.05, features: allFeatures });
+  const qrBank = gw({ slug: "qrbank", category: "bank", channels: ["duitnowqr"], fees: { duitnowqr: "RM0" } });
+  const pool = [flat, pctGw, qrBank, infra];
+  const cheapest = PROFILES.find((p) => p.slug === "cheapest-payment-gateway-malaysia")!;
+
+  it("generic page lists a top pick per need, and keeps the how-to-choose FAQ first", () => {
+    const page = buildProfilePage(pool, PROFILES[0]);
+    expect(page.byNeed.length).toBeGreaterThan(0);
+    expect(page.byNeed.every((b) => b.top.rankable)).toBe(true);
+    expect(page.faqs[0].q).toContain("How do I choose");
+  });
+
+  it("cheapest page costs the same rates at each sale size", () => {
+    const page = buildProfilePage(pool, cheapest);
+    expect(page.byTicket.map((b) => b.ticket)).toEqual([20, 100, 500]);
+    // RM100 always agrees with the ranked list
+    expect(page.byTicket[1].top.slug).toBe(page.ranked[0].gateway.slug);
+    // a flat RM1 FPX fee loses to 0.5% on RM20 (RM0.10) and wins on RM500 (RM2.50)
+    expect(page.byTicket[0].top.slug).toBe("pct");
+    expect(page.byTicket[2].top.slug).toBe("flat");
+  });
+
+  it("cheapest page meta names the top pick inside the SERP window", () => {
+    for (const locale of ["en", "ms"] as const) {
+      const page = buildProfilePage(pool, cheapest, 8, undefined, locale);
+      expect(page.description).toContain("pct");
+      expect(page.description.length).toBeGreaterThanOrEqual(110);
+      expect(page.description.length).toBeLessThanOrEqual(160);
+    }
+    // profiles without answerMeta keep their static copy
+    expect(buildProfilePage(pool, PROFILES[0]).description).toBe(PROFILES[0].description);
+  });
+
+  it("QR FAQ quotes only published DuitNow QR rates, and says who is outside the list", () => {
+    const def = PROFILES.find((p) => p.slug === "payment-gateway-physical-store")!;
+    const faq = buildProfilePage(pool, def).faqs.find((f) => f.q.includes("DuitNow QR"))!;
+    expect(faq.a).toContain("qrbank (RM0)");
+    expect(faq.a).toContain("not in the list above");
   });
 });

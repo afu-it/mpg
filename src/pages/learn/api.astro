@@ -3,8 +3,111 @@ export const prerender = true;
 
 import { getCollection } from "astro:content";
 import Base from "../../layouts/Base.astro";
+import { getLocale, tr } from "../../i18n/locale";
 
 const BASE = "https://malaysiapg.com.my";
+const MCP_URL = "https://mcp.malaysiapg.com.my/mcp";
+const locale = getLocale(Astro);
+const T = tr(locale, {
+  en: {
+    title: "Data API: query Malaysian payment gateways as JSON | MPG",
+    description:
+      "Free static JSON API for the MPG directory: every Malaysian payment gateway with fees, estimated cost, channels, features and developer-experience data.",
+    lead: "Every Malaysian gateway and its fees, as data. Free to use.",
+    copy: "Copy",
+    endpoints: "Endpoints",
+    allCheapest: "All gateways, cheapest first",
+    oneGateway: "One gateway",
+    open: "Open →",
+    example: "Example →",
+    mcpServer: "MCP server (Streamable HTTP)",
+    more: "More",
+    codeExamples: "Code examples (jq, JavaScript)",
+    allFields: (n: number) => `All fields (${n})`,
+    footPre: "Fees change and some are estimates, so confirm with the provider before you rely on one.",
+    footGuide: "Guide for AI tools:",
+    footLink: "Build with AI agents",
+    ldDatasetName: "Malaysian payment gateway fees and features",
+    ldDatasetDesc:
+      "Fees (FPX, card, e-wallet, DuitNow QR, BNPL), settlement times, supported channels and developer-experience data for Malaysian payment providers, verified against official pricing pages. Each record carries a verified_date and source URL.",
+    ldApiDesc: "Free static JSON API over the MPG directory: all gateways, or one gateway by slug.",
+    fields: [
+      { name: "slug", desc: "Stable id. Matches /gateway/<slug>." },
+      { name: "name, tagline, website, category", desc: "category: gateway | bank | ewallet | bnpl | infrastructure." },
+      { name: "access", desc: "How a merchant signs up: integrate | account | infrastructure." },
+      { name: "fees", desc: "Published fee per channel. A trailing * means third-party figure." },
+      { name: "est_fee_rm100", desc: "Est. cost of a RM100 sale (FPX/card/e-wallet 50/30/20). null if unpublished." },
+      { name: "rankable", desc: "false = pricing on request." },
+      { name: "channels, features, methods, banks", desc: "Payment rails, no_code/api/recurring flags, e-wallets, FPX banks." },
+      { name: "mcp, webhooks, plugins, dev_docs, skill", desc: "Developer support and the matching setup skill." },
+      { name: "popularity", desc: "Editorial score 0-100. An estimate." },
+      { name: "verified_date, source", desc: "When and where the fees were checked." },
+    ],
+    quickstart: [
+      {
+        title: "For AI agents",
+        sub: "Claude Code, Cursor, Codex",
+        cmd: `claude mcp add --transport http mpg ${MCP_URL}`,
+        note: "Then ask: \"cheapest gateway for FPX + recurring?\"",
+      },
+      {
+        title: "For your code",
+        sub: "Free JSON, no API key",
+        cmd: `curl -s ${BASE}/api/gateways.json`,
+        note: "Rebuilt on every update, so it always matches the site.",
+      },
+    ],
+  },
+  ms: {
+    title: "API data: semak payment gateway Malaysia dalam JSON | MPG",
+    description:
+      "API JSON percuma untuk direktori MPG: setiap payment gateway Malaysia dengan fee, anggaran caj, saluran bayaran, ciri dan maklumat untuk developer.",
+    lead: "Semua gateway Malaysia dan fee mereka, dalam bentuk data yang program komputer boleh baca. Percuma.",
+    copy: "Salin",
+    endpoints: "Endpoint",
+    allCheapest: "Semua gateway, paling murah dahulu",
+    oneGateway: "Satu gateway",
+    open: "Buka →",
+    example: "Contoh →",
+    mcpServer: "Server MCP (Streamable HTTP)",
+    more: "Lagi",
+    codeExamples: "Contoh kod (jq, JavaScript)",
+    allFields: (n: number) => `Semua medan (${n})`,
+    footPre: "Fee boleh berubah dan ada yang cuma anggaran. Semak dengan gateway itu dulu sebelum anda bergantung pada angka ini.",
+    footGuide: "Panduan untuk alat AI:",
+    footLink: "Bina dengan AI agent",
+    ldDatasetName: "Fee dan ciri payment gateway Malaysia",
+    ldDatasetDesc:
+      "Fee (FPX, kad, e-wallet, DuitNow QR, BNPL), tempoh duit masuk, saluran bayaran dan maklumat untuk developer bagi payment gateway Malaysia, disemak dengan halaman harga rasmi. Setiap rekod ada verified_date dan URL sumber.",
+    ldApiDesc: "API JSON statik percuma untuk direktori MPG: semua gateway, atau satu gateway ikut slug.",
+    fields: [
+      { name: "slug", desc: "Id tetap. Sama dengan /gateway/<slug>." },
+      { name: "name, tagline, website, category", desc: "category: gateway | bank | ewallet | bnpl | infrastructure." },
+      { name: "access", desc: "Cara peniaga mendaftar: integrate | account | infrastructure." },
+      { name: "fees", desc: "Fee yang disiarkan untuk setiap cara bayar. Tanda * di hujung maksudnya angka dari pihak ketiga." },
+      { name: "est_fee_rm100", desc: "Anggaran caj untuk jualan RM100 (FPX/kad/e-wallet 50/30/20). null kalau kadar tak disiarkan." },
+      { name: "rankable", desc: "false = Hubungi jualan (harga tak disiarkan)." },
+      { name: "channels, features, methods, banks", desc: "Saluran bayaran, tanda no_code/api/recurring, e-wallet, bank FPX." },
+      { name: "mcp, webhooks, plugins, dev_docs, skill", desc: "Sokongan untuk developer dan setup skill yang sepadan." },
+      { name: "popularity", desc: "Skor pilihan editor 0-100. Cuma anggaran." },
+      { name: "verified_date, source", desc: "Bila dan di mana fee disemak." },
+    ],
+    quickstart: [
+      {
+        title: "Untuk AI agent",
+        sub: "Claude Code, Cursor, Codex",
+        cmd: `claude mcp add --transport http mpg ${MCP_URL}`,
+        note: "Kemudian tanya: \"gateway paling murah untuk FPX + caj berulang?\"",
+      },
+      {
+        title: "Untuk kod anda",
+        sub: "JSON percuma, tanpa API key",
+        cmd: `curl -s ${BASE}/api/gateways.json`,
+        note: "Dikemas kini setiap kali laman ini berubah, jadi datanya sentiasa sama.",
+      },
+    ],
+  },
+});
 
 // Dataset + WebAPI JSON-LD: makes the directory eligible for Google Dataset
 // Search and describes the JSON endpoints to machine readers (spec 12).
@@ -18,9 +121,8 @@ const datasetLd = JSON.stringify({
     {
       "@type": "Dataset",
       "@id": `${BASE}/learn/api/#dataset`,
-      name: "Malaysian payment gateway fees and features",
-      description:
-        "Fees (FPX, card, e-wallet, DuitNow QR, BNPL), settlement times, supported channels and developer-experience data for Malaysian payment providers, verified against official pricing pages. Each record carries a verified_date and source URL.",
+      name: T.ldDatasetName,
+      description: T.ldDatasetDesc,
       url: `${BASE}/learn/api/`,
       license: "https://creativecommons.org/licenses/by/4.0/",
       sameAs: "https://github.com/afu-it/mpg",
@@ -40,136 +142,143 @@ const datasetLd = JSON.stringify({
       "@type": "WebAPI",
       "@id": `${BASE}/learn/api/#webapi`,
       name: "MPG Data API",
-      description:
-        "Free static JSON API over the MPG directory: all gateways, or one gateway by slug.",
+      description: T.ldApiDesc,
       documentation: `${BASE}/learn/api/`,
       provider: { "@id": `${BASE}/#organization` },
     },
   ],
 });
 
-const fields = [
-  { name: "slug", desc: "Stable id, matches /gateway/<slug> and the per-gateway endpoint." },
-  { name: "name, tagline, website, category", desc: "Display basics. category = gateway | bank | ewallet | bnpl | infrastructure." },
-  { name: "access", desc: "{ key, short } — how a merchant onboards: integrate | account | infrastructure." },
-  { name: "fees", desc: "Raw published fee strings per channel (fpx, card, card_intl, ewallet, duitnowqr, bnpl, setup, monthly). A trailing ' *' means third-party/indicative." },
-  { name: "est_fee_rm100", desc: "Blended effective cost (RM) on a RM100 sale, FPX/card/e-wallet weighted 50/30/20. null when the gateway has no comparable published rates." },
-  { name: "rankable", desc: "true when est_fee_rm100 is comparable; false gateways are 'pricing on request'." },
-  { name: "channels, features, methods, banks", desc: "Supported rails, capability flags (no_code/api/recurring), e-wallets, and FPX banks." },
-  { name: "mcp, webhooks, plugins, dev_docs, skill", desc: "Developer experience: AI-agent MCP support, webhooks, CMS plugins, API docs, and the matching setup-* skill." },
-  { name: "popularity", desc: "Editorial market-presence score (0-100). Estimate, not a measured metric." },
-  { name: "verified_date, source", desc: "When the fees were last checked, and where they came from. Always reconfirm before relying on them." },
-];
+const { fields, quickstart } = T;
+const mcpTools = ["list_gateways", "get_gateway", "compare_gateways", "recommend_gateway"];
 ---
 
 <Base
-  title="Data API: query Malaysian payment gateways as JSON | MPG"
-  description="Free static JSON API for the MPG directory: every Malaysian payment gateway with fees, estimated cost, channels, features and developer-experience data."
+  title={T.title}
+  description={T.description}
 >
   <script is:inline type="application/ld+json" set:html={datasetLd} />
   <header class="max-w-2xl">
-    <h1 class="max-w-3xl text-3xl font-bold tracking-tight text-fg sm:text-4xl">Data API</h1>
-    <p class="mt-2 text-muted">
-      The whole directory as machine-readable JSON, so your code or AI agent can
-      pick a gateway programmatically. It is a static file rebuilt on every deploy,
-      so it is fast, free, and always matches what you see on the site.
-    </p>
+    <h1 class="text-3xl font-bold tracking-tight text-fg sm:text-4xl">API &amp; MCP</h1>
+    <p class="mt-2 text-muted">{T.lead}</p>
   </header>
 
-  <!-- endpoints -->
-  <section class="mt-8">
-    <h2 class="text-base font-medium text-fg">Endpoints</h2>
-    <div class="mt-3 space-y-3">
-      <div class="rounded-md border border-line bg-panel p-4">
-        <code class="text-sm text-accent">GET /api/gateways.json</code>
-        <p class="mt-1.5 text-sm text-muted">All gateways, ordered like the site (lowest estimated fee first, then "on request" by popularity), wrapped with <code class="text-fg">schema</code>, <code class="text-fg">generated_at</code>, <code class="text-fg">count</code>, a <code class="text-fg">disclaimer</code> and the <code class="text-fg">weighting</code>.</p>
-        <a href="/api/gateways.json" class="mt-2 inline-block text-sm text-accent hover:underline">View {BASE}/api/gateways.json →</a>
-      </div>
-      <div class="rounded-md border border-line bg-panel p-4">
-        <code class="text-sm text-accent">GET /api/gateways/&lt;slug&gt;.json</code>
-        <p class="mt-1.5 text-sm text-muted">A single gateway object (same shape as one item in the array above).</p>
-        <a href="/api/gateways/chip.json" class="mt-2 inline-block text-sm text-accent hover:underline">Example: /api/gateways/chip.json →</a>
-      </div>
-    </div>
+  <section class="mt-8 grid gap-3 md:grid-cols-2">
+    {
+      quickstart.map((q) => (
+        <div class="flex flex-col rounded-xl border border-line bg-panel p-5">
+          <h2 class="font-semibold text-fg">{q.title}</h2>
+          <p class="text-sm text-muted">{q.sub}</p>
+          <div class="mt-4 flex items-center gap-2 rounded-lg border border-line bg-surface py-2 pl-3 pr-2">
+            <code class="min-w-0 flex-1 overflow-x-auto whitespace-nowrap text-xs text-fg">{q.cmd}</code>
+            <button
+              type="button"
+              data-copy={q.cmd}
+              class="shrink-0 rounded-md border border-line px-2 py-1 text-xs text-muted hover:border-muted hover:text-fg"
+            >
+              {T.copy}
+            </button>
+          </div>
+          <p class="mt-3 text-xs text-muted">{q.note}</p>
+        </div>
+      ))
+    }
   </section>
 
-  <!-- examples -->
-  <section class="mt-8">
-    <h2 class="text-base font-medium text-fg">Examples</h2>
-    <div class="mt-3 space-y-4">
-      <div>
-        <p class="mb-1.5 text-sm text-muted">Fetch the whole directory:</p>
-        <pre class="overflow-x-auto rounded-md border border-line bg-raised p-3 text-xs text-fg"><code>curl -s {BASE}/api/gateways.json</code></pre>
-      </div>
-      <div>
-        <p class="mb-1.5 text-sm text-muted">Cheapest gateways that support FPX, with a real published rate (jq):</p>
-        <pre class="overflow-x-auto rounded-md border border-line bg-raised p-3 text-xs text-fg"><code>{`curl -s ${BASE}/api/gateways.json \\
+  <section class="mt-10">
+    <h2 class="text-xs font-medium uppercase tracking-widest text-muted">{T.endpoints}</h2>
+    <ul class="mt-3 divide-y divide-line overflow-hidden rounded-xl border border-line bg-panel text-sm">
+      <li class="flex flex-wrap items-center gap-x-4 gap-y-1 px-4 py-3">
+        <code class="text-accent">GET /api/gateways.json</code>
+        <span class="text-muted">{T.allCheapest}</span>
+        <a href="/api/gateways.json" class="ml-auto text-accent hover:underline">{T.open}</a>
+      </li>
+      <li class="flex flex-wrap items-center gap-x-4 gap-y-1 px-4 py-3">
+        <code class="text-accent">GET /api/gateways/&lt;slug&gt;.json</code>
+        <span class="text-muted">{T.oneGateway}</span>
+        <a href="/api/gateways/chip.json" class="ml-auto text-accent hover:underline">{T.example}</a>
+      </li>
+      <li class="flex flex-wrap items-center gap-x-4 gap-y-1 px-4 py-3">
+        <code class="text-accent">{MCP_URL}</code>
+        <span class="text-muted">{T.mcpServer}</span>
+        <span class="ml-auto flex flex-wrap gap-1.5">
+          {mcpTools.map((t) => <code class="rounded bg-raised px-1.5 py-0.5 text-xs text-fg">{t}</code>)}
+        </span>
+      </li>
+    </ul>
+  </section>
+
+  <section class="mt-10">
+    <h2 class="text-xs font-medium uppercase tracking-widest text-muted">{T.more}</h2>
+    <div class="mt-3 space-y-3">
+      <details class="group rounded-xl border border-line bg-panel">
+        <summary class="flex cursor-pointer items-center justify-between px-4 py-3 text-sm font-medium text-fg [&::-webkit-details-marker]:hidden">
+          {T.codeExamples}
+          <span class="text-muted transition-transform group-open:rotate-90">›</span>
+        </summary>
+        <div class="space-y-3 border-t border-line p-4">
+          <pre class="overflow-x-auto rounded-lg border border-line bg-surface p-3 text-xs text-fg"><code>{`# 5 cheapest gateways with FPX
+curl -s ${BASE}/api/gateways.json \\
   | jq '.gateways
         | map(select(.rankable and (.channels | index("fpx"))))
         | sort_by(.est_fee_rm100)
         | .[0:5]
         | map({slug, est_fee_rm100})'`}</code></pre>
-      </div>
-      <div>
-        <p class="mb-1.5 text-sm text-muted">In JavaScript:</p>
-        <pre class="overflow-x-auto rounded-md border border-line bg-raised p-3 text-xs text-fg"><code>{`const { gateways } = await fetch(
+          <pre class="overflow-x-auto rounded-lg border border-line bg-surface p-3 text-xs text-fg"><code>{`const { gateways } = await fetch(
   "${BASE}/api/gateways.json"
 ).then((r) => r.json());
 
 const recurringWithMcp = gateways.filter(
   (g) => g.features.recurring && g.mcp === "official"
 );`}</code></pre>
-      </div>
+        </div>
+      </details>
+
+      <details class="group rounded-xl border border-line bg-panel">
+        <summary class="flex cursor-pointer items-center justify-between px-4 py-3 text-sm font-medium text-fg [&::-webkit-details-marker]:hidden">
+          {T.allFields(fields.length)}
+          <span class="text-muted transition-transform group-open:rotate-90">›</span>
+        </summary>
+        <table class="w-full border-t border-line text-sm">
+          <tbody>
+            {
+              fields.map((f, i) => (
+                <tr class={i % 2 ? "bg-surface/40" : ""}>
+                  <th scope="row" class="whitespace-nowrap px-4 py-2 text-left align-top font-mono text-xs font-normal text-fg">
+                    {f.name}
+                  </th>
+                  <td class="px-4 py-2 text-muted">{f.desc}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </details>
     </div>
   </section>
 
-  <!-- fields -->
-  <section class="mt-8">
-    <h2 class="text-base font-medium text-fg">Fields</h2>
-    <div class="mt-3 overflow-hidden rounded-md border border-line">
-      <table class="w-full text-sm">
-        <tbody>
-          {
-            fields.map((f, i) => (
-              <tr class={i % 2 ? "bg-panel" : ""}>
-                <th scope="row" class="whitespace-nowrap px-3 py-2 text-left align-top font-mono text-xs font-normal text-fg">
-                  {f.name}
-                </th>
-                <td class="px-3 py-2 text-muted">{f.desc}</td>
-              </tr>
-            ))
-          }
-        </tbody>
-      </table>
-    </div>
-  </section>
+  <p class="mt-10 text-sm text-muted">
+    {T.footPre}
+    {T.footGuide}{" "}
+    <a href="/learn/ai-agents/" class="text-accent hover:underline">{T.footLink}</a>.
+  </p>
 
-  <!-- disclaimer -->
-  <section class="mt-8 rounded-md border border-line bg-panel p-5">
-    <h2 class="text-base font-medium text-fg">Use the fees responsibly</h2>
-    <p class="mt-1.5 max-w-2xl text-sm text-muted">
-      Fees are indicative and change. Values marked with a trailing <span class="text-fg">*</span>
-      are third-party / not officially published, and <code class="text-fg">est_fee_rm100</code>
-      is a modelled estimate, not a quote. Always confirm with the provider and check each
-      gateway's <code class="text-fg">verified_date</code> and <code class="text-fg">source</code>.
-    </p>
-  </section>
-
-  <!-- MCP server -->
-  <section class="mt-6 rounded-md border border-line bg-panel p-5">
-    <h2 class="text-base font-medium text-fg">MCP server</h2>
-    <p class="mt-1.5 max-w-2xl text-sm text-muted">
-      AI coding agents (Claude, Cursor) can query this directory live while you
-      build, via the Model Context Protocol. Point your client at:
-    </p>
-    <pre class="mt-2 overflow-x-auto rounded-md border border-line bg-raised p-3 text-xs text-fg"><code>https://mpg-mcp.afuitdev.workers.dev/mcp</code></pre>
-    <p class="mt-2 text-sm text-muted">Example (Claude Code):</p>
-    <pre class="mt-1 overflow-x-auto rounded-md border border-line bg-raised p-3 text-xs text-fg"><code>claude mcp add --transport http mpg https://mpg-mcp.afuitdev.workers.dev/mcp</code></pre>
-    <p class="mt-2 max-w-2xl text-sm text-muted">
-      Tools: <code class="text-fg">list_gateways</code>, <code class="text-fg">get_gateway</code>,
-      <code class="text-fg">compare_gateways</code>, <code class="text-fg">recommend_gateway</code>. Then ask
-      e.g. <em>"cheapest Malaysian gateway for FPX + recurring?"</em>. See{" "}
-      <a href="/learn/ai-agents/" class="text-accent hover:underline">Build with AI agents</a>.
-    </p>
-  </section>
+  <script>
+    import { pageLocale, tr } from "../../i18n/client";
+    const L = tr(pageLocale(), {
+      en: { copy: "Copy", copied: "Copied", press: "Press ⌘C" },
+      ms: { copy: "Salin", copied: "Disalin", press: "Tekan ⌘C" },
+    });
+    document.querySelectorAll<HTMLButtonElement>("button[data-copy]").forEach((b) =>
+      b.addEventListener("click", async () => {
+        try {
+          await navigator.clipboard.writeText(b.dataset.copy ?? "");
+          b.textContent = L.copied;
+        } catch {
+          b.textContent = L.press;
+        }
+        setTimeout(() => (b.textContent = L.copy), 1500);
+      }),
+    );
+  </script>
 </Base>

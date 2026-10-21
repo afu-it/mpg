@@ -41,6 +41,11 @@ plans:
     source: "https://revenuemonster.my/pricing"
 verified_date: "2026-10-20"
 source: "https://revenuemonster.my/pricing"
+bnm:
+  roles: [merchant-acquirer]
+  entity: "Revenue Monster Sdn Bhd"
+  checked: "2026-10-21"
+  evidence: "https://revenuemonster.my"
 notes: "The previously indicative from-0.8% e-wallet/DuitNow figures are no longer on /pricing (re-verified 2026-07-17) so both are downgraded to Contact sales. Setup fee (RM499 one-time) and T+2 settlement are from the official pricing page; per-transaction rates are described only as 'competitive rates' and are not publicly published, so contact sales."
 ---
 

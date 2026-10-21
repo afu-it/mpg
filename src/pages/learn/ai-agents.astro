@@ -5,30 +5,92 @@ import { getCollection } from "astro:content";
 import Base from "../../layouts/Base.astro";
 import { techArticleLd } from "../../lib/jsonld";
 import FlowDiagram from "../../components/FlowDiagram.astro";
+import { getLocale, localizePath, tr } from "../../i18n/locale";
 import { SKILLS_REPO, skillRepoUrl, skillInstallCommand } from "../../lib/learn";
 
-const setupFlow = [
-  { title: "1. CHOOSE A GATEWAY", body: ["Compare fees + features here on MPG"] },
-  { via: "sign up", title: "2. CREATE AN ACCOUNT", body: ["Get SANDBOX (test) API keys"] },
-  {
-    via: "optional",
-    title: "3. INSTALL THE AI SKILL",
-    body: ["npx skills@latest add ... --skill setup-<gw>", 'then paste the "Copy prompt" button'],
+type FlowStep = { title: string; body?: string[]; via?: string; emphasis?: boolean };
+const locale = getLocale(Astro);
+const T = tr(locale, {
+  en: {
+    title: "Build with AI agents | MPG Learn",
+    h1: "Build with AI agents",
+    description:
+      "Install AFU's setup-* skills, paste a ready prompt, and understand what MCP vs API/webhooks unlocks for AI coding tools when integrating a Malaysian gateway.",
+    back: "← Learn",
+    caption:
+      "Setup, from picking a gateway to going live. Step 3 is optional, but installing the skill lets an AI agent do steps 4 to 6 for you.",
+    howItWorks: "How it works",
+    skillsH: "Available setup skills",
+    from: "From",
+    clickCopy: "Click an install command to copy it.",
+    clickToCopy: "Click to copy",
+    mcpH: "MCP, API & webhooks",
+    officialMcp: "Official MCP",
+    communityMcp: "Community MCP",
+    setupFlow: [
+      { title: "1. CHOOSE A GATEWAY", body: ["Compare fees + features here on MPG"] },
+      { via: "sign up", title: "2. CREATE AN ACCOUNT", body: ["Get SANDBOX (test) API keys"] },
+      {
+        via: "optional",
+        title: "3. INSTALL THE AI SKILL",
+        body: ["npx skills@latest add ... --skill setup-<gw>", 'then paste the "Copy prompt" button'],
+      },
+      {
+        via: "build",
+        title: "4. WIRE THE INTEGRATION",
+        body: ["Checkout + signed webhook + settlement", "(your agent follows the safe flow)"],
+      },
+      { via: "configure", title: "5. SET THE WEBHOOK URL", body: ["In the sandbox dashboard"] },
+      { via: "test", title: "6. TEST IN SANDBOX", body: ["Pay end to end; confirm it unlocks once"] },
+      {
+        via: "ship",
+        title: "7. GO LIVE",
+        emphasis: true,
+        body: ["Switch to LIVE keys + live webhook URL", "Keep sandbox and live keys separate"],
+      },
+    ] as FlowStep[],
   },
-  {
-    via: "build",
-    title: "4. WIRE THE INTEGRATION",
-    body: ["Checkout + signed webhook + settlement", "(your agent follows the safe flow)"],
+  ms: {
+    title: "Bina dengan AI agent | MPG Belajar",
+    h1: "Bina dengan AI agent",
+    description:
+      "Pasang setup skill AFU, tampal prompt siap, dan faham beza MCP dengan API/webhook bila anda guna AI agent untuk sambung payment gateway Malaysia.",
+    back: "← Belajar",
+    caption:
+      "Langkah dari pilih gateway sampai mula terima bayaran sebenar. Langkah 3 tak wajib. Tapi kalau skill dipasang, AI agent boleh buat langkah 4 hingga 6 untuk anda.",
+    howItWorks: "Cara ia berfungsi",
+    skillsH: "Setup skill yang ada",
+    from: "Dari",
+    clickCopy: "Klik arahan pasang untuk salin.",
+    clickToCopy: "Klik untuk salin",
+    mcpH: "MCP, API & webhook",
+    officialMcp: "MCP rasmi",
+    communityMcp: "MCP komuniti",
+    setupFlow: [
+      { title: "1. PILIH GATEWAY", body: ["Banding fee + ciri di MPG"] },
+      { via: "daftar", title: "2. BUKA AKAUN", body: ["Ambil API key sandbox (untuk mod ujian)"] },
+      {
+        via: "tak wajib",
+        title: "3. PASANG AI SKILL",
+        body: ["npx skills@latest add ... --skill setup-<gw>", 'lepas itu tekan butang "Salin prompt"'],
+      },
+      {
+        via: "bina",
+        title: "4. BUAT INTEGRASI",
+        body: ["Checkout + webhook yang disemak + tanda pesanan dibayar", "(agent anda ikut langkah selamat)"],
+      },
+      { via: "tetapkan", title: "5. LETAK URL WEBHOOK", body: ["Dalam dashboard sandbox"] },
+      { via: "uji", title: "6. UJI DALAM SANDBOX", body: ["Cuba bayar dari mula hingga habis. Pastikan pesanan dibuka sekali sahaja"] },
+      {
+        via: "lancar",
+        title: "7. MULA TERIMA BAYARAN SEBENAR",
+        emphasis: true,
+        body: ["Tukar ke key live + URL webhook live", "Asingkan key sandbox dan key live"],
+      },
+    ] as FlowStep[],
   },
-  { via: "configure", title: "5. SET THE WEBHOOK URL", body: ["In the sandbox dashboard"] },
-  { via: "test", title: "6. TEST IN SANDBOX", body: ["Pay end to end; confirm it unlocks once"] },
-  {
-    via: "ship",
-    title: "7. GO LIVE",
-    emphasis: true,
-    body: ["Switch to LIVE keys + live webhook URL", "Keep sandbox and live keys separate"],
-  },
-];
+});
+const setupFlow = T.setupFlow;
 
 const gateways = await getCollection("gateways");
 
@@ -48,61 +110,93 @@ const mcpCommunity = gateways
   .map((g) => g.data.name)
   .sort();
 const site = (Astro.site?.href ?? "https://malaysiapg.com.my/").replace(/\/$/, "");
-const articleLd = JSON.stringify(techArticleLd(site, "/learn/ai-agents/", 'Build with AI agents', "Install AFU's setup-* skills, paste a ready prompt, and understand what MCP vs API/webhooks unlocks for AI coding tools when integrating a Malaysian gateway."));
+const articleLd = JSON.stringify(techArticleLd(site, localizePath("/learn/ai-agents/", locale), T.h1, T.description));
 ---
 
 <Base
-  title="Build with AI agents | MPG Learn"
-  description="Install AFU's setup-* skills, paste a ready prompt, and understand what MCP vs API/webhooks unlocks for AI coding tools when integrating a Malaysian gateway."
+  title={T.title}
+  description={T.description}
 >
   <script is:inline type="application/ld+json" set:html={articleLd} />
-  <a href="/learn/" class="text-sm text-muted hover:text-fg">← Learn</a>
+  <a href="/learn/" class="text-sm text-muted hover:text-fg">{T.back}</a>
 
   <header class="mt-4 max-w-2xl">
-    <h1 class="max-w-3xl text-3xl font-bold tracking-tight text-fg sm:text-4xl">Build with AI agents</h1>
-    <p class="mt-2 text-muted">
-      Using Claude Code, Cursor or Codex? Install the matching{" "}
-      <strong class="text-fg">setup skill</strong>, then paste a prompt, and your agent
-      gets the secure integration steps baked in.
-    </p>
+    <h1 class="max-w-3xl text-3xl font-bold tracking-tight text-fg sm:text-4xl">{T.h1}</h1>
+    {
+      locale === "ms" ? (
+        <p class="mt-2 text-muted">
+          Guna Claude Code, Cursor atau Codex? Ini semua AI agent, iaitu pembantu AI yang tulis kod
+          untuk anda. Pasang <strong class="text-fg">setup skill</strong> yang sepadan (set arahan
+          siap untuk agent). Lepas itu tampal satu prompt (arahan). Agent anda terus tahu cara sambung
+          gateway dengan selamat.
+        </p>
+      ) : (
+        <p class="mt-2 text-muted">
+          Using Claude Code, Cursor or Codex? Install the matching{" "}
+          <strong class="text-fg">setup skill</strong>, then paste a prompt, and your agent
+          gets the secure integration steps baked in.
+        </p>
+      )
+    }
   </header>
 
   <!-- setup flow diagram -->
   <FlowDiagram
     steps={setupFlow}
-    caption="Setup, from picking a gateway to going live. Step 3 is optional, but installing the skill lets an AI agent do steps 4 to 6 for you."
+    caption={T.caption}
   />
 
   <!-- 1. how it works -->
   <section class="mt-8 max-w-2xl">
     <h2 class="mb-3 text-xs font-medium uppercase tracking-wide text-muted">
-      How it works
+      {T.howItWorks}
     </h2>
-    <ol class="space-y-2 rounded-md border border-line bg-panel p-4 text-sm text-muted">
-      <li>
-        <strong class="text-fg">1.</strong> Install the gateway's skill into your agent
-        (one command, below).
-      </li>
-      <li>
-        <strong class="text-fg">2.</strong> Open the gateway's page here and hit{" "}
-        <strong class="text-fg">Copy prompt</strong>, or write your own.
-      </li>
-      <li>
-        <strong class="text-fg">3.</strong> Paste it to your agent. The skill enforces
-        the <a href="/learn/integration-flow/" class="text-accent hover:underline">safe flow</a>
-        : verified webhooks, idempotent settlement, no fake-redirect unlock.
-      </li>
-    </ol>
+    {
+      locale === "ms" ? (
+        <ol class="space-y-2 rounded-md border border-line bg-panel p-4 text-sm text-muted">
+          <li>
+            <strong class="text-fg">1.</strong> Pasang skill gateway itu dalam agent anda
+            (satu arahan sahaja, ada di bawah).
+          </li>
+          <li>
+            <strong class="text-fg">2.</strong> Buka halaman gateway itu di sini dan tekan{" "}
+            <strong class="text-fg">Salin prompt</strong>, atau tulis prompt (arahan) sendiri.
+          </li>
+          <li>
+            <strong class="text-fg">3.</strong> Tampal kepada agent anda. Skill itu pastikan agent ikut{" "}
+            <a href="/learn/integration-flow/" class="text-accent hover:underline">langkah selamat</a>
+            : webhook (mesej automatik dari gateway bila pelanggan dah bayar) disemak dulu, bayaran yang
+            sama tak dikira dua kali, dan pesanan tak dibuka hanya sebab pelanggan balik ke laman anda.
+          </li>
+        </ol>
+      ) : (
+        <ol class="space-y-2 rounded-md border border-line bg-panel p-4 text-sm text-muted">
+          <li>
+            <strong class="text-fg">1.</strong> Install the gateway's skill into your agent
+            (one command, below).
+          </li>
+          <li>
+            <strong class="text-fg">2.</strong> Open the gateway's page here and hit{" "}
+            <strong class="text-fg">Copy prompt</strong>, or write your own.
+          </li>
+          <li>
+            <strong class="text-fg">3.</strong> Paste it to your agent. The skill enforces
+            the <a href="/learn/integration-flow/" class="text-accent hover:underline">safe flow</a>
+            : verified webhooks, idempotent settlement, no fake-redirect unlock.
+          </li>
+        </ol>
+      )
+    }
   </section>
 
   <!-- 2. available skills -->
   <section class="mt-8">
     <h2 class="mb-1 text-sm font-medium uppercase tracking-wide text-muted">
-      Available setup skills
+      {T.skillsH}
     </h2>
     <p class="mb-3 max-w-2xl text-sm text-muted">
-      From <a href={SKILLS_REPO} target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">afu-it/malaysia-payment-gateway</a>.
-      Click an install command to copy it.
+      {T.from} <a href={SKILLS_REPO} target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">afu-it/malaysia-payment-gateway</a>.
+      {T.clickCopy}
     </p>
     <ul class="grid gap-2 sm:grid-cols-2">
       {
@@ -125,7 +219,7 @@ const articleLd = JSON.stringify(techArticleLd(site, "/learn/ai-agents/", 'Build
               type="button"
               data-copy={skillInstallCommand(g.skill)}
               class="mt-2 w-full overflow-hidden rounded border border-line bg-surface px-2.5 py-1.5 text-left font-mono text-xs text-muted hover:border-accent hover:text-fg"
-              title="Click to copy"
+              title={T.clickToCopy}
             >
               <span data-copy-label>$ …add --skill {g.skill}</span>
             </button>
@@ -138,28 +232,51 @@ const articleLd = JSON.stringify(techArticleLd(site, "/learn/ai-agents/", 'Build
   <!-- 3. MCP / API explainer -->
   <section class="mt-10 max-w-2xl">
     <h2 class="mb-3 text-xs font-medium uppercase tracking-wide text-muted">
-      MCP, API & webhooks
+      {T.mcpH}
     </h2>
     <div class="space-y-3 text-sm text-muted">
-      <p>
-        <strong class="text-fg">MCP (Model Context Protocol)</strong> lets an AI tool
-        talk to a gateway's API directly, the smoothest path for agent-driven
-        integration. A gateway either ships an <strong class="text-fg">official</strong>{" "}
-        MCP server, has a <strong class="text-fg">community</strong> one, or none yet.
-      </p>
+      {
+        locale === "ms" ? (
+          <p>
+            <strong class="text-fg">MCP (Model Context Protocol)</strong> ialah cara standard untuk
+            AI agent bercakap terus dengan API gateway (saluran untuk sistem anda berhubung dengan sistem
+            gateway). Kalau agent yang buat integrasi, inilah jalan paling mudah. Ada gateway yang ada
+            server MCP <strong class="text-fg">rasmi</strong>. Ada yang guna versi{" "}
+            <strong class="text-fg">komuniti</strong>. Ada yang belum ada langsung.
+          </p>
+        ) : (
+          <p>
+            <strong class="text-fg">MCP (Model Context Protocol)</strong> lets an AI tool
+            talk to a gateway's API directly, the smoothest path for agent-driven
+            integration. A gateway either ships an <strong class="text-fg">official</strong>{" "}
+            MCP server, has a <strong class="text-fg">community</strong> one, or none yet.
+          </p>
+        )
+      }
       <div class="rounded-md border border-line bg-panel p-4">
-        <p class="text-xs uppercase tracking-wide text-muted">Official MCP</p>
+        <p class="text-xs uppercase tracking-wide text-muted">{T.officialMcp}</p>
         <p class="mt-1 text-fg">{mcpOfficial.join(", ") || "—"}</p>
-        <p class="mt-3 text-xs uppercase tracking-wide text-muted">Community MCP</p>
+        <p class="mt-3 text-xs uppercase tracking-wide text-muted">{T.communityMcp}</p>
         <p class="mt-1 text-fg">{mcpCommunity.join(", ") || "—"}</p>
       </div>
-      <p>
-        No MCP doesn't mean hard to integrate. Most gateways expose a standard{" "}
-        <strong class="text-fg">REST API + webhooks</strong> and e-commerce{" "}
-        <strong class="text-fg">plugins</strong> (WooCommerce, Shopify…). Each
-        gateway page lists its API docs, webhook support and plugins under{" "}
-        <em>Developer experience</em>.
-      </p>
+      {
+        locale === "ms" ? (
+          <p>
+            Tiada MCP pun integrasi masih boleh dibuat dengan mudah. Kebanyakan gateway ada{" "}
+            <strong class="text-fg">REST API + webhook</strong> yang biasa, dan{" "}
+            <strong class="text-fg">plugin</strong> e-commerce (untuk WooCommerce, Shopify…). Setiap halaman gateway senaraikan dokumen API, sokongan webhook
+            dan plugin di bawah <em>Untuk developer</em>.
+          </p>
+        ) : (
+          <p>
+            No MCP doesn't mean hard to integrate. Most gateways expose a standard{" "}
+            <strong class="text-fg">REST API + webhooks</strong> and e-commerce{" "}
+            <strong class="text-fg">plugins</strong> (WooCommerce, Shopify…). Each
+            gateway page lists its API docs, webhook support and plugins under{" "}
+            <em>Developer experience</em>.
+          </p>
+        )
+      }
     </div>
   </section>
 </Base>

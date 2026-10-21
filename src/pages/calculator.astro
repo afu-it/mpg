@@ -7,22 +7,109 @@ import { getCollection } from "astro:content";
 import Base from "../layouts/Base.astro";
 import { toApiGateway, type GatewayEntryLike } from "../lib/api";
 import { breadcrumbLd } from "../lib/jsonld";
+import { getLocale, tr } from "../i18n/locale";
+import type { ImageMetadata } from "astro";
+
+const locale = getLocale(Astro);
+const T = tr(locale, {
+  en: {
+    title: "Payment gateway fee calculator for Malaysia | MPG",
+    description:
+      "Enter your typical transaction size and see what each Malaysian gateway really costs per sale, from officially published FPX, card and e-wallet rates.",
+    home: "Home",
+    crumb: "Fee calculator",
+    appName: "Malaysian payment gateway fee calculator",
+    h1: "Payment gateway fee calculator",
+    lead: "Enter your usual sale amount. See what every provider with official rates would charge, cheapest first.",
+    presets: "Quick amounts",
+    cheapest: "Cheapest for this sale",
+    perSale: "per sale",
+    allRanked: "All providers, ranked",
+    amount: "Transaction amount (RM)",
+    channel: "Channel",
+    blended: "Blended (FPX/card/e-wallet)",
+    card: "Card",
+    ewallet: "E-wallet",
+    thGateway: "Gateway",
+    thRate: "Published rate",
+    thCost: "Est. cost / sale",
+    thPct: "Effective %",
+    howH: "How the estimate works",
+    how: 'Each cost is max(amount × rate, minimum fee) plus any flat add-on the provider publishes, exactly as on the rest of this site. The blended view weights FPX 50%, card 30% and e-wallet 20%, and only includes gateways whose official rates cover enough channels to compare honestly. Third-party or indicative rates (marked * in the directory) and "Contact sales" providers are excluded rather than guessed. Estimates are not quotes: confirm current pricing with the provider.',
+    table: "Browse the full table",
+    choose: "Help me choose",
+    mdr: "What is MDR?",
+  },
+  ms: {
+    title: "Kalkulator fee payment gateway Malaysia | MPG",
+    description:
+      "Masukkan jumlah jualan biasa anda dan lihat caj sebenar setiap payment gateway Malaysia bagi setiap jualan, dari kadar rasmi FPX, kad dan e-wallet.",
+    home: "Utama",
+    crumb: "Kalkulator fee",
+    appName: "Kalkulator fee payment gateway Malaysia",
+    h1: "Kalkulator fee payment gateway",
+    lead: "Masukkan jumlah jualan biasa anda. Lihat berapa caj setiap gateway yang ada kadar rasmi, paling murah di atas.",
+    presets: "Pilih cepat",
+    cheapest: "Paling murah untuk jualan ini",
+    perSale: "setiap jualan",
+    allRanked: "Semua gateway, ikut ranking",
+    amount: "Jumlah transaksi (RM)",
+    channel: "Cara bayaran",
+    blended: "Campuran (FPX/kad/e-wallet)",
+    card: "Kad",
+    ewallet: "E-wallet",
+    thGateway: "Gateway",
+    thRate: "Kadar rasmi",
+    thCost: "Anggaran caj / jualan",
+    thPct: "% sebenar",
+    howH: "Cara anggaran ini dikira",
+    how: 'Setiap caj dikira sebagai max(jumlah × kadar, caj minimum) campur apa-apa caj tetap tambahan yang gateway siarkan, sama seperti di seluruh laman ini. Pilihan Campuran kira FPX 50%, kad 30% dan e-wallet 20%, dan hanya masukkan gateway yang kadar rasminya meliputi cukup cara bayaran untuk dibanding dengan adil. Kadar pihak ketiga atau anggaran (ditanda * dalam direktori) dan gateway "Hubungi jualan" tidak dimasukkan, kami tak teka angkanya. Anggaran ini bukan sebut harga: sahkan harga terkini dengan gateway.',
+    table: "Lihat jadual penuh",
+    choose: "Bantu saya pilih",
+    mdr: "Apa itu MDR (caj transaksi)?",
+  },
+});
 
 const entries = (await getCollection("gateways")) as unknown as GatewayEntryLike[];
+// logo files, same lookup as components/Logo.astro (svg preferred over raster)
+const logoFiles = import.meta.glob<{ default: ImageMetadata }>("/src/assets/logos/*.{svg,png,webp}", { eager: true });
+const logoBySlug: Record<string, string> = {};
+for (const [path, mod] of Object.entries(logoFiles)) {
+  const key = path.split("/").pop()!.replace(/\.\w+$/, "");
+  if (!logoBySlug[key] || path.endsWith(".svg")) logoBySlug[key] = mod.default.src;
+}
+const roundSlugs = new Set(
+  (await getCollection("gateways")).filter((g) => g.data.logo_round).map((g) => g.id),
+);
 // slim embed: the client only needs fee strings + identity
 const data = entries.map((e) => {
   const g = toApiGateway(e);
-  return { slug: g.slug, name: g.name, fees: g.fees, popularity: g.popularity };
+  return {
+    slug: g.slug,
+    name: g.name,
+    fees: g.fees,
+    popularity: g.popularity,
+    logo: logoBySlug[g.slug] ?? null,
+    round: roundSlugs.has(g.slug),
+  };
 });
+const PRESETS = [10, 50, 100, 500, 1000];
+const channels = [
+  { value: "blended", label: T.blended, short: locale === "ms" ? "Campuran" : "Blended" },
+  { value: "fpx", label: "FPX", short: "FPX" },
+  { value: "card", label: T.card, short: T.card },
+  { value: "ewallet", label: T.ewallet, short: T.ewallet },
+  { value: "duitnowqr", label: "DuitNow QR", short: "DuitNow QR" },
+];
 
 const site = (Astro.site?.href ?? "https://malaysiapg.com.my/").replace(/\/$/, "");
 const crumbLd = JSON.stringify(
-  breadcrumbLd(site, [{ name: "Home", path: "/" }, { name: "Fee calculator" }]),
+  breadcrumbLd(site, [{ name: T.home, path: "/" }, { name: T.crumb }]),
 );
 const appLd = JSON.stringify({
   "@context": "https://schema.org",
   "@type": "WebApplication",
-  name: "Malaysian payment gateway fee calculator",
+  name: T.appName,
   url: `${site}/calculator/`,
   applicationCategory: "FinanceApplication",
   operatingSystem: "Web",
@@ -31,92 +118,92 @@ const appLd = JSON.stringify({
 });
 ---
 
-<Base
-  title="Payment gateway fee calculator for Malaysia | MPG"
-  description="Enter your typical transaction size and see what each Malaysian gateway really costs per sale, from officially published FPX, card and e-wallet rates."
->
+<Base title={T.title} description={T.description}>
   <script is:inline type="application/ld+json" set:html={crumbLd} />
   <script is:inline type="application/ld+json" set:html={appLd} />
 
   <header class="max-w-2xl">
-    <h1 class="text-2xl font-semibold tracking-tight text-fg">Payment gateway fee calculator</h1>
-    <p class="mt-2 text-muted">
-      Percentages hide the real cost. Enter your typical sale amount and see the estimated
-      cost per transaction on every provider with officially published rates, computed with
-      the same engine that ranks the whole directory.
-    </p>
+    <h1 class="text-3xl font-bold tracking-tight text-fg sm:text-4xl">{T.h1}</h1>
+    <p class="mt-2 text-muted">{T.lead}</p>
   </header>
 
-  <div class="mt-6 flex flex-wrap items-end gap-4">
-    <label class="block">
-      <span class="text-sm text-muted">Transaction amount (RM)</span>
-      <input
-        id="calc-amount"
-        type="number"
-        min="0.1"
-        step="1"
-        value="100"
-        inputmode="decimal"
-        class="mt-1 block w-40 rounded-md border border-line bg-panel px-3 py-2 text-fg focus:border-accent focus:outline-none"
-      />
-    </label>
-    <label class="block">
-      <span class="text-sm text-muted">Channel</span>
-      <select
-        id="calc-channel"
-        class="mt-1 block w-56 rounded-md border border-line bg-panel px-3 py-2 text-fg focus:border-accent focus:outline-none"
-      >
-        <option value="blended" selected>Blended (FPX/card/e-wallet)</option>
-        <option value="fpx">FPX</option>
-        <option value="card">Card</option>
-        <option value="ewallet">E-wallet</option>
-        <option value="duitnowqr">DuitNow QR</option>
-      </select>
-    </label>
-  </div>
+  <section class="mt-8 grid gap-6 rounded-xl border border-line bg-panel p-5 lg:grid-cols-[auto_1fr] lg:items-end">
+    <div>
+      <label for="calc-amount" class="text-xs font-medium uppercase tracking-widest text-muted">{T.amount}</label>
+      <div class="mt-2 flex items-center rounded-lg border border-line bg-surface px-3 focus-within:border-accent">
+        <span class="text-2xl font-semibold text-muted">RM</span>
+        <input
+          id="calc-amount"
+          type="number"
+          min="0.1"
+          step="1"
+          value="100"
+          inputmode="decimal"
+          class="w-40 bg-transparent px-2 py-2 text-3xl font-semibold text-fg focus:outline-none"
+        />
+      </div>
+      <div class="mt-3 flex flex-wrap gap-1.5" role="group" aria-label={T.presets}>
+        {
+          PRESETS.map((v) => (
+            <button
+              type="button"
+              data-amount={v}
+              class="calc-preset rounded-full border border-line px-3 py-1 text-xs text-muted hover:border-muted hover:text-fg aria-pressed:border-fg aria-pressed:bg-raised aria-pressed:text-fg"
+              aria-pressed={v === 100 ? "true" : "false"}
+            >
+              RM{v.toLocaleString("en-MY")}
+            </button>
+          ))
+        }
+      </div>
+    </div>
+    <fieldset>
+      <legend class="text-xs font-medium uppercase tracking-widest text-muted">{T.channel}</legend>
+      <div class="mt-2 flex flex-wrap gap-1.5">
+        {
+          channels.map((c, i) => (
+            <label class="cursor-pointer">
+              <input type="radio" name="calc-ch" value={c.value} data-label={c.label} checked={i === 0} class="peer sr-only" />
+              <span class="inline-block rounded-lg border border-line px-3 py-2 text-sm text-muted hover:text-fg peer-checked:border-accent peer-checked:bg-raised peer-checked:text-fg peer-focus-visible:ring-1 peer-focus-visible:ring-accent">
+                {c.short}
+              </span>
+            </label>
+          ))
+        }
+      </div>
+    </fieldset>
+  </section>
 
-  <p id="calc-note" class="mt-4 text-sm text-muted"></p>
+  <h2 class="mt-10 text-xs font-medium uppercase tracking-widest text-muted">{T.cheapest}</h2>
+  <ol id="calc-top" class="mt-3 grid gap-3 sm:grid-cols-3" data-per-sale={T.perSale}></ol>
 
-  <div class="mt-4 overflow-x-auto rounded-md border border-line">
+  <p id="calc-note" class="mt-6 text-sm text-muted"></p>
+
+  <h2 class="mt-8 text-xs font-medium uppercase tracking-widest text-muted">{T.allRanked}</h2>
+  <div class="mt-3 overflow-x-auto rounded-xl border border-line">
     <table class="w-full text-sm sm:min-w-[560px]">
       <thead>
         <tr class="border-b border-line bg-panel text-left text-xs uppercase tracking-wide text-muted">
           <th class="px-3 py-2 text-right">#</th>
-          <th class="px-3 py-2">Gateway</th>
-          <th class="px-3 py-2">Published rate</th>
-          <th class="px-3 py-2 text-right">Est. cost / sale</th>
-          <th class="hidden px-3 py-2 text-right sm:table-cell">Effective %</th>
+          <th class="px-3 py-2">{T.thGateway}</th>
+          <th class="px-3 py-2">{T.thRate}</th>
+          <th class="px-3 py-2 text-right">{T.thCost}</th>
+          <th class="hidden px-3 py-2 text-right sm:table-cell">{T.thPct}</th>
         </tr>
       </thead>
       <tbody id="calc-rows" class="divide-y divide-line"></tbody>
     </table>
   </div>
 
-  <section class="mt-10 max-w-3xl border-t border-line pt-6">
-    <h2 class="text-base font-medium text-fg">How the estimate works</h2>
-    <p class="mt-2 text-sm text-muted">
-      Each cost is max(amount × rate, minimum fee) plus any flat add-on the provider
-      publishes, exactly as on the rest of this site. The blended view weights FPX 50%,
-      card 30% and e-wallet 20%, and only includes gateways whose official rates cover
-      enough channels to compare honestly. Third-party or indicative rates (marked * in
-      the directory) and "Contact sales" providers are excluded rather than guessed.
-      Estimates are not quotes: confirm current pricing with the provider.
-    </p>
-    <div class="mt-4 flex flex-wrap gap-3">
-      <a href="/gateways/" class="rounded-md border border-line px-4 py-2 text-sm text-muted hover:text-fg">
-        Browse the full table
-      </a>
-      <a href="/choose/" class="rounded-md border border-line px-4 py-2 text-sm text-muted hover:text-fg">
-        Help me choose
-      </a>
-      <a
-        href="/learn/glossary/mdr/"
-        class="rounded-md border border-line px-4 py-2 text-sm text-muted hover:text-fg"
-      >
-        What is MDR?
-      </a>
-    </div>
-  </section>
+  <details class="mt-8 max-w-3xl rounded-xl border border-line bg-panel p-5">
+    <summary class="cursor-pointer font-semibold text-fg">{T.howH}</summary>
+    <p class="mt-2 text-sm text-muted">{T.how}</p>
+  </details>
+  <div class="mt-4 flex flex-wrap gap-2 text-sm">
+    <a href="/gateways/" class="rounded-full border border-line px-3 py-1 text-muted hover:border-muted hover:text-fg">{T.table}</a>
+    <a href="/choose/" class="rounded-full border border-line px-3 py-1 text-muted hover:border-muted hover:text-fg">{T.choose}</a>
+    <a href="/learn/glossary/mdr/" class="rounded-full border border-line px-3 py-1 text-muted hover:border-muted hover:text-fg">{T.mdr}</a>
+  </div>
 
   <script type="application/json" id="gw-data" set:html={JSON.stringify(data)} />
   <script>

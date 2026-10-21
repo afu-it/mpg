@@ -22,6 +22,11 @@ dev_docs: https://product.shopeepay.com/integration/api/customer-presented-mode
 popularity: 50
 verified_date: "2026-10-20"
 source: "https://product.shopeepay.com"
+bnm:
+  roles: [merchant-acquirer, emoney-issuer]
+  entity: "ShopeePay Malaysia Sdn Bhd"
+  checked: "2026-10-21"
+  evidence: "https://shopeepay.com.my/terms-of-service"
 notes: "Direct merchant integration for the ShopeePay wallet outside the Shopee marketplace, by ShopeePay Malaysia Sdn Bhd (BNM-registered merchant acquirer and e-money issuer). Products: Checkout with ShopeePay, Link & Pay, Subscription (recurring wallet charging), Auth & Capture, and QR (CPM/MPM) over REST APIs. Wallet-only (no FPX/cards), analogous to this directory's TNG eWallet entry. No pricing published. Fees for accepting ShopeePay VIA other gateways appear in those gateways' entries; this entry is the direct route. Re-verified 2026-10-20: the product site now also lists a hosted 'ShopeePay Payment Gateway' that connects a checkout page to multiple local payment methods through one integration; the methods and pricing are not published, so channels stay wallet-only here. Official Shopify and WooCommerce plugins are listed."
 plugins:
   - Shopify

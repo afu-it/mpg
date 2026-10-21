@@ -70,6 +70,12 @@ plans:
 verified_date: "2026-10-20"
 source: "https://www.betterpay.me/v2/pricing.html"
 notes: "Pay Direct Technology Sdn Bhd. Re-verified 2026-10-20, rates unchanged. Plans: Starter (RM0 setup, FPX-only, FPX B2C RM1.00 / B2B RM2.00), Lite (RM300 setup, FPX B2B RM2.00), Pro (RM500 setup, instant bank-transfer settlement, FPX B2B RM2.00, DuitNow QR 1.00%). Values shown are the published Lite-tier rates: FPX RM1.00 B2C, local cards 1.90%, international 4.00%, main e-wallets 1.50% (WeChat 1.20%, Alipay 2.70%), DuitNow QR 1.20%, BNPL Atome 5.50% / GrabPayLater 5.00%-6.50%. UnionPay and Diners Club 3.00%. Apple Pay / Google Pay 1.90% on Pro. Shopify adds a 0.50% surcharge. No monthly fee."
+instant_settlement:
+  detail: "Instant payout for online banking payments on the Pro plan (one-time setup fee). Cards still take two working days."
+  detail_ms: "Duit masuk serta-merta untuk bayaran online banking pada pelan Pro (ada fee setup sekali). Kad masih dua hari bekerja."
+  quote: "Pro One-Time Setup RM500.00 Bank Transfer Settlement Instant"
+  source: https://www.betterpay.me/v2/pricing.html
+  checked: "2026-10-21"
 ---
 
 BetterPay (Pay Direct Technology Sdn Bhd) is a Malaysian gateway whose pitch is

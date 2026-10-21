@@ -36,6 +36,11 @@ dev_docs: "https://support.axaipay.com/support/solutions/folders/73000373064"
 popularity: 30
 verified_date: "2026-10-20"
 source: "https://www.axaipay.com/online-payments"
+bnm:
+  roles: [merchant-acquirer]
+  entity: "Axai Digital Sdn Bhd"
+  checked: "2026-10-21"
+  evidence: "https://www.axaipay.com"
 notes: "Operated by Axai Digital Sdn Bhd, Kuala Lumpur, founded 2019; BNM Registered Merchant Acquirer (Non-bank) with MDEC Malaysia Digital status. Markets no monthly or yearly maintenance fee, pay only per sale; per-transaction rates are quote-only (re-checked 2026-10-20: \"no monthly or yearly maintenance fees\", \"You only pay when you make a sale\"). PCI DSS Level 1. Supports cards, FPX, DuitNow QR, e-wallets (Alipay+) and BNPL, with WooCommerce/EasyStore/OpenCart/PrestaShop/VirtueMart plugins and a developer support portal."
 ---
 

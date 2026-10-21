@@ -58,6 +58,11 @@ plans:
     source: "https://payhalal.my/home_v3/pricing/"
 verified_date: "2026-10-20"
 source: "https://payhalal.my/home_v3/pricing/"
+bnm:
+  roles: [merchant-acquirer]
+  entity: "Souqa Fintech Sdn Bhd"
+  checked: "2026-10-21"
+  evidence: "https://payhalal.my"
 notes: "FPX B2B published (Basic): 2.50% or RM2.00 (re-verified 2026-07-17). Rates shown are the official published Basic (free) tier; lower rates apply on paid tiers (Plus/Pro/Advanced). Settlement period not published; contact sales."
 ---
 

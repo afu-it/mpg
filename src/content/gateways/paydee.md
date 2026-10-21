@@ -24,6 +24,11 @@ dev_docs: "https://developer.paydee.co/"
 popularity: 34
 verified_date: "2026-10-20"
 source: "https://www.paydee.co/"
+bnm:
+  roles: [merchant-acquirer]
+  entity: "Paydee Sdn Bhd (formerly known as Synergy Cards Sdn Bhd)"
+  checked: "2026-10-21"
+  evidence: "https://paydee.co"
 notes: "Indicative. No fees published; site cites only 'competitive processing rates'. Channels confirmed via developer docs (FPX, e-wallet, card)."
 ---
 

@@ -5,22 +5,58 @@
 import { getCollection } from "astro:content";
 import { toApiGateway, type GatewayEntryLike } from "../lib/api";
 import Logo from "./Logo.astro";
+import { getLocale, tr, formatDate } from "../i18n/locale";
+import { gatewayMs } from "../i18n/content";
 
 interface Props {
   slugs: string[];
 }
 const { slugs } = Astro.props;
 
+const locale = getLocale(Astro);
+const T = tr(locale, {
+  en: {
+    gateway: "Gateway",
+    fpx: "FPX",
+    card: "Card (local)",
+    ewallet: "E-wallet",
+    duitnow: "DuitNow QR",
+    est: "Est. / RM100",
+    settlement: "Settlement",
+    onRequest: "On request",
+    caption: (d: string) =>
+      `Live directory data, verified against official sources on ${d}. Third-party figures carry a trailing *; "Contact sales" means the provider does not publish that rate.`,
+  },
+  ms: {
+    gateway: "Gateway",
+    fpx: "FPX",
+    card: "Kad (tempatan)",
+    ewallet: "E-wallet",
+    duitnow: "DuitNow QR",
+    est: "Anggaran / RM100",
+    settlement: "Duit masuk",
+    onRequest: "Atas permintaan",
+    caption: (d: string) =>
+      `Data terkini dari direktori kami, disemak dengan sumber rasmi pada ${d}. Angka bertanda * datang dari pihak ketiga. "Hubungi jualan" bermaksud gateway itu tidak siarkan kadar tersebut.`,
+  },
+});
+// fee cells keep their figures; only the "Contact sales" placeholder is translated
+const fee = (v: string | undefined) => (locale === "ms" && v === "Contact sales" ? "Hubungi jualan" : v);
+
+
 const all = (await getCollection("gateways")) as unknown as GatewayEntryLike[];
 const rows = slugs
   .map((s) => all.find((e) => e.id === s))
   .filter((e): e is GatewayEntryLike => Boolean(e))
   .map((e) => ({ entry: e, api: toApiGateway(e) }));
+const settlementMs = new Map<string, string | undefined>();
+for (const r of rows) settlementMs.set(r.entry.id, (await gatewayMs(r.entry.id, locale))?.data.settlement);
 
 const verified = rows
   .map((r) => r.entry.data.verified_date)
   .sort()
   .at(-1);
+const verifiedShown = verified && locale === "ms" ? formatDate(verified, locale) : verified;
 ---
 
 {
@@ -29,13 +65,13 @@ const verified = rows
       <table class="w-full min-w-[560px] text-sm">
         <thead>
           <tr class="border-b border-line bg-panel text-left text-xs uppercase tracking-wide text-muted">
-            <th class="px-3 py-2 font-medium">Gateway</th>
-            <th class="px-3 py-2 font-medium">FPX</th>
-            <th class="px-3 py-2 font-medium">Card (local)</th>
-            <th class="px-3 py-2 font-medium">E-wallet</th>
-            <th class="px-3 py-2 font-medium">DuitNow QR</th>
-            <th class="px-3 py-2 font-medium">Est. / RM100</th>
-            <th class="px-3 py-2 font-medium">Settlement</th>
+            <th class="px-3 py-2 font-medium">{T.gateway}</th>
+            <th class="px-3 py-2 font-medium">{T.fpx}</th>
+            <th class="px-3 py-2 font-medium">{T.card}</th>
+            <th class="px-3 py-2 font-medium">{T.ewallet}</th>
+            <th class="px-3 py-2 font-medium">{T.duitnow}</th>
+            <th class="px-3 py-2 font-medium">{T.est}</th>
+            <th class="px-3 py-2 font-medium">{T.settlement}</th>
           </tr>
         </thead>
         <tbody>
@@ -47,21 +83,20 @@ const verified = rows
                   <span class="font-medium">{entry.data.name}</span>
                 </a>
               </td>
-              <td class="px-3 py-2 text-muted">{entry.data.fees.fpx}</td>
-              <td class="px-3 py-2 text-muted">{entry.data.fees.card}</td>
-              <td class="px-3 py-2 text-muted">{entry.data.fees.ewallet}</td>
-              <td class="px-3 py-2 text-muted">{entry.data.fees.duitnowqr}</td>
+              <td class="px-3 py-2 text-muted">{fee(entry.data.fees.fpx)}</td>
+              <td class="px-3 py-2 text-muted">{fee(entry.data.fees.card)}</td>
+              <td class="px-3 py-2 text-muted">{fee(entry.data.fees.ewallet)}</td>
+              <td class="px-3 py-2 text-muted">{fee(entry.data.fees.duitnowqr)}</td>
               <td class="px-3 py-2 font-medium text-fg">
-                {api.rankable && api.est_fee_rm100 != null ? `RM${api.est_fee_rm100.toFixed(2)}` : "On request"}
+                {api.rankable && api.est_fee_rm100 != null ? `RM${api.est_fee_rm100.toFixed(2)}` : T.onRequest}
               </td>
-              <td class="px-3 py-2 text-muted">{entry.data.settlement}</td>
+              <td class="px-3 py-2 text-muted">{settlementMs.get(entry.id) ?? fee(entry.data.settlement)}</td>
             </tr>
           ))}
         </tbody>
       </table>
       <figcaption class="border-t border-line bg-panel px-3 py-2 text-xs text-muted">
-        Live directory data, verified against official sources on {verified}. Third-party figures carry a
-        trailing *; "Contact sales" means the provider does not publish that rate.
+        {T.caption(String(verifiedShown))}
       </figcaption>
     </figure>
   )

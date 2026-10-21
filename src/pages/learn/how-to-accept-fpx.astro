@@ -8,6 +8,7 @@ import Logo from "../../components/Logo.astro";
 import { toApiGateway, type GatewayEntryLike } from "../../lib/api";
 import { recommendOrClosest } from "../../lib/recommend";
 import { breadcrumbLd, techArticleLd } from "../../lib/jsonld";
+import { formatDate, getLocale, localizePath, tr } from "../../i18n/locale";
 
 const entries = (await getCollection("gateways")) as unknown as GatewayEntryLike[];
 const gateways = entries.map(toApiGateway);
@@ -18,92 +19,144 @@ const { matches } = recommendOrClosest(gateways, { channels: ["fpx"] }, 5);
 const ranked = matches.filter((m) => m.gateway.rankable);
 
 const site = (Astro.site?.href ?? "https://malaysiapg.com.my/").replace(/\/$/, "");
-const title = "How to accept FPX payments as a Malaysian merchant | MPG";
-const description =
-  "The practical route to accepting FPX: register with a payment gateway, what documents you need, how long approval takes, and what it costs per transaction.";
+const locale = getLocale(Astro);
+// English keeps the ISO date it always showed; BM reads it in Malay month names
+const asOfShown = asOf && locale === "ms" ? formatDate(asOf, locale) : asOf;
+const T = tr(locale, {
+  en: {
+    title: "How to accept FPX payments as a Malaysian merchant | MPG",
+    description:
+      "The practical route to accepting FPX: register with a payment gateway, what documents you need, how long approval takes, and what it costs per transaction.",
+    h1: "How to accept FPX payments",
+    crumbHome: "Home",
+    crumbLearn: "Learn",
+    crumbHere: "How to accept FPX",
+    back: "← Learn",
+    lead: "FPX (online banking transfer) is how most Malaysians pay online. Here is the practical route from zero to accepting it, and what it will cost.",
+    cheapestH: `Cheapest FPX-capable gateways (published rates, verified ${asOfShown})`,
+    fullRanking: "Full FPX ranking",
+    whatIs: "What is FPX?",
+    safeFlow: "The safe integration flow",
+    steps: [
+      {
+        t: "1. You register with a gateway, not with FPX itself",
+        d: "FPX is national infrastructure run by PayNet; direct membership is for banks and large institutions. As a merchant you get FPX by opening an account with any onboarded payment gateway or acquirer, and the gateway handles the FPX side for you. That is the entire trick: pick the gateway, and FPX comes with it.",
+      },
+      {
+        t: "2. Prepare the usual onboarding documents",
+        d: "Expect to provide your SSM business registration, a Malaysian business bank account for settlement, director/owner identification, and your website or social storefront for review. Sole proprietors are widely accepted; some providers also take individuals for payment links with limits.",
+      },
+      {
+        t: "3. Apply, integrate, then test in sandbox",
+        d: "Approval typically takes from a couple of days to a few weeks depending on the provider and your business profile. While waiting, integrate in sandbox mode: payment links need no code at all, while custom sites use the provider's API or a WooCommerce/Shopify plugin. Verify the webhook flow before going live.",
+      },
+      {
+        t: "4. Know what you will pay",
+        d: `FPX is usually the cheapest online channel: most providers price it as a low flat fee or small percentage per transaction. ${fpxCount} providers in this directory support FPX; the ranked list below shows the cheapest ones with officially published rates (verified ${asOfShown}).`,
+      },
+    ],
+  },
+  ms: {
+    title: "Cara terima bayaran FPX sebagai peniaga Malaysia | MPG",
+    description:
+      "Cara mudah untuk terima FPX: daftar dengan payment gateway, dokumen yang perlu, berapa lama nak lulus, dan berapa caj setiap transaksi.",
+    h1: "Cara terima bayaran FPX",
+    crumbHome: "Utama",
+    crumbLearn: "Belajar",
+    crumbHere: "Cara terima FPX",
+    back: "← Belajar",
+    lead: "FPX (bayar terus dari akaun bank melalui online banking) ialah cara kebanyakan orang Malaysia bayar online. Di sini kami tunjuk langkah dari kosong sampai anda boleh terima FPX, dan berapa kosnya.",
+    cheapestH: `Gateway FPX paling murah (kadar yang disiarkan, disemak ${asOfShown})`,
+    fullRanking: "Senarai penuh FPX",
+    whatIs: "Apa itu FPX?",
+    safeFlow: "Langkah integrasi yang selamat",
+    steps: [
+      {
+        t: "1. Anda daftar dengan gateway, bukan dengan FPX sendiri",
+        d: "FPX ialah sistem negara yang dijalankan oleh PayNet. Yang boleh sertai FPX terus hanya bank dan institusi besar. Peniaga biasa dapat FPX dengan buka akaun di mana-mana payment gateway (syarikat yang terima bayaran online bagi pihak anda) atau merchant acquirer yang sudah berdaftar. Gateway itu yang uruskan bahagian FPX. Jadi caranya mudah: pilih gateway, dan FPX datang sekali.",
+      },
+      {
+        t: "2. Sediakan dokumen pendaftaran yang biasa",
+        d: "Biasanya anda perlu sediakan pendaftaran bisnes SSM, akaun bank bisnes Malaysia (tempat duit jualan masuk), kad pengenalan pengarah/pemilik, dan laman web atau kedai media sosial anda untuk disemak. Kebanyakan gateway terima perniagaan milikan tunggal (sole proprietor). Ada gateway yang terima individu juga untuk payment link, tapi dengan had.",
+      },
+      {
+        t: "3. Mohon, buat integrasi, kemudian uji dalam sandbox",
+        d: "Kelulusan biasanya ambil masa beberapa hari hingga beberapa minggu. Ini bergantung pada gateway dan jenis bisnes anda. Sementara tunggu, cuba dulu dalam mod sandbox (mod ujian, tiada duit sebenar). Payment link tak perlu kod langsung. Laman web sendiri pula guna API gateway (cara sistem anda bercakap dengan gateway) atau plugin WooCommerce/Shopify. Sebelum terima duit sebenar, pastikan webhook (mesej automatik dari gateway bila pelanggan dah bayar) berjalan betul.",
+      },
+      {
+        t: "4. Tahu berapa yang anda akan bayar",
+        d: `FPX biasanya cara bayar online yang paling murah. Kebanyakan gateway kenakan caj tetap yang rendah atau peratusan kecil untuk setiap transaksi. ${fpxCount} gateway dalam direktori ini sokong FPX. Senarai di bawah tunjuk yang paling murah antara yang siarkan kadar rasmi (disemak ${asOfShown}).`,
+      },
+    ],
+  },
+});
+const { title, description, steps } = T;
 const jsonld = [
-  techArticleLd(site, "/learn/how-to-accept-fpx/", "How to accept FPX payments", description, asOf),
+  techArticleLd(site, localizePath("/learn/how-to-accept-fpx/", locale), T.h1, description, asOf),
   breadcrumbLd(site, [
-    { name: "Home", path: "/" },
-    { name: "Learn", path: "/learn/" },
-    { name: "How to accept FPX" },
+    { name: T.crumbHome, path: localizePath("/", locale) },
+    { name: T.crumbLearn, path: localizePath("/learn/", locale) },
+    { name: T.crumbHere },
   ]),
-];
-
-const steps = [
-  {
-    t: "1. You register with a gateway, not with FPX itself",
-    d: "FPX is national infrastructure run by PayNet; direct membership is for banks and large institutions. As a merchant you get FPX by opening an account with any onboarded payment gateway or acquirer, and the gateway handles the FPX side for you. That is the entire trick: pick the gateway, and FPX comes with it.",
-  },
-  {
-    t: "2. Prepare the usual onboarding documents",
-    d: "Expect to provide your SSM business registration, a Malaysian business bank account for settlement, director/owner identification, and your website or social storefront for review. Sole proprietors are widely accepted; some providers also take individuals for payment links with limits.",
-  },
-  {
-    t: "3. Apply, integrate, then test in sandbox",
-    d: "Approval typically takes from a couple of days to a few weeks depending on the provider and your business profile. While waiting, integrate in sandbox mode: payment links need no code at all, while custom sites use the provider's API or a WooCommerce/Shopify plugin. Verify the webhook flow before going live.",
-  },
-  {
-    t: "4. Know what you will pay",
-    d: `FPX is usually the cheapest online channel: most providers price it as a low flat fee or small percentage per transaction. ${fpxCount} providers in this directory support FPX; the ranked list below shows the cheapest ones with officially published rates (verified ${asOf}).`,
-  },
 ];
 ---
 
 <Base title={title} description={description}>
   {jsonld.map((obj) => <script is:inline type="application/ld+json" set:html={JSON.stringify(obj)} />)}
-  <a href="/learn/" class="text-sm text-muted hover:text-fg">← Learn</a>
+  <a href="/learn/" class="text-sm text-muted hover:text-fg">{T.back}</a>
 
   <header class="mt-4 max-w-2xl">
-    <h1 class="max-w-3xl text-3xl font-bold tracking-tight text-fg sm:text-4xl">How to accept FPX payments</h1>
-    <p class="mt-2 text-muted">
-      FPX (online banking transfer) is how most Malaysians pay online. Here is the practical
-      route from zero to accepting it, and what it will cost.
-    </p>
+    <h1 class="max-w-3xl text-3xl font-bold tracking-tight text-fg sm:text-4xl">{T.h1}</h1>
+    <p class="mt-2 text-muted">{T.lead}</p>
   </header>
 
-  <div class="mt-8 max-w-3xl space-y-4">
+  <ol class="mt-10 max-w-3xl">
     {
-      steps.map((s) => (
-        <section class="rounded-md border border-line bg-panel p-5">
-          <h2 class="font-medium text-fg">{s.t}</h2>
-          <p class="mt-2 text-sm text-muted">{s.d}</p>
-        </section>
+      steps.map((s, i) => (
+        <li class="relative flex gap-5 pb-8 last:pb-0">
+          {i < steps.length - 1 && <span class="absolute left-4 top-9 h-[calc(100%-2.5rem)] w-px bg-line" aria-hidden="true" />}
+          <span class="grid size-8 shrink-0 place-items-center rounded-full border border-line bg-panel text-sm font-semibold text-fg">{i + 1}</span>
+          <div class="pt-1">
+            <h2 class="font-semibold text-fg">{s.t.replace(/^\d+\.\s*/, "")}</h2>
+            <p class="mt-1.5 text-sm leading-6 text-muted">{s.d}</p>
+          </div>
+        </li>
       ))
     }
-  </div>
+  </ol>
 
-  <section class="mt-10">
-    <h2 class="mb-3 text-xs font-medium uppercase tracking-wide text-muted">
-      Cheapest FPX-capable gateways (published rates, verified {asOf})
-    </h2>
-    <ol class="max-w-3xl space-y-2">
+  <section class="mt-14">
+    <h2 class="text-xs font-medium uppercase tracking-widest text-muted">{T.cheapestH}</h2>
+    <ol class="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
       {
         ranked.map((m, i) => (
-          <li class="flex items-center gap-3 rounded-md border border-line bg-panel px-4 py-3">
-            <span class="w-5 text-right font-semibold text-muted">{i + 1}.</span>
-            <Logo slug={m.gateway.slug} name={m.gateway.name} size={22} />
-            <a href={`/gateway/${m.gateway.slug}/`} class="font-medium text-fg hover:underline">
-              {m.gateway.name}
+          <li>
+            <a href={`/gateway/${m.gateway.slug}/`} class={`flex h-full flex-col gap-3 rounded-xl border bg-panel p-4 hover:border-muted ${i === 0 ? "border-accent" : "border-line"}`}>
+              <span class="flex items-center gap-2">
+                <span class="text-xs font-medium text-muted">#{i + 1}</span>
+                <Logo slug={m.gateway.slug} name={m.gateway.name} size={22} />
+                <span class="truncate font-semibold text-fg">{m.gateway.name}</span>
+              </span>
+              <span class="flex items-baseline justify-between gap-2">
+                <span class="text-2xl font-semibold text-fg">{m.gateway.fees.fpx}</span>
+                <span class="text-xs text-muted">~RM{m.gateway.est_fee_rm100!.toFixed(2)}/RM100</span>
+              </span>
             </a>
-            <span class="ml-auto text-sm text-muted">
-              FPX {m.gateway.fees.fpx} · ~RM{m.gateway.est_fee_rm100!.toFixed(2)}/RM100
-            </span>
           </li>
         ))
       }
     </ol>
   </section>
 
-  <div class="mt-8 flex flex-wrap gap-3">
+  <div class="mt-6 flex flex-wrap gap-3">
     <a href="/best/payment-gateway-fpx/" class="rounded-md bg-brand-blue px-4 py-2 text-sm font-medium text-white hover:opacity-90">
-      Full FPX ranking
+      {T.fullRanking}
     </a>
     <a href="/learn/glossary/fpx/" class="rounded-md border border-line px-4 py-2 text-sm text-muted hover:text-fg">
-      What is FPX?
+      {T.whatIs}
     </a>
     <a href="/learn/integration-flow/" class="rounded-md border border-line px-4 py-2 text-sm text-muted hover:text-fg">
-      The safe integration flow
+      {T.safeFlow}
     </a>
   </div>
 </Base>

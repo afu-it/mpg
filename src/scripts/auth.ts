@@ -2,6 +2,9 @@
 // Single "Sign up" button when signed out (the modal links to sign-in),
 // a UserButton when signed in. Dark-themed to match the site.
 
+import { pageLocale, tr, href } from "../i18n/client";
+
+const T = tr(pageLocale(), { en: { signUp: "Sign up" }, ms: { signUp: "Daftar" } });
 const pk = import.meta.env.PUBLIC_CLERK_PUBLISHABLE_KEY as string | undefined;
 const mount = document.getElementById("clerk-auth");
 
@@ -74,14 +77,14 @@ if (pk && mount) {
         if (isIn) {
           const el = document.createElement("div");
           mount.appendChild(el);
-          Clerk.mountUserButton(el, { afterSignOutUrl: "/" });
+          Clerk.mountUserButton(el, { afterSignOutUrl: href("/") });
         } else {
           const btn = document.createElement("button");
-          btn.textContent = "Sign up";
+          btn.textContent = T.signUp;
           btn.className =
             "whitespace-nowrap rounded-md bg-brand-blue px-3 py-1.5 font-medium text-white hover:opacity-90";
           btn.addEventListener("click", () =>
-            Clerk.openSignUp({ afterSignUpUrl: "/", afterSignInUrl: "/" }),
+            Clerk.openSignUp({ afterSignUpUrl: href("/"), afterSignInUrl: href("/") }),
           );
           mount.appendChild(btn);
         }

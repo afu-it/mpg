@@ -32,6 +32,12 @@ describe("parseSettlementDays", () => {
     expect(parseSettlementDays("")).toBeNull();
   });
 
+  it("reads hyphenated same-day and real-time, but a slower stated leg wins", () => {
+    expect(parseSettlementDays("Same-day")).toBe(0);
+    expect(parseSettlementDays("Real-time")).toBe(0);
+    expect(parseSettlementDays("Real-time or next day (depends on payment mode)")).toBe(1);
+  });
+
   it("plan-gated instant does not beat the stated primary leg", () => {
     expect(parseSettlementDays("T+1 (FPX) / T+2; instant on Pro")).toBe(2);
   });

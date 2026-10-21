@@ -11,6 +11,9 @@ import Logo from "../../components/Logo.astro";
 import { toApiGateway, type GatewayEntryLike } from "../../lib/api";
 import { breadcrumbLd, techArticleLd } from "../../lib/jsonld";
 import { PLATFORMS } from "../../lib/platform-guides";
+import { headlineRates } from "../../lib/seo-pages";
+import { splitName } from "../../lib/name";
+import { formatDate, getLocale, localizePath, tr } from "../../i18n/locale";
 
 export async function getStaticPaths() {
   return PLATFORMS.map((p) => ({ params: { platform: p.slug }, props: { def: p } }));
@@ -30,43 +33,123 @@ const onRequest = withPlugin
   .filter((g) => !g.rankable)
   .sort((a, b) => b.popularity - a.popularity || a.name.localeCompare(b.name));
 const top = ranked[0];
+const runnersUp = ranked.slice(1, 3);
+// gateways on this platform that cover both FPX and e-wallets (the usual Malaysian checkout ask)
+const fpxAndWallet = withPlugin.filter((g) => g.channels.includes("fpx") && g.channels.includes("ewallet"));
+const and = (items: string[], word: string) =>
+  items.length <= 1 ? items.join("") : `${items.slice(0, -1).join(", ")} ${word} ${items.at(-1)}`;
+
+const locale = getLocale(Astro);
+const copy = locale === "ms" ? def.ms : def;
+const T = tr(locale, {
+  en: {
+    h1: `${def.name} payment gateways for Malaysia`,
+    crumbHome: "Home",
+    crumbLearn: "Learn",
+    crumbHere: `${def.name} gateways`,
+    back: "← Learn",
+    top: (date: string, gw: string, rm: string) =>
+      `As of ${date}, the cheapest ${def.name}-ready gateway with officially published rates is ${gw}, at about RM${rm} per RM100 transaction${
+        runnersUp.length ? `, followed by ${and(runnersUp.map((g) => `${splitName(g.name).base} (RM${g.est_fee_rm100!.toFixed(2)})`), "and")}` : ""
+      }.`,
+    faqH: "FAQ",
+    faqCheapQ: `What is the cheapest ${def.name} payment gateway in Malaysia?`,
+    faqCheapA: (date: string, gw: string, rm: string) =>
+      `As of ${date}, ${gw} has the lowest estimated cost among gateways that list a ${def.name} integration and publish official rates: about RM${rm} per RM100 transaction, blending FPX, card and e-wallet fees. Quote-based providers may negotiate lower but publish no comparable rates.`,
+    faqWhichQ: `Which Malaysian payment gateways work with ${def.name}?`,
+    faqWhichA: `${withPlugin.length} providers in this directory list a ${def.name} integration: ${and(withPlugin.map((g) => g.name), "and")}. ${ranked.length} of them publish comparable official rates; the rest quote on request.`,
+    faqFpxQ: `Which ${def.name} payment gateways accept both FPX and e-wallets?`,
+    faqFpxA: `${fpxAndWallet.length} of the ${withPlugin.length}: ${and(fpxAndWallet.map((g) => g.name), "and")}. Check each provider's page for the exact e-wallets it supports.`,
+    browseCheapest: "Cheapest gateways overall",
+    browseAll: "Compare every gateway",
+    rankedH: "Ranked by estimated cost (published rates)",
+    alsoH: `Also ${def.name}-ready, pricing on request`,
+    notesH: "Setup notes",
+    allPlugin: "All plugin-ready gateways",
+    safeFlow: "The safe integration flow",
+    checklist: "Production checklist",
+  },
+  ms: {
+    h1: `Payment gateway untuk ${def.name} di Malaysia`,
+    crumbHome: "Utama",
+    crumbLearn: "Belajar",
+    crumbHere: `Gateway ${def.name}`,
+    back: "← Belajar",
+    top: (date: string, gw: string, rm: string) =>
+      `Setakat ${date}, gateway paling murah yang ada plugin ${def.name} dan siarkan kadar rasmi ialah ${gw}. Cajnya kira-kira RM${rm} untuk setiap jualan RM100${
+        runnersUp.length ? `, diikuti ${and(runnersUp.map((g) => `${splitName(g.name).base} (RM${g.est_fee_rm100!.toFixed(2)})`), "dan")}` : ""
+      }.`,
+    faqH: "Soalan lazim",
+    faqCheapQ: `Apakah payment gateway ${def.name} paling murah di Malaysia?`,
+    faqCheapA: (date: string, gw: string, rm: string) =>
+      `Setakat ${date}, ${gw} ada anggaran caj paling rendah antara gateway yang ada integrasi ${def.name} dan siarkan kadar rasmi: kira-kira RM${rm} bagi setiap transaksi RM100, campuran caj FPX, kad dan e-wallet. Penyedia yang beri harga atas permintaan mungkin boleh runding lebih rendah, tapi tidak siarkan kadar yang boleh dibandingkan.`,
+    faqWhichQ: `Payment gateway Malaysia mana yang boleh guna dengan ${def.name}?`,
+    faqWhichA: `${withPlugin.length} penyedia dalam direktori ini ada integrasi ${def.name}: ${and(withPlugin.map((g) => g.name), "dan")}. ${ranked.length} daripadanya siarkan kadar rasmi yang boleh dibandingkan, selebihnya beri harga atas permintaan.`,
+    faqFpxQ: `Payment gateway ${def.name} mana yang terima FPX dan juga e-wallet?`,
+    faqFpxA: `${fpxAndWallet.length} daripada ${withPlugin.length}: ${and(fpxAndWallet.map((g) => g.name), "dan")}. Semak halaman setiap penyedia untuk e-wallet yang disokong.`,
+    browseCheapest: "Gateway paling murah keseluruhan",
+    browseAll: "Banding semua gateway",
+    rankedH: "Disusun ikut anggaran caj (kadar yang disiarkan)",
+    alsoH: `Juga ada plugin ${def.name}, Hubungi jualan untuk harga`,
+    notesH: "Nota setup",
+    allPlugin: "Semua gateway yang ada plugin",
+    safeFlow: "Langkah integrasi yang selamat",
+    checklist: "Senarai semak sebelum lancar",
+  },
+});
+// English keeps the ISO date it always showed; BM reads it in Malay month names
+const asOfShown = asOf && locale === "ms" ? formatDate(asOf, locale) : asOf;
+
+// data-built FAQ (same FAQPage pattern as /best/ pages); never a hardcoded fee
+const faqs: Array<{ q: string; a: string }> = [];
+if (top) faqs.push({ q: T.faqCheapQ, a: T.faqCheapA(asOfShown ?? "", top.name, top.est_fee_rm100!.toFixed(2)) });
+if (withPlugin.length) faqs.push({ q: T.faqWhichQ, a: T.faqWhichA });
+if (fpxAndWallet.length) faqs.push({ q: T.faqFpxQ, a: T.faqFpxA });
 
 const site = (Astro.site?.href ?? "https://malaysiapg.com.my/").replace(/\/$/, "");
 const jsonld = [
-  techArticleLd(site, `/learn/${def.slug}/`, `${def.name} payment gateways for Malaysia`, def.description, asOf),
+  techArticleLd(site, localizePath(`/learn/${def.slug}/`, locale), T.h1, copy.description, asOf),
   {
     "@context": "https://schema.org",
     "@type": "ItemList",
-    name: `${def.name} payment gateways for Malaysia`,
+    name: T.h1,
     itemListElement: [...ranked, ...onRequest].map((g, i) => ({
       "@type": "ListItem",
       position: i + 1,
       name: g.name,
-      url: `${site}/gateway/${g.slug}/`,
+      url: `${site}${localizePath(`/gateway/${g.slug}/`, locale)}`,
     })),
   },
   breadcrumbLd(site, [
-    { name: "Home", path: "/" },
-    { name: "Learn", path: "/learn/" },
-    { name: `${def.name} gateways` },
+    { name: T.crumbHome, path: localizePath("/", locale) },
+    { name: T.crumbLearn, path: localizePath("/learn/", locale) },
+    { name: T.crumbHere },
   ]),
+  ...(faqs.length
+    ? [
+        {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: faqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
+        },
+      ]
+    : []),
 ];
 ---
 
-<Base title={def.title} description={def.description}>
+<Base title={copy.title} description={copy.description}>
   {jsonld.map((obj) => <script is:inline type="application/ld+json" set:html={JSON.stringify(obj)} />)}
-  <a href="/learn/" class="text-sm text-muted hover:text-fg">← Learn</a>
+  <a href="/learn/" class="text-sm text-muted hover:text-fg">{T.back}</a>
 
   <header class="mt-4 max-w-2xl">
     <h1 class="max-w-3xl text-3xl font-bold tracking-tight text-fg sm:text-4xl">
-      {def.name} payment gateways for Malaysia
+      {T.h1}
     </h1>
-    <p class="mt-2 text-muted">{def.intro}</p>
+    <p class="mt-2 text-muted">{copy.intro}</p>
     {
       top && (
         <p class="mt-3 font-medium text-fg">
-          As of {asOf}, the cheapest {def.name}-ready gateway with officially published rates is{" "}
-          {top.name}, at about RM{top.est_fee_rm100!.toFixed(2)} per RM100 transaction.
+          {T.top(asOfShown ?? "", top.name, top.est_fee_rm100!.toFixed(2))}
         </p>
       )
     }
@@ -74,7 +157,7 @@ const jsonld = [
 
   <section class="mt-8">
     <h2 class="mb-3 text-xs font-medium uppercase tracking-wide text-muted">
-      Ranked by estimated cost (published rates)
+      {T.rankedH}
     </h2>
     <ol class="max-w-3xl space-y-2">
       {
@@ -89,6 +172,9 @@ const jsonld = [
               ~RM{g.est_fee_rm100!.toFixed(2)}
               <span class="text-muted"> / RM100</span>
             </span>
+            {headlineRates(g, 3, locale) && (
+              <span class="w-full pl-8 text-xs text-muted">{headlineRates(g, 3, locale)}</span>
+            )}
           </li>
         ))
       }
@@ -99,7 +185,7 @@ const jsonld = [
     onRequest.length > 0 && (
       <section class="mt-8">
         <h2 class="mb-3 text-xs font-medium uppercase tracking-wide text-muted">
-          Also {def.name}-ready, pricing on request
+          {T.alsoH}
         </h2>
         <div class="flex max-w-3xl flex-wrap gap-2">
           {onRequest.map((g) => (
@@ -116,19 +202,41 @@ const jsonld = [
   }
 
   <section class="mt-10 max-w-3xl rounded-md border border-line bg-panel p-5">
-    <h2 class="font-medium text-fg">Setup notes</h2>
-    <p class="mt-2 text-sm text-muted">{def.note}</p>
+    <h2 class="font-medium text-fg">{T.notesH}</h2>
+    <p class="mt-2 text-sm text-muted">{copy.note}</p>
   </section>
+
+  {
+    faqs.length > 0 && (
+      <section class="mt-10">
+        <h2 class="mb-3 text-xs font-medium uppercase tracking-wide text-muted">{T.faqH}</h2>
+        <div class="max-w-3xl divide-y divide-line border-y border-line">
+          {faqs.map((f) => (
+            <div class="py-4">
+              <h3 class="font-medium text-fg">{f.q}</h3>
+              <p class="mt-1 text-sm text-muted">{f.a}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+    )
+  }
 
   <div class="mt-8 flex flex-wrap gap-3">
     <a href="/best/payment-gateway-ecommerce-plugins/" class="rounded-md bg-brand-blue px-4 py-2 text-sm font-medium text-white hover:opacity-90">
-      All plugin-ready gateways
+      {T.allPlugin}
     </a>
     <a href="/learn/integration-flow/" class="rounded-md border border-line px-4 py-2 text-sm text-muted hover:text-fg">
-      The safe integration flow
+      {T.safeFlow}
     </a>
     <a href="/learn/checklist/" class="rounded-md border border-line px-4 py-2 text-sm text-muted hover:text-fg">
-      Production checklist
+      {T.checklist}
+    </a>
+    <a href="/best/cheapest-payment-gateway-malaysia/" class="rounded-md border border-line px-4 py-2 text-sm text-muted hover:text-fg">
+      {T.browseCheapest}
+    </a>
+    <a href="/gateways/" class="rounded-md border border-line px-4 py-2 text-sm text-muted hover:text-fg">
+      {T.browseAll}
     </a>
   </div>
 </Base>

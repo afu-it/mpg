@@ -30,6 +30,11 @@ dev_docs: "https://docs.chip-in.asia/"
 popularity: 78
 verified_date: "2026-10-20"
 source: "https://www.chip-in.asia/pricing"
+bnm:
+  roles: [merchant-acquirer]
+  entity: "Chip In Sdn Bhd"
+  checked: "2026-10-21"
+  evidence: "https://www.chip-in.asia/terms-of-service"
 notes: "Re-verified 2026-10-20 on the official /pricing page (rates moved off /collect): FPX B2C RM1 (B2B RM2), local credit cards 2.0% (local debit 1.0%), foreign cards 3.0%, all e-wallets 1.4%, DuitNow QR online 1.0%, BNPL Atome 5.3% or SPayLater by Shopee 1.4%, stablecoin 1.5% (BTC, ETH, PYUSD, USDC, USDT on six networks, settled in MYR, 1.5% refund fee, gas and network fees excluded). Transaction fees are subject to 8% SST. No setup, monthly or annual fees. Refund fees apply only to FPX (RM1 B2C, RM2 B2B). Settlement: FPX and DuitNow QR next day; cards, e-wallets and SPayLater every 2 business days; stablecoin every 1 business day; Atome every Thursday of the following week. In-person DuitNow QR via the CHIP mini app 1.0%; POS terminal card and e-wallet rates are listed as coming soon. The earlier RM0.15 minimum on DuitNow QR is no longer shown on the pricing page."
 ---
 

@@ -43,7 +43,12 @@ dev_docs: "https://bitbucket.org/eghl/merchantapi"
 popularity: 82
 verified_date: "2026-10-20"
 source: "https://my.nttdatapay.com/en/payment-services/adaptis-e-commerce"
-notes: "Rebrand (checked 2026-10-20): eghl.my now 301-redirects to my.nttdatapay.com/en/payment-services/adaptis-e-commerce, so eGHL is now sold as ADAPTIS e-Commerce by NTT DATA Payment Services Malaysia (formerly GHL). The new page lists card, online banking, e-wallet, instalment (0% Easy Payment Plan) and BNPL acceptance, plus Direct Link checkout, email payment links and recurring payments, with a Contact us form only. No rate card and no settlement terms are published on the official site, so the weekly W+4 settlement can no longer be confirmed there. All fees shown (*) are third-party/indicative tiered ranges (Standard/Premium/Corporate), not official; confirm with NTT DATA Payment Services sales."
+bnm:
+  roles: [merchant-acquirer]
+  entity: "NTT DATA ePayments Sdn Bhd"
+  checked: "2026-10-21"
+  evidence: "https://web.archive.org/web/20260315082252/https://my.nttdatapay.com/company-name-change"
+notes: "iPay88 and eGHL now operate under the NTT DATA brand ADAPTIS (NTT DATA Payment Services notice: 'The e-Commerce services you knew from iPay88 and eGHL are now part of ADAPTIS e-Commerce.', https://my.nttdatapay.com/company-name-change, archived copy of 2026-03-15; ipay88.com and eghl.my both redirect to the ADAPTIS e-Commerce page, checked 2026-10-21). Rebrand (checked 2026-10-20): eghl.my now 301-redirects to my.nttdatapay.com/en/payment-services/adaptis-e-commerce, so eGHL is now sold as ADAPTIS e-Commerce by NTT DATA Payment Services Malaysia (formerly GHL). The new page lists card, online banking, e-wallet, instalment (0% Easy Payment Plan) and BNPL acceptance, plus Direct Link checkout, email payment links and recurring payments, with a Contact us form only. No rate card and no settlement terms are published on the official site, so the weekly W+4 settlement can no longer be confirmed there. All fees shown (*) are third-party/indicative tiered ranges (Standard/Premium/Corporate), not official; confirm with NTT DATA Payment Services sales."
 ---
 
 eGHL (GHL ePayments, now NTT DATA Payment Services) is an established, Bank Negara-regulated, PCI-DSS Level 1 online payment gateway operating across Malaysia and Southeast Asia. It lets businesses accept credit/debit cards, FPX online banking, e-wallets, QR and Buy Now Pay Later through a single integration with API/SDK, hosted pages, recurring billing and a real-time dashboard.

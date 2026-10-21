@@ -7,182 +7,237 @@ export const prerender = true;
 import Base from "../layouts/Base.astro";
 import { breadcrumbLd } from "../lib/jsonld";
 
-const crumbLd = breadcrumbLd(String(Astro.site ?? "https://malaysiapg.com.my/"), [
-  { name: "Home", path: "/" },
-  { name: "Contribute" },
-]);
+import { getLocale, tr } from "../i18n/locale";
 
-const areas = [
+const locale = getLocale(Astro);
+// option values stay English: they go into the email the maintainer reads
+const areaValues = [
   "Fix or update a gateway's fees (with an official source)",
   "Add a missing Malaysian gateway",
   "Fill in supported banks / e-wallet methods",
   "Improve the Learn guides or docs",
   "Something else",
 ];
+const T = tr(locale, {
+  en: {
+    home: "Home",
+    crumb: "Contribute",
+    title: "Contribute to MPG | Malaysia Payment Gateway",
+    description:
+      "Help keep Malaysia's payment gateway directory accurate: fix fees with official sources, add missing gateways, improve the guides. Apply to contribute.",
+    h1: "Contribute",
+    lead: "Found a wrong fee or a missing gateway? Help keep the list true.",
+    openGithub: "Open GitHub",
+    report: "Report a fee change",
+    rules: "3 rules",
+    r1: "Official source",
+    r1Text: "Every fee needs the provider's own page, with a date.",
+    r2: "No guessing",
+    r2Text: 'Unpublished stays "Contact sales". Third-party figures get a *.',
+    r3: "One file per gateway",
+    r3Text: "Checks must pass before it goes in.",
+    how: "How it works",
+    steps: [
+      { title: "Fork the repo", desc: "Copy the project to your GitHub account." },
+      { title: "Edit one file", desc: "One gateway = one file. Fix the fee and the date." },
+      { title: "Open a pull request", desc: "Add the official source link. Tests run on their own." },
+      { title: "Merged and live", desc: "Checked against the source, then it goes live." },
+    ],
+    noGithub: "No GitHub? Send a report",
+    gate: "Sign up free first, then the form opens.",
+    signup: "Sign up to apply",
+    sendingAs: "Sending as",
+    opensMail: "This opens your mail app with everything filled in.",
+    githubLabel: "GitHub username or profile link",
+    githubPh: "octocat or https://github.com/octocat",
+    areaLabel: "What do you want to contribute?",
+    areas: areaValues,
+    messageLabel: "Tell us a little more",
+    messagePh: "Which gateway, what is wrong or missing, and your source if you have one.",
+    send: "Send application",
+  },
+  ms: {
+    home: "Utama",
+    crumb: "Sumbang",
+    title: "Sumbang kepada MPG | Malaysia Payment Gateway",
+    description:
+      "Bantu pastikan direktori payment gateway Malaysia tepat: betulkan fee dengan sumber rasmi, tambah gateway yang belum ada, baiki panduan. Mohon untuk menyumbang.",
+    h1: "Sumbang",
+    lead: "Jumpa fee yang salah atau gateway yang belum ada? Bantu kami pastikan senarai ini betul.",
+    openGithub: "Buka GitHub",
+    report: "Lapor perubahan fee",
+    rules: "3 peraturan",
+    r1: "Sumber rasmi",
+    r1Text: "Setiap fee perlu ada link ke laman rasmi gateway itu sendiri, berserta tarikh.",
+    r2: "Tiada tekaan",
+    r2Text: 'Yang tak disiarkan kekal "Hubungi jualan". Angka dari pihak ketiga diberi tanda *.',
+    r3: "Satu fail bagi setiap gateway",
+    r3Text: "Semakan automatik mesti lulus sebelum ia dimasukkan.",
+    how: "Macam mana nak sumbang",
+    steps: [
+      { title: "Fork repo", desc: "Salin projek ini ke akaun GitHub anda." },
+      { title: "Edit satu fail", desc: "Satu gateway = satu fail. Betulkan fee dan tarikh." },
+      { title: "Buka pull request", desc: "Letak link sumber rasmi. Semakan automatik jalan sendiri." },
+      { title: "Diterima dan naik", desc: "Kami semak dengan sumber, lepas itu terus naik ke laman." },
+    ],
+    noGithub: "Tiada GitHub? Hantar laporan",
+    gate: "Daftar percuma dulu, lepas itu borang akan dibuka.",
+    signup: "Daftar untuk mohon",
+    sendingAs: "Dihantar sebagai",
+    opensMail: "Ini akan buka app email anda dengan semua maklumat sudah diisi.",
+    githubLabel: "Nama pengguna GitHub atau link profil",
+    githubPh: "octocat atau https://github.com/octocat",
+    areaLabel: "Apa yang anda mahu sumbang?",
+    areas: [
+      "Betulkan atau kemas kini fee gateway (dengan sumber rasmi)",
+      "Tambah gateway Malaysia yang belum ada",
+      "Isi senarai bank / e-wallet yang disokong",
+      "Baiki panduan Belajar atau dokumen",
+      "Lain-lain",
+    ],
+    messageLabel: "Ceritakan sedikit lagi",
+    messagePh: "Gateway mana, apa yang salah atau tiada, dan sumber anda jika ada.",
+    send: "Hantar permohonan",
+  },
+});
+
+const crumbLd = breadcrumbLd(String(Astro.site ?? "https://malaysiapg.com.my/"), [
+  { name: T.home, path: "/" },
+  { name: T.crumb },
+]);
+
+const areas = areaValues.map((value, i) => ({ value, label: T.areas[i] }));
 
 const repoUrl = "https://github.com/afu-it/mpg";
-const steps = [
-  {
-    n: "1",
-    title: "Fork the repo",
-    desc: "The code and all gateway data are open source on GitHub. Fork it to your account.",
-  },
-  {
-    n: "2",
-    title: "Edit one file",
-    desc: "Each gateway is a single markdown file. Fix the fee, bump the verified date, keep the official source link.",
-  },
-  {
-    n: "3",
-    title: "Open a pull request",
-    desc: "Tests check the data automatically. Link your official source in the PR description.",
-  },
-  {
-    n: "4",
-    title: "Merged and live",
-    desc: "Every change is reviewed against the source before it goes live on the site.",
-  },
-];
+const steps = T.steps.map((s, i) => ({ n: String(i + 1), ...s }));
 ---
 
 <Base
-  title="Contribute to MPG | Malaysia Payment Gateway"
-  description="Help keep Malaysia's payment gateway directory accurate: fix fees with official sources, add missing gateways, improve the guides. Apply to contribute."
+  title={T.title}
+  description={T.description}
 >
   <script is:inline type="application/ld+json" set:html={JSON.stringify(crumbLd)} />
-  <nav aria-label="Breadcrumb" class="mb-4 flex items-center gap-2 text-sm text-muted">
-    <a href="/" class="hover:text-fg hover:underline">Home</a>
-    <span aria-hidden="true">/</span>
-    <span class="text-fg">Contribute</span>
-  </nav>
-
-  <div class="mx-auto max-w-2xl">
-    <h1 class="text-3xl font-bold tracking-tight text-fg sm:text-4xl">Contribute to MPG</h1>
-    <p class="mt-4 text-muted">
-      This directory stays useful only if the data stays true. If you spot an outdated fee,
-      know a gateway we missed, or want to improve the guides, you can help. The whole
-      site is{" "}
-      <a href={repoUrl} target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">open source on GitHub</a>.
-    </p>
-    <div class="mt-6 flex flex-wrap gap-3">
+  <header class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+    <div class="max-w-2xl">
+      <h1 class="text-3xl font-bold tracking-tight text-fg sm:text-4xl">{T.h1}</h1>
+      <p class="mt-2 text-muted">{T.lead}</p>
+    </div>
+    <div class="flex flex-wrap gap-2">
       <a
         href={repoUrl}
         target="_blank"
         rel="noopener noreferrer"
         class="rounded-md bg-brand-blue px-4 py-2 text-sm font-medium text-white hover:opacity-90"
       >
-        View the repo on GitHub
+        {T.openGithub}
       </a>
       <a
         href={`${repoUrl}/issues/new/choose`}
         target="_blank"
         rel="noopener noreferrer"
-        class="rounded-md border border-line px-4 py-2 text-sm text-muted hover:text-fg"
+        class="rounded-md border border-line px-4 py-2 text-sm text-muted hover:border-muted hover:text-fg"
       >
-        Report a fee change
+        {T.report}
       </a>
     </div>
+  </header>
 
-    <section class="mt-8">
-      <h2 class="mb-3 text-sm font-medium uppercase tracking-wide text-muted">The rules (non-negotiable)</h2>
-      <ul class="space-y-2 text-sm text-muted">
-        <li class="rounded-md border border-line bg-panel px-4 py-3">
-          <strong class="text-fg">Every fee needs an official source.</strong>{" "}
-          Provider pricing page or rate card, with a date. No source, no number.
-        </li>
-        <li class="rounded-md border border-line bg-panel px-4 py-3">
-          <strong class="text-fg">Never invent a figure.</strong>{" "}
-          Unpublished pricing stays "Contact sales". Third-party figures carry a trailing *.
-        </li>
-        <li class="rounded-md border border-line bg-panel px-4 py-3">
-          <strong class="text-fg">One gateway = one markdown file.</strong>{" "}
-          Data lives in simple, schema-checked files; tests and checks must pass before merge.
-        </li>
-      </ul>
-    </section>
+  <section class="mt-8">
+    <h2 class="text-xs font-medium uppercase tracking-widest text-muted">{T.rules}</h2>
+    <ul class="mt-3 grid gap-3 md:grid-cols-3">
+      <li class="rounded-xl border border-line bg-panel p-5">
+        <h3 class="font-semibold text-fg">{T.r1}</h3>
+        <p class="mt-1 text-sm text-muted">{T.r1Text}</p>
+      </li>
+      <li class="rounded-xl border border-line bg-panel p-5">
+        <h3 class="font-semibold text-fg">{T.r2}</h3>
+        <p class="mt-1 text-sm text-muted">{T.r2Text}</p>
+      </li>
+      <li class="rounded-xl border border-line bg-panel p-5">
+        <h3 class="font-semibold text-fg">{T.r3}</h3>
+        <p class="mt-1 text-sm text-muted">{T.r3Text}</p>
+      </li>
+    </ul>
+  </section>
 
-    <section class="mt-8">
-      <h2 class="mb-3 text-sm font-medium uppercase tracking-wide text-muted">How it works</h2>
-      <ol class="grid gap-3 sm:grid-cols-2">
-        {
-          steps.map((s) => (
-            <li class="rounded-md border border-line bg-panel p-4">
-              <span class="grid h-6 w-6 place-items-center rounded-full bg-brand-blue text-xs font-semibold text-white">
-                {s.n}
-              </span>
-              <h3 class="mt-2 text-sm font-medium text-fg">{s.title}</h3>
-              <p class="mt-1 text-sm text-muted">{s.desc}</p>
-            </li>
-          ))
-        }
-      </ol>
-    </section>
+  <section class="mt-10">
+    <h2 class="text-xs font-medium uppercase tracking-widest text-muted">{T.how}</h2>
+    <ol class="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+      {
+        steps.map((s) => (
+          <li class="rounded-xl border border-line bg-panel p-5">
+            <span class="grid size-6 place-items-center rounded-full bg-brand-blue text-xs font-semibold text-white">
+              {s.n}
+            </span>
+            <h3 class="mt-3 font-semibold text-fg">{s.title}</h3>
+            <p class="mt-1 text-sm text-muted">{s.desc}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
 
+  <div class="mt-10 max-w-2xl">
     <section class="mt-8">
-      <h2 class="mb-3 text-sm font-medium uppercase tracking-wide text-muted">No GitHub? Send a report instead</h2>
+      <h2 class="mb-3 text-xs font-medium uppercase tracking-widest text-muted">{T.noGithub}</h2>
 
       <!-- signed out: sign-up gate -->
       <div id="apply-gate" class="rounded-md border border-line bg-panel p-5 text-center">
         <p class="text-sm text-muted">
-          Reports are tied to an account, so sign up (free) first, then this form unlocks.
+          {T.gate}
         </p>
         <button
           id="apply-signup"
           type="button"
-          class="mt-3 rounded-md bg-brand-blue px-4 py-2 text-sm font-medium text-white hover:opacity-90"
+          class="mt-3 cursor-pointer rounded-md bg-brand-blue px-4 py-2 text-sm font-medium text-white hover:opacity-90"
         >
-          Sign up to apply
+          {T.signup}
         </button>
       </div>
 
       <!-- signed in: application form -> prefilled email -->
       <form id="apply-form" hidden class="space-y-4 rounded-md border border-line bg-panel p-5">
         <p class="text-sm text-muted">
-          Applying as <span id="apply-email" class="text-fg"></span>. Submitting opens a
-          prefilled email in your mail app; just hit send.
+          {T.sendingAs} <span id="apply-email" class="text-fg"></span>. {T.opensMail}
         </p>
         <div>
-          <label for="apply-github" class="mb-1 block text-sm font-medium text-fg">GitHub username or profile link</label>
+          <label for="apply-github" class="mb-1 block text-sm font-medium text-fg">{T.githubLabel}</label>
           <input
             id="apply-github"
             name="github"
             required
-            placeholder="octocat or https://github.com/octocat"
+            placeholder={T.githubPh}
             class="w-full rounded-md border border-line bg-raised px-3 py-2 text-sm text-fg placeholder:text-muted focus:border-accent focus:outline-none"
           />
         </div>
         <div>
-          <label for="apply-area" class="mb-1 block text-sm font-medium text-fg">What do you want to contribute?</label>
+          <label for="apply-area" class="mb-1 block text-sm font-medium text-fg">{T.areaLabel}</label>
           <select
             id="apply-area"
             name="area"
             class="w-full rounded-md border border-line bg-raised px-3 py-2 text-sm text-fg focus:border-accent focus:outline-none"
           >
-            {areas.map((a) => <option value={a}>{a}</option>)}
+            {areas.map((a) => <option value={a.value}>{a.label}</option>)}
           </select>
         </div>
         <div>
-          <label for="apply-message" class="mb-1 block text-sm font-medium text-fg">Tell us a little more</label>
+          <label for="apply-message" class="mb-1 block text-sm font-medium text-fg">{T.messageLabel}</label>
           <textarea
             id="apply-message"
             name="message"
             rows="4"
-            placeholder="Which gateway, what is wrong or missing, and your source if you have one."
+            placeholder={T.messagePh}
             class="w-full rounded-md border border-line bg-raised px-3 py-2 text-sm text-fg placeholder:text-muted focus:border-accent focus:outline-none"></textarea>
         </div>
         <button
           type="submit"
           class="rounded-md bg-brand-blue px-4 py-2 text-sm font-medium text-white hover:opacity-90"
         >
-          Send application
+          {T.send}
         </button>
       </form>
     </section>
 
-    <p class="mt-8 text-xs text-muted">
-      Prefer neither? You can still help: use the details on a gateway page to tell the
-      provider their public pricing is unclear, or just share this site.
-    </p>
   </div>
 
   <script>

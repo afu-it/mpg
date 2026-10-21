@@ -5,3 +5,11 @@
 /gateway/favepay-later /gateways/ 301
 /gateway/edxapay/ /gateways/ 301
 /gateway/edxapay /gateways/ 301
+
+# old curated BM pages (spec 12 slice G) -> their twins in the full /ms/ site
+/ms/payment-gateway-murah/ /ms/best/cheapest-payment-gateway-malaysia/ 301
+/ms/payment-gateway-murah /ms/best/cheapest-payment-gateway-malaysia/ 301
+/ms/cara-pilih-payment-gateway/ /ms/choose/ 301
+/ms/cara-pilih-payment-gateway /ms/choose/ 301
+/ms/payment-gateway-untuk-bisnes-online/ /ms/best/payment-gateway-online-store/ 301
+/ms/payment-gateway-untuk-bisnes-online /ms/best/payment-gateway-online-store/ 301

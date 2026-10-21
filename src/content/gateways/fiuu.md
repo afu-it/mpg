@@ -43,6 +43,11 @@ dev_docs: https://github.com/FiuuPayment/Documentation-Fiuu_API_Spec
 popularity: 90
 verified_date: "2026-10-20"
 source: "https://booster.fiuu.com/assets/Appendix_20260817.pdf"
+bnm:
+  roles: [merchant-acquirer]
+  entity: "Razer Merchant Services Sdn Bhd (formerly known as MOLPay Sdn Bhd)"
+  checked: "2026-10-21"
+  evidence: "https://fiuu.com/terms-of-services/"
 notes: "Official Booster (self-serve) appendix dated 2026-08-17, linked from booster.fiuu.com (replaces the April 2024 card). One-time signup fee RM999 waived (the earlier RM99 promo is gone); yearly maintenance RM99, first year waived. Online banking B2C 1.00% (min RM1.20, max RM2.00), B2B 1.00% (min RM1.70, max RM2.50). Online DuitNow QR 1.05% (CASA, wallet) or 1.40% (linked credit account). Online e-wallets: TNG 1.50%, GrabPay 1.40%, Boost 1.40%, ShopeePay 1.30%. Online Visa/Mastercard domestic credit 2.00% + RM0.45, debit 1.79% + RM0.45, prepaid 1.91% + RM0.45, charge card 3.37% + RM0.45; foreign 4.01% + RM0.84 plus scheme surcharges; MyDebit 0.90% (min RM1.20); UnionPay 3.00%; Diners/Discover 3.20%. BNPL (Atome, GrabPay PayLater) no longer appears on the appendix, so BNPL is Contact sales (April 2024 card listed 5.5% to 6%). Settled weekly every Thursday; domestic e-wallets T+2. Minimum settlement RM100. FPX refund RM0.60, chargeback RM50. Shopify merchants +0.25% MDR. Enterprise rates negotiable."
 ---
 

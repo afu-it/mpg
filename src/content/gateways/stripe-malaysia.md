@@ -35,7 +35,24 @@ dev_docs: "https://docs.stripe.com/api"
 popularity: 68
 verified_date: "2026-10-20"
 source: "https://stripe.com/en-my/pricing"
+bnm:
+  roles: [merchant-acquirer]
+  entity: "Stripe Payments Malaysia Sdn Bhd"
+  checked: "2026-10-21"
+  evidence: "https://stripe.com/en-my/legal/ssa"
 notes: "Domestic cards and FPX both 3% + RM1.00. International cards add +1% (so ~4% + RM1.00), plus 2% if currency conversion is needed. GrabPay 3%, Alipay 2.9% + RM1.00. No setup or monthly fee. Powerful APIs and Stripe Billing for subscriptions. DuitNow QR not listed."
+no_ssm:
+  detail: "Individuals and sole owners can sign up with MyKad instead of an SSM business registration number."
+  detail_ms: "Individu dan pemilik tunggal boleh daftar guna MyKad, bukan nombor pendaftaran SSM."
+  quote: "you'll need to provide your Tax Identification Number (MY TIN) and Business Registration Number (BRN) or MyKad"
+  source: https://support.stripe.com/questions/understanding-e-invoicing-requirements-for-malaysia
+  checked: "2026-10-21"
+instant_settlement:
+  detail: "Instant Payouts is a paid extra (a small % per payout); the standard payout schedule is slower."
+  detail_ms: "Instant Payouts ialah tambahan berbayar (sedikit % setiap kali keluarkan duit); jadual biasa lebih lambat."
+  quote: "Access funds within minutes through an eligible debit card or bank account."
+  source: https://stripe.com/en-my/pricing
+  checked: "2026-10-21"
 ---
 
 Stripe is the global, **developer-first** payments platform, available in

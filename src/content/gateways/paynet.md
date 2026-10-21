@@ -28,6 +28,11 @@ features:
 popularity: 0
 verified_date: "2026-10-20"
 source: "https://www.paynet.my"
+bnm:
+  roles: [payment-system-operator]
+  entity: "Payments Network Malaysia Sdn Bhd (PayNet)"
+  checked: "2026-10-21"
+  evidence: "https://www.paynet.my"
 notes: "Payments Network Malaysia Sdn Bhd is the national payments infrastructure majority-owned by Bank Negara Malaysia, NOT a merchant gateway. Merchants do not sign up with PayNet directly; they connect to FPX / DuitNow / DuitNow QR through a bank or a licensed payment gateway (PSP). Listed here for context only; fees are set by the connecting gateway, so all fee fields are not applicable."
 ---
 

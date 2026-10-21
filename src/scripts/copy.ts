@@ -1,6 +1,12 @@
 // Generic copy-to-clipboard for any element with `data-copy="<text>"`.
 // On click, copies the text and briefly swaps the element's label to "Copied!".
 // Used by the per-gateway "Copy prompt" button and /learn install commands.
+import { pageLocale, tr } from "../i18n/client";
+
+const T = tr(pageLocale(), {
+  en: { copied: "Copied!", failed: "Copy failed" },
+  ms: { copied: "Disalin!", failed: "Gagal salin" },
+});
 
 function flash(el: HTMLElement, done: string) {
   const label = el.querySelector<HTMLElement>("[data-copy-label]") ?? el;
@@ -18,8 +24,8 @@ document.addEventListener("click", async (e) => {
   if (!text) return;
   try {
     await navigator.clipboard.writeText(text);
-    flash(target, "Copied!");
+    flash(target, T.copied);
   } catch {
-    flash(target, "Copy failed");
+    flash(target, T.failed);
   }
 });

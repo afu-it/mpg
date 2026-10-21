@@ -1,0 +1,191 @@
+---
+// Gateways an individual can join without SSM business registration (reader
+// request 2026-10-21). Static sibling of /best/fastest-settlement/. Lists only
+// gateways whose own page says so (gateway.no_ssm, quoted verbatim with source);
+// everything else is "not stated", never "no".
+export const prerender = true;
+
+import { getCollection } from "astro:content";
+import Base from "../../layouts/Base.astro";
+import Logo from "../../components/Logo.astro";
+import { toApiGateway, type GatewayEntryLike } from "../../lib/api";
+import { breadcrumbLd } from "../../lib/jsonld";
+import { PROFILES, profileCopy } from "../../lib/seo-pages";
+import { getLocale, tr, formatDate } from "../../i18n/locale";
+
+const locale = getLocale(Astro);
+const T = tr(locale, {
+  en: {
+    title: "Payment gateway without SSM in Malaysia: individuals | MPG",
+    description:
+      "Malaysian payment gateways an individual can sign up for without SSM business registration, each backed by a quote from the gateway's own page, with fees.",
+    home: "Home",
+    learn: "Learn",
+    breadcrumb: "Breadcrumb",
+    crumb: "Without SSM",
+    h1: "Payment gateways you can register without SSM",
+    lead: "SSM registration (Suruhanjaya Syarikat Malaysia) is what most gateways ask for before you can take payments. The gateways below say on their own website that an individual can sign up without it, usually with just a MyKad. Each one shows the exact sentence and where it came from, so you can check it yourself.",
+    answer: (n: number, date: string) =>
+      `As of ${date}, ${n} Malaysian payment gateways say on their own website that individuals can sign up without SSM registration.`,
+    listH: "Gateways that accept individuals without SSM",
+    say: "What they say",
+    source: "Source",
+    checked: "checked",
+    estFee: "est. fee",
+    none: "We have not confirmed any gateway yet. Check back soon.",
+    otherH: "Everyone else",
+    otherP:
+      "The other gateways either ask for SSM registration or don't say on their website. Ask them directly before you apply; rules change.",
+    tip: "Tip: individual accounts often have lower monthly limits or fewer payment methods. Once your sales grow, registering with SSM usually unlocks more.",
+    browse: "Browse all gateways",
+    more: "More guides",
+  },
+  ms: {
+    title: "Payment gateway tanpa SSM di Malaysia untuk individu | MPG",
+    description:
+      "Payment gateway Malaysia yang individu boleh daftar tanpa SSM, setiap satu dengan ayat bukti dari laman rasmi gateway itu sendiri, berserta caj.",
+    home: "Utama",
+    learn: "Belajar",
+    breadcrumb: "Laluan halaman",
+    crumb: "Tanpa SSM",
+    h1: "Payment gateway yang boleh daftar tanpa SSM",
+    lead: "Kebanyakan gateway minta pendaftaran SSM (Suruhanjaya Syarikat Malaysia) sebelum anda boleh terima bayaran. Gateway di bawah tulis di laman rasmi mereka sendiri bahawa individu boleh daftar tanpa SSM, biasanya guna MyKad sahaja. Setiap satu ada ayat asal dan link sumber, jadi anda boleh semak sendiri.",
+    answer: (n: number, date: string) =>
+      `Sehingga ${date}, ada ${n} payment gateway Malaysia yang tulis di laman rasmi mereka bahawa individu boleh daftar tanpa SSM.`,
+    listH: "Gateway yang terima individu tanpa SSM",
+    say: "Apa yang mereka tulis",
+    source: "Sumber",
+    checked: "disemak",
+    estFee: "anggaran caj",
+    none: "Belum ada gateway yang kami sahkan. Sila semak semula nanti.",
+    otherH: "Gateway lain",
+    otherP:
+      "Gateway lain sama ada minta SSM atau tak nyatakan di laman mereka. Tanya terus sebelum mohon, sebab syarat boleh berubah.",
+    tip: "Tip: akaun individu biasanya ada had jualan bulanan lebih rendah atau kurang cara bayar. Bila jualan dah naik, daftar SSM biasanya buka lebih banyak pilihan.",
+    browse: "Lihat semua gateway",
+    more: "Panduan lain",
+  },
+});
+
+const entries = (await getCollection("gateways")) as unknown as (GatewayEntryLike & {
+  data: GatewayEntryLike["data"] & {
+    no_ssm?: { detail: string; detail_ms: string; quote: string; source: string; checked: string };
+  };
+})[];
+const api = new Map(entries.map((e) => [e.id, toApiGateway(e)]));
+const listed = entries
+  .filter((e) => e.data.no_ssm && api.get(e.id)!.category !== "infrastructure")
+  .map((e) => ({ e, g: api.get(e.id)!, s: e.data.no_ssm! }))
+  // cheapest first where an estimate exists, then by market presence
+  .sort(
+    (a, b) =>
+      (a.g.est_fee_rm100 ?? Infinity) - (b.g.est_fee_rm100 ?? Infinity) ||
+      b.g.popularity - a.g.popularity ||
+      a.g.name.localeCompare(b.g.name),
+  );
+const asOf = listed.map((x) => x.s.checked).sort().at(-1) ?? "2026-10-21";
+const shownDate = (d: string) => (locale === "ms" ? formatDate(d, locale) : d);
+
+const site = (Astro.site?.href ?? "https://malaysiapg.com.my/").replace(/\/$/, "");
+const jsonld = [
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: T.h1,
+    itemListElement: listed.map((x, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: x.g.name,
+      url: `${site}/gateway/${x.g.slug}/`,
+    })),
+  },
+  breadcrumbLd(site, [
+    { name: T.home, path: "/" },
+    { name: T.learn, path: "/learn/" },
+    { name: T.crumb },
+  ]),
+];
+---
+
+<Base title={T.title} description={T.description}>
+  <nav aria-label={T.breadcrumb} class="mb-4 flex items-center gap-2 text-sm text-muted">
+    <a href="/" class="hover:text-fg hover:underline">{T.home}</a>
+    <span aria-hidden="true">/</span>
+    <a href="/learn/" class="hover:text-fg hover:underline">{T.learn}</a>
+    <span aria-hidden="true">/</span>
+    <span class="text-fg">{T.crumb}</span>
+  </nav>
+
+  <h1 class="max-w-3xl text-3xl font-bold tracking-tight text-fg sm:text-4xl">{T.h1}</h1>
+  <p class="mt-4 max-w-3xl text-muted">{T.lead}</p>
+  {listed.length > 0 && <p class="mt-3 max-w-3xl font-medium text-fg">{T.answer(listed.length, shownDate(asOf))}</p>}
+
+  <section class="mt-12">
+    <h2 class="mb-3 text-xs font-medium uppercase tracking-wide text-muted">{T.listH}</h2>
+    {listed.length === 0 && <p class="text-sm text-muted">{T.none}</p>}
+    <ol class="divide-y divide-line border-y border-line">
+      {
+        listed.map((x, i) => (
+          <li class="py-4">
+            <div class="flex flex-wrap items-center gap-3">
+              <span class="w-6 text-right font-semibold text-muted">{i + 1}.</span>
+              <Logo slug={x.g.slug} name={x.g.name} size={26} />
+              <a href={`/gateway/${x.g.slug}/`} class="font-medium text-fg hover:underline">
+                {x.g.name}
+              </a>
+              {x.g.est_fee_rm100 != null && (
+                <span class="ml-auto text-sm text-fg">
+                  {T.estFee} ~RM{x.g.est_fee_rm100.toFixed(2)} / RM100
+                </span>
+              )}
+            </div>
+            <p class="mt-2 pl-9 text-sm text-fg">{locale === "ms" ? x.s.detail_ms : x.s.detail}</p>
+            <blockquote class="mt-2 ml-9 border-l-2 border-line pl-3 text-sm italic text-muted" lang="en">
+              "{x.s.quote}"
+            </blockquote>
+            <p class="mt-1 pl-9 text-xs text-muted">
+              {T.source}:{" "}
+              <a href={x.s.source} target="_blank" rel="noopener noreferrer" class="hover:text-fg hover:underline" data-l10n="off">
+                {new URL(x.s.source).hostname.replace(/^www\./, "")}
+              </a>
+              {" · "}{T.checked} {shownDate(x.s.checked)}
+            </p>
+          </li>
+        ))
+      }
+    </ol>
+    <p class="mt-4 max-w-3xl text-sm text-muted">{T.tip}</p>
+  </section>
+
+  <section class="mt-12">
+    <h2 class="mb-3 text-xs font-medium uppercase tracking-wide text-muted">{T.otherH}</h2>
+    <p class="max-w-3xl text-sm text-muted">{T.otherP}</p>
+  </section>
+
+  <div class="mt-8 flex flex-wrap gap-3">
+    <a href="/gateways/" class="rounded-md border border-line px-4 py-2 text-sm text-muted hover:text-fg">
+      {T.browse}
+    </a>
+  </div>
+
+  <section class="mt-12 border-t border-line pt-6">
+    <h2 class="mb-3 text-xs font-medium uppercase tracking-wide text-muted">{T.more}</h2>
+    <div class="flex flex-wrap gap-2">
+      <a href="/best/fastest-settlement/" class="rounded-full border border-line bg-panel px-3 py-1 text-xs text-muted hover:text-fg">
+        {locale === "ms" ? "Duit masuk paling cepat" : "Fastest settlement"}
+      </a>
+      {
+        PROFILES.map((p) => (
+          <a
+            href={`/best/${p.slug}/`}
+            class="rounded-full border border-line bg-panel px-3 py-1 text-xs text-muted hover:text-fg"
+          >
+            {profileCopy(p, locale).h1}
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  {jsonld.map((obj) => <script is:inline type="application/ld+json" set:html={JSON.stringify(obj)} />)}
+</Base>

@@ -9,11 +9,15 @@ import FeeCell from "../../components/FeeCell.astro";
 import FeatureBadge from "../../components/FeatureBadge.astro";
 import { FPX_BANKS, FPX_BANKS_SOURCE } from "../../lib/fpx-banks";
 import { skillRepoUrl, skillInstallCommand, agentPrompt } from "../../lib/learn";
-import { accessInfo } from "../../lib/access";
 import { gatewayCost, REF_TICKET } from "../../lib/fees";
 import { vsPairs, alternativesTargets } from "../../lib/seo-pages";
 import { toApiGateway, type GatewayEntryLike } from "../../lib/api";
 import { breadcrumbLd } from "../../lib/jsonld";
+import { gatewaySeoTitle, gatewaySeoDescription } from "../../lib/gateway-seo";
+import { accessInfo } from "../../lib/access";
+import { bnmBadge, bnmRoleLabel, BNM_LIST_URL } from "../../lib/bnm";
+import { getLocale, tr, localizePath, formatDate } from "../../i18n/locale";
+import { gatewayMs } from "../../i18n/content";
 
 export async function getStaticPaths() {
   const gateways = await getCollection("gateways");
@@ -21,73 +25,254 @@ export async function getStaticPaths() {
 }
 
 const { entry } = Astro.props;
-const { Content } = await render(entry);
+const locale = getLocale(Astro);
+const ms = await gatewayMs(entry.id, locale);
+// BM body when a translation with prose exists, otherwise the English body
+const { Content } = await render(ms && ms.body?.trim() ? ms : entry);
 const d = entry.data;
+const tagline = ms?.data.tagline ?? d.tagline;
+const settlement = ms?.data.settlement ?? d.settlement;
+const minTxn = ms?.data.min_txn ?? d.min_txn;
+const notes = ms?.data.notes ?? d.notes;
+// plans: BM overlay matched by position, field by field, English as fallback
+const plans = (d.plans ?? []).map((p, i) => {
+  const o = ms?.data.plans?.[i];
+  return {
+    ...p,
+    name: o?.name ?? p.name,
+    eligibility: o?.eligibility ?? p.eligibility,
+    settlement: o?.settlement ?? p.settlement,
+    rows: p.rows.map((r, j) => ({
+      label: o?.rows?.[j]?.label ?? r.label,
+      value: o?.rows?.[j]?.value ?? r.value,
+    })),
+  };
+});
 const hasUnofficial = Object.values(d.fees).some(
   (v) => typeof v === "string" && v.includes("*"),
 );
 const { base: nameBase, note: nameNote } = splitName(d.name);
 
+const T = tr(locale, {
+  en: {
+    card: "Card",
+    ewallet: "E-wallet",
+    bank: "Bank",
+    fpxRow: "FPX (online banking)",
+    cardRow: "Card (local credit/debit)",
+    intlCard: "International card",
+    setupFee: "Setup fee",
+    monthly: "Monthly / annual fee",
+    minTxn: "Minimum transaction",
+    settlement: "Settlement",
+    noCode: "No-code (links/forms)",
+    devApi: "Developer API",
+    recurring: "Recurring / subscription",
+    webhooks: "Webhooks",
+    mcpOfficial: "MCP · Official",
+    mcpCommunity: "MCP · Community",
+    noMcp: "No MCP server",
+    setup: "Setup",
+    home: "Home",
+    gateways: "Gateways",
+    jsonTitle: (n: string) => `${n} data (JSON)`,
+    allGateways: "← All gateways",
+    visitWebsite: "Visit website →",
+    rankOf: (n: number) => `cheapest of ${n} ranked`,
+    notRanked: "Not ranked",
+    notFull: "rates not fully published",
+    onRequest: "On request",
+    estFee: "Est. fee per RM100 sale",
+    noRates: "No comparable published rates",
+    plans: "Plans",
+    officialSource: "Official source",
+    officialSourceArrow: "Official source →",
+    compareWith: (n: string) => `Compare ${n} with`,
+    estShort: "est. per RM100 sale",
+    visit: (n: string) => `Visit ${n} →`,
+    compareOthers: "Compare with others",
+    features: "Features",
+    devExp: "Developer experience",
+    mcpTitle: "Model Context Protocol: lets AI agents/tools integrate the API",
+    apiDocs: "API docs →",
+    plugins: "E-commerce plugins",
+    aiAgent: "Integrate with an AI agent",
+    pasteThis: "Paste this into Claude Code, Cursor or Codex. It uses",
+    andThe: "and the",
+    safeFlow: "safe flow",
+    clickCopy: "Click to copy",
+    copyPrompt: "Copy prompt",
+    firstInstall: "First install it:",
+    otherMethods: (n: number) => `Other payment methods (${n})`,
+    banks: (n: number) => `Supported banks (${n})`,
+    onlineVia: "Online banking via",
+    nationalSet: "the national bank set:",
+    h2h: "Head-to-head comparisons",
+    alternatives: (n: string) => `${n} alternatives`,
+    allComparisons: "All comparisons →",
+    lastVerified: "Last verified",
+    bnmLine: "Bank Negara Malaysia list:",
+    bnmChecked: "checked",
+    noSsmLine: "Sign up without SSM:",
+    instantLine: "Real-time or same-day payout:",
+    seeSource: "source",
+    showDetails: (n: number) => `Show verification details (${n})`,
+    unofficial:
+      "Indicative rate from a third-party source, not officially published. Always confirm with the provider.",
+  },
+  ms: {
+    card: "Kad",
+    ewallet: "E-wallet",
+    bank: "Bank",
+    fpxRow: "FPX (perbankan online)",
+    cardRow: "Kad (kredit/debit tempatan)",
+    intlCard: "Kad luar negara",
+    setupFee: "Fee setup",
+    monthly: "Fee bulanan / tahunan",
+    minTxn: "Transaksi minimum",
+    settlement: "Duit masuk",
+    noCode: "Tanpa kod (link/borang)",
+    devApi: "API untuk developer",
+    recurring: "Caj berulang / langganan",
+    webhooks: "Webhook",
+    mcpOfficial: "MCP · Rasmi",
+    mcpCommunity: "MCP · Komuniti",
+    noMcp: "Tiada server MCP",
+    setup: "Fee setup",
+    home: "Utama",
+    gateways: "Gateway",
+    jsonTitle: (n: string) => `Data ${n} (JSON)`,
+    allGateways: "← Semua gateway",
+    visitWebsite: "Lawat laman web →",
+    rankOf: (n: number) => `paling murah daripada ${n} gateway`,
+    notRanked: "Tiada ranking",
+    notFull: "harga tak disiarkan penuh",
+    onRequest: "Hubungi jualan",
+    estFee: "Anggaran caj bagi jualan RM100",
+    noRates: "Tiada harga rasmi untuk dibanding",
+    plans: "Pelan",
+    officialSource: "Sumber rasmi",
+    officialSourceArrow: "Sumber rasmi →",
+    compareWith: (n: string) => `Banding ${n} dengan`,
+    estShort: "anggaran bagi jualan RM100",
+    visit: (n: string) => `Lawat ${n} →`,
+    compareOthers: "Banding dengan yang lain",
+    features: "Ciri",
+    devExp: "Untuk developer",
+    mcpTitle: "Model Context Protocol: bagi AI agent dan tool AI guna API ini terus",
+    apiDocs: "Dokumen API →",
+    plugins: "Plugin kedai online",
+    aiAgent: "Integrasi guna AI agent",
+    pasteThis: "Paste prompt ini dalam Claude Code, Cursor atau Codex. Prompt ini guna",
+    andThe: "dan",
+    safeFlow: "langkah integrasi selamat",
+    clickCopy: "Klik untuk salin",
+    copyPrompt: "Salin prompt",
+    firstInstall: "Pasang dulu:",
+    otherMethods: (n: number) => `Cara bayar lain (${n})`,
+    banks: (n: number) => `Bank yang disokong (${n})`,
+    onlineVia: "Perbankan online melalui",
+    nationalSet: "ikut senarai bank kebangsaan:",
+    h2h: "Perbandingan satu lawan satu",
+    alternatives: (n: string) => `Pilihan lain selain ${n}`,
+    allComparisons: "Semua perbandingan →",
+    lastVerified: "Terakhir disemak",
+    bnmLine: "Senarai Bank Negara Malaysia:",
+    bnmChecked: "disemak",
+    noSsmLine: "Daftar tanpa SSM:",
+    instantLine: "Duit masuk serta-merta atau hari sama:",
+    seeSource: "sumber",
+    showDetails: (n: number) => `Lihat butiran semakan (${n})`,
+    unofficial:
+      "Kadar anggaran dari sumber pihak ketiga, bukan harga rasmi. Sahkan dulu dengan gateway.",
+  },
+});
 const channelLabels: Record<string, string> = {
   fpx: "FPX",
-  card: "Card",
-  ewallet: "E-wallet",
+  card: T.card,
+  ewallet: T.ewallet,
   duitnowqr: "DuitNow QR",
   bnpl: "BNPL",
 };
 
 const feeRows = [
-  { label: "FPX (online banking)", value: d.fees.fpx },
-  { label: "Card (local credit/debit)", value: d.fees.card },
-  ...(d.fees.card_intl ? [{ label: "International card", value: d.fees.card_intl }] : []),
-  { label: "E-wallet", value: d.fees.ewallet },
-  { label: "DuitNow QR", value: d.fees.duitnowqr },
-  ...(d.fees.bnpl ? [{ label: "BNPL", value: d.fees.bnpl }] : []),
-  { label: "Setup fee", value: d.fees.setup },
-  { label: "Monthly / annual fee", value: d.fees.monthly },
-  { label: "Minimum transaction", value: d.min_txn },
-  { label: "Settlement", value: d.settlement },
+  { key: "fpx", label: T.fpxRow, value: d.fees.fpx },
+  { key: "card", label: T.cardRow, value: d.fees.card },
+  ...(d.fees.card_intl ? [{ key: "card_intl", label: T.intlCard, value: d.fees.card_intl }] : []),
+  { key: "ewallet", label: T.ewallet, value: d.fees.ewallet },
+  { key: "duitnowqr", label: "DuitNow QR", value: d.fees.duitnowqr },
+  ...(d.fees.bnpl ? [{ key: "bnpl", label: "BNPL", value: d.fees.bnpl }] : []),
+  { key: "setup", label: T.setupFee, value: d.fees.setup },
+  { key: "monthly", label: T.monthly, value: d.fees.monthly },
+  { key: "min_txn", label: T.minTxn, value: minTxn },
+  { key: "settlement", label: T.settlement, value: settlement },
 ];
 
 const features = [
-  { label: "No-code (links/forms)", on: d.features.no_code },
-  { label: "Developer API", on: d.features.api },
-  { label: "Recurring / subscription", on: d.features.recurring },
-  ...(d.webhooks !== undefined ? [{ label: "Webhooks", on: d.webhooks }] : []),
+  { label: T.noCode, on: d.features.no_code },
+  { label: T.devApi, on: d.features.api },
+  { label: T.recurring, on: d.features.recurring },
+  ...(d.webhooks !== undefined ? [{ label: T.webhooks, on: d.webhooks }] : []),
 ];
 
-const access = accessInfo(d.category);
+const access = accessInfo(d.category, locale);
+// on a Bank Negara Malaysia regulatee list under its own legal name (src/lib/bnm.ts)
+const bnm = d.bnm ? bnmBadge(d.bnm, locale) : null;
 // Blended estimated fee on a RM100 transaction (matches the directory ranking).
 const est = gatewayCost(d.fees, REF_TICKET);
 
 const mcpLabel =
-  d.mcp === "official"
-    ? "MCP · Official"
-    : d.mcp === "community"
-      ? "MCP · Community"
-      : "No MCP server";
+  d.mcp === "official" ? T.mcpOfficial : d.mcp === "community" ? T.mcpCommunity : T.noMcp;
 
 // AI-agent prompt + install command, generated from the gateway's setup-* skill.
+// The prompt is read by the AI agent, so it stays in English.
 const prompt = d.skill ? agentPrompt(d.name, d.skill) : null;
 const installCmd = d.skill ? skillInstallCommand(d.skill) : null;
 
-// SERP-friendly title/description: brand base name (notes like "(by Razorpay)"
-// stay out of the title). Taglines run 37-75 chars, so this fixed suffix lands
-// every description inside the 110-160 char SERP window.
-// avoid "Stripe Malaysia Malaysia" when the brand name already ends in Malaysia
-const titleBrand = nameBase.endsWith(" Malaysia") ? nameBase : `${nameBase} Malaysia`;
-const pageTitle = `${titleBrand} fees & features | MPG`;
-const pageDesc = `${d.tagline} Fees, settlement times and integrations, verified from official sources on MPG.`;
-
 // head-to-head pages featuring this gateway (internal mesh for the /vs pages)
 const allApi = ((await getCollection("gateways")) as unknown as GatewayEntryLike[]).map(toApiGateway);
+
+// SERP title/description led by this gateway's own published fees (FPX, card,
+// e-wallet, setup/monthly, settlement), year from verified_date; brand base name
+// only (notes like "(by Razorpay)" stay out). Lengths are checked for every
+// gateway in both locales by src/lib/gateway-seo.test.ts.
+const seoInput = {
+  brand: nameBase,
+  tagline,
+  settlement,
+  verified_date: d.verified_date,
+  fees: d.fees,
+  others: allApi.length - 1,
+};
+const pageTitle = gatewaySeoTitle(seoInput, locale);
+const pageDesc = gatewaySeoDescription(seoInput, locale);
 const myVs = vsPairs(allApi).filter((p) => p.a.slug === entry.id || p.b.slug === entry.id);
 const hasAlternativesPage = alternativesTargets(allApi).some((g) => g.slug === entry.id);
+
+// ranking context, same order as the directory and homepage (cheapest first)
+const ranked = allApi
+  .filter((g) => g.rankable && g.est_fee_rm100 != null)
+  .sort((a, b) => a.est_fee_rm100! - b.est_fee_rm100!);
+const rank = ranked.findIndex((g) => g.slug === entry.id) + 1;
+// "compare with": the cheapest ranked gateways other than this one
+const alternatives = ranked.filter((g) => g.slug !== entry.id).slice(0, 3);
+const vsSlugWith = (other: string) => myVs.find((p) => p.a.slug === other || p.b.slug === other)?.slug;
+const summaryTiles = [
+  { label: "FPX", value: d.fees.fpx },
+  { label: T.card, value: d.fees.card },
+  { label: T.setup, value: d.fees.setup },
+  { label: T.settlement, value: settlement },
+];
+// provenance notes read better as a list than as one dense paragraph
+const noteItems = (notes ?? "")
+  .split(/(?<=\.)\s+(?=[A-Z0-9(])|;\s+/)
+  .map((t) => t.trim())
+  .filter(Boolean);
 
 // entity signals: this page is ABOUT a third-party provider (never an Offer of
 // MPG's own; fees here are the provider's merchant pricing, not our product)
 const siteHref = String(Astro.site ?? "https://malaysiapg.com.my/");
-const pageUrl = `${siteHref.replace(/\/$/, "")}/gateway/${entry.id}/`;
+const pageUrl = `${siteHref.replace(/\/$/, "")}${localizePath(`/gateway/${entry.id}/`, locale)}`;
 const detailLd = [
   {
     "@context": "https://schema.org",
@@ -101,13 +286,13 @@ const detailLd = [
       "@type": "FinancialService",
       name: nameBase,
       url: d.website,
-      description: d.tagline,
+      description: tagline,
       areaServed: "MY",
     },
   },
   breadcrumbLd(siteHref, [
-    { name: "Home", path: "/" },
-    { name: "Gateways", path: "/gateways/" },
+    { name: T.home, path: localizePath("/", locale) },
+    { name: T.gateways, path: localizePath("/gateways/", locale) },
     { name: nameBase },
   ]),
 ];
@@ -119,16 +304,16 @@ const detailLd = [
     rel="alternate"
     type="application/json"
     href={`/api/gateways/${entry.id}.json`}
-    title={`${nameBase} data (JSON)`}
+    title={T.jsonTitle(nameBase)}
   />
   {detailLd.map((obj) => <script is:inline type="application/ld+json" set:html={JSON.stringify(obj)} />)}
-  <a href="/gateways/" class="text-sm text-muted hover:text-fg">← All gateways</a>
+  <a href="/gateways/" class="text-sm text-muted hover:text-fg">{T.allGateways}</a>
 
   <header class="mt-4 flex flex-wrap items-start justify-between gap-4">
     <div class="flex items-center gap-3">
       <Logo slug={entry.id} name={d.name} size={36} />
       <div>
-        <div class="flex items-center gap-2">
+        <div class="flex flex-wrap items-center gap-2">
           <h1 class="text-2xl font-semibold tracking-tight text-fg">
             {nameBase}
             {nameNote && <span class="ml-2 text-base font-normal text-muted">{nameNote}</span>}
@@ -140,16 +325,29 @@ const detailLd = [
           )}
           {d.category === "bank" && (
             <span class="rounded-full border border-line px-2 py-0.5 text-xs font-medium uppercase tracking-wide text-muted">
-              Bank
+              {T.bank}
             </span>
           )}
           {d.category === "ewallet" && (
             <span class="rounded-full border border-line px-2 py-0.5 text-xs font-medium uppercase tracking-wide text-muted">
-              E-wallet
+              {T.ewallet}
             </span>
           )}
+          {bnm && (
+            <a
+              data-l10n="off"
+              href={bnm.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              title={bnm.title}
+              aria-label={`${bnm.text}: ${bnm.title}`}
+              class="whitespace-nowrap rounded-full border border-line px-2 py-0.5 text-xs font-medium text-muted hover:border-accent hover:text-fg"
+            >
+              {bnm.text}
+            </a>
+          )}
         </div>
-        <p class="text-muted">{d.tagline}</p>
+        <p class="text-muted">{tagline}</p>
       </div>
     </div>
     <a
@@ -158,7 +356,7 @@ const detailLd = [
       rel="noopener noreferrer"
       class="rounded-md bg-brand-blue px-4 py-2 text-sm font-medium text-white hover:opacity-90"
     >
-      Visit website →
+      {T.visitWebsite}
     </a>
   </header>
 
@@ -180,6 +378,35 @@ const detailLd = [
     {access.hint}
   </p>
 
+  <!-- at a glance: where it ranks + the four numbers people check first -->
+  <div class="mt-8 flex flex-col gap-4 sm:flex-row sm:items-stretch">
+    <div class="flex shrink-0 flex-col justify-center rounded-lg border border-line bg-panel px-5 py-3">
+      {
+        rank > 0 ? (
+          <>
+            <p class="text-2xl font-bold text-white">#{rank}</p>
+            <p class="text-xs text-muted">{T.rankOf(ranked.length)}</p>
+          </>
+        ) : (
+          <>
+            <p class="text-sm font-medium text-white">{T.notRanked}</p>
+            <p class="text-xs text-muted">{T.notFull}</p>
+          </>
+        )
+      }
+    </div>
+    <dl class="grid flex-1 grid-cols-2 gap-px overflow-hidden rounded-lg border border-line bg-line sm:grid-cols-4">
+      {
+        summaryTiles.map((t) => (
+          <div class="bg-panel px-4 py-3">
+            <dt class="text-xs text-muted">{t.label}</dt>
+            <dd class="mt-1 truncate text-sm font-medium"><FeeCell value={t.value} /></dd>
+          </div>
+        ))
+      }
+    </dl>
+  </div>
+
   <!-- desktop: data column left, capabilities rail right; mobile: single stack -->
   <div class="mt-14 lg:grid lg:grid-cols-[minmax(0,1fr)_20rem] lg:gap-16">
     <div class="min-w-0">
@@ -191,15 +418,11 @@ const detailLd = [
               RM{est.cost.toFixed(2)}
             </p>
           ) : (
-            <p class="text-4xl font-bold tracking-tight text-muted sm:text-5xl">On request</p>
+            <p class="text-4xl font-bold tracking-tight text-muted sm:text-5xl">{T.onRequest}</p>
           )
         }
         <p class="mt-3 text-sm text-muted">
-          {est.rankable ? "est. fee per RM100 sale (FPX/card/e-wallet 50/30/20)" : "no comparable published rates"}
-          {" · "}verified {d.verified_date} ·{" "}
-          <a href={d.source} target="_blank" rel="noopener noreferrer" class="underline-offset-2 hover:text-fg hover:underline">
-            official source
-          </a>
+          {est.rankable ? T.estFee : T.noRates}
         </p>
       </section>
 
@@ -210,7 +433,7 @@ const detailLd = [
             {
               feeRows.map((row) => (
                 <tr>
-                  <th scope="row" class={`py-3 text-left font-normal ${row.label === "DuitNow QR" ? "text-duitnow" : row.label.startsWith("FPX") ? "text-fpx" : "text-muted"}`}>
+                  <th scope="row" class={`py-3 text-left font-normal ${row.key === "duitnowqr" ? "text-duitnow" : row.key === "fpx" ? "text-fpx" : "text-muted"}`}>
                     {row.label}
                   </th>
                   <td class="py-3 text-right">
@@ -226,11 +449,11 @@ const detailLd = [
       <!-- published plans/tiers (spec 17): shown side by side so nobody has to
            dig through the provider's own site -->
       {
-        d.plans && d.plans.length > 0 && (
+        plans.length > 0 && (
           <section class="mt-12">
-            <h2 class="text-xs font-medium uppercase tracking-wide text-muted">Plans</h2>
-            <div class={`mt-4 grid gap-4 ${d.plans.length >= 3 ? "sm:grid-cols-3" : "sm:grid-cols-2"}`}>
-              {d.plans.map((p) => (
+            <h2 class="text-xs font-medium uppercase tracking-wide text-muted">{T.plans}</h2>
+            <div class={`mt-4 grid gap-4 ${plans.length >= 3 ? "sm:grid-cols-3" : "sm:grid-cols-2"}`}>
+              {plans.map((p) => (
                 <div class="min-w-0 rounded-lg border border-line bg-panel p-4">
                   <p class="font-semibold text-fg">{p.name}</p>
                   {p.eligibility && <p class="mt-0.5 text-xs text-muted">{p.eligibility}</p>}
@@ -243,7 +466,7 @@ const detailLd = [
                     ))}
                     {p.settlement && (
                       <div class="py-2.5">
-                        <dt class="text-xs text-muted">Settlement</dt>
+                        <dt class="text-xs text-muted">{T.settlement}</dt>
                         <dd class="mt-0.5 text-fg">{p.settlement}</dd>
                       </div>
                     )}
@@ -255,7 +478,7 @@ const detailLd = [
                       rel="noopener noreferrer"
                       class="underline-offset-2 hover:text-fg hover:underline"
                     >
-                      Official source →
+                      {T.officialSourceArrow}
                     </a>
                   </p>
                 </div>
@@ -269,12 +492,59 @@ const detailLd = [
       <section class="prose-mpg mt-12 max-w-2xl space-y-4 leading-relaxed text-fg">
         <Content />
       </section>
+
+      <!-- keep readers moving: cheapest alternatives, each with a head-to-head when one exists -->
+      {
+        alternatives.length > 0 && (
+          <section class="mt-14">
+            <h2 class="text-xs font-medium uppercase tracking-wide text-muted">{T.compareWith(nameBase)}</h2>
+            <div class="mt-4 grid gap-3 sm:grid-cols-3">
+              {alternatives.map((g) => {
+                const vs = vsSlugWith(g.slug);
+                return (
+                  <div class="flex flex-col rounded-lg border border-line bg-panel p-4">
+                    <a href={`/gateway/${g.slug}/`} class="flex items-center gap-2 font-medium text-white hover:underline">
+                      <Logo slug={g.slug} name={g.name} size={24} />
+                      {splitName(g.name).base}
+                    </a>
+                    <p class="mt-3 text-2xl font-bold text-white">RM{g.est_fee_rm100!.toFixed(2)}</p>
+                    <p class="text-xs text-muted">{T.estShort}</p>
+                    {vs && (
+                      <a href={`/vs/${vs}/`} class="mt-3 text-xs text-accent hover:underline">
+                        {splitName(d.name).base} vs {splitName(g.name).base} →
+                      </a>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </section>
+        )
+      }
     </div>
 
-    <aside class="mt-12 space-y-10 lg:mt-0">
+    <aside data-rail class="mt-12 space-y-10 lg:sticky lg:top-20 lg:mt-0 lg:self-start">
+      <!-- actions stay in reach while the long column scrolls -->
+      <div class="flex flex-col gap-2">
+        <a
+          href={d.website}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex h-10 items-center justify-center rounded-md bg-brand-blue text-sm font-medium text-white hover:opacity-90"
+        >
+          {T.visit(nameBase)}
+        </a>
+        <a
+          href={`/compare/?ids=${entry.id}`}
+          class="inline-flex h-10 items-center justify-center rounded-md border border-line text-sm text-fg hover:border-accent"
+        >
+          {T.compareOthers}
+        </a>
+      </div>
+
       <!-- features -->
       <section>
-        <h2 class="mb-3 text-xs font-medium uppercase tracking-wide text-muted">Features</h2>
+        <h2 class="mb-3 text-xs font-medium uppercase tracking-wide text-muted">{T.features}</h2>
         <ul class="space-y-2.5 text-sm">
           {
             features.map((f) => (
@@ -290,7 +560,7 @@ const detailLd = [
       <!-- developer experience -->
       <section>
     <h2 class="mb-3 text-sm font-medium uppercase tracking-wide text-muted">
-      Developer experience
+      {T.devExp}
     </h2>
     <div class="flex flex-wrap items-center gap-2">
       <span
@@ -301,7 +571,7 @@ const detailLd = [
               ? "border-line text-fg"
               : "border-line text-muted"
         }`}
-        title="Model Context Protocol: lets AI agents/tools integrate the API"
+        title={T.mcpTitle}
       >
         {mcpLabel}
       </span>
@@ -313,7 +583,7 @@ const detailLd = [
             rel="noopener noreferrer"
             class="rounded-full border border-line px-3 py-1 text-xs text-accent hover:underline"
           >
-            API docs →
+            {T.apiDocs}
           </a>
         )
       }
@@ -321,7 +591,7 @@ const detailLd = [
     {
       d.plugins && d.plugins.length > 0 && (
         <div class="mt-3">
-          <p class="mb-1.5 text-xs text-muted">E-commerce plugins</p>
+          <p class="mb-1.5 text-xs text-muted">{T.plugins}</p>
           <div class="flex flex-wrap gap-2">
             {d.plugins.map((p) => (
               <span class="rounded-full border border-line bg-raised px-3 py-1 text-xs text-fg">
@@ -336,13 +606,13 @@ const detailLd = [
       d.skill && (
         <details class="group mt-4 rounded-md border border-line bg-panel p-4">
           <summary class="flex cursor-pointer select-none items-center justify-between text-xs font-medium uppercase tracking-wide text-muted [&::-webkit-details-marker]:hidden">
-            Integrate with an AI agent
+            {T.aiAgent}
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="size-3.5 transition-transform group-open:rotate-180" aria-hidden="true">
               <path d="m6 9 6 6 6-6" />
             </svg>
           </summary>
           <p class="mt-2 text-sm text-muted">
-            Paste this into Claude Code, Cursor or Codex. It uses{" "}
+            {T.pasteThis}{" "}
             <a
               href={skillRepoUrl(d.skill)}
               target="_blank"
@@ -351,9 +621,9 @@ const detailLd = [
             >
               <code class="text-fg">{d.skill}</code>
             </a>{" "}
-            and the{" "}
+            {T.andThe}{" "}
             <a href="/learn/integration-flow/" class="text-accent hover:underline">
-              safe flow
+              {T.safeFlow}
             </a>
             .
           </p>
@@ -361,20 +631,20 @@ const detailLd = [
             type="button"
             data-copy={prompt}
             class="mt-3 flex w-full items-start justify-between gap-3 rounded border border-line bg-surface px-3 py-2 text-left hover:border-accent"
-            title="Click to copy"
+            title={T.clickCopy}
           >
             <span class="text-sm text-fg">{prompt}</span>
             <span data-copy-label class="shrink-0 text-xs font-medium text-accent">
-              Copy prompt
+              {T.copyPrompt}
             </span>
           </button>
           <p class="mt-2 text-xs text-muted">
-            First install it:{" "}
+            {T.firstInstall}{" "}
             <button
               type="button"
               data-copy={installCmd}
               class="font-mono text-muted hover:text-accent"
-              title="Click to copy"
+              title={T.clickCopy}
             >
               <span data-copy-label>npx skills@latest add … --skill {d.skill}</span>
             </button>
@@ -390,7 +660,7 @@ const detailLd = [
           <section>
         <details class="group">
           <summary class="flex cursor-pointer select-none items-center gap-2 text-sm font-medium uppercase tracking-wide text-muted [&::-webkit-details-marker]:hidden">
-            Other payment methods ({d.methods.length})
+            {T.otherMethods(d.methods.length)}
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="size-3.5 transition-transform group-open:rotate-180" aria-hidden="true">
               <path d="m6 9 6 6 6-6" />
             </svg>
@@ -413,20 +683,20 @@ const detailLd = [
   {
     (d.channels.includes("fpx") || (d.banks && d.banks.length > 0)) && (
       <section>
-        <details class="group">
+        <details class="group" open>
           <summary class="flex cursor-pointer select-none items-center gap-2 text-sm font-medium uppercase tracking-wide text-muted [&::-webkit-details-marker]:hidden">
-            Supported banks ({(d.banks?.length ?? 0) + (d.channels.includes("fpx") ? FPX_BANKS.length : 0)})
+            {T.banks((d.banks?.length ?? 0) + (d.channels.includes("fpx") ? FPX_BANKS.length : 0))}
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="size-3.5 transition-transform group-open:rotate-180" aria-hidden="true">
               <path d="m6 9 6 6 6-6" />
             </svg>
           </summary>
           {d.channels.includes("fpx") && (
             <p class="mb-3 mt-2 text-xs text-muted">
-              Online banking via{" "}
+              {T.onlineVia}{" "}
               <a href={FPX_BANKS_SOURCE} target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">
                 FPX
               </a>{" "}
-              the national bank set:
+              {T.nationalSet}
             </p>
           )}
           <div class="mt-2 flex flex-wrap gap-2">
@@ -455,7 +725,7 @@ const detailLd = [
     {
       myVs.length > 0 && (
         <div>
-          <p class="text-fg">Head-to-head comparisons</p>
+          <p class="text-fg">{T.h2h}</p>
           <div class="mt-2 flex flex-wrap gap-2">
             {myVs.slice(0, 6).map((p) => (
               <a
@@ -470,22 +740,51 @@ const detailLd = [
                 href={`/alternatives/${entry.id}/`}
                 class="rounded-full border border-line bg-panel px-3 py-1 text-xs text-muted hover:border-accent hover:text-fg"
               >
-                {splitName(d.name).base} alternatives
+                {T.alternatives(splitName(d.name).base)}
               </a>
             )}
             {myVs.length > 6 && (
               <a href="/vs/" class="rounded-full px-3 py-1 text-xs text-accent hover:underline">
-                All comparisons →
+                {T.allComparisons}
               </a>
             )}
           </div>
         </div>
       )
     }
+    {
+      d.bnm && (
+        <p class="mt-4">
+          {T.bnmLine} <span class="text-fg">{d.bnm.entity}</span>{" "}
+          {d.bnm.roles.map((r) => (
+            <>
+              ·{" "}
+              <a data-l10n="off" href={BNM_LIST_URL[r]} target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">{bnmRoleLabel(r, locale)}</a>{" "}
+            </>
+          ))}
+          · {T.bnmChecked} {formatDate(d.bnm.checked, locale)}
+        </p>
+      )
+    }
+    {
+      [
+        { f: d.no_ssm, label: T.noSsmLine },
+        { f: d.instant_settlement, label: T.instantLine },
+      ].map(
+        (x) =>
+          x.f && (
+            <p class="mt-4">
+              {x.label} <span class="text-fg">{locale === "ms" ? x.f.detail_ms : x.f.detail}</span> ·{" "}
+              <a data-l10n="off" href={x.f.source} target="_blank" rel="noopener noreferrer" class="text-accent hover:underline" title={x.f.quote}>{T.seeSource}</a>{" "}
+              · {T.bnmChecked} {formatDate(x.f.checked, locale)}
+            </p>
+          ),
+      )
+    }
     <p class="mt-4">
-      Last verified {d.verified_date} ·{" "}
+      {T.lastVerified} {locale === "ms" ? formatDate(d.verified_date, locale) : d.verified_date} ·{" "}
       <a href={d.source} target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">
-        Official source
+        {T.officialSource}
       </a>
       {d.skill && (
         <>
@@ -496,12 +795,23 @@ const detailLd = [
         </>
       )}
     </p>
-    {d.notes && <p class="mt-2 max-w-2xl">{d.notes}</p>}
+    {
+      noteItems.length > 0 && (
+        <details class="group mt-3 max-w-2xl">
+          <summary class="inline-flex cursor-pointer list-none items-center gap-1.5 text-fg hover:text-white">
+            <span class="transition-transform group-open:rotate-90">›</span>
+            {T.showDetails(noteItems.length)}
+          </summary>
+          <ul class="mt-3 list-disc space-y-1.5 pl-5 leading-relaxed">
+            {noteItems.map((n) => <li>{n}</li>)}
+          </ul>
+        </details>
+      )
+    }
     {
       hasUnofficial && (
         <p class="mt-2 max-w-2xl">
-          <span class="text-fg">*</span> Indicative rate from a third-party source, not
-          officially published. Always confirm with the provider.
+          <span class="text-fg">*</span> {T.unofficial}
         </p>
       )
     }
@@ -510,4 +820,13 @@ const detailLd = [
 
 <script>
   import "../../scripts/copy.ts";
+
+  // the rail only sticks while it fits on screen; a long bank list would otherwise be cut off
+  const rail = document.querySelector<HTMLElement>("aside[data-rail]");
+  if (rail) {
+    const fit = () => rail.classList.toggle("lg:sticky", rail.offsetHeight <= innerHeight - 96);
+    fit();
+    addEventListener("resize", fit);
+    rail.addEventListener("toggle", fit, true);
+  }
 </script>

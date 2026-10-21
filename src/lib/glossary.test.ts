@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { GLOSSARY, glossaryPath } from "./glossary";
+import { GLOSSARY, glossaryPath, termCopy } from "./glossary";
 
 describe("GLOSSARY registry", () => {
   it("has unique, url-safe slugs and complete copy", () => {
@@ -43,5 +43,33 @@ describe("GLOSSARY registry", () => {
 
   it("glossaryPath builds the url with a trailing slash", () => {
     expect(glossaryPath("fpx")).toBe("/learn/glossary/fpx/");
+  });
+});
+
+describe("GLOSSARY Bahasa Malaysia copy", () => {
+  it("is complete, in the SERP windows and free of em-dashes", () => {
+    for (const t of GLOSSARY) {
+      const m = t.ms;
+      expect(m.term.length, t.slug).toBeGreaterThan(0);
+      expect(m.question.length, t.slug).toBeGreaterThan(0);
+      expect(m.def.length, t.slug).toBeGreaterThan(0);
+      expect(m.body.length, t.slug).toBe(t.body.length);
+      expect(m.related.length, t.slug).toBe(t.related.length);
+      expect(m.title.length, `${t.slug} ms title`).toBeGreaterThanOrEqual(30);
+      expect(m.title.length, `${t.slug} ms title`).toBeLessThanOrEqual(65);
+      expect(m.description.length, `${t.slug} ms desc`).toBeGreaterThanOrEqual(110);
+      expect(m.description.length, `${t.slug} ms desc`).toBeLessThanOrEqual(160);
+      const prose = [m.term, m.question, m.title, m.description, m.def, ...m.body, ...m.related].join(" ");
+      expect(prose, t.slug).not.toMatch(/[—–]/);
+    }
+  });
+
+  it("termCopy keeps hrefs and swaps labels by locale", () => {
+    const t = GLOSSARY[0];
+    expect(termCopy(t, "en").def).toBe(t.def);
+    const ms = termCopy(t, "ms");
+    expect(ms.def).toBe(t.ms.def);
+    expect(ms.related.map((r) => r.href)).toEqual(t.related.map((r) => r.href));
+    expect(ms.related[0].label).toBe(t.ms.related[0]);
   });
 });

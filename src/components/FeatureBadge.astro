@@ -1,11 +1,13 @@
 ---
 // ✓ (accent) when supported, — (muted) when not. Accessible label included.
+import { getLocale, tr } from "../i18n/locale";
 interface Props {
   on: boolean;
   label?: string;
 }
 const { on, label } = Astro.props;
-const state = on ? "yes" : "no";
+const T = tr(getLocale(Astro), { en: { yes: "yes", no: "no" }, ms: { yes: "ya", no: "tidak" } });
+const state = on ? T.yes : T.no;
 ---
 
 <span

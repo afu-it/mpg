@@ -7,6 +7,7 @@ import { SKILLS_REPO } from "../../lib/learn";
 import { toApiGateway, type GatewayEntryLike } from "../../lib/api";
 import { PROFILES, vsPairs } from "../../lib/seo-pages";
 import { splitName } from "../../lib/name";
+import { getLocale, tr } from "../../i18n/locale";
 
 const entries = (await getCollection("gateways")) as unknown as GatewayEntryLike[];
 const gateways = entries.map(toApiGateway);
@@ -14,207 +15,241 @@ const topComparisons = vsPairs(gateways)
   .sort((x, y) => y.a.popularity + y.b.popularity - (x.a.popularity + x.b.popularity))
   .slice(0, 6);
 
-// short chip labels (spec 16 slice E): the full h1 stays in the title attr
-const PROFILE_CHIP: Record<string, string> = {
-  "payment-gateway-malaysia": "Best overall",
-  "cheapest-payment-gateway-malaysia": "Cheapest",
-  "payment-gateway-fpx": "FPX",
-  "payment-gateway-credit-card": "Cards",
-  "payment-gateway-ewallet": "E-wallets",
-  "payment-gateway-duitnow-qr": "DuitNow QR",
-  "payment-gateway-recurring": "Recurring billing",
-  "payment-gateway-no-code": "No-code / payment links",
-  "payment-gateway-api": "Developer API",
-  "payment-gateway-online-store": "Small online stores",
-  "bnpl-malaysia": "BNPL",
-  "payment-gateway-ecommerce-plugins": "E-commerce plugins",
-  "payment-gateway-physical-store": "Physical stores & F&B",
-  "payment-gateway-digital-products": "Digital products & services",
-  "payment-gateway-saas": "SaaS & subscriptions",
-};
-
-const sections = [
-  {
-    href: "/learn/glossary/",
-    title: "Glossary",
-    desc: "Plain-language definitions: FPX, DuitNow QR, MDR, settlement, webhooks, idempotency, MCP and more.",
+const locale = getLocale(Astro);
+const L = tr(locale, {
+  en: {
+    title: "Learn: integrate a Malaysia payment gateway | MPG",
+    description:
+      "Understand and ship Malaysian payment gateways: glossary, the safe integration flow, AI-agent setup, and a production checklist.",
+    h1: "Learn",
+    lead: "How to start taking payments in Malaysia, without the jargon.",
+    whichType: "Which type do you need?",
+    eg: "e.g.",
+    bestFor: "Best gateway for…",
+    popular: "Popular comparisons",
+    agentPre: "Coding with an AI agent? Grab the free setup skills at",
+    spotted: "Spotted a wrong fee?",
+    helpFix: "Help fix it",
+    chips: {
+      "payment-gateway-malaysia": "Best overall",
+      "cheapest-payment-gateway-malaysia": "Cheapest",
+      "payment-gateway-fpx": "FPX",
+      "payment-gateway-credit-card": "Cards",
+      "payment-gateway-ewallet": "E-wallets",
+      "payment-gateway-duitnow-qr": "DuitNow QR",
+      "payment-gateway-recurring": "Recurring billing",
+      "payment-gateway-no-code": "No-code / payment links",
+      "payment-gateway-api": "Developer API",
+      "payment-gateway-online-store": "Small online stores",
+      "bnpl-malaysia": "BNPL",
+      "payment-gateway-ecommerce-plugins": "E-commerce plugins",
+      "payment-gateway-physical-store": "Physical stores & F&B",
+      "payment-gateway-digital-products": "Digital products & services",
+      "payment-gateway-saas": "SaaS & subscriptions",
+    } as Record<string, string>,
+    groups: [
+      {
+        name: "Guides",
+        items: [
+          { href: "/choose/", title: "Help me choose", desc: "A few questions, then a shortlist." },
+          { href: "/learn/glossary/", title: "Glossary", desc: "FPX, MDR, webhooks in plain words." },
+          { href: "/learn/integration-flow/", title: "Safe integration flow", desc: "The order that stops fake payments." },
+          { href: "/learn/checklist/", title: "Go-live checklist", desc: "Check these before launch." },
+          { href: "/learn/ai-agents/", title: "Build with AI agents", desc: "Ready prompts for Claude Code, Cursor, Codex." },
+          { href: "/learn/api/", title: "Data API", desc: "Every fee as JSON." },
+        ],
+      },
+    ],
+    types: [
+      {
+        title: "Payment gateway",
+        desc: "API or plugin. You write the code.",
+        eg: "CHIP, Billplz, Stripe",
+        links: [{ href: "/gateways/?category=gateway", label: "Browse" }],
+      },
+      {
+        title: "Bank gateway",
+        desc: "Apply through your business bank.",
+        eg: "Maybank2u Pay, CIMB",
+        links: [{ href: "/gateways/?category=bank", label: "Browse" }],
+      },
+      {
+        title: "E-wallet & BNPL",
+        desc: "Sign up as a merchant directly.",
+        eg: "Touch 'n Go, Atome",
+        links: [
+          { href: "/gateways/?category=ewallet", label: "E-wallets" },
+          { href: "/gateways/?category=bnpl", label: "BNPL" },
+        ],
+      },
+    ],
+    extras: [
+      { href: "/best/fastest-settlement/", label: "Fastest settlement" },
+      { href: "/best/payment-gateway-without-ssm/", label: "Without SSM" },
+      { href: "/calculator/", label: "Fee calculator" },
+      { href: "/fee-changes/", label: "Recent fee changes" },
+      { href: "/learn/how-to-accept-fpx/", label: "How to accept FPX" },
+      { href: "/learn/woocommerce-payment-gateways/", label: "WooCommerce gateways" },
+      { href: "/learn/shopify-payment-gateways-malaysia/", label: "Shopify gateways" },
+    ],
   },
-  {
-    href: "/learn/integration-flow/",
-    title: "The safe integration flow",
-    desc: "The order to wire a gateway so a payment can never be faked: pending record → checkout → verify webhook → settle once.",
+  ms: {
+    title: "Belajar: cara pasang payment gateway Malaysia | MPG",
+    description:
+      "Faham dan mula guna payment gateway Malaysia: maksud istilah, langkah sambung yang selamat, setup dengan AI agent, dan senarai semak sebelum lancar.",
+    h1: "Belajar",
+    lead: "Cara mula terima bayaran online di Malaysia, dalam bahasa mudah.",
+    whichType: "Jenis mana yang anda perlukan?",
+    eg: "cth.",
+    bestFor: "Gateway terbaik untuk…",
+    popular: "Perbandingan popular",
+    agentPre: "Guna AI agent untuk tulis kod? Ambil skill setup percuma di",
+    spotted: "Nampak fee yang salah?",
+    helpFix: "Bantu betulkan",
+    chips: {
+      "payment-gateway-malaysia": "Terbaik keseluruhan",
+      "cheapest-payment-gateway-malaysia": "Paling murah",
+      "payment-gateway-fpx": "FPX",
+      "payment-gateway-credit-card": "Kad",
+      "payment-gateway-ewallet": "E-wallet",
+      "payment-gateway-duitnow-qr": "DuitNow QR",
+      "payment-gateway-recurring": "Caj berulang automatik",
+      "payment-gateway-no-code": "Tanpa kod / payment link",
+      "payment-gateway-api": "API untuk developer",
+      "payment-gateway-online-store": "Kedai online kecil",
+      "bnpl-malaysia": "BNPL",
+      "payment-gateway-ecommerce-plugins": "Plugin e-commerce",
+      "payment-gateway-physical-store": "Kedai fizikal & F&B",
+      "payment-gateway-digital-products": "Produk & servis digital",
+      "payment-gateway-saas": "SaaS & langganan",
+    } as Record<string, string>,
+    groups: [
+      {
+        name: "Panduan",
+        items: [
+          { href: "/choose/", title: "Bantu saya pilih", desc: "Jawab beberapa soalan, dapat senarai pendek." },
+          { href: "/learn/glossary/", title: "Glosari", desc: "FPX, MDR, webhook dalam bahasa mudah." },
+          { href: "/learn/integration-flow/", title: "Langkah integrasi selamat", desc: "Ikut susunan ini supaya bayaran palsu tak lepas." },
+          { href: "/learn/checklist/", title: "Senarai semak sebelum lancar", desc: "Semak semua ini sebelum mula jual." },
+          { href: "/learn/ai-agents/", title: "Bina dengan AI agent", desc: "Arahan siap untuk Claude Code, Cursor, Codex." },
+          { href: "/learn/api/", title: "API data", desc: "Semua fee dalam format JSON." },
+        ],
+      },
+    ],
+    types: [
+      {
+        title: "Payment gateway",
+        desc: "Sambung guna API atau plugin. Anda pasang sendiri.",
+        eg: "CHIP, Billplz, Stripe",
+        links: [{ href: "/gateways/?category=gateway", label: "Lihat" }],
+      },
+      {
+        title: "Gateway bank",
+        desc: "Mohon melalui bank bisnes anda.",
+        eg: "Maybank2u Pay, CIMB",
+        links: [{ href: "/gateways/?category=bank", label: "Lihat" }],
+      },
+      {
+        title: "E-wallet & BNPL",
+        desc: "Daftar akaun peniaga terus dengan syarikat itu.",
+        eg: "Touch 'n Go, Atome",
+        links: [
+          { href: "/gateways/?category=ewallet", label: "E-wallet" },
+          { href: "/gateways/?category=bnpl", label: "BNPL" },
+        ],
+      },
+    ],
+    extras: [
+      { href: "/best/fastest-settlement/", label: "Duit masuk paling cepat" },
+      { href: "/best/payment-gateway-without-ssm/", label: "Tanpa SSM" },
+      { href: "/calculator/", label: "Kalkulator fee" },
+      { href: "/fee-changes/", label: "Perubahan fee terkini" },
+      { href: "/learn/how-to-accept-fpx/", label: "Cara terima FPX" },
+      { href: "/learn/woocommerce-payment-gateways/", label: "Gateway WooCommerce" },
+      { href: "/learn/shopify-payment-gateways-malaysia/", label: "Gateway Shopify" },
+    ],
   },
-  {
-    href: "/learn/ai-agents/",
-    title: "Build with AI agents",
-    desc: "Install AFU's setup-* skills, paste a ready prompt, and understand what MCP vs API/webhooks unlocks for AI coding tools.",
-  },
-  {
-    href: "/learn/checklist/",
-    title: "Production checklist",
-    desc: "What to verify before going live: env vars, webhook URLs, replay-safety, separated keys, no fake-redirect unlock.",
-  },
-  {
-    href: "/learn/api/",
-    title: "Data API",
-    desc: "Query the whole directory as JSON (fees, estimated cost, channels, features, developer support) from your code or an AI agent. MCP server coming.",
-  },
-  {
-    href: "/choose/",
-    title: "Help me choose",
-    desc: "Answer a few questions and get a ranked shortlist of gateways that fit your needs, cheapest first.",
-  },
-  {
-    href: "/contribute/",
-    title: "Contribute",
-    desc: "Spot an outdated fee or a missing gateway? Sign up and apply to help keep the directory accurate.",
-  },
-];
+});
+const { groups, types, extras } = L;
+const PROFILE_CHIP = L.chips;
+// full profile heading for the chip's title attr; BM twin when the profile carries one
+const profileTitle = (p: (typeof PROFILES)[number]): string =>
+  locale === "ms" && "h1Ms" in p && typeof p.h1Ms === "string" ? p.h1Ms : p.h1;
+const chip =
+  "rounded-full border border-line px-3 py-1 text-sm text-muted hover:border-muted hover:text-fg";
 ---
 
 <Base
-  title="Learn: integrate a Malaysia payment gateway | MPG"
-  description="Understand and ship Malaysian payment gateways: glossary, the safe integration flow, AI-agent setup, and a production checklist."
+  title={L.title}
+  description={L.description}
 >
   <header class="max-w-2xl">
-    <h1 class="max-w-3xl text-3xl font-bold tracking-tight text-fg sm:text-4xl">Learn</h1>
-    <p class="mt-2 text-muted">
-      The directory tells you <em>which</em> gateway to pick. This section tells
-      you <em>how</em> to integrate one safely: the jargon, the correct order to
-      wire things, and how to hand the job to an AI coding agent.
-    </p>
+    <h1 class="text-3xl font-bold tracking-tight text-fg sm:text-4xl">{L.h1}</h1>
+    <p class="mt-2 text-muted">{L.lead}</p>
   </header>
 
-  <!-- which type do you need? gateway (integrate) vs bank/e-wallet (account) -->
   <section class="mt-8">
-    <h2 class="text-base font-medium text-fg">Which type do you need?</h2>
-    <p class="mt-1.5 max-w-2xl text-sm text-muted">
-      Not every provider works the same way. There are three broad ways to start
-      accepting payments in Malaysia, depending on whether you are integrating code
-      or opening a business account.
-    </p>
-    <div class="mt-4 grid gap-4 sm:grid-cols-3">
-      <div class="rounded-md border border-line bg-panel p-4">
-        <span class="rounded-full bg-raised px-2 py-0.5 text-xs font-medium text-accent">Integrate</span>
-        <h3 class="mt-2 text-sm font-medium text-fg">Payment gateway</h3>
-        <p class="mt-1 text-sm text-muted">
-          For developers. Sign up, get API keys, then call the API or drop in a
-          plugin (WooCommerce, Shopify). You control the code.
-        </p>
-        <p class="mt-2 text-xs text-muted">e.g. CHIP, Billplz, Stripe, Curlec, Fiuu</p>
-        <a href="/gateways/?category=gateway" class="mt-2 inline-block text-sm text-accent hover:underline">
-          Browse gateways →
-        </a>
-      </div>
-      <div class="rounded-md border border-line bg-panel p-4">
-        <span class="rounded-full bg-raised px-2 py-0.5 text-xs font-medium text-accent">Merchant account</span>
-        <h3 class="mt-2 text-sm font-medium text-fg">Bank gateway</h3>
-        <p class="mt-1 text-sm text-muted">
-          Apply for a business or merchant account with a Malaysian bank. It runs on
-          the bank's own hosted gateway, usually tied to your business account.
-        </p>
-        <p class="mt-2 text-xs text-muted">e.g. Maybank2u Pay, CIMB, OCBC</p>
-        <a href="/gateways/?category=bank" class="mt-2 inline-block text-sm text-accent hover:underline">
-          Browse banks →
-        </a>
-      </div>
-      <div class="rounded-md border border-line bg-panel p-4">
-        <span class="rounded-full bg-raised px-2 py-0.5 text-xs font-medium text-accent">Merchant account</span>
-        <h3 class="mt-2 text-sm font-medium text-fg">E-wallet &amp; BNPL</h3>
-        <p class="mt-1 text-sm text-muted">
-          Register as a merchant to accept e-wallets and DuitNow QR, or to offer
-          Buy-Now-Pay-Later instalments at checkout.
-        </p>
-        <p class="mt-2 text-xs text-muted">e.g. Touch 'n Go eWallet, Atome</p>
-        <a href="/gateways/?category=ewallet" class="mt-2 inline-block text-sm text-accent hover:underline">E-wallet →</a>
-        <a href="/gateways/?category=bnpl" class="mt-2 ml-4 inline-block text-sm text-accent hover:underline">BNPL →</a>
-      </div>
+    <h2 class="text-xs font-medium uppercase tracking-widest text-muted">{L.whichType}</h2>
+    <div class="mt-3 grid gap-3 sm:grid-cols-3">
+      {
+        types.map((t) => (
+          <div class="rounded-xl border border-line bg-panel p-5">
+            <h3 class="font-semibold text-fg">{t.title}</h3>
+            <p class="mt-1 text-sm text-muted">{t.desc}</p>
+            <p class="mt-3 text-xs text-muted">{L.eg} {t.eg}</p>
+            <p class="mt-3 flex gap-4 text-sm">
+              {t.links.map((l) => (
+                <a href={l.href} class="text-accent hover:underline">{l.label} →</a>
+              ))}
+            </p>
+          </div>
+        ))
+      }
     </div>
   </section>
 
-  <div class="mt-8 grid gap-4 sm:grid-cols-2">
-    {
-      sections.map((s) => (
-        <a
-          href={s.href}
-          class="group rounded-md border border-line bg-panel p-5 transition-colors hover:border-accent"
-        >
-          <h2 class="flex items-center justify-between text-base font-medium text-fg">
-            {s.title}
-            <span class="text-muted transition-transform group-hover:translate-x-0.5 group-hover:text-accent">
-              →
-            </span>
-          </h2>
-          <p class="mt-1.5 text-sm text-muted">{s.desc}</p>
-        </a>
-      ))
-    }
-  </div>
+  {
+    groups.map((g) => (
+      <section class="mt-10">
+        <h2 class="text-xs font-medium uppercase tracking-widest text-muted">{g.name}</h2>
+        <div class="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {g.items.map((s) => (
+            <a
+              href={s.href}
+              class="group flex flex-col rounded-xl border border-line bg-panel p-5 hover:border-muted"
+            >
+              <span class="flex items-center justify-between font-semibold text-fg">
+                {s.title}
+                <span class="text-muted transition-transform group-hover:translate-x-0.5 group-hover:text-fg">→</span>
+              </span>
+              <span class="mt-1 text-sm text-muted">{s.desc}</span>
+            </a>
+          ))}
+        </div>
+      </section>
+    ))
+  }
 
-  <!-- programmatic SEO guides (spec 10): /best/* profiles + /vs/* head-to-heads -->
   <section class="mt-10">
-    <h2 class="text-base font-medium text-fg">Guides: best gateway for your need</h2>
-    <p class="mt-1.5 max-w-2xl text-sm text-muted">
-      Pre-ranked shortlists for common needs, using the same estimated-cost engine as the
-      directory and the <a href="/choose/" class="text-accent hover:underline">Help me choose</a> wizard.
-    </p>
-    <div class="mt-4 flex flex-wrap gap-2">
+    <h2 class="text-xs font-medium uppercase tracking-widest text-muted">{L.bestFor}</h2>
+    <div class="mt-3 flex flex-wrap gap-2">
       {
         PROFILES.map((p) => (
-          <a
-            href={`/best/${p.slug}/`}
-            title={p.h1}
-            class="rounded-full border border-line bg-panel px-3 py-1 text-xs text-muted hover:border-accent hover:text-fg"
-          >
-            {PROFILE_CHIP[p.slug] ?? p.h1}
+          <a href={`/best/${p.slug}/`} title={profileTitle(p)} class={chip}>
+            {PROFILE_CHIP[p.slug] ?? profileTitle(p)}
           </a>
         ))
       }
-      <a
-        href="/best/fastest-settlement/"
-        class="rounded-full border border-line bg-panel px-3 py-1 text-xs text-muted hover:border-accent hover:text-fg"
-      >
-        Fastest settlement
-      </a>
-      <a
-        href="/calculator/"
-        class="rounded-full border border-line bg-panel px-3 py-1 text-xs text-muted hover:border-accent hover:text-fg"
-      >
-        Fee calculator
-      </a>
-      <a
-        href="/fee-changes/"
-        class="rounded-full border border-line bg-panel px-3 py-1 text-xs text-muted hover:border-accent hover:text-fg"
-      >
-        Recent fee changes
-      </a>
-      <a
-        href="/learn/how-to-accept-fpx/"
-        class="rounded-full border border-line bg-panel px-3 py-1 text-xs text-muted hover:border-accent hover:text-fg"
-      >
-        How to accept FPX
-      </a>
-      <a
-        href="/learn/woocommerce-payment-gateways/"
-        class="rounded-full border border-line bg-panel px-3 py-1 text-xs text-muted hover:border-accent hover:text-fg"
-      >
-        WooCommerce gateways
-      </a>
-      <a
-        href="/learn/shopify-payment-gateways-malaysia/"
-        class="rounded-full border border-line bg-panel px-3 py-1 text-xs text-muted hover:border-accent hover:text-fg"
-      >
-        Shopify gateways
-      </a>
+      {extras.map((e) => <a href={e.href} class={chip}>{e.label}</a>)}
     </div>
-    <h3 class="mt-6 text-sm font-medium text-fg">Popular comparisons</h3>
+  </section>
+
+  <section class="mt-10">
+    <h2 class="text-xs font-medium uppercase tracking-widest text-muted">{L.popular}</h2>
     <div class="mt-3 flex flex-wrap gap-2">
       {
         topComparisons.map((p) => (
-          <a
-            href={`/vs/${p.slug}/`}
-            class="rounded-full border border-line bg-panel px-3 py-1 text-xs text-muted hover:border-accent hover:text-fg"
-          >
+          <a href={`/vs/${p.slug}/`} class={chip}>
             {splitName(p.a.name).base} vs {splitName(p.b.name).base}
           </a>
         ))
@@ -222,21 +257,12 @@ const sections = [
     </div>
   </section>
 
-  <section class="mt-10 rounded-md border border-line bg-panel p-5">
-    <h2 class="text-base font-medium text-fg">Built for vibe coders</h2>
-    <p class="mt-1.5 max-w-2xl text-sm text-muted">
-      Using Claude Code, Cursor or Codex? Many gateways here map to an open-source{" "}
-      <strong class="text-fg">setup skill</strong> that teaches your agent the
-      correct, secure integration, and every gateway page with one has a{" "}
-      <strong class="text-fg">Copy prompt</strong> button you can paste straight in.
-    </p>
-    <a
-      href={SKILLS_REPO}
-      target="_blank"
-      rel="noopener noreferrer"
-      class="mt-3 inline-block text-sm text-accent hover:underline"
-    >
-      afu-it/malaysia-payment-gateway →
+  <p class="mt-12 text-sm text-muted">
+    {L.agentPre}{" "}
+    <a href={SKILLS_REPO} target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">
+      afu-it/malaysia-payment-gateway
     </a>
-  </section>
+    . {L.spotted}{" "}
+    <a href="/contribute/" class="text-accent hover:underline">{L.helpFix}</a>.
+  </p>
 </Base>

@@ -14,6 +14,8 @@ import { toApiGateway, type GatewayEntryLike } from "../../lib/api";
 import { vsPairs, buildVsPage } from "../../lib/seo-pages";
 import { breadcrumbLd } from "../../lib/jsonld";
 import { splitName } from "../../lib/name";
+import { getLocale, tr, localizePath } from "../../i18n/locale";
+import { gatewayMs } from "../../i18n/content";
 
 export async function getStaticPaths() {
   const entries = (await getCollection("gateways")) as unknown as GatewayEntryLike[];
@@ -22,27 +24,25 @@ export async function getStaticPaths() {
 }
 
 const { pair } = Astro.props;
-const page = buildVsPage(pair);
+const locale = getLocale(Astro);
+const page = buildVsPage(pair, locale);
 const { a, b } = pair;
+// BM settlement wording from the gateway overlays, English figures otherwise
+const [msA, msB] = await Promise.all([gatewayMs(a.slug, locale), gatewayMs(b.slug, locale)]);
+const settleRow = page.feeRows.find((r) => r.key === "settlement");
+if (settleRow) {
+  settleRow.a = msA?.data.settlement ?? settleRow.a;
+  settleRow.b = msB?.data.settlement ?? settleRow.b;
+}
 const hasIndicative = [...page.feeRows, ...page.featureRows].some(
   (r) => r.a.includes("*") || r.b.includes("*"),
 );
 // winner highlight (2026-07-17, AFU): bold + colour the cheaper side of a row
 // when BOTH sides publish comparable official figures (indicative * and
 // Contact sales never win). Lower is better for every row in this set.
-const LOWER_BETTER = new Set([
-  "Est. fee / RM100",
-  "FPX",
-  "Cards (local)",
-  "Cards (international)",
-  "E-wallets",
-  "DuitNow QR",
-  "BNPL",
-  "Setup fee",
-  "Monthly / annual fee",
-]);
-function rowCost(label: string, v: string): number {
-  if (label === "Est. fee / RM100") {
+const LOWER_BETTER = new Set(["est", "fpx", "card", "card_intl", "ewallet", "duitnowqr", "bnpl", "setup"]);
+function rowCost(key: string, v: string): number {
+  if (key === "est") {
     const m = String(v).match(/RM(\d+(?:\.\d+)?)/);
     return m ? parseFloat(m[1]) : Infinity;
   }
@@ -50,17 +50,56 @@ function rowCost(label: string, v: string): number {
   if (shape.indicative) return Infinity;
   return effectiveCost(shape, 100);
 }
-function winnerOf(r: { label: string; a: string; b: string }): "a" | "b" | null {
-  if (!LOWER_BETTER.has(r.label)) return null;
-  const ca = rowCost(r.label, r.a);
-  const cb = rowCost(r.label, r.b);
+function winnerOf(r: { key: string; a: string; b: string }): "a" | "b" | null {
+  if (!LOWER_BETTER.has(r.key)) return null;
+  const ca = rowCost(r.key, r.a);
+  const cb = rowCost(r.key, r.b);
   if (!isFinite(ca) || !isFinite(cb) || ca === cb) return null;
   return ca < cb ? "a" : "b";
 }
 
+const T = tr(locale, {
+  en: {
+    home: "Home",
+    comparisons: "Comparisons",
+    intro1:
+      "Side-by-side fees and features for Malaysian merchants, from each provider's published pricing. For the full matrix including supported banks and e-wallets, open the",
+    interactive: "interactive comparison",
+    glance: "At a glance",
+    fees: "Fees",
+    estLabel: "Est. fee / RM100",
+    blend: "blends officially published rates (FPX/card/e-wallet 50/30/20).",
+    thirdParty: "= third-party figure, excluded from ranking.",
+    confirm: "Fees change; confirm with the provider.",
+    methodology: "Methodology",
+    features: "Features",
+    full: "Full comparison",
+    details: (n: string) => `${n} details`,
+    choose: "Help me choose",
+  },
+  ms: {
+    home: "Utama",
+    comparisons: "Perbandingan",
+    intro1:
+      "Fee dan ciri sebelah-menyebelah untuk peniaga Malaysia, diambil dari harga rasmi setiap gateway. Untuk jadual penuh, termasuk bank dan e-wallet yang disokong, buka",
+    interactive: "perbandingan interaktif",
+    glance: "Ringkasan",
+    fees: "Fee",
+    estLabel: "Anggaran caj / RM100",
+    blend: "dikira dengan campur kadar rasmi FPX, kad dan e-wallet (50/30/20).",
+    thirdParty: "= angka dari pihak ketiga, tidak dikira dalam ranking.",
+    confirm: "Fee boleh berubah, jadi sahkan dulu dengan gateway.",
+    methodology: "Cara kami kira",
+    features: "Ciri",
+    full: "Perbandingan penuh",
+    details: (n: string) => `Butiran ${n}`,
+    choose: "Bantu saya pilih",
+  },
+});
+
 const crumbLd = breadcrumbLd(String(Astro.site ?? "https://malaysiapg.com.my/"), [
-  { name: "Home", path: "/" },
-  { name: "Comparisons", path: "/vs/" },
+  { name: T.home, path: localizePath("/", locale) },
+  { name: T.comparisons, path: localizePath("/vs/", locale) },
   { name: `${splitName(a.name).base} vs ${splitName(b.name).base}` },
 ]);
 ---
@@ -68,9 +107,9 @@ const crumbLd = breadcrumbLd(String(Astro.site ?? "https://malaysiapg.com.my/"),
 <Base title={page.title} description={page.description}>
   <script is:inline type="application/ld+json" set:html={JSON.stringify(crumbLd)} />
   <nav aria-label="Breadcrumb" class="mb-4 flex items-center gap-2 text-sm text-muted">
-    <a href="/" class="hover:text-fg hover:underline">Home</a>
+    <a href="/" class="hover:text-fg hover:underline">{T.home}</a>
     <span aria-hidden="true">/</span>
-    <a href="/vs/" class="hover:text-fg hover:underline">Comparisons</a>
+    <a href="/vs/" class="hover:text-fg hover:underline">{T.comparisons}</a>
     <span aria-hidden="true">/</span>
     <span class="text-fg">{a.name} vs {b.name}</span>
   </nav>
@@ -79,13 +118,12 @@ const crumbLd = breadcrumbLd(String(Astro.site ?? "https://malaysiapg.com.my/"),
     {a.name} vs {b.name}
   </h1>
   <p class="mt-4 max-w-3xl text-muted">
-    Side-by-side fees and features for Malaysian merchants, from each provider's published
-    pricing. For the full matrix including supported banks and e-wallets, open the{" "}
-    <a href={`/compare/?ids=${a.slug},${b.slug}`} class="text-accent hover:underline">interactive comparison</a>.
+    {T.intro1}{" "}
+    <a href={`/compare/?ids=${a.slug},${b.slug}`} class="text-accent hover:underline">{T.interactive}</a>.
   </p>
 
   <section class="mt-10">
-    <h2 class="mb-3 text-xs font-medium uppercase tracking-wide text-muted">At a glance</h2>
+    <h2 class="mb-3 text-xs font-medium uppercase tracking-wide text-muted">{T.glance}</h2>
     <ul class="max-w-3xl divide-y divide-line border-y border-line">
       {
         page.verdicts.map((v) => (
@@ -96,7 +134,7 @@ const crumbLd = breadcrumbLd(String(Astro.site ?? "https://malaysiapg.com.my/"),
   </section>
 
   <section class="mt-12">
-    <h2 class="mb-3 text-xs font-medium uppercase tracking-wide text-muted">Fees</h2>
+    <h2 class="mb-3 text-xs font-medium uppercase tracking-wide text-muted">{T.fees}</h2>
     <div class="overflow-x-auto">
       <table class="w-full min-w-[520px] text-sm">
         <thead>
@@ -135,20 +173,19 @@ const crumbLd = breadcrumbLd(String(Astro.site ?? "https://malaysiapg.com.my/"),
       </table>
     </div>
     <p class="mt-2 text-xs text-muted">
-      <span class="text-fg">Est. fee / RM100</span> blends officially published rates
-      (FPX/card/e-wallet 50/30/20).{" "}
+      <span class="text-fg">{T.estLabel}</span> {T.blend}{" "}
       {hasIndicative && (
         <>
-          <span class="text-fg">*</span> = third-party figure, excluded from ranking.{" "}
+          <span class="text-fg">*</span> {T.thirdParty}{" "}
         </>
       )}
-      Fees change; confirm with the provider.{" "}
-      <a href="/about/" class="underline-offset-2 hover:text-fg hover:underline">Methodology</a>
+      {T.confirm}{" "}
+      <a href="/about/" class="underline-offset-2 hover:text-fg hover:underline">{T.methodology}</a>
     </p>
   </section>
 
   <section class="mt-12">
-    <h2 class="mb-3 text-xs font-medium uppercase tracking-wide text-muted">Features</h2>
+    <h2 class="mb-3 text-xs font-medium uppercase tracking-wide text-muted">{T.features}</h2>
     <div class="overflow-x-auto">
       <table class="w-full min-w-[520px] text-sm">
         <tbody class="divide-y divide-line border-y border-line">
@@ -171,16 +208,16 @@ const crumbLd = breadcrumbLd(String(Astro.site ?? "https://malaysiapg.com.my/"),
       href={`/compare/?ids=${a.slug},${b.slug}`}
       class="rounded-md bg-brand-blue px-4 py-2 text-sm font-medium text-white hover:opacity-90"
     >
-      Full comparison
+      {T.full}
     </a>
     <a href={`/gateway/${a.slug}/`} class="rounded-md border border-line px-4 py-2 text-sm text-muted hover:text-fg">
-      {a.name} details
+      {T.details(a.name)}
     </a>
     <a href={`/gateway/${b.slug}/`} class="rounded-md border border-line px-4 py-2 text-sm text-muted hover:text-fg">
-      {b.name} details
+      {T.details(b.name)}
     </a>
     <a href="/choose/" class="rounded-md border border-line px-4 py-2 text-sm text-muted hover:text-fg">
-      Help me choose
+      {T.choose}
     </a>
   </div>
 </Base>

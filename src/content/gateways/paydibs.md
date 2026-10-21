@@ -26,6 +26,11 @@ dev_docs: "https://v3api-docs.paydibs.com/docs/introduction"
 popularity: 42
 verified_date: "2026-10-20"
 source: "https://paydibs.com/payment-gateway-stack/"
+bnm:
+  roles: [merchant-acquirer]
+  entity: "Paydibs Sdn Bhd"
+  checked: "2026-10-21"
+  evidence: "https://paydibs.com"
 notes: "Site relaunched in October 2026 and the old /pricing/ page now returns 404 (checked 2026-10-20). No signup fee, maintenance fee, settlement time or per-transaction rate is published anywhere on paydibs.com, so the previously listed Free/USD120 signup and RM300/year maintenance fee are downgraded to Contact sales. The Service Agreement says Paydibs acts as the authorised agent of Adyen Malaysia Sdn. Bhd. for acquiring, and fees are set in each merchant's schedule. BNPL is no longer mentioned on the relaunched site; channel list left unchanged pending confirmation."
 ---
 

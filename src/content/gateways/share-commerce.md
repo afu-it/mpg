@@ -38,6 +38,11 @@ dev_docs: "https://devdocs.share-commerce.com/"
 popularity: 28
 verified_date: "2026-10-20"
 source: "https://share-commerce.com/"
+bnm:
+  roles: [merchant-acquirer]
+  entity: "Share Commerce Sdn Bhd"
+  checked: "2026-10-21"
+  evidence: "https://share-commerce.com"
 notes: "Share Commerce Sdn Bhd (201901009558), listed on BNM's FSP Directory as a registered merchant acquirer (non-bank). Fully quote-based: no rates published anywhere, not even third-party figures. Also does white-label gateways, POS terminal management and NFC e-receipts for institutions; PCI-DSS and Malaysia Digital certified. Merchant Android app updated May 2026. BNPL: Atome shown on the homepage (the API appendix also lists a MyIOU code)."
 ---
 

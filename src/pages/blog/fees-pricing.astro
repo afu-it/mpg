@@ -1,117 +1,56 @@
 ---
 // Pillar page: fees & pricing cluster (spec 15 slice B). A literal route so it
-// wins over the dynamic /blog/[slug] post route. Summarises and links every
-// post in the cluster plus the money pages built on the same data.
+// wins over the dynamic /blog/[slug] post route.
 export const prerender = true;
 
 import { getCollection } from "astro:content";
-import Base from "../../layouts/Base.astro";
-import { clusterBySlug } from "../../lib/blog";
-import { breadcrumbLd } from "../../lib/jsonld";
+import BlogPillar from "../../components/BlogPillar.astro";
 import { toApiGateway, type GatewayEntryLike } from "../../lib/api";
+import { getLocale, tr } from "../../i18n/locale";
 
-const cluster = clusterBySlug("fees-pricing")!;
-const posts = (await getCollection("posts"))
-  .filter((p) => p.data.cluster === "fees-pricing")
-  .sort((a, b) => (b.data.updatedDate ?? b.data.pubDate).localeCompare(a.data.updatedDate ?? a.data.pubDate));
+const T = tr(getLocale(Astro), {
+  en: {
+    heading: "Payment gateway fees in Malaysia",
+    intro: "What each gateway really charges, from official rate cards.",
+    topLabel: "Cheapest right now",
+    seeAll: "Full ranking",
+    calculator: "Fee calculator",
+    compare: "Compare gateways",
+    log: "Fee change log",
+  },
+  ms: {
+    heading: "Fee payment gateway di Malaysia",
+    intro: "Caj sebenar setiap gateway, terus dari senarai harga rasmi mereka.",
+    topLabel: "Paling murah sekarang",
+    seeAll: "Senarai penuh",
+    calculator: "Kalkulator fee",
+    compare: "Bandingkan gateway",
+    log: "Rekod perubahan fee",
+  },
+});
 
-// live context for the summary block: cheapest ranked gateways right now
+// live tiles: cheapest ranked gateways right now
 const all = (await getCollection("gateways")) as unknown as GatewayEntryLike[];
-const ranked = all
+const top = all
   .map(toApiGateway)
   .filter((g) => g.rankable && g.est_fee_rm100 != null)
-  .sort((a, b) => a.est_fee_rm100! - b.est_fee_rm100!);
-const cheapest = ranked.slice(0, 3);
+  .sort((a, b) => a.est_fee_rm100! - b.est_fee_rm100!)
+  .slice(0, 3)
+  .map((g) => ({ slug: g.slug, name: g.name, est: g.est_fee_rm100! }));
 const verified = all.map((e) => e.data.verified_date).sort().at(-1);
-
-const site = (Astro.site?.href ?? "https://malaysiapg.com.my/").replace(/\/$/, "");
-const crumbLd = JSON.stringify(
-  breadcrumbLd(site, [
-    { name: "Home", path: "/" },
-    { name: "Blog", path: "/blog/" },
-    { name: cluster.name },
-  ]),
-);
 ---
 
-<Base title={cluster.title} description={cluster.description}>
-  <script is:inline type="application/ld+json" set:html={crumbLd} />
-
-  <nav aria-label="Breadcrumb" class="mb-4 flex items-center gap-2 text-sm text-muted">
-    <a href="/" class="hover:text-fg hover:underline">Home</a>
-    <span aria-hidden="true">/</span>
-    <a href="/blog/" class="hover:text-fg hover:underline">Blog</a>
-    <span aria-hidden="true">/</span>
-    <span class="text-fg">{cluster.name}</span>
-  </nav>
-
-  <header class="max-w-2xl">
-    <h1 class="max-w-3xl text-3xl font-bold tracking-tight text-fg sm:text-4xl">
-      Payment gateway fees in Malaysia
-    </h1>
-    <p class="mt-3 text-muted">
-      What Malaysian gateways actually charge, provider by provider. Every figure below is verified
-      against official rate cards (last verification {verified}) and rendered from the same dataset as
-      the{" "}
-      <a href="/gateways/" class="text-accent underline-offset-2 hover:underline">directory ranking</a>.
-    </p>
-    {
-      cheapest.length > 0 && (
-        <p class="mt-3 rounded-lg border border-line bg-panel p-4 text-sm text-muted">
-          As of {verified}, the cheapest ranked gateways on a RM100 basket are{" "}
-          {cheapest.map((g, i) => (
-            <>
-              <a href={`/gateway/${g.slug}/`} class="text-accent underline-offset-2 hover:underline">
-                {g.name}
-              </a>
-              <span class="text-fg"> (RM{g.est_fee_rm100!.toFixed(2)})</span>
-              {i < cheapest.length - 1 ? ", " : "."}
-            </>
-          ))}{" "}
-          See the full list on{" "}
-          <a href="/best/payment-gateway-malaysia/" class="text-accent underline-offset-2 hover:underline">
-            the best-gateways page
-          </a>
-          .
-        </p>
-      )
-    }
-  </header>
-
-  <section class="mt-8 max-w-2xl">
-    <h2 class="text-sm font-medium uppercase tracking-wide text-muted">Guides in this topic</h2>
-    <div class="mt-3 space-y-4">
-      {
-        posts.map((p) => (
-          <article class="rounded-lg border border-line bg-panel p-4">
-            <p class="text-xs text-muted">{p.data.updatedDate ?? p.data.pubDate}</p>
-            <h3 class="mt-1 text-lg font-semibold text-fg">
-              <a href={`/blog/${p.id}/`} class="hover:text-accent">
-                {p.data.title}
-              </a>
-            </h3>
-            <p class="mt-1 text-sm text-muted">{p.data.description}</p>
-          </article>
-        ))
-      }
-    </div>
-  </section>
-
-  <section class="mt-10 max-w-2xl border-t border-line pt-6">
-    <h2 class="text-sm font-medium uppercase tracking-wide text-muted">Tools built on the same data</h2>
-    <div class="mt-3 flex flex-wrap gap-3">
-      <a href="/calculator/" class="rounded-md border border-line px-4 py-2 text-sm text-muted hover:text-fg">
-        Fee calculator
-      </a>
-      <a href="/best/payment-gateway-malaysia/" class="rounded-md border border-line px-4 py-2 text-sm text-muted hover:text-fg">
-        Best gateways ranked
-      </a>
-      <a href="/fee-changes/" class="rounded-md border border-line px-4 py-2 text-sm text-muted hover:text-fg">
-        Fee change log
-      </a>
-      <a href="/compare/" class="rounded-md border border-line px-4 py-2 text-sm text-muted hover:text-fg">
-        Compare gateways
-      </a>
-    </div>
-  </section>
-</Base>
+<BlogPillar
+  cluster="fees-pricing"
+  heading={T.heading}
+  intro={T.intro}
+  topLabel={T.topLabel}
+  top={top}
+  seeAll={{ href: "/best/payment-gateway-malaysia/", label: T.seeAll }}
+  tools={[
+    { href: "/calculator/", label: T.calculator },
+    { href: "/compare/", label: T.compare },
+    { href: "/fee-changes/", label: T.log },
+  ]}
+  verified={verified}
+/>

@@ -4,19 +4,92 @@ export const prerender = true;
 import Base from "../layouts/Base.astro";
 import Sidebar from "../components/Sidebar.astro";
 import GatewayTable from "../components/GatewayTable.astro";
+import { getCollection } from "astro:content";
+import { getLocale, tr } from "../i18n/locale";
+import { PROFILES, profileCopy } from "../lib/seo-pages";
+import { PLATFORMS } from "../lib/platform-guides";
+
+const locale = getLocale(Astro);
+// provider count comes from the content collection, so the title never goes stale
+const count = (await getCollection("gateways")).length;
+const T = tr(locale, {
+  en: {
+    title: `Malaysia payment gateway list: ${count} providers, fees compared · MPG`,
+    description:
+      "Every Malaysian payment gateway, bank, e-wallet and BNPL provider in one sortable list: FPX, card and e-wallet fees, settlement and features, cheapest first.",
+    shortlists: "Shortlists by need",
+    platformGuide: (name: string) => `${name} payment gateways`,
+    jsonTitle: "MPG gateways data (JSON)",
+    filters: "Filters",
+    closeFilters: "Close filters",
+    h1: "Find the cheapest gateway for your sales",
+    lead: "Filter by FPX, card or e-wallet, then open any row for the full price list. Cheapest first, worked out on a RM100 sale; gateways that don't publish prices sit at the bottom.",
+    sort: "Sort:",
+    sortGateways: "Sort gateways",
+    lowest: "Lowest fees",
+    popularity: "Popularity",
+    fpx: "Lowest FPX",
+    card: "Lowest card",
+    ewallet: "Lowest e-wallet",
+    nameAsc: "Name A-Z",
+    nameDesc: "Name Z-A",
+    search: "Search gateway…",
+    searchLabel: "Search payment gateways by name",
+  },
+  ms: {
+    title: `Senarai payment gateway Malaysia: ${count} penyedia, banding fee · MPG`,
+    description:
+      "Senarai semua payment gateway, bank, e-wallet dan penyedia BNPL di Malaysia: caj FPX, kad dan e-wallet, tempoh duit masuk dan ciri, paling murah di atas.",
+    shortlists: "Senarai pendek ikut keperluan",
+    platformGuide: (name: string) => `Payment gateway untuk ${name}`,
+    jsonTitle: "Data gateway MPG (JSON)",
+    filters: "Penapis",
+    closeFilters: "Tutup penapis",
+    h1: "Cari gateway paling murah untuk jualan anda",
+    lead: "Tapis ikut FPX, kad atau e-wallet, kemudian klik mana-mana baris untuk senarai harga penuh. Paling murah di atas (dikira untuk jualan RM100). Gateway yang tak siarkan harga diletak paling bawah.",
+    sort: "Susun:",
+    sortGateways: "Susun gateway",
+    lowest: "Caj paling rendah",
+    popularity: "Populariti",
+    fpx: "FPX paling murah",
+    card: "Kad paling murah",
+    ewallet: "E-wallet paling murah",
+    nameAsc: "Nama A-Z",
+    nameDesc: "Nama Z-A",
+    search: "Cari gateway…",
+    searchLabel: "Cari payment gateway ikut nama",
+  },
+});
+// crawlable links from the directory into the shortlist pages (SEO round 2026-10)
+const SHORTLIST_SLUGS = [
+  "cheapest-payment-gateway-malaysia",
+  "payment-gateway-malaysia",
+  "payment-gateway-fpx",
+  "payment-gateway-duitnow-qr",
+  "payment-gateway-physical-store",
+  "payment-gateway-api",
+  "payment-gateway-recurring",
+];
+const shortlists = [
+  ...SHORTLIST_SLUGS.flatMap((slug) => {
+    const def = PROFILES.find((p) => p.slug === slug);
+    return def ? [{ href: `/best/${slug}/`, label: profileCopy(def, locale).h1 }] : [];
+  }),
+  ...PLATFORMS.map((p) => ({ href: `/learn/${p.slug}/`, label: T.platformGuide(p.name) })),
+];
 ---
 
 <Base
   full
-  title="All Malaysian payment gateways, fees compared · MPG"
-  description="Sortable table of every Malaysian payment gateway, bank, e-wallet and BNPL provider: FPX, card and e-wallet fees, settlement and features, ranked by cost."
+  title={T.title}
+  description={T.description}
 >
   <link
     slot="head"
     rel="alternate"
     type="application/json"
     href="/api/gateways.json"
-    title="MPG gateways data (JSON)"
+    title={T.jsonTitle}
   />
   <div class="flex w-full flex-col md:flex-row">
     <!-- filter sidebar: sticky column on desktop, LEFT DRAWER on mobile (spec 14).
@@ -31,14 +104,14 @@ import GatewayTable from "../components/GatewayTable.astro";
     <aside
       id="gw-filters"
       class="fixed inset-y-0 left-0 z-40 w-80 max-w-[85vw] -translate-x-full overflow-y-auto border-r border-line bg-surface px-4 py-5 transition-transform duration-200 data-[open]:translate-x-0 motion-reduce:transition-none md:sticky md:top-14 md:z-auto md:h-[calc(100vh-3.5rem)] md:w-60 md:shrink-0 md:translate-x-0 md:border-b-0 md:py-6"
-      aria-label="Filters"
+      aria-label={T.filters}
     >
       <div class="mb-4 flex items-center justify-between md:hidden">
-        <span class="text-sm font-medium text-fg">Filters</span>
+        <span class="text-sm font-medium text-fg">{T.filters}</span>
         <button
           type="button"
           id="gw-filters-close"
-          aria-label="Close filters"
+          aria-label={T.closeFilters}
           class="flex size-11 items-center justify-center rounded-md text-muted hover:bg-panel hover:text-fg"
         >
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="size-5" aria-hidden="true">
@@ -54,10 +127,10 @@ import GatewayTable from "../components/GatewayTable.astro";
       <div class="mb-5 flex flex-wrap items-center gap-3">
         <div class="mr-auto">
           <h1 class="text-2xl font-semibold tracking-tight text-fg">
-            Malaysian payment gateway fees, compared
+            {T.h1}
           </h1>
           <p class="mt-1 text-sm text-muted">
-            Ranked by estimated cost on a RM100 basket; unpublished rates sit below as "On request".
+            {T.lead}
           </p>
         </div>
         <!-- mobile: open the filter drawer -->
@@ -71,7 +144,7 @@ import GatewayTable from "../components/GatewayTable.astro";
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4" aria-hidden="true">
             <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
           </svg>
-          Filters
+          {T.filters}
           <span id="gw-filters-count" hidden class="rounded-full bg-brand-blue px-2 py-0.5 text-xs font-medium text-white"></span>
         </button>
         <!-- sort dropdown: sits to the left of the search box -->
@@ -101,8 +174,8 @@ import GatewayTable from "../components/GatewayTable.astro";
               <path d="m21 8-4-4-4 4"></path>
               <path d="M17 4v16"></path>
             </svg>
-            <span class="text-muted/80">Sort:</span>
-            <span id="gw-sort-label" class="min-w-0 flex-1 truncate text-left text-fg">Lowest fees</span>
+            <span class="text-muted/80">{T.sort}</span>
+            <span id="gw-sort-label" class="min-w-0 flex-1 truncate text-left text-fg">{T.lowest}</span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -119,19 +192,19 @@ import GatewayTable from "../components/GatewayTable.astro";
           <ul
             id="gw-sort-menu"
             role="menu"
-            aria-label="Sort gateways"
+            aria-label={T.sortGateways}
             hidden
             class="absolute left-0 z-20 mt-1 w-full min-w-[12rem] overflow-hidden rounded-md border border-line bg-panel py-1 shadow-lg"
           >
             {
               [
-                { key: "value", label: "Lowest fees", checked: true },
-                { key: "popularity", label: "Popularity", checked: false },
-                { key: "fpx", label: "Lowest FPX", checked: false },
-                { key: "card", label: "Lowest card", checked: false },
-                { key: "ewallet", label: "Lowest e-wallet", checked: false },
-                { key: "name-asc", label: "Name A-Z", checked: false },
-                { key: "name-desc", label: "Name Z-A", checked: false },
+                { key: "value", label: T.lowest, checked: true },
+                { key: "popularity", label: T.popularity, checked: false },
+                { key: "fpx", label: T.fpx, checked: false },
+                { key: "card", label: T.card, checked: false },
+                { key: "ewallet", label: T.ewallet, checked: false },
+                { key: "name-asc", label: T.nameAsc, checked: false },
+                { key: "name-desc", label: T.nameDesc, checked: false },
               ].map((o) => (
                 <li role="none">
                   <button
@@ -165,14 +238,29 @@ import GatewayTable from "../components/GatewayTable.astro";
         <input
           id="gw-search"
           type="search"
-          placeholder="Search gateway…"
+          placeholder={T.search}
           autocomplete="off"
-          aria-label="Search payment gateways by name"
+          aria-label={T.searchLabel}
           class="h-9 w-full rounded-md border border-line bg-panel px-3 text-fg placeholder:text-muted focus:border-accent sm:w-72"
         />
       </div>
 
       <GatewayTable />
+
+      <nav aria-labelledby="gw-shortlists" class="mt-10 border-t border-line pt-6">
+        <h2 id="gw-shortlists" class="mb-3 text-xs font-medium uppercase tracking-wide text-muted">{T.shortlists}</h2>
+        <ul class="flex flex-wrap gap-2">
+          {
+            shortlists.map((l) => (
+              <li>
+                <a href={l.href} class="rounded-full border border-line bg-panel px-3 py-1 text-xs text-muted hover:text-fg">
+                  {l.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
     </div>
   </div>
 </Base>

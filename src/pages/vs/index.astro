@@ -6,9 +6,10 @@ export const prerender = true;
 import { getCollection } from "astro:content";
 import Base from "../../layouts/Base.astro";
 import { toApiGateway, type GatewayEntryLike } from "../../lib/api";
-import { vsPairs, PROFILES } from "../../lib/seo-pages";
+import { vsPairs, PROFILES, profileCopy } from "../../lib/seo-pages";
 import { breadcrumbLd } from "../../lib/jsonld";
 import { splitName } from "../../lib/name";
+import { getLocale, tr, localizePath } from "../../i18n/locale";
 
 const entries = (await getCollection("gateways")) as unknown as GatewayEntryLike[];
 const gateways = entries.map(toApiGateway);
@@ -20,34 +21,63 @@ const popular = [...pairs]
 const label = (p: (typeof pairs)[number]) =>
   `${splitName(p.a.name).base} vs ${splitName(p.b.name).base}`;
 
+const locale = getLocale(Astro);
+const T = tr(locale, {
+  en: {
+    title: "Payment gateway comparisons: head-to-head fees | MPG",
+    description:
+      "Every head-to-head comparison of Malaysian payment gateways on MPG: published FPX, card and e-wallet fees, settlement and features, side by side.",
+    home: "Home",
+    comparisons: "Comparisons",
+    h1: "Payment gateway comparisons",
+    intro1: (n: number) =>
+      `Head-to-head pages for ${n} popular pairings of Malaysian payment providers, built from the same officially published fees as the rest of the directory. Need a custom matchup? Use the`,
+    tool: "interactive compare tool",
+    intro2: "for any combination of up to seven providers.",
+    popular: "Most popular",
+    all: "All comparisons",
+    guides: "Ranked guides",
+  },
+  ms: {
+    title: "Perbandingan payment gateway: fee satu lawan satu | MPG",
+    description:
+      "Semua perbandingan satu lawan satu payment gateway Malaysia di MPG: caj FPX, kad dan e-wallet yang disiarkan, tempoh duit masuk dan ciri, sebelah-menyebelah.",
+    home: "Utama",
+    comparisons: "Perbandingan",
+    h1: "Perbandingan payment gateway",
+    intro1: (n: number) =>
+      `Halaman satu lawan satu untuk ${n} pasangan payment gateway Malaysia yang popular. Semuanya guna fee rasmi yang sama dengan bahagian lain direktori ini. Nak banding pasangan lain? Guna`,
+    tool: "alat banding interaktif",
+    intro2: "untuk banding mana-mana gabungan, sehingga tujuh gateway.",
+    popular: "Paling popular",
+    all: "Semua perbandingan",
+    guides: "Panduan ranking",
+  },
+});
+
 const crumbLd = breadcrumbLd(String(Astro.site ?? "https://malaysiapg.com.my/"), [
-  { name: "Home", path: "/" },
-  { name: "Comparisons" },
+  { name: T.home, path: localizePath("/", locale) },
+  { name: T.comparisons },
 ]);
 ---
 
-<Base
-  title="Payment gateway comparisons: head-to-head fees | MPG"
-  description="Every head-to-head comparison of Malaysian payment gateways on MPG: published FPX, card and e-wallet fees, settlement and features, side by side."
->
+<Base title={T.title} description={T.description}>
   <script is:inline type="application/ld+json" set:html={JSON.stringify(crumbLd)} />
   <nav aria-label="Breadcrumb" class="mb-4 flex items-center gap-2 text-sm text-muted">
-    <a href="/" class="hover:text-fg hover:underline">Home</a>
+    <a href="/" class="hover:text-fg hover:underline">{T.home}</a>
     <span aria-hidden="true">/</span>
-    <span class="text-fg">Comparisons</span>
+    <span class="text-fg">{T.comparisons}</span>
   </nav>
 
-  <h1 class="max-w-3xl text-3xl font-bold tracking-tight text-fg sm:text-4xl">Payment gateway comparisons</h1>
+  <h1 class="max-w-3xl text-3xl font-bold tracking-tight text-fg sm:text-4xl">{T.h1}</h1>
   <p class="mt-4 max-w-3xl text-muted">
-    Head-to-head pages for {pairs.length} popular pairings of Malaysian payment
-    providers, built from the same officially published fees as the rest of the
-    directory. Need a custom matchup? Use the{" "}
-    <a href="/compare/" class="text-accent hover:underline">interactive compare tool</a>{" "}
-    for any combination of up to four providers.
+    {T.intro1(pairs.length)}{" "}
+    <a href="/compare/" class="text-accent hover:underline">{T.tool}</a>{" "}
+    {T.intro2}
   </p>
 
   <section class="mt-10">
-    <h2 class="mb-3 text-xs font-medium uppercase tracking-wide text-muted">Most popular</h2>
+    <h2 class="mb-3 text-xs font-medium uppercase tracking-wide text-muted">{T.popular}</h2>
     <div class="flex flex-wrap gap-2">
       {
         popular.map((p) => (
@@ -63,7 +93,7 @@ const crumbLd = breadcrumbLd(String(Astro.site ?? "https://malaysiapg.com.my/"),
   </section>
 
   <section class="mt-8">
-    <h2 class="mb-3 text-xs font-medium uppercase tracking-wide text-muted">All comparisons</h2>
+    <h2 class="mb-3 text-xs font-medium uppercase tracking-wide text-muted">{T.all}</h2>
     <div class="flex flex-wrap gap-2">
       {
         pairs.map((p) => (
@@ -79,7 +109,7 @@ const crumbLd = breadcrumbLd(String(Astro.site ?? "https://malaysiapg.com.my/"),
   </section>
 
   <section class="mt-10">
-    <h2 class="mb-3 text-xs font-medium uppercase tracking-wide text-muted">Ranked guides</h2>
+    <h2 class="mb-3 text-xs font-medium uppercase tracking-wide text-muted">{T.guides}</h2>
     <div class="flex flex-wrap gap-2">
       {
         PROFILES.map((p) => (
@@ -87,7 +117,7 @@ const crumbLd = breadcrumbLd(String(Astro.site ?? "https://malaysiapg.com.my/"),
             href={`/best/${p.slug}/`}
             class="rounded-full border border-line bg-panel px-3 py-1 text-xs text-muted hover:border-accent hover:text-fg"
           >
-            {p.h1}
+            {profileCopy(p, locale).h1}
           </a>
         ))
       }

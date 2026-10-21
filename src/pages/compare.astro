@@ -4,11 +4,68 @@ export const prerender = true;
 import { getCollection } from "astro:content";
 import Base from "../layouts/Base.astro";
 import MethodologyNote from "../components/MethodologyNote.astro";
+import { brandKey, needsLightTile } from "../lib/brand-icons";
 import { breadcrumbLd } from "../lib/jsonld";
+import { getLocale, tr, localizePath } from "../i18n/locale";
+import { gatewayMs } from "../i18n/content";
+
+const locale = getLocale(Astro);
+const T = tr(locale, {
+  en: {
+    title: "Compare payment gateways · MPG",
+    description:
+      "Compare up to seven Malaysian payment gateways side by side: FPX, card, e-wallet and DuitNow QR fees, settlement times, features and supported banks.",
+    home: "Home",
+    compare: "Compare",
+    h1: "Compare payment gateways",
+    lead: "Pick up to 7 gateways and compare fees, settlement, channels and features side by side. The lowest fee in each row is highlighted.",
+    searchAdd: "Search gateways to add…",
+    presets: "Presets",
+    diffOnly: "Show differences only",
+    how: "How this comparison works",
+    howItWorks: [
+      { title: "Official rates only", body: "Every fee comes from the provider's own pricing page." },
+      { title: "One number to compare", body: "Estimated cost of a RM100 sale. The lowest is marked Cheapest." },
+      { title: "Blue means best", body: "The lowest fee and fastest payout in each row." },
+      { title: "Share your picks", body: "Copy the page address. It keeps the gateways you chose." },
+    ],
+    presetText: [
+      { title: "Cheap FPX", desc: "Lowest flat FPX rates" },
+      { title: "Popular gateways", desc: "Widely used in Malaysia" },
+      { title: "Best for cards", desc: "Low card processing rates" },
+      { title: "BNPL providers", desc: "Buy now, pay later" },
+    ],
+  },
+  ms: {
+    title: "Banding payment gateway · MPG",
+    description:
+      "Banding sehingga tujuh payment gateway Malaysia sebelah-menyebelah: caj FPX, kad, e-wallet dan DuitNow QR, tempoh duit masuk, ciri dan bank yang disokong.",
+    home: "Utama",
+    compare: "Banding",
+    h1: "Banding payment gateway",
+    lead: "Pilih sehingga 7 gateway dan banding caj, tempoh duit masuk, cara bayar dan ciri sebelah-menyebelah. Caj paling rendah dalam setiap baris akan ditanda.",
+    searchAdd: "Cari gateway untuk ditambah…",
+    presets: "Set sedia",
+    diffOnly: "Tunjuk yang berbeza sahaja",
+    how: "Macam mana perbandingan ini dibuat",
+    howItWorks: [
+      { title: "Kadar rasmi sahaja", body: "Setiap caj diambil dari halaman harga rasmi gateway itu sendiri." },
+      { title: "Satu angka untuk dibanding", body: "Anggaran caj bagi jualan RM100. Yang paling rendah ditanda Paling murah." },
+      { title: "Biru tanda paling baik", body: "Caj paling rendah dan duit masuk paling cepat dalam setiap baris." },
+      { title: "Kongsi pilihan anda", body: "Salin pautan halaman ini. Gateway yang anda pilih tersimpan dalam pautan itu." },
+    ],
+    presetText: [
+      { title: "FPX murah", desc: "Kadar FPX tetap paling rendah" },
+      { title: "Gateway popular", desc: "Ramai guna di Malaysia" },
+      { title: "Murah untuk kad", desc: "Caj kad yang rendah" },
+      { title: "Penyedia BNPL", desc: "Beli sekarang, bayar kemudian" },
+    ],
+  },
+});
 
 const crumbLd = breadcrumbLd(String(Astro.site ?? "https://malaysiapg.com.my/"), [
-  { name: "Home", path: "/" },
-  { name: "Compare" },
+  { name: T.home, path: localizePath("/", locale) },
+  { name: T.compare },
 ]);
 
 const gateways = (await getCollection("gateways")).sort((a, b) =>
@@ -27,13 +84,38 @@ for (const [path, url] of Object.entries(logos)) {
   if (!logoBySlug[key] || path.endsWith(".svg")) logoBySlug[key] = url as string;
 }
 
+// method / plugin name -> official mark url, only for names that have one (others render as text)
+const brandFiles = import.meta.glob("/src/assets/brands/*.{svg,png}", {
+  eager: true,
+  query: "?url",
+  import: "default",
+});
+const assetUrl = (key: string): string | undefined => {
+  const [dir, slug] = key.split("/");
+  if (dir === "logos") return logoBySlug[slug];
+  const hit = Object.entries(brandFiles).find(([path]) => path.split("/").pop()!.replace(/\.\w+$/, "") === slug);
+  return hit?.[1] as string | undefined;
+};
+const brandIcons: Record<string, { url: string; light: boolean }> = {};
+for (const g of gateways) {
+  for (const name of [...(g.data.methods ?? []), ...(g.data.plugins ?? [])]) {
+    const key = brandKey(name);
+    const url = key ? assetUrl(key) : undefined;
+    if (key && url) brandIcons[name] = { url, light: needsLightTile(key) };
+  }
+}
+
+// BM pages show the overlay's settlement / minimum wording; payout speed is
+// still parsed from the English text (settlementEn)
+const overlays = new Map(await Promise.all(gateways.map(async (g) => [g.id, await gatewayMs(g.id, locale)] as const)));
 const data = gateways.map((g) => ({
   id: g.id,
   name: g.data.name,
   category: g.data.category,
   website: g.data.website,
-  settlement: g.data.settlement,
-  min_txn: g.data.min_txn,
+  settlement: overlays.get(g.id)?.data.settlement ?? g.data.settlement,
+  ...(locale === "ms" ? { settlementEn: g.data.settlement } : {}),
+  min_txn: overlays.get(g.id)?.data.min_txn ?? g.data.min_txn,
   channels: g.data.channels,
   features: g.data.features,
   fees: g.data.fees,
@@ -45,58 +127,66 @@ const data = gateways.map((g) => ({
   logo: logoBySlug[g.id] ?? null,
 }));
 
-const presets = [
-  { title: "Cheap FPX", desc: "Lowest flat FPX rates", ids: ["toyyibpay", "billplz", "bayarcash"] },
-  { title: "Popular gateways", desc: "Widely used in Malaysia", ids: ["stripe-malaysia", "curlec", "ipay88", "fiuu"] },
-  { title: "Best for cards", desc: "Low card processing rates", ids: ["kiple", "xendit", "hitpay"] },
-  { title: "BNPL providers", desc: "Buy now, pay later", ids: ["atome", "spaylater", "ahapay"] },
+const howItWorks = T.howItWorks;
+
+const presetIds = [
+  ["toyyibpay", "billplz", "bayarcash"],
+  ["stripe-malaysia", "curlec", "ipay88", "fiuu"],
+  ["kiple", "xendit", "hitpay"],
+  ["atome", "spaylater", "ahapay"],
 ];
+const presets = presetIds.map((ids, i) => ({ ...T.presetText[i], ids }));
 ---
 
-<Base
-  full
-  title="Compare payment gateways · MPG"
-  description="Compare up to four Malaysian payment gateways side by side: FPX, card, e-wallet and DuitNow QR fees, settlement times, features and supported banks."
->
+<Base full title={T.title} description={T.description}>
   <script is:inline type="application/ld+json" set:html={JSON.stringify(crumbLd)} />
   <div class="mx-auto w-full max-w-[1400px] px-4 py-8 sm:px-6">
     <nav aria-label="Breadcrumb" class="mb-4 flex items-center gap-2 text-sm text-muted">
-      <a href="/" class="hover:text-fg hover:underline">Home</a>
+      <a href="/" class="hover:text-fg hover:underline">{T.home}</a>
       <span aria-hidden="true">/</span>
-      <span class="text-fg">Compare</span>
+      <span class="text-fg">{T.compare}</span>
     </nav>
 
     <header class="mb-8">
       <h1 class="max-w-3xl text-3xl font-bold tracking-tight text-fg sm:text-4xl">
-        Compare payment gateways
+        {T.h1}
       </h1>
       <p class="mt-4 max-w-2xl text-muted">
-        Pick up to 4 gateways and compare fees, settlement, channels and
-        features side by side. The lowest fee in each row is highlighted.
+        {T.lead}
       </p>
     </header>
 
-    <!-- preset shortcuts: quiet rows, same links (spec 16 rollout) -->
-    <div class="mb-10 max-w-2xl">
-      <p class="mb-3 text-xs font-medium uppercase tracking-widest text-muted">Preset comparisons</p>
-      <ul class="divide-y divide-line border-y border-line">
+    <!-- toolbar: add a gateway, jump to a preset, hide matching rows -->
+    <div class="mb-6 flex flex-wrap items-center gap-x-3 gap-y-3">
+      <button
+        id="compare-add"
+        type="button"
+        class="inline-flex h-9 w-full items-center gap-2 rounded-md border border-line bg-panel px-3 text-sm text-muted hover:border-accent hover:text-fg sm:w-72"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="size-4" aria-hidden="true">
+          <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path>
+        </svg>
+        {T.searchAdd}
+      </button>
+      <div class="flex flex-wrap items-center gap-2">
+        <span class="text-xs uppercase tracking-widest text-muted">{T.presets}</span>
         {
           presets.map((p) => (
-            <li>
-              <a
-                href={`/compare/?ids=${p.ids.join(",")}`}
-                class="group flex flex-wrap items-baseline gap-x-3 gap-y-0.5 px-1 py-3 hover:bg-panel"
-              >
-                <h2 class="text-sm font-medium text-fg">{p.title}</h2>
-                <p class="text-xs text-muted">{p.desc}</p>
-                <p class="ml-auto truncate text-xs text-muted group-hover:text-accent">
-                  {p.ids.join(" · ")}
-                </p>
-              </a>
-            </li>
+            <a
+              href={`/compare/?ids=${p.ids.join(",")}`}
+              title={`${p.desc}: ${p.ids.join(", ")}`}
+              class="rounded-full border border-line px-3 py-1 text-xs text-fg hover:border-accent hover:text-white"
+            >
+              {p.title}
+            </a>
           ))
         }
-      </ul>
+      </div>
+      <label class="inline-flex cursor-pointer select-none items-center gap-2 text-sm text-muted lg:ml-auto">
+        <input id="compare-diff" type="checkbox" checked class="peer sr-only" />
+        <span class="relative h-5 w-9 shrink-0 rounded-full border border-line bg-raised transition-colors after:absolute after:left-0.5 after:top-0.5 after:size-3.5 after:rounded-full after:bg-white after:transition-transform peer-checked:bg-brand-blue peer-checked:after:translate-x-4 peer-focus-visible:ring-2 peer-focus-visible:ring-accent"></span>
+        {T.diffOnly}
+      </label>
     </div>
 
     <!-- comparison area (rendered by compare.ts) -->
@@ -104,35 +194,24 @@ const presets = [
 
     <MethodologyNote />
 
-    <!-- SEO copy kept verbatim, folded so the tool stays the page (spec 16 rollout) -->
-    <section class="mt-10 border-t border-line pt-6">
-      <details class="group max-w-3xl">
-        <summary class="flex cursor-pointer select-none items-center gap-2 text-sm text-muted hover:text-fg [&::-webkit-details-marker]:hidden">
-          <h2 class="font-medium">How this comparison works</h2>
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="size-3.5 transition-transform group-open:rotate-180" aria-hidden="true">
-            <path d="m6 9 6 6 6-6"></path>
-          </svg>
-        </summary>
-        <p class="mt-3 text-sm leading-relaxed text-muted">
-          Every figure comes from the provider's official pricing page and carries a verified
-          date on its detail page. The side-by-side rows cover fees per channel, settlement
-          speed, supported banks and e-wallets, and developer experience (API docs, webhooks,
-          plugins, MCP). Fee strings in different units are made comparable through the
-          estimated cost of a RM100 transaction, so a flat "RM1.00" and a "1.2%" rate can be
-          compared honestly.
-        </p>
-        <h3 class="mt-5 text-sm font-medium text-fg">Picking between close providers</h3>
-        <p class="mt-2 text-sm leading-relaxed text-muted">
-          When estimated costs are within a few sen, decide on the other rows: settlement speed
-          moves your cash flow, plugin support saves integration time, and quote-based
-          providers may beat published rates at volume. Use the share link above to send this
-          exact comparison to a teammate.
-        </p>
-      </details>
+    <!-- how it works: four one-line facts, scannable at a glance -->
+    <section class="mt-12 border-t border-line pt-8">
+      <h2 class="text-xs font-medium uppercase tracking-widest text-muted">{T.how}</h2>
+      <ul class="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        {
+          howItWorks.map((h) => (
+            <li class="rounded-lg border border-line bg-panel p-4">
+              <p class="text-sm font-medium text-fg">{h.title}</p>
+              <p class="mt-1 text-sm text-muted">{h.body}</p>
+            </li>
+          ))
+        }
+      </ul>
     </section>
   </div>
 
   <script type="application/json" id="gw-data" set:html={JSON.stringify(data)} />
+  <script type="application/json" id="brand-icons" set:html={JSON.stringify(brandIcons)} />
   <script>
     import "../scripts/compare.ts";
   </script>

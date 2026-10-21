@@ -28,6 +28,11 @@ features:
 popularity: 38
 verified_date: "2026-10-20"
 source: "https://www.finexusgroup.com/businesses/payments"
+bnm:
+  roles: [merchant-acquirer, emoney-issuer]
+  entity: "FINEXUS Cards Sdn Bhd (formerly known as MAA Cards Sdn Bhd)"
+  checked: "2026-10-21"
+  evidence: "https://www.finexusgroup.com/businesses/payments"
 notes: "FINEXUS Cards Sdn Bhd (FINEXUS Group); BNM Registered Merchant Acquirer and licensed e-money issuer. Merchant payments now sold under the Kayaaku brand (POS, online gateway with hosted page or API, card tokenisation). Official page states no setup fees: zero registration, integration and maintenance fees, no minimum sales commitment. Per-transaction MDR is not published. Help Centre states the usual settlement is 2 business days (T+2 or T+n depending on scheme and product), with instant settlement coming soon; it also lists recurring/direct debit solutions and a sandbox. The old /digital-money source URL now redirects to the e-wallet page."
 ---
 

@@ -36,6 +36,12 @@ plans:
 verified_date: "2026-07-17"
 source: "https://lekirpay.com"
 notes: "Re-verified 2026-07-17: same-day FPX settlement (T+0) published; card acceptance (2.7%, bi-weekly settlement) requires the Enterprises plan (RM299 sign-up + RM199/yr). Cyberjaya company (1381659-X) styling itself a commoditised payment platform for SMEs. Published: FPX RM0.80 per transaction plus RM0.10 settlement fee (effectively RM0.90 all-in, among the cheapest published FPX rates), cards 2.7%; Start Up plan free, Enterprise RM299 sign-up + RM199/year. Payment forms and QR, recurring billing supported, DuitNow Online Banking marked coming soon. API docs and live merchant portal (app.lekirpay.com); GiveWP donation plugin on WordPress.org. Settlement timing not published."
+instant_settlement:
+  detail: "Same-day (T+0) payout advertised for FPX; cards settle every two weeks."
+  detail_ms: "Duit masuk hari sama (T+0) diiklankan untuk FPX; kad setiap dua minggu."
+  quote: "Same-Day Settlement (T+0) A business growth depends on their cashflow. We understood, hence we provide."
+  source: https://lekirpay.com
+  checked: "2026-10-21"
 ---
 
 LekirPay sells itself as a commoditised payment platform: simple published

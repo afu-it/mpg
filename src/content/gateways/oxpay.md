@@ -28,6 +28,11 @@ plugins:
 popularity: 12
 verified_date: "2026-07-17"
 source: "https://oxpay.com.my/payment/"
+bnm:
+  roles: [merchant-acquirer]
+  entity: "OxPay (Malaysia) Sdn Bhd (formerly known as MC Payment (M) Sdn Bhd)"
+  checked: "2026-10-21"
+  evidence: "https://oxpay.com.my"
 notes: "Indicative. No fees of any kind are published on the site; all pricing is quote-based via sales."
 ---
 

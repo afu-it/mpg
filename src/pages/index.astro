@@ -7,6 +7,48 @@ import Logo from "../components/Logo.astro";
 import FlagMY from "../components/FlagMY.astro";
 import manropeWoff2 from "@fontsource-variable/manrope/files/manrope-latin-wght-normal.woff2?url";
 import { toApiGateway, type GatewayEntryLike } from "../lib/api";
+import { effectiveCostAt, REF_TICKET } from "../lib/fees";
+import { getLocale, tr } from "../i18n/locale";
+
+const locale = getLocale(Astro);
+const T = tr(locale, {
+  en: {
+    title: (n: number) => `Compare Malaysian payment gateway fees: ${n} providers | MPG`,
+    ldDesc: (n: number) =>
+      `Independent directory comparing fees and features of ${n} Malaysian payment providers: FPX, cards, e-wallets, DuitNow QR and BNPL.`,
+    jsonTitle: "MPG gateways data (JSON)",
+    lead: (n: number) =>
+      `Fees for ${n} providers, taken straight from each official pricing page. Free, independent, no sponsored rankings.`,
+    browse: "Browse gateways",
+    choose: "Help me choose",
+    cheapest: "Cheapest with FPX, card and e-wallet",
+    cheapestSub: "Estimated fee on a RM100 sale",
+    cheapestFpx: "Cheapest for FPX only",
+    cheapestFpxSub: "FPX fee on a RM100 sale",
+    viewAll: (n: number) => `View all ${n} →`,
+    whatIs: "What is a payment gateway in Malaysia?",
+    whatIsBody:
+      "A payment gateway is the service that lets your website or app accept money from Malaysian customers: FPX online banking transfers, credit and debit cards, e-wallets like Touch 'n Go and GrabPay, DuitNow QR, and buy-now-pay-later plans. The gateway collects the payment, takes a fee per transaction, and settles the balance to your bank account, typically within one to three working days. Fees, settlement speed and integration effort differ widely between providers, which is exactly what this directory compares, using only officially published rates.",
+  },
+  ms: {
+    title: (n: number) => `Banding fee payment gateway Malaysia: ${n} gateway | MPG`,
+    ldDesc: (n: number) =>
+      `Direktori bebas yang bandingkan fee dan ciri ${n} payment gateway Malaysia: FPX, kad, e-wallet, DuitNow QR dan BNPL.`,
+    jsonTitle: "Data gateway MPG (JSON)",
+    lead: (n: number) =>
+      `Fee ${n} gateway, kami ambil terus dari laman harga rasmi mereka dan susun ikut caj paling murah. Percuma untuk semua.`,
+    browse: "Lihat semua gateway",
+    choose: "Bantu saya pilih",
+    cheapest: "Paling murah yang ada FPX, kad dan e-wallet",
+    cheapestSub: "Anggaran caj bagi jualan RM100",
+    cheapestFpx: "Paling murah untuk FPX sahaja",
+    cheapestFpxSub: "Caj FPX bagi jualan RM100",
+    viewAll: (n: number) => `Lihat semua ${n} →`,
+    whatIs: "Apa itu payment gateway di Malaysia?",
+    whatIsBody:
+      "Payment gateway ialah servis yang membolehkan laman web atau app anda terima bayaran daripada pelanggan di Malaysia: pindahan bank online FPX, kad kredit dan debit, e-wallet seperti Touch 'n Go dan GrabPay, DuitNow QR, dan pelan BNPL (beli sekarang bayar kemudian). Gateway ini kutip bayaran, ambil caj setiap transaksi, kemudian masukkan baki duit ke akaun bank anda, biasanya dalam satu hingga tiga hari bekerja. Fee, berapa cepat duit masuk dan senang atau susah nak pasang sangat berbeza antara satu gateway dengan yang lain. Itulah yang direktori ini bandingkan, guna kadar rasmi yang disiarkan sahaja.",
+  },
+});
 
 const gateways = await getCollection("gateways");
 const total = gateways.length;
@@ -16,8 +58,28 @@ const total = gateways.length;
 const ranked = (gateways as unknown as GatewayEntryLike[])
   .map((e) => ({ e, api: toApiGateway(e) }))
   .filter((x) => x.api.rankable && x.api.est_fee_rm100 != null)
+  // only gateways that take all three everyday methods at a fixed published rate:
+  // a missing FPX or a "From x%" floor would otherwise look cheapest
+  .filter(({ e }) =>
+    (["fpx", "card", "ewallet"] as const).every((k) => {
+      const fee = e.data.fees[k] ?? "";
+      return e.data.channels.includes(k) && /\d/.test(fee) && !/^\s*from\b/i.test(fee);
+    }),
+  )
   .sort((a, b) => a.api.est_fee_rm100! - b.api.est_fee_rm100!)
   .slice(0, 5);
+
+// second teaser: cheapest FPX fee on its own, for sellers who only need online banking
+const fixedRate = (fee: string | undefined) => /\d/.test(fee ?? "") && !/^\s*from\b/i.test(fee ?? "");
+const fpxRanked = (gateways as unknown as GatewayEntryLike[])
+  .map((e) => ({ e, api: toApiGateway(e), cost: effectiveCostAt(e.data.fees.fpx ?? "", REF_TICKET) }))
+  .filter((x) => x.api.rankable && x.e.data.channels.includes("fpx") && fixedRate(x.e.data.fees.fpx) && Number.isFinite(x.cost))
+  .sort((a, b) => a.cost - b.cost)
+  .slice(0, 5);
+const lists = [
+  { title: T.cheapest, sub: T.cheapestSub, rows: ranked.map(({ e, api }) => ({ e, name: api.name, cost: api.est_fee_rm100! })) },
+  { title: T.cheapestFpx, sub: T.cheapestFpxSub, rows: fpxRanked.map(({ e, api, cost }) => ({ e, name: api.name, cost })) },
+];
 
 // entity signals for Google (site is new; helps search + AI systems identify it)
 const siteUrl = String(Astro.site);
@@ -29,8 +91,8 @@ const jsonLd = JSON.stringify({
       "@id": `${siteUrl}#website`,
       url: siteUrl,
       name: "Malaysia Payment Gateway (MPG)",
-      description: `Independent directory comparing fees and features of ${total} Malaysian payment providers: FPX, cards, e-wallets, DuitNow QR and BNPL.`,
-      inLanguage: "en",
+      description: T.ldDesc(total),
+      inLanguage: locale === "ms" ? "ms" : "en",
       publisher: { "@id": `${siteUrl}#organization` },
     },
     {
@@ -45,13 +107,13 @@ const jsonLd = JSON.stringify({
 });
 ---
 
-<Base full title={`Compare Malaysian payment gateway fees: ${total} providers | MPG`}>
+<Base full title={T.title(total)}>
   <link
     slot="head"
     rel="alternate"
     type="application/json"
     href="/api/gateways.json"
-    title="MPG gateways data (JSON)"
+    title={T.jsonTitle}
   />
   <link slot="head" rel="preload" href={manropeWoff2} as="font" type="font/woff2" crossorigin />
   <script is:inline type="application/ld+json" set:html={jsonLd} />
@@ -61,54 +123,58 @@ const jsonLd = JSON.stringify({
   <canvas data-wake aria-hidden="true" class="pointer-events-none absolute inset-0 block h-full w-full text-muted opacity-60"></canvas>
   <section class="relative mx-auto w-full max-w-4xl px-4 pb-16 pt-10 text-center sm:px-6 md:pt-16">
     <h1 class="bg-gradient-to-b from-white via-white to-white/60 bg-clip-text font-display text-4xl font-bold leading-[1.05] tracking-[-0.05em] text-transparent sm:text-6xl md:text-7xl">
-      Every <span class="whitespace-nowrap">Malaysian<FlagMY class="ml-[0.15em] inline-block h-[0.8em] w-auto -translate-y-[0.05em] align-baseline" /></span> payment gateway, compared.
+      {locale === "ms" ? (
+        <>Bandingkan semua payment gateway <span class="whitespace-nowrap">Malaysia<FlagMY class="ml-[0.15em] inline-block h-[0.8em] w-auto -translate-y-[0.05em] align-baseline" /></span></>
+      ) : (
+        <>Every <span class="whitespace-nowrap">Malaysian<FlagMY class="ml-[0.15em] inline-block h-[0.8em] w-auto -translate-y-[0.05em] align-baseline" /></span> payment gateway, compared.</>
+      )}
     </h1>
     <p class="mx-auto mt-6 max-w-2xl text-balance text-base text-muted sm:text-lg">
-      Fees for {total} providers, taken straight from each official pricing page. Free, independent, no sponsored rankings.
+      {T.lead(total)}
     </p>
     <div class="mt-10 flex flex-col justify-center gap-3 sm:flex-row">
       <a
         href="/gateways/"
         class="inline-flex h-12 items-center justify-center rounded-md bg-brand-blue px-8 text-sm font-medium text-white hover:opacity-90"
       >
-        Browse gateways
+        {T.browse}
       </a>
       <a
         href="/choose/"
         class="inline-flex h-12 items-center justify-center rounded-md border border-line px-8 text-sm font-medium text-fg hover:border-accent"
       >
-        Help me choose
+        {T.choose}
       </a>
     </div>
   </section>
   </div>
 
-  <!-- the product itself, quietly: cheapest ranked right now -->
-  <section class="mx-auto w-full max-w-xl px-4 pb-20 sm:px-6">
-    <p class="mb-3 text-center text-xs font-medium uppercase tracking-widest text-muted">
-      Cheapest ranked today · est. per RM100 sale
-    </p>
-    <ol class="divide-y divide-line border-y border-line">
+  <!-- the product itself, quietly: two cheapest lists side by side (all-rounders, FPX only) -->
+  <section class="mx-auto w-full max-w-4xl px-4 pb-20 sm:px-6">
+    <div class="grid gap-10 md:grid-cols-2">
       {
-        ranked.map(({ e, api }) => (
-          <li>
-            <a
-              href={`/gateway/${e.id}/`}
-              class="flex items-center gap-3 px-2 py-3.5 hover:bg-panel"
-            >
-              <Logo slug={e.id} name={e.data.name} size={20} />
-              <span class="font-medium text-fg">{api.name}</span>
-              <span class="ml-auto tabular-nums text-muted">
-                RM{api.est_fee_rm100!.toFixed(2)}
-              </span>
-            </a>
-          </li>
+        lists.map((l) => (
+          <div>
+            <h2 class="text-sm font-medium text-fg">{l.title}</h2>
+            <p class="mb-3 text-xs text-muted">{l.sub}</p>
+            <ol class="divide-y divide-line border-y border-line">
+              {l.rows.map(({ e, name, cost }) => (
+                <li>
+                  <a href={`/gateway/${e.id}/`} class="flex items-center gap-3 px-2 py-3.5 hover:bg-panel">
+                    <Logo slug={e.id} name={e.data.name} size={20} />
+                    <span class="font-medium text-fg">{name}</span>
+                    <span class="ml-auto tabular-nums text-muted">RM{cost.toFixed(2)}</span>
+                  </a>
+                </li>
+              ))}
+            </ol>
+          </div>
         ))
       }
-    </ol>
-    <p class="mt-4 text-center">
+    </div>
+    <p class="mt-6 text-center">
       <a href="/gateways/" class="text-sm text-accent underline-offset-4 hover:underline">
-        View all {total} →
+        {T.viewAll(total)}
       </a>
     </p>
   </section>
@@ -117,19 +183,13 @@ const jsonLd = JSON.stringify({
   <section class="mx-auto w-full max-w-2xl px-4 pb-24 sm:px-6">
     <details class="group">
       <summary class="flex cursor-pointer select-none items-center justify-center gap-2 text-sm text-muted hover:text-fg [&::-webkit-details-marker]:hidden">
-        <h2 class="font-medium">What is a payment gateway in Malaysia?</h2>
+        <h2 class="font-medium">{T.whatIs}</h2>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="size-3.5 transition-transform group-open:rotate-180" aria-hidden="true">
           <path d="m6 9 6 6 6-6"></path>
         </svg>
       </summary>
       <p class="mt-4 text-sm leading-relaxed text-muted">
-        A payment gateway is the service that lets your website or app accept money from
-        Malaysian customers: FPX online banking transfers, credit and debit cards, e-wallets
-        like Touch 'n Go and GrabPay, DuitNow QR, and buy-now-pay-later plans. The gateway
-        collects the payment, takes a fee per transaction, and settles the balance to your
-        bank account, typically within one to three working days. Fees, settlement speed and
-        integration effort differ widely between providers, which is exactly what this
-        directory compares, using only officially published rates.
+        {T.whatIsBody}
       </p>
     </details>
   </section>

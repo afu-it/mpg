@@ -27,6 +27,11 @@ features:
 popularity: 34
 verified_date: "2026-07-17"
 source: "https://jcpacific.com.my/about"
+bnm:
+  roles: [merchant-acquirer]
+  entity: "J&C Pacific Sdn Bhd"
+  checked: "2026-10-21"
+  evidence: "https://jcpacific.com.my"
 notes: "J&C Pacific Sdn Bhd; BNM Registered Merchant Acquirer (Non-bank). Card acceptance (Visa, Mastercard, American Express, MyDebit), e-wallets and DuitNow QR for retail and online merchants. Pricing quote-only."
 ---
 

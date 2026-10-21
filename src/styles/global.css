@@ -41,6 +41,13 @@
 }
 
 @layer base {
+  /* Tailwind v4 preflight resets buttons to the default arrow; restore the hand for anything clickable */
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  summary {
+    cursor: pointer;
+  }
+
   html {
     color-scheme: dark;
     background-color: var(--color-surface);

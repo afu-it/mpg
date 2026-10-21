@@ -29,6 +29,11 @@ dev_docs: "https://developer.asiapay.com/"
 popularity: 28
 verified_date: "2026-10-20"
 source: "https://www.asiapay.com.my/"
+bnm:
+  roles: [merchant-acquirer]
+  entity: "AsiaPay (Malaysia) Sdn Bhd"
+  checked: "2026-10-21"
+  evidence: "https://www.asiapay.com.my/"
 notes: "Indicative. Re-checked 2026-10-20: site still lists Visa, Mastercard, Amex, JCB, Alipay, UnionPay, Boost, GrabPay, DuitNow, FPX, ShopBack, TNG Wallet and TrueMoney, plus Atome, SPayLater and PayLater by Grab; no fees published. No public Malaysia rate card; pricing is setup + monthly + per-transaction, quoted on request."
 ---
 

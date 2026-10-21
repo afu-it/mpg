@@ -11,5 +11,8 @@
   "vars": {
     "MPG_API_BASE": "https://malaysiapg.com.my"
   },
+  // branded address; the workers.dev URL stays live for existing clients
+  "routes": [{ "pattern": "mcp.malaysiapg.com.my", "custom_domain": true }],
+  "workers_dev": true,
   "observability": { "enabled": true }
 }

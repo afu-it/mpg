@@ -2,20 +2,60 @@
 // One shared fine-print line (spec 16 slice D) so methodology captions stop
 // repeating in slightly different shapes across pages. Full explanation lives
 // on /about ("How the ranking works").
+import { getLocale } from "../i18n/locale";
 interface Props {
   star?: boolean; // include the third-party * sentence
+  bnm?: boolean; // explain the BNM marker (directory table only)
 }
-const { star = true } = Astro.props;
+const { star = true, bnm = false } = Astro.props;
+const ms = getLocale(Astro) === "ms";
 ---
 
-<p class="mt-2 text-xs text-muted">
-  <span class="text-fg">Est. fee / RM100</span> blends officially published rates
-  (FPX/card/e-wallet 50/30/20).{" "}
-  {star && (
-    <>
-      <span class="text-fg">*</span> = third-party figure, excluded from ranking.{" "}
-    </>
-  )}
-  Fees change; confirm with the provider.{" "}
-  <a href="/about/" class="underline-offset-2 hover:text-fg hover:underline">Methodology</a>
-</p>
+{
+  ms ? (
+    <p class="mt-2 text-xs text-muted">
+      <span class="text-fg">Anggaran caj / RM100</span> dikira dari kadar rasmi yang disiarkan,
+      campuran FPX/kad/e-wallet (50/30/20).{" "}
+      {star && (
+        <>
+          <span class="text-fg">*</span> = angka dari pihak ketiga, tidak dikira dalam susunan.{" "}
+        </>
+      )}
+      Fee boleh berubah, sahkan dengan gateway.{" "}
+      <a href="/about/" class="underline-offset-2 hover:text-fg hover:underline">Cara kiraan</a>
+    </p>
+  ) : (
+    <p class="mt-2 text-xs text-muted">
+      <span class="text-fg">Est. fee / RM100</span> blends officially published rates
+      (FPX/card/e-wallet 50/30/20).{" "}
+      {star && (
+        <>
+          <span class="text-fg">*</span> = third-party figure, excluded from ranking.{" "}
+        </>
+      )}
+      Fees change; confirm with the provider.{" "}
+      <a href="/about/" class="underline-offset-2 hover:text-fg hover:underline">Methodology</a>
+    </p>
+  )
+}
+{
+  bnm && (
+    <p class="mt-1 text-xs text-muted">
+      {ms ? (
+        <>
+          <span class="text-fg">BNM</span> = syarikat ini ada dalam senarai rasmi Bank Negara Malaysia atas namanya sendiri
+          (merchant acquirer berdaftar, pengeluar e-wallet yang diluluskan, pengendali sistem pembayaran yang diluluskan atau bank berlesen). Ini cuma status
+          lesen, BNM tidak menyokong atau menjamin syarikat itu. Kalau tiada tanda, maksudnya kami tak jumpa nama syarikat itu
+          dalam senarai BNM. Ramai gateway yang sah beroperasi melalui rakan kongsi yang berdaftar.
+        </>
+      ) : (
+        <>
+          <span class="text-fg">BNM</span> = the company is on a Bank Negara Malaysia list under its own name
+          (registered merchant acquirer, approved e-money issuer, approved payment system operator or licensed bank). It is a regulatory status,
+          not an endorsement or guarantee. No marker means we did not find the company on BNM's lists under its
+          own name; many gateways legitimately operate through a registered partner.
+        </>
+      )}
+    </p>
+  )
+}

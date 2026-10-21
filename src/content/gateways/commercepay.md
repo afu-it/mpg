@@ -52,6 +52,11 @@ plans:
     source: "https://www.commercepay.asia/credit-card-ipp"
 verified_date: "2026-10-20"
 source: "https://www.commercepay.asia/faq"
+bnm:
+  roles: [merchant-acquirer]
+  entity: "Commerce DotAsia Payments Sdn Bhd"
+  checked: "2026-10-21"
+  evidence: "https://www.commercepay.asia"
 notes: "Re-verified 2026-10-20. Gateway: no setup or annual maintenance fee (FAQ); per-transaction fee (fixed or %) is not published, so channel rates are Contact sales. Settlement 1-2 business days (features section; the homepage hero says 1-3). IPP (credit-card-ipp page): 0% instalment MDR 3.50% (3-month), 4.00% (6), 5.00% (12), 7.50% (24), 9.70% (36), 9 banks, T+1 settlement; the homepage states a one-time IPP setup fee of RM500 (this corrects the July note that said RM500 was gone). RM300-RM3,000 figures are per-bank minimum transaction amounts. New since May 2026: BInfinite loyalty (earn/redeem BPoints at checkout, no setup fee). BNM-licensed merchant acquirer."
 ---
 

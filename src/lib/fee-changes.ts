@@ -15,15 +15,122 @@ export interface FeeChange {
   kind: ChangeKind;
   /** one-sentence, data-true description; no em-dashes */
   what: string;
+  /** the same sentence in plain Bahasa Malaysia (shown on /ms/ pages); no em-dashes */
+  whatMs: string;
 }
 
 export const FEE_CHANGES: FeeChange[] = [
+  {
+    observed: "2026-10-21",
+    slug: "luminarix",
+    name: "Luminarix",
+    kind: "listing",
+    what: "Luminarix added to the directory: FPX, cards, e-wallets and DuitNow QR with T+1 settlement; rates are quoted on request.",
+    whatMs: "Luminarix ditambah ke direktori: FPX, kad, e-wallet dan DuitNow QR dengan duit masuk T+1; kadar diberi atas permintaan.",
+  },
+  {
+    observed: "2026-10-21",
+    slug: "ezypay",
+    name: "Ezypay",
+    kind: "listing",
+    what: "Ezypay added to the directory: recurring card billing for subscription businesses in Malaysia; rates are quoted on request.",
+    whatMs: "Ezypay ditambah ke direktori: caj kad berulang untuk bisnes langganan di Malaysia; kadar diberi atas permintaan.",
+  },
+  {
+    observed: "2026-10-21",
+    slug: "eghl",
+    name: "eGHL",
+    kind: "listing",
+    what: "iPay88 and eGHL now run under the NTT DATA brand ADAPTIS e-Commerce; both sites redirect to it, and eGHL is now on the BNM register as NTT DATA ePayments Sdn Bhd.",
+    whatMs: "iPay88 dan eGHL kini di bawah jenama NTT DATA, ADAPTIS e-Commerce; kedua-dua laman dialih ke situ, dan eGHL kini dalam senarai BNM sebagai NTT DATA ePayments Sdn Bhd.",
+  },
+  {
+    observed: "2026-10-21",
+    slug: "cardup",
+    name: "CardUp",
+    kind: "listing",
+    what: "CardUp added to the directory: payment links with local cards 2.25%, international cards 3.3% (RM10 minimum under RM400) and FPX 0.2% or RM2.00, plus 8% SST, on its official Malaysia pricing page.",
+    whatMs: "CardUp ditambah ke direktori: link bayaran dengan kad tempatan 2.25%, kad luar negara 3.3% (minimum RM10 bawah RM400) dan FPX 0.2% atau RM2.00, campur SST 8%, di halaman harga rasmi CardUp Malaysia.",
+  },
+  {
+    observed: "2026-10-21",
+    slug: "syntrino",
+    name: "Syntrino",
+    kind: "listing",
+    what: "Syntrino added to the directory: a Bank Negara registered merchant acquirer offering FPX and e-wallets by API; rates are quoted on request.",
+    whatMs: "Syntrino ditambah ke direktori: merchant acquirer berdaftar dengan Bank Negara yang tawarkan FPX dan e-wallet melalui API; kadar diberi atas permintaan.",
+  },
+  {
+    observed: "2026-10-21",
+    slug: "setel",
+    name: "Setel",
+    kind: "listing",
+    what: "Setel added to the directory: online stores can accept the Setel wallet and cards saved in Setel; rates are quoted on request.",
+    whatMs: "Setel ditambah ke direktori: kedai online boleh terima wallet Setel dan kad yang disimpan dalam Setel; kadar diberi atas permintaan.",
+  },
+  {
+    observed: "2026-10-21",
+    slug: "favepay",
+    name: "FavePay",
+    kind: "listing",
+    what: "FavePay added to the directory: FavePay Online takes cards and e-wallets, with an official WooCommerce plugin; rates are quoted on request.",
+    whatMs: "FavePay ditambah ke direktori: FavePay Online terima kad dan e-wallet, dengan plugin WooCommerce rasmi; kadar diberi atas permintaan.",
+  },
+  {
+    observed: "2026-10-21",
+    slug: "grab-paylater",
+    name: "GrabPay & PayLater",
+    kind: "listing",
+    what: "PayLater by Grab now covers GrabPay too: one Grab merchant sign-up adds GrabPay wallet checkout and PayLater, with settlement within 5 working days.",
+    whatMs: "PayLater by Grab kini merangkumi GrabPay juga: dengan satu pendaftaran peniaga Grab, anda dapat checkout GrabPay dan PayLater sekali, dengan duit masuk dalam 5 hari bekerja.",
+  },
+  {
+    observed: "2026-10-21",
+    slug: "paypal",
+    name: "PayPal",
+    kind: "listing",
+    what: "PayPal added to the directory: domestic sales 3.9% + RM2.00 and international sales 4.4% + RM2.00 on its official Malaysia fee page; no FPX or DuitNow QR.",
+    whatMs: "PayPal ditambah ke direktori: jualan dalam negara 3.9% + RM2.00 dan jualan luar negara 4.4% + RM2.00 di halaman fee rasmi PayPal Malaysia; tiada FPX atau DuitNow QR.",
+  },
+  {
+    observed: "2026-10-21",
+    slug: "omise",
+    name: "Omise",
+    kind: "listing",
+    what: "Omise added to the directory: cards 2.50%, FPX RM1.50, DuitNow QR and e-wallets 1.50% on its official Malaysia pricing page.",
+    whatMs: "Omise ditambah ke direktori: kad 2.50%, FPX RM1.50, DuitNow QR dan e-wallet 1.50% di halaman harga rasmi Omise Malaysia.",
+  },
+  {
+    observed: "2026-10-21",
+    slug: "2c2p",
+    name: "2C2P",
+    kind: "listing",
+    what: "2C2P added to the directory: a Bank Negara registered merchant acquirer offering FPX, DuitNow QR, e-wallets and BNPL; rates are quoted on request.",
+    whatMs: "2C2P ditambah ke direktori: merchant acquirer berdaftar dengan Bank Negara yang tawarkan FPX, DuitNow QR, e-wallet dan BNPL; kadar diberi atas permintaan.",
+  },
+  {
+    observed: "2026-10-21",
+    slug: "adyen",
+    name: "Adyen",
+    kind: "listing",
+    what: "Adyen added to the directory: a Bank Negara registered merchant acquirer; its pricing page lists indicative per-method prices without ringgit figures, so fees show as Contact sales.",
+    whatMs: "Adyen ditambah ke direktori: merchant acquirer berdaftar dengan Bank Negara; halaman harganya senaraikan harga anggaran tanpa angka ringgit, jadi fee ditunjukkan sebagai Hubungi jualan.",
+  },
+  {
+    observed: "2026-10-21",
+    slug: "xendit",
+    name: "Xendit",
+    kind: "listing",
+    what: "Payex is now part of Xendit Malaysia: payex.io sends new sign-ups to Xendit, so Payex is noted under Xendit rather than listed separately.",
+    whatMs: "Payex kini sebahagian daripada Xendit Malaysia: payex.io hantar pendaftaran baharu ke Xendit, jadi Payex dicatat di bawah Xendit dan tidak disenaraikan berasingan.",
+  },
   {
     observed: "2026-10-20",
     slug: null,
     name: "Directory",
     kind: "listing",
     what: "FavePay Later removed from the directory: Fave discontinued it on 30 September 2022 and now offers bank card instalments instead.",
+    whatMs: "FavePay Later dikeluarkan dari direktori: Fave hentikannya pada 30 September 2022 dan kini tawarkan ansuran kad bank sebagai ganti.",
   },
   {
     observed: "2026-10-20",
@@ -31,6 +138,7 @@ export const FEE_CHANGES: FeeChange[] = [
     name: "Directory",
     kind: "listing",
     what: "edxaPay removed from the directory: it no longer markets an online gateway and its WooCommerce plugin points to a payment server that no longer exists (71 providers listed).",
+    whatMs: "edxaPay dikeluarkan dari direktori: ia tidak lagi menawarkan payment gateway online, dan plugin WooCommerce (tambahan untuk kedai online) miliknya masih menghala ke server bayaran yang sudah tiada (kini 71 penyedia disenaraikan).",
   },
   {
     observed: "2026-10-20",
@@ -38,6 +146,7 @@ export const FEE_CHANGES: FeeChange[] = [
     name: "BCL",
     kind: "published",
     what: "BCL now publishes a full rate card: cards 1.50% (overseas 3.50%), e-wallets 1.50%, DuitNow QR 1.60% and BNPL 1.50%, all settled T+2, plus FPX B2B RM2.00 and Direct Debit RM1.50.",
+    whatMs: "BCL kini siarkan senarai kadar penuh: kad 1.50% (luar negara 3.50%), e-wallet 1.50%, DuitNow QR 1.60% dan BNPL 1.50%, semua dengan duit masuk T+2 (dua hari bekerja selepas jualan), serta FPX B2B RM2.00 dan Direct Debit RM1.50.",
   },
   {
     observed: "2026-10-20",
@@ -45,6 +154,7 @@ export const FEE_CHANGES: FeeChange[] = [
     name: "UOB Malaysia",
     kind: "published",
     what: "DuitNow QR fees now published: no fee for bank-account and e-wallet payments and 0.25% for credit-card payments until 31 December 2026.",
+    whatMs: "Caj DuitNow QR kini disiarkan: tiada caj untuk bayaran dari akaun bank dan e-wallet, dan 0.25% untuk bayaran kad kredit sehingga 31 Disember 2026.",
   },
   {
     observed: "2026-10-20",
@@ -52,6 +162,7 @@ export const FEE_CHANGES: FeeChange[] = [
     name: "OCBC Malaysia",
     kind: "published",
     what: "OneCollect DuitNow QR now charged at 0.6% after the fee waiver ended on 30 September 2026.",
+    whatMs: "DuitNow QR OneCollect kini dicaj 0.6% selepas pengecualian caj tamat pada 30 September 2026.",
   },
   {
     observed: "2026-10-20",
@@ -59,6 +170,7 @@ export const FEE_CHANGES: FeeChange[] = [
     name: "RHB",
     kind: "published",
     what: "RHB Pay launched on 5 August 2026 with cards, FPX and DuitNow Pay and real-time or next-day settlement; rates remain Contact sales.",
+    whatMs: "RHB Pay dilancarkan pada 5 Ogos 2026 dengan kad, FPX dan DuitNow Pay, dan duit masuk serta-merta atau hari berikutnya; kadar masih Hubungi jualan.",
   },
   {
     observed: "2026-10-20",
@@ -66,6 +178,7 @@ export const FEE_CHANGES: FeeChange[] = [
     name: "Finexus",
     kind: "published",
     what: "Kayaaku merchant payments now list zero setup and maintenance fees with usual T+2 settlement.",
+    whatMs: "Bayaran peniaga Kayaaku kini senaraikan fee setup dan fee penyelenggaraan sifar, dengan duit masuk biasa T+2.",
   },
   {
     observed: "2026-10-20",
@@ -73,6 +186,7 @@ export const FEE_CHANGES: FeeChange[] = [
     name: "Billplz",
     kind: "published",
     what: "New card Auto-Deduct recurring rate published (2.3% + RM1.25 Basic, 2% + RM0.75 Standard); the PayLater by Grab 6.5% BNPL rate is no longer listed.",
+    whatMs: "Kadar baharu Auto-Deduct kad (caj berulang automatik) disiarkan (2.3% + RM1.25 Basic, 2% + RM0.75 Standard); kadar BNPL PayLater by Grab 6.5% tidak lagi disenaraikan.",
   },
   {
     observed: "2026-10-20",
@@ -80,6 +194,7 @@ export const FEE_CHANGES: FeeChange[] = [
     name: "Curlec",
     kind: "published",
     what: "Pricing table now lists DuitNow Pay at 1.20% or RM0.30, Alipay+ 2.70% and UPI 2.00% on the Basic plan.",
+    whatMs: "Jadual harga kini senaraikan DuitNow Pay pada 1.20% atau RM0.30, Alipay+ 2.70% dan UPI 2.00% pada pelan Basic.",
   },
   {
     observed: "2026-10-20",
@@ -87,6 +202,7 @@ export const FEE_CHANGES: FeeChange[] = [
     name: "SPayLater",
     kind: "published",
     what: "Invite-only 6M+12M Programme adds a 3% programme fee on 6- and 12-month instalments on top of the 4.5% transaction fee, effective 23 May 2026.",
+    whatMs: "Program 6M+12M (jemputan sahaja) tambah fee program 3% untuk ansuran 6 dan 12 bulan, di atas caj transaksi 4.5%, berkuat kuasa 23 Mei 2026.",
   },
   {
     observed: "2026-10-20",
@@ -94,6 +210,7 @@ export const FEE_CHANGES: FeeChange[] = [
     name: "HitPay",
     kind: "correction",
     what: "Payouts are now T+2 for non-card payments, T+1 for FPX and from T+1 for cards, replacing the old T+3 card payout.",
+    whatMs: "Duit masuk kini T+2 untuk bayaran bukan kad, T+1 untuk FPX dan dari T+1 untuk kad, menggantikan duit masuk kad T+3 yang lama.",
   },
   {
     observed: "2026-10-20",
@@ -101,6 +218,7 @@ export const FEE_CHANGES: FeeChange[] = [
     name: "Paydibs",
     kind: "unpublished",
     what: "Setup and RM300 yearly fees were removed when the pricing page was taken down in the October 2026 site relaunch; now Contact sales.",
+    whatMs: "Fee setup dan fee tahunan RM300 hilang bila halaman harga ditutup semasa laman baharu dilancarkan pada Oktober 2026; kini Hubungi jualan.",
   },
   {
     observed: "2026-10-20",
@@ -108,6 +226,7 @@ export const FEE_CHANGES: FeeChange[] = [
     name: "Atome",
     kind: "correction",
     what: "Merchant BNPL rate shown as Contact sales because Atome does not publish its MDR; the old 3.5% to 4.5% was a third-party estimate.",
+    whatMs: "Kadar BNPL peniaga ditunjukkan sebagai Hubungi jualan kerana Atome tidak siarkan caj setiap transaksi (MDR) mereka; angka lama 3.5% hingga 4.5% hanyalah anggaran pihak ketiga.",
   },
   {
     observed: "2026-10-20",
@@ -115,6 +234,7 @@ export const FEE_CHANGES: FeeChange[] = [
     name: "PayLater by Grab",
     kind: "correction",
     what: "Merchant fee shown as Contact sales because Grab does not publish an official merchant rate; the old figure was a third-party estimate.",
+    whatMs: "Caj peniaga ditunjukkan sebagai Hubungi jualan kerana Grab tidak siarkan kadar rasmi untuk peniaga; angka lama hanyalah anggaran pihak ketiga.",
   },
   {
     observed: "2026-10-20",
@@ -122,6 +242,7 @@ export const FEE_CHANGES: FeeChange[] = [
     name: "Xendit",
     kind: "correction",
     what: "DuitNow Pay online banking is now a single MYR2.00 plus the MYR0.90 processing fee, replacing the RM1.20 personal / RM2.00 corporate split.",
+    whatMs: "Perbankan online DuitNow Pay kini satu kadar MYR2.00 campur caj pemprosesan MYR0.90, menggantikan pecahan lama RM1.20 peribadi / RM2.00 korporat.",
   },
   {
     observed: "2026-10-20",
@@ -129,6 +250,7 @@ export const FEE_CHANGES: FeeChange[] = [
     name: "Directory",
     kind: "listing",
     what: "Bizappay removed from the directory after the service closed (73 providers listed).",
+    whatMs: "Bizappay dikeluarkan dari direktori selepas perkhidmatan itu ditutup (73 penyedia disenaraikan).",
   },
   {
     observed: "2026-10-20",
@@ -136,6 +258,7 @@ export const FEE_CHANGES: FeeChange[] = [
     name: "Fiuu",
     kind: "decrease",
     what: "New rate card dated 17 Aug 2026: FPX 1% (min RM1.20, max RM2.00), local cards 2.00% + RM0.45, DuitNow QR 1.05%, setup RM0 and RM99/year with the first year waived; foreign cards rise to 4.01% + RM0.84 and BNPL leaves the rate card.",
+    whatMs: "Senarai kadar baharu bertarikh 17 Ogos 2026: FPX 1% (min RM1.20, maks RM2.00), kad tempatan 2.00% + RM0.45, DuitNow QR 1.05%, setup RM0 dan RM99/tahun dengan tahun pertama dikecualikan; kad luar negara naik ke 4.01% + RM0.84 dan BNPL tiada lagi dalam senarai kadar.",
   },
   {
     observed: "2026-10-20",
@@ -143,6 +266,7 @@ export const FEE_CHANGES: FeeChange[] = [
     name: "Airwallex",
     kind: "increase",
     what: "Fee schedule updated 14 Oct 2026: international cards now 3.80% + RM0.50 (accounts verified before that date keep 2.95%); local methods 1.4% + RM0.50 and domestic cards 1.90% + RM0.50 unchanged.",
+    whatMs: "Jadual fee dikemas kini 14 Okt 2026: kad luar negara kini 3.80% + RM0.50 (akaun yang disahkan sebelum tarikh itu kekal 2.95%); kaedah tempatan 1.4% + RM0.50 dan kad domestik 1.90% + RM0.50 tidak berubah.",
   },
   {
     observed: "2026-10-20",
@@ -150,6 +274,7 @@ export const FEE_CHANGES: FeeChange[] = [
     name: "MOBY",
     kind: "increase",
     what: "Plans repriced: SME RM99 to RM149/month and Enterprise RM149 to RM199/month, with fewer credits; BNPL now published at 1.5% (pay in full) to 6% (instalments).",
+    whatMs: "Harga pelan diubah: SME dari RM99 ke RM149/bulan dan Enterprise dari RM149 ke RM199/bulan, dengan kredit lebih sedikit; BNPL kini disiarkan pada 1.5% (bayar penuh) hingga 6% (ansuran).",
   },
   {
     observed: "2026-10-20",
@@ -157,6 +282,7 @@ export const FEE_CHANGES: FeeChange[] = [
     name: "M1Pay",
     kind: "unpublished",
     what: "The RM399 setup and RM100/yr plan no longer appear on the redesigned site and are blank in the application form; per-transaction rates (cards 1.8%, FPX RM0.80 B2C) are unchanged.",
+    whatMs: "Setup RM399 dan pelan RM100/tahun tidak lagi muncul di laman yang direka semula, dan dibiarkan kosong dalam borang permohonan; kadar setiap transaksi (kad 1.8%, FPX RM0.80 B2C) tidak berubah.",
   },
   {
     observed: "2026-10-20",
@@ -164,6 +290,7 @@ export const FEE_CHANGES: FeeChange[] = [
     name: "CHIP",
     kind: "published",
     what: "Pricing moved to /pricing: SPayLater BNPL added at 1.4%, a stablecoin channel at 1.5%, and the RM0.15 DuitNow QR minimum is no longer shown.",
+    whatMs: "Harga dipindah ke /pricing: BNPL SPayLater ditambah pada 1.4%, saluran stablecoin pada 1.5%, dan minimum RM0.15 untuk DuitNow QR tidak lagi ditunjukkan.",
   },
   {
     observed: "2026-07-17",
@@ -171,6 +298,7 @@ export const FEE_CHANGES: FeeChange[] = [
     name: "Directory",
     kind: "listing",
     what: "Eleven providers added in discovery round 3 (74 total), led by Herepay whose flat RM0.70 B2C FPX makes it the cheapest ranked gateway at about RM1.07 per RM100.",
+    whatMs: "Sebelas penyedia ditambah dalam pusingan carian ke-3 (jumlah 74). Yang paling menonjol ialah Herepay: caj FPX B2C rata RM0.70 menjadikannya gateway paling murah dalam ranking, kira-kira RM1.07 bagi setiap RM100.",
   },
   {
     observed: "2026-07-17",
@@ -178,6 +306,7 @@ export const FEE_CHANGES: FeeChange[] = [
     name: "M1Pay",
     kind: "published",
     what: "Full MDR table now published (FPX RM0.80 B2C, domestic card 1.8%, wallets 1% to 1.2%, setup RM399, RM100/yr), moving M1Pay from Contact sales into the ranking at about RM1.16 per RM100.",
+    whatMs: "Jadual MDR (caj setiap transaksi) penuh kini disiarkan (FPX RM0.80 B2C, kad domestik 1.8%, wallet 1% hingga 1.2%, setup RM399, RM100/tahun), jadi M1Pay keluar dari Hubungi jualan dan masuk ranking pada kira-kira RM1.16 bagi setiap RM100.",
   },
   {
     observed: "2026-07-17",
@@ -185,6 +314,7 @@ export const FEE_CHANGES: FeeChange[] = [
     name: "MOBY",
     kind: "published",
     what: "Full rate card now published (cards 0.99%, e-wallets 1.5%, DuitNow QR 0.8% + RM0.10, FPX RM2.00 B2C / RM0.70 B2B) alongside SME RM99/month and Enterprise RM149/month plans.",
+    whatMs: "Senarai kadar penuh kini disiarkan (kad 0.99%, e-wallet 1.5%, DuitNow QR 0.8% + RM0.10, FPX RM2.00 B2C / RM0.70 B2B) bersama pelan SME RM99/bulan dan Enterprise RM149/bulan.",
   },
   {
     observed: "2026-07-17",
@@ -192,6 +322,7 @@ export const FEE_CHANGES: FeeChange[] = [
     name: "AffanPay",
     kind: "published",
     what: "Homepage rate card recorded: FPX RM1.00 B2C / RM2.00 B2B, DuitNow QR 0.8%, e-wallets 1.5%, cards 1.75% local / 2.4% foreign, with QR, wallet and card channels subject to approval.",
+    whatMs: "Senarai kadar di halaman utama direkodkan: FPX RM1.00 B2C / RM2.00 B2B, DuitNow QR 0.8%, e-wallet 1.5%, kad 1.75% tempatan / 2.4% luar negara, dengan saluran QR, wallet dan kad perlu kelulusan dahulu.",
   },
   {
     observed: "2026-07-17",
@@ -199,6 +330,7 @@ export const FEE_CHANGES: FeeChange[] = [
     name: "Qashier",
     kind: "published",
     what: "Malaysian MDR card now lives at /my/mdr-rates: online cards from 1.40% + RM0.65 and DuitNow from 1.0% (setup RM500 for WooCommerce/API); in-store cards from 0.50%.",
+    whatMs: "Kadar MDR Malaysia kini di /my/mdr-rates: kad online dari 1.40% + RM0.65 dan DuitNow dari 1.0% (setup RM500 untuk WooCommerce/API); kad di kedai dari 0.50%.",
   },
   {
     observed: "2026-07-17",
@@ -206,6 +338,7 @@ export const FEE_CHANGES: FeeChange[] = [
     name: "RinggitPay",
     kind: "unpublished",
     what: "The public rate card (FPX RM1.20/RM2.20, cards 1.5%/2.0%, wallets 1.5%) was removed; the pricing page is now a lead-capture form, so RinggitPay leaves the fee ranking.",
+    whatMs: "Senarai kadar awam (FPX RM1.20/RM2.20, kad 1.5%/2.0%, wallet 1.5%) dibuang; halaman harga kini hanya borang untuk minta dihubungi, jadi RinggitPay keluar dari ranking fee.",
   },
   {
     observed: "2026-07-17",
@@ -213,6 +346,7 @@ export const FEE_CHANGES: FeeChange[] = [
     name: "Revenue Monster",
     kind: "unpublished",
     what: "The indicative from-0.8% e-wallet and DuitNow QR figures no longer appear on the pricing page; both fields return to Contact sales.",
+    whatMs: "Angka anggaran e-wallet dan DuitNow QR dari 0.8% tidak lagi muncul di halaman harga; kedua-duanya kembali kepada Hubungi jualan.",
   },
   {
     observed: "2026-07-17",
@@ -220,6 +354,7 @@ export const FEE_CHANGES: FeeChange[] = [
     name: "Xendit Malaysia",
     kind: "correction",
     what: "Pricing page now splits FPX personal (RM1.20 + RM0.90) vs corporate (RM2.00 + RM0.90), splits domestic debit 1.90% vs credit 2.00%, and newly publishes DuitNow Online Banking rates.",
+    whatMs: "Halaman harga kini asingkan FPX peribadi (RM1.20 + RM0.90) dan korporat (RM2.00 + RM0.90), asingkan debit domestik 1.90% dan kredit 2.00%, dan kini mula siarkan kadar DuitNow Online Banking.",
   },
   {
     observed: "2026-07-17",
@@ -227,6 +362,7 @@ export const FEE_CHANGES: FeeChange[] = [
     name: "Paydibs",
     kind: "unpublished",
     what: "The previously published settlement schedule (three times weekly) is no longer stated anywhere on paydibs.com, so settlement returns to Contact sales.",
+    whatMs: "Jadual duit masuk yang pernah disiarkan (tiga kali seminggu) tidak lagi dinyatakan di mana-mana dalam paydibs.com, jadi tempoh duit masuk kembali kepada Hubungi jualan.",
   },
   {
     observed: "2026-07-02",
@@ -234,6 +370,7 @@ export const FEE_CHANGES: FeeChange[] = [
     name: "Xendit Malaysia",
     kind: "increase",
     what: "Repriced: a flat RM0.90 now stacks on every method fee, and the full rate card is officially published (previously third-party figures).",
+    whatMs: "Harga diubah: caj rata RM0.90 kini ditambah pada setiap caj kaedah bayaran, dan senarai kadar penuh kini disiarkan secara rasmi (dulu angka pihak ketiga).",
   },
   {
     observed: "2026-07-02",
@@ -241,6 +378,7 @@ export const FEE_CHANGES: FeeChange[] = [
     name: "toyyibPay",
     kind: "published",
     what: "Now publishes card 1.5% (foreign 3.5%) and DuitNow QR 1% or RM1, joining FPX RM1.00; enough official coverage to enter the ranking near the top.",
+    whatMs: "Kini siarkan kad 1.5% (luar negara 3.5%) dan DuitNow QR 1% atau RM1, bersama FPX RM1.00. Dengan kadar rasmi yang cukup, ia masuk ranking dekat dengan tempat teratas.",
   },
   {
     observed: "2026-07-02",
@@ -248,6 +386,7 @@ export const FEE_CHANGES: FeeChange[] = [
     name: "SPayLater",
     kind: "increase",
     what: "The 3-month tenure merchant rate rises to 5% effective 1 February 2026, per the official seller notice.",
+    whatMs: "Kadar peniaga untuk tempoh 3 bulan naik ke 5% berkuat kuasa 1 Februari 2026, menurut notis rasmi kepada penjual.",
   },
   {
     observed: "2026-07-02",
@@ -255,6 +394,7 @@ export const FEE_CHANGES: FeeChange[] = [
     name: "SwiF",
     kind: "published",
     what: "Published a full 4-tier rate card covering FPX, cards and e-wallets on its official pricing page.",
+    whatMs: "Kini siarkan senarai kadar penuh 4 peringkat untuk FPX, kad dan e-wallet di halaman harga rasmi.",
   },
   {
     observed: "2026-07-02",
@@ -262,6 +402,7 @@ export const FEE_CHANGES: FeeChange[] = [
     name: "HitPay",
     kind: "published",
     what: "Per-wallet and BNPL rates are now on the official pricing page, and settlement is T+2 to T+3 (previously understood as faster).",
+    whatMs: "Kadar setiap wallet dan BNPL kini ada di halaman harga rasmi, dan duit masuk ialah T+2 hingga T+3 (dulu disangka lebih cepat).",
   },
   {
     observed: "2026-07-02",
@@ -269,6 +410,7 @@ export const FEE_CHANGES: FeeChange[] = [
     name: "Fiuu",
     kind: "published",
     what: "DuitNow QR 1% and the RM99 signup fee are now stated on official pages.",
+    whatMs: "DuitNow QR 1% dan fee daftar RM99 kini dinyatakan di halaman rasmi.",
   },
   {
     observed: "2026-07-02",
@@ -276,6 +418,7 @@ export const FEE_CHANGES: FeeChange[] = [
     name: "Billplz",
     kind: "published",
     what: "DuitNow QR at 1.5% added to the official rate card.",
+    whatMs: "DuitNow QR pada 1.5% ditambah ke senarai kadar rasmi.",
   },
   {
     observed: "2026-07-02",
@@ -283,6 +426,7 @@ export const FEE_CHANGES: FeeChange[] = [
     name: "CHIP",
     kind: "published",
     what: "DuitNow QR 1% (minimum RM0.15) and Atome BNPL 5.3% published officially.",
+    whatMs: "DuitNow QR 1% (minimum RM0.15) dan BNPL Atome 5.3% disiarkan secara rasmi.",
   },
   {
     observed: "2026-07-02",
@@ -290,6 +434,7 @@ export const FEE_CHANGES: FeeChange[] = [
     name: "Kiple",
     kind: "published",
     what: "DuitNow QR 1.2% published on the official site.",
+    whatMs: "DuitNow QR 1.2% disiarkan di laman rasmi.",
   },
   {
     observed: "2026-07-02",
@@ -297,6 +442,7 @@ export const FEE_CHANGES: FeeChange[] = [
     name: "TNG eWallet",
     kind: "published",
     what: "Merchant signup confirmed free on official merchant pages.",
+    whatMs: "Halaman rasmi untuk peniaga sahkan pendaftaran peniaga adalah percuma.",
   },
   {
     observed: "2026-07-02",
@@ -304,6 +450,7 @@ export const FEE_CHANGES: FeeChange[] = [
     name: "Stripe Malaysia",
     kind: "published",
     what: "A RM2 minimum charge amount is documented officially.",
+    whatMs: "Caj minimum RM2 dinyatakan secara rasmi.",
   },
   {
     observed: "2026-07-02",
@@ -311,6 +458,7 @@ export const FEE_CHANGES: FeeChange[] = [
     name: "Curlec by Razorpay",
     kind: "correction",
     what: "T+2 settlement confirmed on official documentation (previously a third-party figure).",
+    whatMs: "Duit masuk T+2 disahkan dalam dokumentasi rasmi (dulu angka pihak ketiga).",
   },
   {
     observed: "2026-07-02",
@@ -318,6 +466,7 @@ export const FEE_CHANGES: FeeChange[] = [
     name: "Riipay",
     kind: "unpublished",
     what: "Previously published rates (2.5%, T+7) are no longer on the official site; fees now shown as Contact sales.",
+    whatMs: "Kadar yang pernah disiarkan (2.5%, T+7) tiada lagi di laman rasmi; caj kini ditunjukkan sebagai Hubungi jualan.",
   },
   {
     observed: "2026-07-02",
@@ -325,6 +474,7 @@ export const FEE_CHANGES: FeeChange[] = [
     name: "Gkash",
     kind: "unpublished",
     what: "Setup and annual fees no longer published officially; downgraded to Contact sales.",
+    whatMs: "Fee setup dan fee tahunan tidak lagi disiarkan secara rasmi, jadi kini ditunjukkan sebagai Hubungi jualan.",
   },
   {
     observed: "2026-07-02",
@@ -332,6 +482,7 @@ export const FEE_CHANGES: FeeChange[] = [
     name: "BCL Pay",
     kind: "unpublished",
     what: "Setup fee and T+1 settlement no longer stated officially; downgraded to Contact sales.",
+    whatMs: "Fee setup dan duit masuk T+1 tidak lagi dinyatakan secara rasmi, jadi kini ditunjukkan sebagai Hubungi jualan.",
   },
   {
     observed: "2026-07-02",
@@ -339,6 +490,7 @@ export const FEE_CHANGES: FeeChange[] = [
     name: "SecurePay",
     kind: "unpublished",
     what: "Rates removed from the official site; fees now shown as Contact sales.",
+    whatMs: "Kadar dibuang dari laman rasmi; caj kini ditunjukkan sebagai Hubungi jualan.",
   },
   {
     observed: "2026-07-02",
@@ -346,6 +498,7 @@ export const FEE_CHANGES: FeeChange[] = [
     name: "Mobi (formerly gomobi)",
     kind: "correction",
     what: "Rebranded from gomobi to Mobi (mobi.xyz); same provider, updated identity.",
+    whatMs: "Tukar jenama dari gomobi ke Mobi (mobi.xyz). Syarikat yang sama, cuma nama baharu.",
   },
   {
     observed: "2026-07-02",
@@ -353,6 +506,7 @@ export const FEE_CHANGES: FeeChange[] = [
     name: "BetterPay",
     kind: "listing",
     what: "Added to the directory with a fully published rate card; enters the fee ranking on official rates.",
+    whatMs: "Ditambah ke direktori dengan senarai kadar penuh yang disiarkan; masuk ranking fee berdasarkan kadar rasmi.",
   },
 ];
 
@@ -362,5 +516,14 @@ export const KIND_LABEL: Record<ChangeKind, string> = {
   published: "Rates published",
   unpublished: "Rates withdrawn",
   correction: "Correction",
-  listing: "New listing",
+  listing: "Listing change",
+};
+
+export const KIND_LABEL_MS: Record<ChangeKind, string> = {
+  increase: "Fee naik",
+  decrease: "Fee turun",
+  published: "Kadar disiarkan",
+  unpublished: "Kadar ditarik balik",
+  correction: "Pembetulan",
+  listing: "Perubahan senarai",
 };

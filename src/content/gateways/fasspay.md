@@ -29,6 +29,11 @@ features:
 popularity: 28
 verified_date: "2026-10-20"
 source: "https://fasspay.com/productsandservices"
+bnm:
+  roles: [merchant-acquirer, emoney-issuer]
+  entity: "Fass Payment Solutions Sdn Bhd"
+  checked: "2026-10-21"
+  evidence: "https://fasspay.com"
 notes: "Official base rates carry an \"onwards\" qualifier: domestic credit cards 1.2% onwards per tap, dip or swipe; MyDebit 0.38% onwards for a limited time; major QR wallets 1% onwards depending on QR acceptance (the duitnowqr value follows the QR wallet rate). No settlement period published on the official site, so settlement is Contact sales. Operated by Fass Payment Solutions Sdn Bhd, Petaling Jaya, part of the Soft Space group; BNM-registered merchant acquirer. Card brands Visa/Mastercard/JCB/UnionPay/MyDebit, NFC tap-and-pay (Fasstap), plus white-label e-wallet and prepaid card issuing. Setup and other fees quote-only; FPX online banking not offered. Rates unchanged at the 2026-10-20 check."
 ---
 

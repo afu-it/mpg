@@ -71,6 +71,12 @@ plans:
 verified_date: "2026-10-20"
 source: "https://main.billplz.com/pricing"
 notes: "Re-verified 2026-10-20: the pricing page now lists only Atome (6%, 3-month, payouts Wednesday and Friday) under instalments; the PayLater by Grab 6.5% rate is no longer published (Grab is still listed on the payment-methods page, rate unpublished). New Card Auto-Deduct (recurring card charging, separate application): Basic 2.3% + RM1.25 MYR / 4.2% + RM1.25 non-MYR, Standard 2% + RM0.75 / 4% + RM0.75. Wallet payout next day. DuitNow Transfer payment orders RM1.25 (Basic) / RM0.75 (Standard), real-time. Shopify adds 0.3%. Standard plan (RM999/yr) lowers FPX to RM0.75 B2C / RM2.00 B2B and cards to 1.5%/3.5%. Basic (free) plan rates: B2C FPX RM1.25, B2B FPX RM3.00. Card (MYR) 1.8%, non-MYR 3.8% (T+2 payout). E-wallet 1.5%. BNPL (Atome) 6%. FPX payout next business day, guaranteed."
+instant_settlement:
+  detail: "Real-time payout, 24/7, on the Enterprise plan only. Other plans: FPX next business day, cards two business days."
+  detail_ms: "Duit masuk serta-merta, 24 jam, untuk pelan Enterprise sahaja. Pelan lain: FPX hari bekerja berikutnya, kad dua hari bekerja."
+  quote: "Real-time payout Get your money instantly in your bank account, 24/7"
+  source: https://main.billplz.com/pricing
+  checked: "2026-10-21"
 ---
 
 Billplz is a long-running Malaysian gateway focused on **flat-rate FPX

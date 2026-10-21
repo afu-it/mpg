@@ -3,73 +3,138 @@ export const prerender = true;
 
 import Base from "../layouts/Base.astro";
 import { breadcrumbLd } from "../lib/jsonld";
+import { getLocale, tr } from "../i18n/locale";
+
+const locale = getLocale(Astro);
+const T = tr(locale, {
+  en: {
+    home: "Home",
+    crumb: "Contact",
+    title: "Contact MPG · Malaysia Payment Gateway directory",
+    description:
+      "How to reach the maintainer of the Malaysia Payment Gateway directory: report a stale fee, suggest a missing provider, or ask about the data and API.",
+    h1: "Contact",
+    lead: "One person runs MPG and reads every message.",
+    email: "Email",
+    maintainer: "the maintainer",
+    copy: "Copy",
+    copied: "Copied",
+    pressCopy: "Press ⌘C",
+    emailNote: "Fixes, missing gateways, API questions, anything.",
+    wrongFee: "Wrong fee?",
+    wrongFeeText: "Fix it yourself, or send a report.",
+    provider: "Are you a provider?",
+    providerText: "Email a link to your public rate card.",
+    api: "API & MCP",
+    apiText: "Docs for the free data API.",
+    more: "More:",
+    about: "About",
+    privacy: "Privacy",
+  },
+  ms: {
+    home: "Utama",
+    crumb: "Hubungi",
+    title: "Hubungi MPG · direktori Malaysia Payment Gateway",
+    description:
+      "Cara hubungi pengurus direktori Malaysia Payment Gateway: lapor fee yang dah lapuk, cadang gateway yang belum ada, atau tanya tentang data dan API.",
+    h1: "Hubungi",
+    lead: "Seorang sahaja yang urus MPG, dan dia baca setiap mesej.",
+    email: "Email",
+    maintainer: "pengurus laman",
+    copy: "Salin",
+    copied: "Disalin",
+    pressCopy: "Tekan ⌘C",
+    emailNote: "Pembetulan, gateway yang belum ada, soalan API, apa sahaja.",
+    wrongFee: "Fee salah?",
+    wrongFeeText: "Betulkan sendiri, atau hantar laporan.",
+    provider: "Anda dari syarikat gateway?",
+    providerText: "Email link senarai harga awam anda.",
+    api: "API & MCP",
+    apiText: "Panduan API data percuma (API = cara sistem lain ambil data kami).",
+    more: "Lagi:",
+    about: "Tentang",
+    privacy: "Privasi",
+  },
+});
+const clientT = { copy: T.copy, copied: T.copied, pressCopy: T.pressCopy };
 
 const crumbLd = breadcrumbLd(String(Astro.site ?? "https://malaysiapg.com.my/"), [
-  { name: "Home", path: "/" },
-  { name: "Contact" },
+  { name: T.home, path: "/" },
+  { name: T.crumb },
 ]);
 ---
 
 <Base
-  title="Contact MPG · Malaysia Payment Gateway directory"
-  description="How to reach the maintainer of the Malaysia Payment Gateway directory: report a stale fee, suggest a missing provider, or ask about the data and API."
+  title={T.title}
+  description={T.description}
 >
   <script is:inline type="application/ld+json" set:html={JSON.stringify(crumbLd)} />
-  <nav aria-label="Breadcrumb" class="mb-4 flex items-center gap-2 text-sm text-muted">
-    <a href="/" class="hover:text-fg hover:underline">Home</a>
-    <span aria-hidden="true">/</span>
-    <span class="text-fg">Contact</span>
-  </nav>
 
-  <div class="mx-auto max-w-2xl">
-    <h1 class="text-2xl font-semibold tracking-tight text-fg">Contact</h1>
-    <p class="mt-3 text-muted">
-      MPG is maintained by one independent Malaysian developer, so every message
-      is read by the person who actually edits the data.
-    </p>
+  <header class="max-w-2xl">
+    <h1 class="text-3xl font-bold tracking-tight text-fg sm:text-4xl">{T.h1}</h1>
+    <p class="mt-2 text-muted">{T.lead}</p>
+  </header>
 
-    <section class="mt-8">
-      <h2 class="text-lg font-semibold text-fg">Report a wrong or stale fee</h2>
-      <p class="mt-3 text-muted">
-        The fastest route is the{" "}
-        <a href="/contribute/" class="text-accent hover:underline">contribute page</a>:
-        it explains the sourcing rules (official pages only) and opens a
-        prefilled application email. If you just want to point out a mistake
-        without contributing, a plain email works too.
-      </p>
-    </section>
+  <section class="mt-8 rounded-xl border border-line bg-panel p-5">
+    <h2 class="text-xs font-medium uppercase tracking-widest text-muted">{T.email}</h2>
+    <div class="mt-2 flex flex-wrap items-center gap-3">
+      <a href="#" id="contact-email" class="text-xl font-semibold text-fg hover:text-accent">{T.maintainer}</a>
+      <button
+        type="button"
+        id="contact-copy"
+        data-t={JSON.stringify(clientT)}
+        class="rounded-md border border-line px-2 py-1 text-xs text-muted hover:border-muted hover:text-fg"
+      >
+        {T.copy}
+      </button>
+    </div>
+    <p class="mt-2 text-sm text-muted">{T.emailNote}</p>
+  </section>
 
-    <section class="mt-8">
-      <h2 class="text-lg font-semibold text-fg">Email</h2>
-      <p class="mt-3 text-muted">
-        Write to{" "}
-        <a href="#" id="contact-email" class="text-accent hover:underline">the maintainer</a>{" "}
-        for corrections, missing gateways, questions about the{" "}
-        <a href="/learn/api/" class="text-accent hover:underline">JSON API and MCP server</a>,
-        or anything else about the directory. Providers are welcome to send
-        updated official rate cards; a public source link is required before any
-        fee changes.
-      </p>
-    </section>
-
-    <section class="mt-8">
-      <h2 class="text-lg font-semibold text-fg">What this site is</h2>
-      <p class="mt-3 text-muted">
-        Read the <a href="/about/" class="text-accent hover:underline">About page</a>{" "}
-        for how fees are sourced and how the cost ranking works, and the{" "}
-        <a href="/privacy/" class="text-accent hover:underline">privacy policy</a>{" "}
-        for what data the site does and does not collect.
-      </p>
-    </section>
+  <div class="mt-3 grid gap-3 sm:grid-cols-3">
+    <a href="/contribute/" class="group rounded-xl border border-line bg-panel p-5 hover:border-muted">
+      <span class="flex items-center justify-between font-semibold text-fg">
+        {T.wrongFee}
+        <span class="text-muted transition-transform group-hover:translate-x-0.5 group-hover:text-fg">→</span>
+      </span>
+      <span class="mt-1 block text-sm text-muted">{T.wrongFeeText}</span>
+    </a>
+    <div class="rounded-xl border border-line bg-panel p-5">
+      <span class="font-semibold text-fg">{T.provider}</span>
+      <span class="mt-1 block text-sm text-muted">{T.providerText}</span>
+    </div>
+    <a href="/learn/api/" class="group rounded-xl border border-line bg-panel p-5 hover:border-muted">
+      <span class="flex items-center justify-between font-semibold text-fg">
+        {T.api}
+        <span class="text-muted transition-transform group-hover:translate-x-0.5 group-hover:text-fg">→</span>
+      </span>
+      <span class="mt-1 block text-sm text-muted">{T.apiText}</span>
+    </a>
   </div>
+
+  <p class="mt-8 text-sm text-muted">
+    {T.more} <a href="/about/" class="text-accent hover:underline">{T.about}</a>{" · "}
+    <a href="/privacy/" class="text-accent hover:underline">{T.privacy}</a>
+  </p>
 
   <script>
     // assemble the address at runtime so scrapers reading static HTML miss it
-    const a = document.getElementById("contact-email");
+    const to = ["afuitdev", "gmail.com"].join("@");
+    const a = document.getElementById("contact-email") as HTMLAnchorElement | null;
     if (a) {
-      const to = ["afuitdev", "gmail.com"].join("@");
-      (a as HTMLAnchorElement).href = `mailto:${to}`;
+      a.href = `mailto:${to}`;
       a.textContent = to;
     }
+    const b = document.getElementById("contact-copy");
+    const t = { copy: "Copy", copied: "Copied", pressCopy: "Press ⌘C", ...JSON.parse(b?.dataset.t ?? "{}") };
+    b?.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(to);
+        b.textContent = t.copied;
+      } catch {
+        b.textContent = t.pressCopy;
+      }
+      setTimeout(() => (b.textContent = t.copy), 1500);
+    });
   </script>
 </Base>

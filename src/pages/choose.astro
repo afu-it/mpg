@@ -4,6 +4,71 @@ export const prerender = true;
 import { getCollection } from "astro:content";
 import Base from "../layouts/Base.astro";
 import { toApiGateway, type GatewayEntryLike } from "../lib/api";
+import { getLocale, tr } from "../i18n/locale";
+
+const locale = getLocale(Astro);
+const T = tr(locale, {
+  en: {
+    title: "Help me choose a Malaysia payment gateway | MPG",
+    description:
+      "Answer four quick questions and get a ranked shortlist of Malaysian payment gateways that fit your needs, cheapest first, with reasons for every pick.",
+    h1: "Help me choose",
+    lead: "Answer up to four questions. We will shortlist the gateways that fit, cheapest first.",
+    qIntegration: "How do you want to integrate?",
+    noPref: "No preference",
+    nocode: "No-code (payment links)",
+    developer: "Developer (API / plugin)",
+    qChannels: "Which payment methods do you need?",
+    chFpx: "FPX (online banking)",
+    chCard: "Cards",
+    chEwallet: "E-wallets",
+    chQr: "DuitNow QR",
+    chBnpl: "BNPL (instalments)",
+    qRecurring: "Do you need recurring / subscriptions?",
+    yes: "Yes",
+    no: "No",
+    qAccess: "How do you want to onboard?",
+    integrate: "Integrate yourself (gateway)",
+    account: "Merchant account (bank / e-wallet)",
+    bnpl: "BNPL at checkout",
+    back: "Back",
+    next: "Next",
+    howH: "How the recommendation works",
+    how: "Your answers filter the directory by hard requirements: the payment channels your customers use, recurring billing, whether you want a no-code setup or a developer API, and the kind of account you can open. Matching providers are then ranked by the same estimated blended cost used across this site: officially published FPX, card and e-wallet rates applied to a RM100 transaction. Providers without comparable published rates are shown as quote-based rather than ranked.",
+    adsH: "Why results may differ from ads",
+    ads: "We only rank on rates a provider publishes on its own site, each with a source link and verified date. Promotional or negotiated rates you see elsewhere are real but not comparable, so they never move the ranking. Shortlist two or three candidates here, then confirm current pricing with the provider before signing up.",
+  },
+  ms: {
+    title: "Bantu saya pilih payment gateway Malaysia | MPG",
+    description:
+      "Jawab empat soalan ringkas dan dapatkan senarai pendek payment gateway Malaysia yang sesuai untuk anda, paling murah di atas, dengan sebab bagi setiap pilihan.",
+    h1: "Bantu saya pilih",
+    lead: "Jawab sehingga empat soalan. Kami akan senaraikan payment gateway (perkhidmatan terima bayaran online) yang sesuai, paling murah di atas.",
+    qIntegration: "Macam mana anda nak pasang?",
+    noPref: "Tak kisah",
+    nocode: "Tanpa kod (link bayaran)",
+    developer: "Developer (API / plugin)",
+    qChannels: "Cara bayaran apa yang anda perlukan?",
+    chFpx: "FPX (perbankan online)",
+    chCard: "Kad",
+    chEwallet: "E-wallet",
+    chQr: "DuitNow QR",
+    chBnpl: "BNPL (ansuran)",
+    qRecurring: "Perlu caj berulang / langganan?",
+    yes: "Ya",
+    no: "Tidak",
+    qAccess: "Macam mana anda nak mula?",
+    integrate: "Pasang sendiri (gateway)",
+    account: "Akaun peniaga (bank / e-wallet)",
+    bnpl: "BNPL semasa checkout",
+    back: "Kembali",
+    next: "Seterusnya",
+    howH: "Cara cadangan ini dibuat",
+    how: "Jawapan anda menapis direktori ikut syarat wajib: cara bayaran yang pelanggan anda guna, caj berulang (langganan), sama ada anda mahu cara tanpa kod atau API (sambungan untuk developer), dan jenis akaun yang anda boleh buka. Gateway yang padan kemudian disusun ikut anggaran caj campuran yang sama seperti di seluruh laman ini: kadar rasmi FPX, kad dan e-wallet dikira pada transaksi RM100. Gateway yang tiada kadar rasmi untuk dibanding ditunjukkan sebagai harga kena tanya, dan tidak dimasukkan dalam ranking.",
+    adsH: "Kenapa keputusan di sini mungkin lain daripada iklan",
+    ads: "Kami hanya susun ikut kadar yang gateway siarkan di laman mereka sendiri, setiap satu dengan link sumber dan tarikh disemak. Kadar promosi atau kadar rundingan yang anda nampak di tempat lain memang wujud, tapi tak boleh dibanding, jadi kadar itu tak ubah ranking. Pilih dua atau tiga calon di sini, kemudian sahkan harga terkini dengan gateway sebelum daftar.",
+  },
+});
 
 const entries = (await getCollection("gateways")) as unknown as GatewayEntryLike[];
 
@@ -19,31 +84,26 @@ for (const [path, url] of Object.entries(logos)) {
 const data = entries.map((e) => ({ ...toApiGateway(e), logo: logoBySlug[e.id] ?? null }));
 
 const channels = [
-  { key: "fpx", label: "FPX (online banking)" },
-  { key: "card", label: "Cards" },
-  { key: "ewallet", label: "E-wallets" },
-  { key: "duitnowqr", label: "DuitNow QR" },
-  { key: "bnpl", label: "BNPL (instalments)" },
+  { key: "fpx", label: T.chFpx },
+  { key: "card", label: T.chCard },
+  { key: "ewallet", label: T.chEwallet },
+  { key: "duitnowqr", label: T.chQr },
+  { key: "bnpl", label: T.chBnpl },
 ];
 const card = "block rounded-md border border-line bg-panel p-4 cursor-pointer hover:border-accent";
 ---
 
-<Base
-  title="Help me choose a Malaysia payment gateway | MPG"
-  description="Answer four quick questions and get a ranked shortlist of Malaysian payment gateways that fit your needs, cheapest first, with reasons for every pick."
->
+<Base title={T.title} description={T.description}>
   <div class="mx-auto max-w-2xl">
-    <h1 class="text-3xl font-bold tracking-tight text-fg sm:text-4xl">Help me choose</h1>
-    <p class="mt-4 text-muted">
-      Answer up to four questions. We will shortlist the gateways that fit, cheapest first.
-    </p>
+    <h1 class="text-3xl font-bold tracking-tight text-fg sm:text-4xl">{T.h1}</h1>
+    <p class="mt-4 text-muted">{T.lead}</p>
 
     <form id="choose-form" class="mt-8 space-y-4">
       <!-- Step 1: integration style -->
       <fieldset data-step="0" class="space-y-3">
-        <legend class="mb-1 text-base font-medium text-fg">How do you want to integrate?</legend>
+        <legend class="mb-1 text-base font-medium text-fg">{T.qIntegration}</legend>
         {
-          [{ v: "any", l: "No preference" }, { v: "nocode", l: "No-code (payment links)" }, { v: "developer", l: "Developer (API / plugin)" }].map((o) => (
+          [{ v: "any", l: T.noPref }, { v: "nocode", l: T.nocode }, { v: "developer", l: T.developer }].map((o) => (
             <label class={card}><input type="radio" name="integration" value={o.v} checked={o.v === "any"} class="mr-2" />{o.l}</label>
           ))
         }
@@ -51,7 +111,7 @@ const card = "block rounded-md border border-line bg-panel p-4 cursor-pointer ho
 
       <!-- Step 2: channels (multi) -->
       <fieldset data-step="1" hidden class="space-y-3">
-        <legend class="mb-1 text-base font-medium text-fg">Which payment methods do you need?</legend>
+        <legend class="mb-1 text-base font-medium text-fg">{T.qChannels}</legend>
         {
           channels.map((c) => (
             <label class={card}><input type="checkbox" name="channel" value={c.key} class="mr-2" />{c.label}</label>
@@ -61,9 +121,9 @@ const card = "block rounded-md border border-line bg-panel p-4 cursor-pointer ho
 
       <!-- Step 3: recurring -->
       <fieldset data-step="2" hidden class="space-y-3">
-        <legend class="mb-1 text-base font-medium text-fg">Do you need recurring / subscriptions?</legend>
+        <legend class="mb-1 text-base font-medium text-fg">{T.qRecurring}</legend>
         {
-          [{ v: "any", l: "No preference" }, { v: "yes", l: "Yes" }, { v: "no", l: "No" }].map((o) => (
+          [{ v: "any", l: T.noPref }, { v: "yes", l: T.yes }, { v: "no", l: T.no }].map((o) => (
             <label class={card}><input type="radio" name="recurring" value={o.v} checked={o.v === "any"} class="mr-2" />{o.l}</label>
           ))
         }
@@ -71,17 +131,17 @@ const card = "block rounded-md border border-line bg-panel p-4 cursor-pointer ho
 
       <!-- Step 4: access type -->
       <fieldset data-step="3" hidden class="space-y-3">
-        <legend class="mb-1 text-base font-medium text-fg">How do you want to onboard?</legend>
+        <legend class="mb-1 text-base font-medium text-fg">{T.qAccess}</legend>
         {
-          [{ v: "any", l: "No preference" }, { v: "integrate", l: "Integrate yourself (gateway)" }, { v: "account", l: "Merchant account (bank / e-wallet)" }, { v: "bnpl", l: "BNPL at checkout" }].map((o) => (
+          [{ v: "any", l: T.noPref }, { v: "integrate", l: T.integrate }, { v: "account", l: T.account }, { v: "bnpl", l: T.bnpl }].map((o) => (
             <label class={card}><input type="radio" name="access" value={o.v} checked={o.v === "any"} class="mr-2" />{o.l}</label>
           ))
         }
       </fieldset>
 
       <div id="choose-nav" class="flex items-center gap-3 pt-2">
-        <button type="button" id="choose-back" hidden class="rounded-md border border-line px-4 py-2 text-sm text-muted hover:text-fg">Back</button>
-        <button type="button" id="choose-next" class="ml-auto rounded-md bg-accent px-4 py-2 text-sm font-medium text-white">Next</button>
+        <button type="button" id="choose-back" hidden class="rounded-md border border-line px-4 py-2 text-sm text-muted hover:text-fg">{T.back}</button>
+        <button type="button" id="choose-next" class="ml-auto rounded-md bg-accent px-4 py-2 text-sm font-medium text-white">{T.next}</button>
       </div>
     </form>
 
@@ -91,26 +151,14 @@ const card = "block rounded-md border border-line bg-panel p-4 cursor-pointer ho
     <section class="mt-12 border-t border-line pt-6">
       <details class="group">
         <summary class="flex cursor-pointer select-none items-center gap-2 text-sm text-muted hover:text-fg [&::-webkit-details-marker]:hidden">
-          <h2 class="font-medium">How the recommendation works</h2>
+          <h2 class="font-medium">{T.howH}</h2>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="size-3.5 transition-transform group-open:rotate-180" aria-hidden="true">
             <path d="m6 9 6 6 6-6"></path>
           </svg>
         </summary>
-        <p class="mt-3 text-sm leading-relaxed text-muted">
-          Your answers filter the directory by hard requirements: the payment channels your
-          customers use, recurring billing, whether you want a no-code setup or a developer
-          API, and the kind of account you can open. Matching providers are then ranked by the
-          same estimated blended cost used across this site: officially published FPX, card and
-          e-wallet rates applied to a RM100 transaction. Providers without comparable published
-          rates are shown as quote-based rather than ranked.
-        </p>
-        <h3 class="mt-5 text-sm font-medium text-fg">Why results may differ from ads</h3>
-        <p class="mt-2 text-sm leading-relaxed text-muted">
-          We only rank on rates a provider publishes on its own site, each with a source link
-          and verified date. Promotional or negotiated rates you see elsewhere are real but not
-          comparable, so they never move the ranking. Shortlist two or three candidates here,
-          then confirm current pricing with the provider before signing up.
-        </p>
+        <p class="mt-3 text-sm leading-relaxed text-muted">{T.how}</p>
+        <h3 class="mt-5 text-sm font-medium text-fg">{T.adsH}</h3>
+        <p class="mt-2 text-sm leading-relaxed text-muted">{T.ads}</p>
       </details>
     </section>
   </div>

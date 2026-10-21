@@ -42,6 +42,11 @@ plans:
     source: "https://www.cimb.com.my/en/business/business-solutions/solutions/merchant-solutions.html"
 verified_date: "2026-10-20"
 source: "https://www.cimb.com.my/en/business/business-solutions/solutions/merchant-solutions.html"
+bnm:
+  roles: [bank]
+  entity: "CIMB Bank Berhad"
+  checked: "2026-10-21"
+  evidence: "https://www.bnm.gov.my/regulations/fsp-directory?p_p_id=com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet_INSTANCE_jXC730NRlqU0&p_p_lifecycle=0&p_p_state=normal&p_p_mode=view&p_r_p_tag=merchant-acquirer"
 notes: "Bank-run online gateway under CIMB's Merchant Solutions, distinct from POS and DuitNow QR products. Three forms: Payment Link (no website, Mastercard/Visa 1.00% on-us / 1.10% off-us), CIMB e-Commerce Partners (hosted gateway, 1.50%-1.80% domestic / 2.80%-3.00% international cards), and Direct Connect to CIMB (direct integration accepting cards, FPX and JomPAY, priced case by case). 3D-Secure; supports recurring and instalment. Requires a CIMB business current account; settled next business day. Card rates are CIMB-published. Re-verified 2026-10-20, unchanged."
 ---
 

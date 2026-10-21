@@ -1,5 +1,12 @@
 // Client behaviour for the gateway comparison table: category, search, filter, sort.
 // Sort values are precomputed server-side into data-sort-value attributes.
+// Row links (data-href) arrive already localized from GatewayTable.astro.
+import { pageLocale, tr } from "../i18n/client";
+
+const T = tr(pageLocale(), {
+  en: { custom: "Custom", popularity: "Popularity" },
+  ms: { custom: "Pilihan sendiri", popularity: "Populariti" },
+});
 
 const table = document.getElementById("gw-table") as HTMLTableElement | null;
 
@@ -153,7 +160,7 @@ if (table && table.tBodies[0]) {
       sortRows(index, type, sortDir);
       // a column header now drives the sort: clear the dropdown's selection
       sortItems.forEach((i) => i.setAttribute("aria-checked", "false"));
-      if (sortLabel) sortLabel.textContent = "Custom";
+      if (sortLabel) sortLabel.textContent = T.custom;
       sortMode = "custom";
       updateDivider();
     });
@@ -223,7 +230,7 @@ if (table && table.tBodies[0]) {
     item.addEventListener("click", () => {
       const key = item.dataset.sortKey ?? "popularity";
       sortItems.forEach((i) => i.setAttribute("aria-checked", String(i === item)));
-      if (sortLabel) sortLabel.textContent = item.dataset.sortLabel ?? "Popularity";
+      if (sortLabel) sortLabel.textContent = item.dataset.sortLabel ?? T.popularity;
       applyDropdownSort(key);
       setMenuOpen(false);
     });
@@ -279,4 +286,19 @@ if (table && table.tBodies[0]) {
 
   // apply default (or deep-linked) category on load
   applyFilters();
+}
+
+// Fit the scroll box into the space left below it on first view, so its sideways
+// scrollbar sits on screen without scrolling the page. Too little room (short
+// screens) falls back to a full screen minus the site header.
+const scrollBox = table?.closest<HTMLElement>(".gw-scroll");
+if (scrollBox) {
+  const fit = () => {
+    const top = scrollBox.getBoundingClientRect().top + window.scrollY;
+    const room = window.innerHeight - top - 16;
+    const headerH = document.querySelector("header")?.getBoundingClientRect().height ?? 80;
+    scrollBox.style.maxHeight = `${room >= 360 ? room : window.innerHeight - headerH - 16}px`;
+  };
+  fit();
+  window.addEventListener("resize", fit);
 }

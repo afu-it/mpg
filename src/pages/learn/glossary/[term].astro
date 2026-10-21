@@ -4,14 +4,21 @@
 export const prerender = true;
 
 import Base from "../../../layouts/Base.astro";
-import { GLOSSARY, glossaryPath } from "../../../lib/glossary";
+import { GLOSSARY, glossaryPath, termCopy } from "../../../lib/glossary";
+import { getLocale, localizePath, tr } from "../../../i18n/locale";
 import { breadcrumbLd } from "../../../lib/jsonld";
 
 export async function getStaticPaths() {
   return GLOSSARY.map((t) => ({ params: { term: t.slug }, props: { t } }));
 }
 
-const { t } = Astro.props;
+const { t: entry } = Astro.props;
+const locale = getLocale(Astro);
+const t = termCopy(entry, locale);
+const T = tr(locale, {
+  en: { home: "Home", learn: "Learn", glossary: "Glossary", more: "More terms", crumbs: "Breadcrumb", allTerms: "All terms", next: "Read next", prev: "Previous", nextTerm: "Next" },
+  ms: { home: "Utama", learn: "Belajar", glossary: "Glosari", more: "Istilah lain", crumbs: "Laluan halaman", allTerms: "Semua istilah", next: "Baca seterusnya", prev: "Sebelum", nextTerm: "Seterusnya" },
+});
 const site = (Astro.site?.href ?? "https://malaysiapg.com.my/").replace(/\/$/, "");
 
 const termLd = JSON.stringify({
@@ -19,67 +26,118 @@ const termLd = JSON.stringify({
   "@type": "DefinedTerm",
   name: t.term,
   description: t.def,
-  url: `${site}${glossaryPath(t.slug)}`,
+  url: `${site}${localizePath(glossaryPath(entry.slug), locale)}`,
   inDefinedTermSet: { "@id": `${site}/learn/glossary/#termset` },
 });
 const crumbLd = JSON.stringify(
   breadcrumbLd(site, [
-    { name: "Home", path: "/" },
-    { name: "Learn", path: "/learn/" },
-    { name: "Glossary", path: "/learn/glossary/" },
+    { name: T.home, path: localizePath("/", locale) },
+    { name: T.learn, path: localizePath("/learn/", locale) },
+    { name: T.glossary, path: localizePath("/learn/glossary/", locale) },
     { name: t.term },
   ]),
 );
 
-const others = GLOSSARY.filter((x) => x.slug !== t.slug);
+const all = GLOSSARY.map((x) => ({ slug: x.slug, term: termCopy(x, locale).term }));
+const others = all.filter((x) => x.slug !== entry.slug);
+// previous / next in glossary order, so a reader can walk the list without going back
+const at = all.findIndex((x) => x.slug === entry.slug);
+const prev = at > 0 ? all[at - 1] : null;
+const next = at < all.length - 1 ? all[at + 1] : null;
 ---
 
 <Base title={t.title} description={t.description}>
   <script is:inline type="application/ld+json" set:html={termLd} />
   <script is:inline type="application/ld+json" set:html={crumbLd} />
 
-  <nav aria-label="Breadcrumb" class="mb-4 flex items-center gap-2 text-sm text-muted">
-    <a href="/" class="hover:text-fg hover:underline">Home</a>
+  <nav aria-label={T.crumbs} class="mb-4 flex items-center gap-2 text-sm text-muted">
+    <a href="/" class="hover:text-fg hover:underline">{T.home}</a>
     <span aria-hidden="true">/</span>
-    <a href="/learn/" class="hover:text-fg hover:underline">Learn</a>
+    <a href="/learn/" class="hover:text-fg hover:underline">{T.learn}</a>
     <span aria-hidden="true">/</span>
-    <a href="/learn/glossary/" class="hover:text-fg hover:underline">Glossary</a>
+    <a href="/learn/glossary/" class="hover:text-fg hover:underline">{T.glossary}</a>
     <span aria-hidden="true">/</span>
     <span class="text-fg">{t.term}</span>
   </nav>
 
-  <header class="max-w-2xl">
-    <h1 class="max-w-3xl text-3xl font-bold tracking-tight text-fg sm:text-4xl">{t.question}</h1>
-    <p class="mt-3 font-medium text-fg">{t.def}</p>
-  </header>
+  <div class="grid gap-12 lg:grid-cols-[200px_minmax(0,1fr)]">
+    <article class="min-w-0 max-w-[68ch]">
+      <h1 class="text-balance text-3xl font-bold tracking-tight text-fg sm:text-5xl">{t.question}</h1>
+      <p class="mt-6 text-xl leading-relaxed text-fg">{t.def}</p>
 
-  <div class="mt-5 max-w-2xl space-y-4">
-    {t.body.map((p) => <p class="text-muted">{p}</p>)}
-  </div>
+      <div class="mt-8 space-y-5 border-t border-line pt-8 text-[15px] leading-7 text-muted sm:text-base">
+        {t.body.map((p) => <p>{p}</p>)}
+      </div>
 
-  <div class="mt-8 flex flex-wrap gap-3">
-    {
-      t.related.map((r) => (
-        <a href={r.href} class="rounded-md border border-line px-4 py-2 text-sm text-muted hover:text-fg">
-          {r.label}
-        </a>
-      ))
-    }
-  </div>
-
-  <section class="mt-10 border-t border-line pt-6">
-    <h2 class="mb-3 text-xs font-medium uppercase tracking-wide text-muted">More terms</h2>
-    <div class="flex flex-wrap gap-2">
       {
-        others.map((x) => (
-          <a
-            href={glossaryPath(x.slug)}
-            class="rounded-full border border-line bg-panel px-3 py-1 text-xs text-muted hover:text-fg"
-          >
-            {x.term}
-          </a>
-        ))
+        t.related.length > 0 && (
+          <section class="mt-10">
+            <h2 class="text-sm font-medium text-fg">{T.next}</h2>
+            <ul class="mt-3 space-y-2">
+              {t.related.map((r) => (
+                <li>
+                  <a href={r.href} class="text-accent underline-offset-4 hover:underline">{r.label}</a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )
       }
-    </div>
-  </section>
+
+      <nav class="mt-12 grid grid-cols-2 gap-3 border-t border-line pt-6 text-sm" aria-label={T.glossary}>
+        {
+          prev ? (
+            <a href={glossaryPath(prev.slug)} class="group rounded-lg p-3 hover:bg-panel">
+              <span class="block text-xs text-muted">← {T.prev}</span>
+              <span class="mt-1 block font-medium text-fg">{prev.term}</span>
+            </a>
+          ) : (
+            <span />
+          )
+        }
+        {
+          next && (
+            <a href={glossaryPath(next.slug)} class="group rounded-lg p-3 text-right hover:bg-panel">
+              <span class="block text-xs text-muted">{T.nextTerm} →</span>
+              <span class="mt-1 block font-medium text-fg">{next.term}</span>
+            </a>
+          )
+        }
+      </nav>
+
+      <section class="mt-10 lg:hidden">
+        <h2 class="mb-3 text-sm font-medium text-fg">{T.more}</h2>
+        <div class="flex flex-wrap gap-2">
+          {
+            others.map((x) => (
+              <a href={glossaryPath(x.slug)} class="rounded-full border border-line px-3 py-1 text-xs text-muted hover:text-fg">
+                {x.term}
+              </a>
+            ))
+          }
+        </div>
+      </section>
+    </article>
+
+    <aside class="hidden lg:order-first lg:block">
+      <nav class="sticky top-20" aria-label={T.allTerms}>
+        <a href="/learn/glossary/" class="text-sm font-medium text-fg hover:underline">{T.allTerms}</a>
+        <ul class="mt-3 space-y-0.5 text-sm">
+          {
+            all.map((x) => (
+              <li>
+                <a
+                  href={glossaryPath(x.slug)}
+                  aria-current={x.slug === entry.slug ? "page" : undefined}
+                  class="block rounded-md px-2.5 py-1.5 text-muted hover:bg-panel hover:text-fg aria-[current=page]:bg-raised aria-[current=page]:text-fg"
+                >
+                  {x.term}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+    </aside>
+  </div>
 </Base>

@@ -3,6 +3,8 @@
 // this script only reads its state. The recipient address is assembled at
 // click time to keep it out of the static HTML for scrapers.
 
+import { href } from "../i18n/client";
+
 const gate = document.getElementById("apply-gate");
 const form = document.getElementById("apply-form") as HTMLFormElement | null;
 const emailNote = document.getElementById("apply-email");
@@ -29,8 +31,8 @@ setTimeout(() => clearInterval(poll), 20000);
 
 document.getElementById("apply-signup")?.addEventListener("click", () => {
   (window as any).Clerk?.openSignUp?.({
-    afterSignUpUrl: "/contribute",
-    afterSignInUrl: "/contribute",
+    afterSignUpUrl: href("/contribute/"),
+    afterSignInUrl: href("/contribute/"),
   });
 });
 

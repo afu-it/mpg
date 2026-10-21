@@ -1,6 +1,8 @@
 ---
 // A small vertical carousel that cycles through gateway logos inside a 20px box.
 // Pure CSS (keyframes generated from the logo count); respects reduced-motion.
+import { getLocale } from "../i18n/locale";
+const logoAlt = getLocale(Astro) === "ms" ? "Logo payment gateway Malaysia" : "Malaysian payment gateway logo";
 const logos = import.meta.glob("/src/assets/logos/*.{png,svg,webp}", {
   eager: true,
   query: "?url",
@@ -41,7 +43,7 @@ const css =
     {
       items.map((url) => (
         <span class="flex h-5 w-5 shrink-0 items-center justify-center">
-          <img src={url} alt="Malaysian payment gateway logo" width="20" height="20" class="h-5 w-5 rounded-[5px] object-contain" />
+          <img src={url} alt={logoAlt} width="20" height="20" class="h-5 w-5 rounded-[5px] object-contain" />
         </span>
       ))
     }

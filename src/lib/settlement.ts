@@ -20,8 +20,8 @@ export function parseSettlementDays(value: string): number | null {
     days.push(Number(m[2] ?? m[1]));
   }
 
-  if (/next business day/i.test(v)) days.push(1);
-  if (/same day|instant/i.test(v) && days.length === 0) days.push(0);
+  if (/next (?:business |working )?day/i.test(v)) days.push(1);
+  if (/same[\s-]day|instant|real[\s-]?time/i.test(v) && days.length === 0) days.push(0);
 
   // weekly cycles: worst wait is a full cycle; "3x weekly" roughly every 2-3
   // business days, count the slowest gap

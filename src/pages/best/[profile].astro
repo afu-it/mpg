@@ -8,52 +8,184 @@ import { getCollection } from "astro:content";
 import Base from "../../layouts/Base.astro";
 import Logo from "../../components/Logo.astro";
 import { toApiGateway, type GatewayEntryLike } from "../../lib/api";
-import { PROFILES, buildProfilePage, profileJsonLd, headlineRates } from "../../lib/seo-pages";
+import { PROFILES, buildProfilePage, profileJsonLd, headlineRates, profileCopy } from "../../lib/seo-pages";
+import { relaxedLabelMs } from "../../lib/recommend";
 import { breadcrumbLd } from "../../lib/jsonld";
+import { getLocale, tr, formatDate } from "../../i18n/locale";
+import { gatewayMs } from "../../i18n/content";
 
 export async function getStaticPaths() {
   return PROFILES.map((p) => ({ params: { profile: p.slug }, props: { def: p } }));
 }
 
 const { def } = Astro.props;
+const locale = getLocale(Astro);
+const T = tr(locale, {
+  en: {
+    home: "Home",
+    learn: "Learn",
+    breadcrumb: "Breadcrumb",
+    relaxed: (list: string) => `No provider matched every criterion, so we relaxed: ${list}.`,
+    rankedH: "Ranked by estimated cost (published rates)",
+    onRequestH: "Also fits, pricing on request",
+    onRequestP:
+      "These providers match the same needs but publish no comparable rates, so we will not rank them by price. Listed by market presence.",
+    contactSales: "Contact sales",
+    compareTop: "Compare the top picks",
+    choose: "Answer 4 questions instead",
+    browse: (n: number) => `Browse all ${n} providers`,
+    faq: "FAQ",
+    more: "More guides",
+    byNeedH: "Top pick by need",
+    byNeedP: "Lowest estimated cost per RM100 among providers with published rates that meet each need.",
+    needCol: "Need",
+    pickCol: "Top pick",
+    costCol: "Est. / RM100",
+    byTicketH: "Cheapest by sale size",
+    byTicketP: "The same published rates, costed at different sale sizes. Try your own amount in the",
+    calculator: "fee calculator",
+    saleCol: "Sale",
+    cheapestCol: "Cheapest",
+    feeCol: "Est. fee",
+  },
+  ms: {
+    home: "Utama",
+    learn: "Belajar",
+    breadcrumb: "Laluan halaman",
+    relaxed: (list: string) => `Tiada gateway yang padan dengan semua syarat, jadi kami longgarkan syarat ini: ${list}.`,
+    rankedH: "Disusun ikut anggaran caj (kadar rasmi)",
+    onRequestH: "Juga sesuai, tapi harga kena tanya",
+    onRequestP:
+      "Gateway ini pun sesuai untuk keperluan yang sama, tapi tak siarkan kadar yang boleh dibanding. Jadi kami tak susun ikut harga, cuma ikut siapa lebih dikenali di pasaran.",
+    contactSales: "Hubungi jualan",
+    compareTop: "Banding pilihan teratas",
+    choose: "Atau jawab 4 soalan",
+    browse: (n: number) => `Lihat semua ${n} gateway`,
+    faq: "Soalan lazim",
+    more: "Panduan lain",
+    byNeedH: "Pilihan utama ikut keperluan",
+    byNeedP: "Anggaran caj paling rendah bagi setiap RM100, antara penyedia yang siarkan kadar rasmi dan penuhi keperluan itu.",
+    needCol: "Keperluan",
+    pickCol: "Pilihan utama",
+    costCol: "Anggaran / RM100",
+    byTicketH: "Paling murah ikut nilai jualan",
+    byTicketP: "Kadar rasmi yang sama, dikira pada nilai jualan berbeza. Cuba jumlah anda sendiri dalam",
+    calculator: "kalkulator caj",
+    saleCol: "Jualan",
+    cheapestCol: "Paling murah",
+    feeCol: "Anggaran caj",
+  },
+});
+const copy = profileCopy(def, locale);
 
 const entries = (await getCollection("gateways")) as unknown as GatewayEntryLike[];
 const gateways = entries.map(toApiGateway);
 // citable "as of" date = the newest official verification across the directory
 const asOf = gateways.map((g) => g.verified_date).sort().at(-1);
-const page = buildProfilePage(gateways, def, 8, asOf);
+const page = buildProfilePage(gateways, def, 8, asOf && locale === "ms" ? formatDate(asOf, locale) : asOf, locale);
 const site = (Astro.site?.href ?? "https://malaysiapg.com.my/").replace(/\/$/, "");
 const jsonld = [
   ...profileJsonLd(page, site),
   breadcrumbLd(site, [
-    { name: "Home", path: "/" },
-    { name: "Learn", path: "/learn/" },
-    { name: def.h1 },
+    { name: T.home, path: "/" },
+    { name: T.learn, path: "/learn/" },
+    { name: copy.h1 },
   ]),
 ];
 
 const shortlist = [...page.ranked, ...page.onRequest];
 const compareIds = shortlist.slice(0, 4).map((m) => m.gateway.slug).join(",");
 const otherProfiles = PROFILES.filter((p) => p.slug !== def.slug);
+const relaxedText = (locale === "ms" ? page.relaxed.map(relaxedLabelMs) : page.relaxed).join(", ");
+// BM taglines come from the gateways-ms overlay when one exists
+const taglines = new Map<string, string>();
+for (const m of shortlist)
+  taglines.set(m.gateway.slug, (await gatewayMs(m.gateway.slug, locale))?.data.tagline ?? m.gateway.tagline);
 ---
 
-<Base title={def.title} description={def.description}>
-  <nav aria-label="Breadcrumb" class="mb-4 flex items-center gap-2 text-sm text-muted">
-    <a href="/" class="hover:text-fg hover:underline">Home</a>
+<Base title={copy.title} description={page.description}>
+  <nav aria-label={T.breadcrumb} class="mb-4 flex items-center gap-2 text-sm text-muted">
+    <a href="/" class="hover:text-fg hover:underline">{T.home}</a>
     <span aria-hidden="true">/</span>
-    <a href="/learn/" class="hover:text-fg hover:underline">Learn</a>
+    <a href="/learn/" class="hover:text-fg hover:underline">{T.learn}</a>
     <span aria-hidden="true">/</span>
-    <span class="text-fg">{def.h1}</span>
+    <span class="text-fg">{copy.h1}</span>
   </nav>
 
-  <h1 class="max-w-3xl text-3xl font-bold tracking-tight text-fg sm:text-4xl">{def.h1}</h1>
-  <p class="mt-4 max-w-3xl text-muted">{def.intro}</p>
-  {page.answerLine && <p class="mt-3 max-w-3xl font-medium text-fg">{page.answerLine}</p>}
+  <h1 class="max-w-3xl text-3xl font-bold tracking-tight text-fg sm:text-4xl">{copy.h1}</h1>
+  {page.answerLine && <p class="mt-4 max-w-3xl font-medium text-fg">{page.answerLine}</p>}
+  <p class="mt-3 max-w-3xl text-muted">{copy.intro}</p>
+
+  {
+    page.byNeed.length > 0 && (
+      <section class="mt-10">
+        <h2 class="mb-1 text-xs font-medium uppercase tracking-wide text-muted">{T.byNeedH}</h2>
+        <p class="mb-3 max-w-3xl text-sm text-muted">{T.byNeedP}</p>
+        <div class="max-w-3xl overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="border-b border-line text-left text-xs text-muted">
+                <th scope="col" class="py-2 pr-4 font-medium">{T.needCol}</th>
+                <th scope="col" class="py-2 pr-4 font-medium">{T.pickCol}</th>
+                <th scope="col" class="py-2 text-right font-medium">{T.costCol}</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-line">
+              {page.byNeed.map((b) => (
+                <tr>
+                  <td class="py-2 pr-4">
+                    <a href={`/best/${b.slug}/`} class="text-fg hover:underline">{b.label.charAt(0).toUpperCase() + b.label.slice(1)}</a>
+                  </td>
+                  <td class="py-2 pr-4">
+                    <a href={`/gateway/${b.top.slug}/`} class="text-fg hover:underline">{b.top.name}</a>
+                  </td>
+                  <td class="py-2 text-right tabular-nums text-fg">~RM{b.top.est_fee_rm100!.toFixed(2)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+    )
+  }
+
+  {
+    page.byTicket.length > 0 && (
+      <section class="mt-10">
+        <h2 class="mb-1 text-xs font-medium uppercase tracking-wide text-muted">{T.byTicketH}</h2>
+        <p class="mb-3 max-w-3xl text-sm text-muted">
+          {T.byTicketP} <a href="/calculator/" class="text-fg underline-offset-4 hover:underline">{T.calculator}</a>.
+        </p>
+        <div class="max-w-3xl overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="border-b border-line text-left text-xs text-muted">
+                <th scope="col" class="py-2 pr-4 font-medium">{T.saleCol}</th>
+                <th scope="col" class="py-2 pr-4 font-medium">{T.cheapestCol}</th>
+                <th scope="col" class="py-2 text-right font-medium">{T.feeCol}</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-line">
+              {page.byTicket.map((b) => (
+                <tr>
+                  <td class="py-2 pr-4 tabular-nums text-fg">RM{b.ticket}</td>
+                  <td class="py-2 pr-4">
+                    <a href={`/gateway/${b.top.slug}/`} class="text-fg hover:underline">{b.top.name}</a>
+                  </td>
+                  <td class="py-2 text-right tabular-nums text-fg">~RM{b.cost.toFixed(2)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+    )
+  }
 
   {
     page.relaxed.length > 0 && (
       <p class="mt-4 max-w-3xl text-sm text-muted">
-        No provider matched every criterion, so we relaxed: {page.relaxed.join(", ")}.
+        {T.relaxed(relaxedText)}
       </p>
     )
   }
@@ -62,7 +194,7 @@ const otherProfiles = PROFILES.filter((p) => p.slug !== def.slug);
     page.ranked.length > 0 && (
       <section class="mt-12">
         <h2 class="mb-3 text-xs font-medium uppercase tracking-wide text-muted">
-          Ranked by estimated cost (published rates)
+          {T.rankedH}
         </h2>
         <ol class="divide-y divide-line border-y border-line">
           {page.ranked.map((m, i) => (
@@ -79,13 +211,13 @@ const otherProfiles = PROFILES.filter((p) => p.slug !== def.slug);
                 </span>
               </div>
               <p class="mt-2 pl-9 text-sm text-muted">
-                {m.gateway.tagline}
-                {headlineRates(m.gateway) && (
-                  <span class="text-xs"> · {headlineRates(m.gateway)}</span>
+                {taglines.get(m.gateway.slug)}
+                {headlineRates(m.gateway, 3, locale) && (
+                  <span class="text-xs"> · {headlineRates(m.gateway, 3, locale)}</span>
                 )}
               </p>
               {m.reasons.length > 0 && (
-                <p class="mt-1 pl-9 text-xs text-muted">{m.reasons.join(" · ")}</p>
+                <p class="mt-1 pl-9 text-xs text-muted">{(locale === "ms" ? m.reasonsMs : m.reasons).join(" · ")}</p>
               )}
             </li>
           ))}
@@ -98,12 +230,9 @@ const otherProfiles = PROFILES.filter((p) => p.slug !== def.slug);
     page.onRequest.length > 0 && (
       <section class="mt-12">
         <h2 class="mb-3 text-xs font-medium uppercase tracking-wide text-muted">
-          Also fits, pricing on request
+          {T.onRequestH}
         </h2>
-        <p class="mb-3 max-w-3xl text-sm text-muted">
-          These providers match the same needs but publish no comparable rates, so we will not rank
-          them by price. Listed by market presence.
-        </p>
+        <p class="mb-3 max-w-3xl text-sm text-muted">{T.onRequestP}</p>
         <ul class="divide-y divide-line border-y border-line">
           {page.onRequest.map((m) => (
             <li class="flex items-center gap-3 px-1 py-3">
@@ -111,7 +240,7 @@ const otherProfiles = PROFILES.filter((p) => p.slug !== def.slug);
               <a href={`/gateway/${m.gateway.slug}/`} class="text-fg hover:underline">
                 {m.gateway.name}
               </a>
-              <span class="ml-auto text-sm text-muted">Contact sales</span>
+              <span class="ml-auto text-sm text-muted">{T.contactSales}</span>
             </li>
           ))}
         </ul>
@@ -126,20 +255,20 @@ const otherProfiles = PROFILES.filter((p) => p.slug !== def.slug);
           href={`/compare/?ids=${compareIds}`}
           class="rounded-md bg-brand-blue px-4 py-2 text-sm font-medium text-white hover:opacity-90"
         >
-          Compare the top picks
+          {T.compareTop}
         </a>
       )
     }
     <a href="/choose/" class="rounded-md border border-line px-4 py-2 text-sm text-muted hover:text-fg">
-      Answer 4 questions instead
+      {T.choose}
     </a>
     <a href="/gateways/" class="rounded-md border border-line px-4 py-2 text-sm text-muted hover:text-fg">
-      Browse all {gateways.length} providers
+      {T.browse(gateways.length)}
     </a>
   </div>
 
   <section class="mt-12">
-    <h2 class="mb-3 text-xs font-medium uppercase tracking-wide text-muted">FAQ</h2>
+    <h2 class="mb-3 text-xs font-medium uppercase tracking-wide text-muted">{T.faq}</h2>
     <div class="max-w-3xl divide-y divide-line border-y border-line">
       {
         page.faqs.map((f) => (
@@ -153,7 +282,7 @@ const otherProfiles = PROFILES.filter((p) => p.slug !== def.slug);
   </section>
 
   <section class="mt-12 border-t border-line pt-6">
-    <h2 class="mb-3 text-xs font-medium uppercase tracking-wide text-muted">More guides</h2>
+    <h2 class="mb-3 text-xs font-medium uppercase tracking-wide text-muted">{T.more}</h2>
     <div class="flex flex-wrap gap-2">
       {
         otherProfiles.map((p) => (
@@ -161,7 +290,7 @@ const otherProfiles = PROFILES.filter((p) => p.slug !== def.slug);
             href={`/best/${p.slug}/`}
             class="rounded-full border border-line bg-panel px-3 py-1 text-xs text-muted hover:text-fg"
           >
-            {p.h1}
+            {profileCopy(p, locale).h1}
           </a>
         ))
       }

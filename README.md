@@ -4,10 +4,10 @@
 
 Live site: **[malaysiapg.com.my](https://malaysiapg.com.my/)**
 
-- **71 gateways**, every fee sourced from the provider's official pricing page with a `verified_date`
+- **81 gateways**, every fee sourced from the provider's official pricing page with a `verified_date`
 - Ranked by estimated blended cost on a RM100 transaction (FPX/card/e-wallet weighted 50/30/20) — providers without comparable published rates are listed as "on request", never guessed
 - Free JSON API: [`/api/gateways.json`](https://malaysiapg.com.my/api/gateways.json) · per-gateway: `/api/gateways/<slug>.json`
-- MCP server for AI agents: `https://mpg-mcp.afuitdev.workers.dev/mcp` (source in [`mcp/`](mcp/))
+- MCP server for AI agents: `https://mcp.malaysiapg.com.my/mcp` (source in [`mcp/`](mcp/))
 - Guides for merchants and developers at [/learn](https://malaysiapg.com.my/learn/) and [/blog](https://malaysiapg.com.my/blog/)
 
 ## The one hard rule
@@ -29,7 +29,7 @@ npm install
 npm run dev        # dev server
 npm test           # vitest (fee parsing, ranking, content rules)
 npx astro check    # types + content schema
-npm run build      # static build (219 pages)
+npm run build      # static build (EN + BM pages)
 npm run preview    # preview the built site
 ```
 

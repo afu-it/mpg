@@ -34,6 +34,12 @@ popularity: 22
 verified_date: "2026-10-20"
 source: "https://www.securepay.my"
 notes: "SecurePay Sdn Bhd, Shah Alam, Selangor; FPX-based MYR gateway. Advertises no registration fee. A widely cited RM1.00-per-FPX figure appears on third-party sites but could not be confirmed on SecurePay's own pricing, so all per-transaction rates are shown as Contact sales (not fabricated). WooCommerce plugin, documented API and webhooks; settles T+1. Dev docs re-checked 2026-10-20: the official docs hub (securepay.my/docs/) offers API v1 (docs.securepay.my, marked recommended for production) and API v2 preview (v2.docs.securepay.my, updated 2026). The v1 GitBook pages were last edited 2020 to 2022, so v1 docs are stable but not actively maintained; v2 is the maintained set. Home page still states no registration or setup fee and next-business-day (T+1) settlement."
+no_ssm:
+  detail: "Individuals register with their MyKad number in place of a business registration number."
+  detail_ms: "Individu daftar guna nombor MyKad di tempat nombor pendaftaran perniagaan."
+  quote: "For personal use, fill in your ID number in the registration number field."
+  source: https://www.securepay.my
+  checked: "2026-10-21"
 ---
 
 **SecurePay** (SecurePay Sdn Bhd, Shah Alam) is a Malaysian FPX-first payment

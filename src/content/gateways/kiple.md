@@ -52,6 +52,11 @@ plans:
     source: "https://kiple.com/sme/"
 verified_date: "2026-10-20"
 source: "https://kiple.com/sme/"
+bnm:
+  roles: [merchant-acquirer, emoney-issuer]
+  entity: "Kiplepay Sdn Bhd (formerly known as Webonline Dot Com Sdn Bhd)"
+  checked: "2026-10-21"
+  evidence: "https://www.bnm.gov.my/regulations/fsp-directory?p_p_id=com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet_INSTANCE_jXC730NRlqU0&p_p_lifecycle=0&p_p_state=normal&p_p_mode=view&p_r_p_tag=merchant-acquirer-nonbank"
 notes: "Re-verified 2026-10-20 via a real browser (plain fetch is 403-blocked): Standard Package rates unchanged; Starter Package now also shows local debit 1.50%, UnionPay 3.50%, multicurrency 4.00% and an RM29 monthly fee waived above RM8,000 GTV. DuitNow QR and e-wallet rows are logo-only on the page, so those values carry over from the earlier read. Recurring payments: the official payments page (kiple.com/payments) lists Recurring Payments and Tokenization as gateway features. MBSB Bank as a supported FPX bank, and recurring support: Vendor confirmation via email to MPG, 2026-10-12 (MBSB not shown on any public Kiple page). Earlier: re-verified 2026-07-17 via Firecrawl (Cloudflare bypass): Standard Package promo values confirmed; page also lists Annual Fee RM500 for Standard, and a Starter Package (RM0 one-time, FPX RM1.20/RM2.00, local credit 2.00%, foreign 3.70%, DNQR 1.50%, wallets 1.7%-2.0%). UnionPay 2.80%, multicurrency 3.80%. Standard Package (shown): FPX B2C RM1.00 / B2B RM1.50, local credit 1.50% / debit 1.00%, foreign cards 3.20%, e-wallets 1.70% (WeChat 1.50%, Alipay 1.80%), DuitNow QR 1.20%, UnionPay 2.80%. Setup RM199 (promo, from RM500); RM29/mo waived if monthly GTV > RM8,000. A new zero-setup Starter Package has higher rates (card 2.00%, DuitNow QR 1.50%). Settlement timing not published."
 ---
 

@@ -2,20 +2,36 @@
 export const prerender = true;
 
 import Base from "../layouts/Base.astro";
+import { getLocale, tr } from "../i18n/locale";
+
+const T = tr(getLocale(Astro), {
+  en: {
+    title: "Not found · MPG",
+    h1: "Page not found",
+    lead: "That gateway or page doesn't exist (or may have been removed).",
+    back: "← Back to all gateways",
+  },
+  ms: {
+    title: "Tidak dijumpai · MPG",
+    h1: "Halaman tidak dijumpai",
+    lead: "Gateway atau halaman ini tiada, atau mungkin sudah dibuang.",
+    back: "← Kembali ke semua gateway",
+  },
+});
 ---
 
-<Base title="Not found · MPG">
+<Base title={T.title}>
   <section class="py-20 text-center">
     <p class="text-sm font-medium uppercase tracking-wide text-accent">404</p>
-    <h1 class="mt-2 text-2xl font-semibold text-fg">Page not found</h1>
+    <h1 class="mt-2 text-2xl font-semibold text-fg">{T.h1}</h1>
     <p class="mt-2 text-muted">
-      That gateway or page doesn't exist (or may have been removed).
+      {T.lead}
     </p>
     <a
       href="/"
       class="mt-6 inline-block rounded-md bg-brand-blue px-4 py-2 text-sm font-medium text-white hover:opacity-90"
     >
-      ← Back to all gateways
+      {T.back}
     </a>
   </section>
 </Base>

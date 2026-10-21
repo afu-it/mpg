@@ -1,11 +1,16 @@
 ---
 // Renders a fee value; mutes non-numeric placeholders so real rates stand out.
+// On BM pages the two placeholder words are shown in Malay; the data is unchanged.
+import { getLocale } from "../i18n/locale";
 interface Props {
   value: string;
 }
 const { value } = Astro.props;
+const locale = getLocale(Astro);
 const display = value && value.trim() ? value : "—";
 const muted = display === "—" || display === "Contact sales";
+const MS: Record<string, string> = { "Contact sales": "Hubungi jualan", "On request": "Atas permintaan" };
+const shown = locale === "ms" ? (MS[display] ?? display) : display;
 ---
 
-<span class={muted ? "text-muted" : "text-fg"}>{display}</span>
+<span class={muted ? "text-muted" : "text-fg"}>{shown}</span>

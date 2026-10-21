@@ -10,6 +10,8 @@ import Logo from "../../components/Logo.astro";
 import { toApiGateway, type GatewayEntryLike } from "../../lib/api";
 import { alternativesTargets, buildAlternativesPage, alternativesJsonLd, headlineRates } from "../../lib/seo-pages";
 import { breadcrumbLd } from "../../lib/jsonld";
+import { getLocale, tr, localizePath } from "../../i18n/locale";
+import { gatewayTagline } from "../../i18n/content";
 
 export async function getStaticPaths() {
   const entries = (await getCollection("gateways")) as unknown as GatewayEntryLike[];
@@ -22,16 +24,53 @@ const entries = (await getCollection("gateways")) as unknown as GatewayEntryLike
 const gateways = entries.map(toApiGateway);
 const target = gateways.find((g) => g.slug === slug)!;
 const asOf = gateways.map((g) => g.verified_date).sort().at(-1);
-const page = buildAlternativesPage(gateways, target, 8, asOf);
+const locale = getLocale(Astro);
+const page = buildAlternativesPage(gateways, target, 8, asOf, locale);
+const T = tr(locale, {
+  en: {
+    home: "Home",
+    gateways: "Gateways",
+    alternatives: "Alternatives",
+    rankedBy: "Ranked by estimated cost (published rates)",
+    alsoFits: "Also fits, pricing on request",
+    contactSales: "Contact sales",
+    compareTop: (n: string) => `Compare ${n} with the top picks`,
+    details: (n: string) => `${n} details`,
+    answer4: "Answer 4 questions instead",
+    faq: "FAQ",
+    more: "More alternatives guides",
+    altOf: (n: string) => `${n} alternatives`,
+  },
+  ms: {
+    home: "Utama",
+    gateways: "Gateway",
+    alternatives: "Pilihan lain",
+    rankedBy: "Disusun ikut anggaran caj (kadar rasmi)",
+    alsoFits: "Juga sesuai, tapi harga kena tanya",
+    contactSales: "Hubungi jualan",
+    compareTop: (n: string) => `Banding ${n} dengan pilihan teratas`,
+    details: (n: string) => `Butiran ${n}`,
+    answer4: "Atau jawab 4 soalan",
+    faq: "Soalan lazim",
+    more: "Lagi panduan gateway alternatif",
+    altOf: (n: string) => `Pilihan lain selain ${n}`,
+  },
+});
+// taglines in the page language (BM overlay when present)
+const taglines = new Map(
+  await Promise.all(
+    page.ranked.map(async (m) => [m.gateway.slug, await gatewayTagline({ id: m.gateway.slug, data: m.gateway }, locale)] as const),
+  ),
+);
 
 const site = (Astro.site?.href ?? "https://malaysiapg.com.my/").replace(/\/$/, "");
 const jsonld = [
   ...alternativesJsonLd(page, site),
   breadcrumbLd(site, [
-    { name: "Home", path: "/" },
-    { name: "Gateways", path: "/gateways/" },
-    { name: target.name, path: `/gateway/${target.slug}/` },
-    { name: "Alternatives" },
+    { name: T.home, path: localizePath("/", locale) },
+    { name: T.gateways, path: localizePath("/gateways/", locale) },
+    { name: target.name, path: localizePath(`/gateway/${target.slug}/`, locale) },
+    { name: T.alternatives },
   ]),
 ];
 
@@ -41,17 +80,17 @@ const otherTargets = alternativesTargets(gateways).filter((g) => g.slug !== targ
 
 <Base title={page.title} description={page.description}>
   <nav aria-label="Breadcrumb" class="mb-4 flex items-center gap-2 text-sm text-muted">
-    <a href="/" class="hover:text-fg hover:underline">Home</a>
+    <a href="/" class="hover:text-fg hover:underline">{T.home}</a>
     <span aria-hidden="true">/</span>
-    <a href="/gateways/" class="hover:text-fg hover:underline">Gateways</a>
+    <a href="/gateways/" class="hover:text-fg hover:underline">{T.gateways}</a>
     <span aria-hidden="true">/</span>
     <a href={`/gateway/${target.slug}/`} class="hover:text-fg hover:underline">{page.base}</a>
     <span aria-hidden="true">/</span>
-    <span class="text-fg">Alternatives</span>
+    <span class="text-fg">{T.alternatives}</span>
   </nav>
 
   <h1 class="max-w-3xl text-3xl font-bold tracking-tight text-fg sm:text-4xl">
-    {page.base} alternatives in Malaysia
+    {page.h1}
   </h1>
   <p class="mt-4 max-w-3xl text-muted">{page.intro}</p>
   {page.answerLine && <p class="mt-3 max-w-3xl font-medium text-fg">{page.answerLine}</p>}
@@ -60,7 +99,7 @@ const otherTargets = alternativesTargets(gateways).filter((g) => g.slug !== targ
     page.ranked.length > 0 && (
       <section class="mt-12">
         <h2 class="mb-3 text-xs font-medium uppercase tracking-wide text-muted">
-          Ranked by estimated cost (published rates)
+          {T.rankedBy}
         </h2>
         <ol class="divide-y divide-line border-y border-line">
           {page.ranked.map((m, i) => (
@@ -77,9 +116,9 @@ const otherTargets = alternativesTargets(gateways).filter((g) => g.slug !== targ
                 </span>
               </div>
               <p class="mt-2 pl-9 text-sm text-muted">
-                {m.gateway.tagline}
-                {headlineRates(m.gateway) && (
-                  <span class="text-xs"> · {headlineRates(m.gateway)}</span>
+                {taglines.get(m.gateway.slug) ?? m.gateway.tagline}
+                {headlineRates(m.gateway, 3, locale) && (
+                  <span class="text-xs"> · {headlineRates(m.gateway, 3, locale)}</span>
                 )}
               </p>
             </li>
@@ -93,7 +132,7 @@ const otherTargets = alternativesTargets(gateways).filter((g) => g.slug !== targ
     page.onRequest.length > 0 && (
       <section class="mt-12">
         <h2 class="mb-3 text-xs font-medium uppercase tracking-wide text-muted">
-          Also fits, pricing on request
+          {T.alsoFits}
         </h2>
         <ul class="divide-y divide-line border-y border-line">
           {page.onRequest.map((m) => (
@@ -102,7 +141,7 @@ const otherTargets = alternativesTargets(gateways).filter((g) => g.slug !== targ
               <a href={`/gateway/${m.gateway.slug}/`} class="text-fg hover:underline">
                 {m.gateway.name}
               </a>
-              <span class="ml-auto text-sm text-muted">Contact sales</span>
+              <span class="ml-auto text-sm text-muted">{T.contactSales}</span>
             </li>
           ))}
         </ul>
@@ -115,18 +154,18 @@ const otherTargets = alternativesTargets(gateways).filter((g) => g.slug !== targ
       href={`/compare/?ids=${compareIds}`}
       class="rounded-md bg-brand-blue px-4 py-2 text-sm font-medium text-white hover:opacity-90"
     >
-      Compare {page.base} with the top picks
+      {T.compareTop(page.base)}
     </a>
     <a href={`/gateway/${target.slug}/`} class="rounded-md border border-line px-4 py-2 text-sm text-muted hover:text-fg">
-      {page.base} details
+      {T.details(page.base)}
     </a>
     <a href="/choose/" class="rounded-md border border-line px-4 py-2 text-sm text-muted hover:text-fg">
-      Answer 4 questions instead
+      {T.answer4}
     </a>
   </div>
 
   <section class="mt-12">
-    <h2 class="mb-3 text-xs font-medium uppercase tracking-wide text-muted">FAQ</h2>
+    <h2 class="mb-3 text-xs font-medium uppercase tracking-wide text-muted">{T.faq}</h2>
     <div class="max-w-3xl divide-y divide-line border-y border-line">
       {
         page.faqs.map((f) => (
@@ -140,7 +179,7 @@ const otherTargets = alternativesTargets(gateways).filter((g) => g.slug !== targ
   </section>
 
   <section class="mt-12 border-t border-line pt-6">
-    <h2 class="mb-3 text-xs font-medium uppercase tracking-wide text-muted">More alternatives guides</h2>
+    <h2 class="mb-3 text-xs font-medium uppercase tracking-wide text-muted">{T.more}</h2>
     <div class="flex flex-wrap gap-2">
       {
         otherTargets.map((g) => (
@@ -148,7 +187,7 @@ const otherTargets = alternativesTargets(gateways).filter((g) => g.slug !== targ
             href={`/alternatives/${g.slug}/`}
             class="rounded-full border border-line bg-panel px-3 py-1 text-xs text-muted hover:text-fg"
           >
-            {g.name} alternatives
+            {T.altOf(g.name)}
           </a>
         ))
       }

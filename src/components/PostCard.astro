@@ -1,0 +1,51 @@
+---
+// Grid card for a blog post: logo cover, topic, title, date. No description:
+// the title carries it and people skim.
+import Logo from "./Logo.astro";
+import { fmtDate, type PostCard } from "../lib/blog-cards";
+import { getLocale, tr } from "../i18n/locale";
+
+interface Props {
+  card: PostCard;
+  showCluster?: boolean;
+}
+const { card: c, showCluster = true } = Astro.props;
+const locale = getLocale(Astro);
+const T = tr(locale, {
+  en: { mins: (n: number) => `${n} min read` },
+  ms: { mins: (n: number) => `${n} min baca` },
+});
+---
+
+<a
+  href={c.href}
+  class="group flex flex-col overflow-hidden rounded-xl border border-line bg-panel hover:border-muted"
+>
+  <div
+    class={`flex h-32 items-center justify-center gap-2 bg-gradient-to-br ${c.tint} to-panel`}
+    aria-hidden="true"
+  >
+    {
+      c.logos.map((l) => (
+        <span class="grid size-11 place-items-center rounded-xl bg-surface/80 ring-1 ring-white/10">
+          <Logo slug={l.slug} name={l.name} size={26} />
+        </span>
+      ))
+    }
+  </div>
+  <div class="flex flex-1 flex-col p-5">
+    {
+      showCluster && c.cluster && (
+        <p class="text-xs font-medium uppercase tracking-widest text-muted">{locale === "ms" ? c.cluster.nameMs : c.cluster.name}</p>
+      )
+    }
+    <h2 class="mt-2 text-balance text-lg font-semibold leading-snug text-fg group-hover:text-white">
+      {c.title}
+    </h2>
+    <p class="mt-auto pt-4 text-xs text-muted">
+      <time datetime={c.date}>{fmtDate(c.date, locale)}</time>
+      <span class="mx-1.5">·</span>
+      {T.mins(c.mins)}
+    </p>
+  </div>
+</a>

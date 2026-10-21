@@ -58,6 +58,12 @@ plans:
 verified_date: "2026-10-20"
 source: "https://www.toyyibpay.com/pricing-plans/"
 notes: "Flat RM1.00 per FPX B2C transaction (B2B RM2.00; free Santai plan for registered NPOs). Official pricing page now publishes card rates (local 1.50%, foreign 3.5%, via toyyibPay Partners; RM100 onboarding + RM100/yr from year 2) and DuitNow QR (1% or RM1.00). Settlement: FPX next 1-4 business days, DuitNow QR 2, card 4, Santai 10. Excludes SST."
+no_ssm:
+  detail: "Its sign-up manual has a personal savings account option that needs only your MyKad. Its newer merchant terms say applicants must be legally registered, so confirm before applying."
+  detail_ms: "Manual daftar mereka ada pilihan akaun simpanan peribadi yang cuma perlukan MyKad. Terma peniaga yang lebih baru kata pemohon mesti berdaftar sah, jadi tanya dulu sebelum mohon."
+  quote: "Personal Saving Account ... Step 9: Upload a copy of Identity Card and enter your IC number"
+  source: https://www.toyyibpay.com/Manual.pdf
+  checked: "2026-10-21"
 ---
 
 toyyibPay is one of Malaysia's most popular low-cost payment gateways, known for a

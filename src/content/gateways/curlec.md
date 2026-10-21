@@ -62,6 +62,11 @@ plans:
     source: "https://curlec.com/pricing/"
 verified_date: "2026-10-20"
 source: "https://curlec.com/pricing/"
+bnm:
+  roles: [merchant-acquirer]
+  entity: "Razorpay Curlec Sdn. Bhd."
+  checked: "2026-10-21"
+  evidence: "https://curlec.com"
 notes: "Basic-plan rates shown: FPX 1.50% (or RM1, whichever greater), credit/debit card 2.40%, foreign card 3.30%, e-wallet 1.50%, BNPL 6.00%. Premium plan lowers card to 2.00% / FPX to 1.00%. A one-time setup fee applies; Enterprise (>RM1M/month) is personalised. Applicable taxes extra. Re-verified 2026-10-20: rates unchanged; the pricing table now also lists DuitNow Pay (PayNet account-to-account, early access for limited businesses; not DuitNow QR) at 1.20% or RM0.30 (Basic) / 1.00% or RM0.30 (Premium), Alipay+ 2.70% / 2.50%, UPI 2.00% / 1.80%, and Apple Pay at standard card pricing. Setup on the table is RM0 Basic / RM999 Premium, but the page FAQ still says RM99 for Basic (inconsistent on the official page). The tax line reads 18% GST, which looks like a template leftover from Razorpay India. DuitNow QR rate is not published."
 ---
 

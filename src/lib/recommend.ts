@@ -16,12 +16,22 @@ export interface Needs {
 export interface Match {
   gateway: ApiGateway;
   reasons: string[];
+  /** the same reasons in Bahasa Malaysia (for /ms/ pages) */
+  reasonsMs: string[];
 }
 
 export const CHANNEL_LABEL: Record<Channel, string> = {
   fpx: "FPX",
   card: "cards",
   ewallet: "e-wallets",
+  duitnowqr: "DuitNow QR",
+  bnpl: "BNPL",
+};
+
+export const CHANNEL_LABEL_MS: Record<Channel, string> = {
+  fpx: "FPX",
+  card: "kad",
+  ewallet: "e-wallet",
   duitnowqr: "DuitNow QR",
   bnpl: "BNPL",
 };
@@ -55,6 +65,33 @@ function reasonsFor(g: ApiGateway, n: Needs): string[] {
   return r;
 }
 
+function reasonsMsFor(g: ApiGateway, n: Needs): string[] {
+  const r: string[] = [];
+  if (n.channels && n.channels.length)
+    r.push("Terima " + n.channels.map((c) => CHANNEL_LABEL_MS[c]).join(", "));
+  if (n.recurring) r.push("Caj berulang automatik");
+  if (n.noCode) r.push("Tanpa kod (link bayaran)");
+  if (n.developer) r.push("API untuk developer");
+  if (n.access === "integrate") r.push("Integrasi sendiri");
+  if (n.access === "account") r.push("Akaun peniaga");
+  if (n.access === "bnpl") r.push("BNPL semasa checkout");
+  return r;
+}
+
+/** BM wording for a recommendOrClosest() `relaxed` label ("FPX channel" -> "bayaran FPX"). */
+export function relaxedLabelMs(label: string): string {
+  const fixed: Record<string, string> = {
+    "access type": "jenis akaun",
+    "integration style": "cara integrasi",
+    recurring: "caj berulang",
+    "all filters": "semua syarat",
+  };
+  if (fixed[label]) return fixed[label];
+  for (const c of Object.keys(CHANNEL_LABEL) as Channel[])
+    if (label === `${CHANNEL_LABEL[c]} channel`) return `bayaran ${CHANNEL_LABEL_MS[c]}`;
+  return label;
+}
+
 function rank(a: ApiGateway, b: ApiGateway): number {
   if (a.rankable !== b.rankable) return a.rankable ? -1 : 1;
   if (a.rankable && b.rankable)
@@ -67,7 +104,7 @@ export function recommend(gateways: ApiGateway[], needs: Needs, limit = 5): Matc
     .filter((g) => matchesNeeds(g, needs))
     .sort(rank)
     .slice(0, limit)
-    .map((g) => ({ gateway: g, reasons: reasonsFor(g, needs) }));
+    .map((g) => ({ gateway: g, reasons: reasonsFor(g, needs), reasonsMs: reasonsMsFor(g, needs) }));
 }
 
 // If nothing matches, drop constraints in priority order until something does,

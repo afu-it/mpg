@@ -19,14 +19,23 @@ features:
   api: true
   recurring: true
 skill: setup-bayarcash
-mcp: "community"
+mcp: "official"
 webhooks: true
 plugins:
   - WooCommerce
   - GiveWP
   - Fluent Forms
+  - FluentCart
+  - Paymattic
   - Gravity Forms
+  - Easy Digital Downloads
+  - WHMCS
+  - PrestaShop
+  - OpenCart
   - EasyStore
+  - Make
+  - Boost.Space
+  - n8n
 dev_docs: https://api.webimpian.support/bayarcash
 popularity: 52
 plans:
@@ -69,7 +78,19 @@ plans:
     source: "https://bayarcash.com"
 verified_date: "2026-10-20"
 source: "https://bayarcash.com"
-notes: "Re-verified 2026-10-20 on the official pricing table. Default free plan = T+ Plan: FPX B2C RM1.00 / B2B RM2.00, credit card RM1.00 + 1%, direct debit RM1.50, DuitNow QR, Boost PayFlex and cross-border QR (QRIS, NETS, PromptPay) 1.60% (min RM0.15), T+2 payout per the plan table; a footnote gives merchants without Public Bank or Bank Islam accounts a T+1 payout (off-day Friday) on T+ Plan pricing. Paid annual plans (Starter RM189, Lite RM2,899, Enterprise RM12,000) unlock realtime settlement (Public Bank and Bank Islam only) and charge a Bayarcash fee per channel on top of bank fees: online banking RM1.20 / RM0.70 / RM0.20, DuitNow QR, SPayLater, Boost PayFlex and cross-border QR RM0.50 each. Bayarcash says bank fees vary by merchant (online banking usually from RM0.70) and DuitNow QR bank fees are free until further notice except for credit card accounts. Enterprise includes 24,000 credits (the page states both RM1.00 and RM0.20 per credit) and a RM5,000 Web Impian voucher. All fees exclude 8% SST."
+notes: "Plugins re-checked 2026-10-21 on plugin.bayarcash.com, which lists 14 platform integrations plus an official Bayarcash MCP server, an e-invoice integration and payment links. Re-verified 2026-10-20 on the official pricing table. Default free plan = T+ Plan: FPX B2C RM1.00 / B2B RM2.00, credit card RM1.00 + 1%, direct debit RM1.50, DuitNow QR, Boost PayFlex and cross-border QR (QRIS, NETS, PromptPay) 1.60% (min RM0.15), T+2 payout per the plan table; a footnote gives merchants without Public Bank or Bank Islam accounts a T+1 payout (off-day Friday) on T+ Plan pricing. Paid annual plans (Starter RM189, Lite RM2,899, Enterprise RM12,000) unlock realtime settlement (Public Bank and Bank Islam only) and charge a Bayarcash fee per channel on top of bank fees: online banking RM1.20 / RM0.70 / RM0.20, DuitNow QR, SPayLater, Boost PayFlex and cross-border QR RM0.50 each. Bayarcash says bank fees vary by merchant (online banking usually from RM0.70) and DuitNow QR bank fees are free until further notice except for credit card accounts. Enterprise includes 24,000 credits (the page states both RM1.00 and RM0.20 per credit) and a RM5,000 Web Impian voucher. All fees exclude 8% SST."
+no_ssm:
+  detail: "Personal account for individuals and freelancers: no SSM, verified with your MyKad, paid into a personal bank account. SSM accounts get higher limits."
+  detail_ms: "Akaun Personal untuk individu dan freelancer: tak perlu SSM, disahkan guna MyKad, duit masuk ke akaun bank peribadi. Akaun SSM dapat had lebih tinggi."
+  quote: "Personal For individual, freelancer and gigs economy related No SSM required Uses NRIC for verification Personal bank account"
+  source: https://onboard.bayarcash.com/register
+  checked: "2026-10-21"
+instant_settlement:
+  detail: "Real-time payout, only if your bank is Public Bank or Bank Islam; other banks get next day or two days."
+  detail_ms: "Duit masuk serta-merta, hanya kalau bank anda Public Bank atau Bank Islam; bank lain sehari atau dua hari."
+  quote: "Realtime Settlement Tiada lagi T+ payout. Settlement secara realtime terus ke akaun anda."
+  source: https://bayarcash.com/
+  checked: "2026-10-21"
 ---
 
 Bayarcash (by Web Impian) markets itself as Malaysia's first **realtime-settlement**

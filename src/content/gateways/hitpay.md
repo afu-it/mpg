@@ -39,6 +39,11 @@ dev_docs: "https://docs.hitpayapp.com/apis/overview"
 popularity: 70
 verified_date: "2026-10-20"
 source: "https://www.hitpayapp.com/my/pricing"
+bnm:
+  roles: [merchant-acquirer]
+  entity: "Mobiedge E-Commerce Sdn Bhd"
+  checked: "2026-10-21"
+  evidence: "https://hitpayapp.com/my/"
 notes: "Official online per-wallet rates: TNG 1.9%, GrabPay 2%, Maybank QRPay 2.1%, ShopeePay 2.2% (Boost no longer listed on the pricing page as of 2026-10-20). BNPL: SPayLater 2.2%, Atome 5.5% + RM1, PayLater by Grab 6.5%. Cross-border wallets AliPay 2.7%, WeChat Pay 1.5%. A platform fee applies on top for some products (0.2% business software such as invoicing/online store; 0.5% Shopify Payments App). Payout schedule: non-card balance T+2 business days (FPX T+1), card balance from T+1 business days processed by Stripe (final schedule set by Compliance case by case). International cards +2% on foreign-currency transactions."
 ---
 
