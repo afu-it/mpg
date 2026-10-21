@@ -23,7 +23,7 @@
 
 <p align="center">
   <a href="https://malaysiapg.com.my/">
-    <img src=".github/readme/home.gif" alt="MPG homepage with the Malaysian flag waving: every Malaysian payment gateway, compared" width="900">
+    <img src=".github/readme/home-flag.gif" alt="MPG homepage with the Malaysian flag waving: every Malaysian payment gateway, compared" width="900">
   </a>
 </p>
 
@@ -39,7 +39,7 @@
 
 <p align="center">
   <a href="https://malaysiapg.com.my/gateways/">
-    <img src=".github/readme/gateways.png" alt="Gateway table with fee columns and filters" width="900">
+    <img src=".github/readme/gateways-table.png" alt="Gateway table with search, sort, fee columns and filters" width="900">
   </a>
 </p>
 
