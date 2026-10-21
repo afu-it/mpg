@@ -23,7 +23,7 @@
 
 <p align="center">
   <a href="https://malaysiapg.com.my/">
-    <img src=".github/readme/home.png" alt="MPG homepage: every Malaysian payment gateway, compared" width="900">
+    <img src=".github/readme/home.gif" alt="MPG homepage with the Malaysian flag waving: every Malaysian payment gateway, compared" width="900">
   </a>
 </p>
 
