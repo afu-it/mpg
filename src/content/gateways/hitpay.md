@@ -57,9 +57,11 @@ bnm:
 notes: "Official online per-wallet rates: TNG 1.9%, GrabPay 2%, Maybank QRPay 2.1%, ShopeePay 2.2% (Boost no longer listed on the pricing page as of 2026-10-20). BNPL: SPayLater 2.2%, Atome 5.5% + RM1, PayLater by Grab 6.5%. Cross-border wallets AliPay 2.7%, WeChat Pay 1.5%. A platform fee applies on top for some products (0.2% business software such as invoicing/online store; 0.5% Shopify Payments App). Payout schedule: non-card balance T+2 business days (FPX T+1), card balance from T+1 business days processed by Stripe (final schedule set by Compliance case by case). International cards +2% on foreign-currency transactions."
 ---
 
-HitPay is a Singapore-headquartered platform. In Malaysia it operates through
-**Mobiedge E-commerce Sdn Bhd**, a merchant acquirer registered with Bank Negara
-Malaysia (its MAS licence covers Singapore only). It uses a
+HitPay is a Singapore-headquartered platform; its MAS licence covers Singapore
+only. In Malaysia it operates as **HitPay Payment Solutions Sdn Bhd**, a technology
+service provider. Its subsidiary **Mobiedge E-commerce Sdn Bhd** is a merchant
+acquirer registered with Bank Negara Malaysia, and HitPay also partners with Stripe
+Payments Malaysia (also BNM-registered) for regulated activities. It uses a
 **pay-per-transaction, no-monthly-fee** model. It bundles a lot
 into one account: checkout, payment links, invoicing, online store, POS and
 **recurring billing**.

@@ -4,10 +4,12 @@ settlement: "T+2 (FPX T+1, kad dari T+1)"
 notes: "Kadar rasmi online ikut e-wallet: TNG 1.9%, GrabPay 2%, Maybank QRPay 2.1%, ShopeePay 2.2% (Boost tidak lagi disenaraikan di laman harga setakat 2026-10-20). BNPL: SPayLater 2.2%, Atome 5.5% + RM1, PayLater by Grab 6.5%. E-wallet rentas sempadan AliPay 2.7%, WeChat Pay 1.5%. Caj platform dikenakan tambahan untuk sesetengah produk (0.2% untuk perisian bisnes seperti invois/kedai online; 0.5% untuk Shopify Payments App). Jadual bayaran keluar: baki bukan kad T+2 hari bekerja (FPX T+1), baki kad dari T+1 hari bekerja diproses oleh Stripe (jadual akhir ditetapkan oleh pasukan Pematuhan ikut kes). Kad luar negara +2% untuk transaksi mata wang asing."
 ---
 
-HitPay ialah platform yang beribu pejabat di Singapura. Di Malaysia ia beroperasi melalui
-**Mobiedge E-commerce Sdn Bhd**, merchant acquirer yang berdaftar dengan Bank Negara
-Malaysia (lesen MAS miliknya hanya untuk Singapura). Modelnya **bayar ikut transaksi, tiada
-fee bulanan**. Satu akaun dah cukup untuk checkout (langkah bayar), link bayaran, invois, kedai online, POS dan **caj
+HitPay ialah platform yang beribu pejabat di Singapura; lesen MAS miliknya hanya untuk
+Singapura. Di Malaysia ia beroperasi sebagai **HitPay Payment Solutions Sdn Bhd**, penyedia
+teknologi. Anak syarikatnya **Mobiedge E-commerce Sdn Bhd** ialah merchant acquirer yang
+berdaftar dengan Bank Negara Malaysia, dan HitPay juga bekerjasama dengan Stripe Payments
+Malaysia (juga berdaftar dengan BNM) untuk aktiviti yang dikawal selia. Modelnya **bayar
+ikut transaksi, tiada fee bulanan**. Satu akaun dah cukup untuk checkout (langkah bayar), link bayaran, invois, kedai online, POS dan **caj
 berulang automatik**.
 
 Kadar online Malaysia: kad tempatan **1.2% + RM1.00**, FPX (bayar terus dari akaun bank
