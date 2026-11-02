@@ -15,7 +15,7 @@ const T = tr(pageLocale(), {
       Features: "Features",
       Developer: "Developer",
     },
-    cat: { bnpl: "BNPL", bank: "Bank", ewallet: "E-wallet", infrastructure: "Infrastructure", gateway: "Gateway" },
+    cat: { bnpl: "BNPL", bank: "Bank", ewallet: "E-wallet", infrastructure: "Infrastructure", gateway: "Gateway", platform: "Platform" },
     rows: {
       category: "Category",
       access: "Access",
@@ -58,7 +58,7 @@ const T = tr(pageLocale(), {
     pickerTitle: "Add gateway",
     close: "Close",
     search: "Search…",
-    types: { all: "All", gateway: "Gateways", bank: "Banks", bnpl: "BNPL", ewallet: "E-wallets" },
+    types: { all: "All", gateway: "Gateways", bank: "Banks", bnpl: "BNPL", ewallet: "E-wallets", platform: "Platforms" },
     chCard: "Card",
     chEwallet: "E-wallet",
     cheapestFirst: "Cheapest first",
@@ -76,7 +76,7 @@ const T = tr(pageLocale(), {
       Features: "Ciri",
       Developer: "Developer",
     },
-    cat: { bnpl: "BNPL", bank: "Bank", ewallet: "E-wallet", infrastructure: "Infrastruktur", gateway: "Gateway" },
+    cat: { bnpl: "BNPL", bank: "Bank", ewallet: "E-wallet", infrastructure: "Infrastruktur", gateway: "Gateway", platform: "Platform" },
     rows: {
       category: "Jenis",
       access: "Cara mula",
@@ -119,7 +119,7 @@ const T = tr(pageLocale(), {
     pickerTitle: "Tambah gateway",
     close: "Tutup",
     search: "Cari…",
-    types: { all: "Semua", gateway: "Gateway", bank: "Bank", bnpl: "BNPL", ewallet: "E-wallet" },
+    types: { all: "Semua", gateway: "Gateway", bank: "Bank", bnpl: "BNPL", ewallet: "E-wallet", platform: "Platform" },
     chCard: "Kad",
     chEwallet: "E-wallet",
     cheapestFirst: "Paling murah dulu",
@@ -133,7 +133,7 @@ const T = tr(pageLocale(), {
 interface GW {
   id: string;
   name: string;
-  category: "gateway" | "bank" | "ewallet" | "bnpl" | "infrastructure";
+  category: "gateway" | "bank" | "ewallet" | "bnpl" | "infrastructure" | "platform";
   website: string;
   settlement: string;
   /** English settlement text, parsed for payout speed (display text may be BM) */
@@ -627,6 +627,7 @@ if (dataEl && root) {
       ["bank", T.types.bank],
       ["bnpl", T.types.bnpl],
       ["ewallet", T.types.ewallet],
+      ["platform", T.types.platform],
     ];
     const CHANNELS: Array<[string, string]> = [
       ["fpx", "FPX"],

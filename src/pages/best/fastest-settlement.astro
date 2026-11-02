@@ -76,7 +76,7 @@ const T = tr(locale, {
 });
 
 const entries = (await getCollection("gateways")) as unknown as GatewayEntryLike[];
-const gateways = entries.map(toApiGateway).filter((g) => g.category !== "infrastructure");
+const gateways = entries.map(toApiGateway).filter((g) => g.category !== "infrastructure" && g.category !== "platform");
 const asOf = gateways.map((g) => g.verified_date).sort().at(-1);
 
 const parsed = gateways.map((g) => ({ g, days: parseSettlementDays(g.settlement) }));

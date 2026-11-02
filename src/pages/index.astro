@@ -57,7 +57,7 @@ const total = gateways.length;
 // as /gateways — the homepage shows the product, not marketing sections
 const ranked = (gateways as unknown as GatewayEntryLike[])
   .map((e) => ({ e, api: toApiGateway(e) }))
-  .filter((x) => x.api.rankable && x.api.est_fee_rm100 != null)
+  .filter((x) => x.api.rankable && x.api.est_fee_rm100 != null && x.api.category !== "platform")
   // only gateways that take all three everyday methods at a fixed published rate:
   // a missing FPX or a "From x%" floor would otherwise look cheapest
   .filter(({ e }) =>
@@ -73,7 +73,7 @@ const ranked = (gateways as unknown as GatewayEntryLike[])
 const fixedRate = (fee: string | undefined) => /\d/.test(fee ?? "") && !/^\s*from\b/i.test(fee ?? "");
 const fpxRanked = (gateways as unknown as GatewayEntryLike[])
   .map((e) => ({ e, api: toApiGateway(e), cost: effectiveCostAt(e.data.fees.fpx ?? "", REF_TICKET) }))
-  .filter((x) => x.api.rankable && x.e.data.channels.includes("fpx") && fixedRate(x.e.data.fees.fpx) && Number.isFinite(x.cost))
+  .filter((x) => x.api.rankable && x.api.category !== "platform" && x.e.data.channels.includes("fpx") && fixedRate(x.e.data.fees.fpx) && Number.isFinite(x.cost))
   .sort((a, b) => a.cost - b.cost)
   .slice(0, 5);
 const lists = [

@@ -74,7 +74,7 @@ const entries = (await getCollection("gateways")) as unknown as (GatewayEntryLik
 })[];
 const api = new Map(entries.map((e) => [e.id, toApiGateway(e)]));
 const listed = entries
-  .filter((e) => e.data.no_ssm && api.get(e.id)!.category !== "infrastructure")
+  .filter((e) => e.data.no_ssm && api.get(e.id)!.category !== "infrastructure" && api.get(e.id)!.category !== "platform")
   .map((e) => ({ e, g: api.get(e.id)!, s: e.data.no_ssm! }))
   // cheapest first where an estimate exists, then by market presence
   .sort(

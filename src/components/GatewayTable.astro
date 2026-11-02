@@ -210,6 +210,11 @@ const td = "whitespace-nowrap px-2.5 py-2 align-middle";
                     E-wallet
                   </span>
                 )}
+                {g.data.category === "platform" && (
+                  <span class="rounded-full border border-line px-1 py-px text-[8px] font-medium uppercase tracking-tight text-muted">
+                    Platform
+                  </span>
+                )}
                 {g.data.bnm && (() => {
                   // compact marker only: the row is already a link, so the BNM list link lives on the detail page
                   const b = bnmBadge(g.data.bnm, locale);

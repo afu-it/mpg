@@ -81,6 +81,8 @@ const T = tr(locale, {
     rankOf: (n: number) => `cheapest of ${n} ranked`,
     notRanked: "Not ranked",
     notFull: "rates not fully published",
+    platformRank: "Platform",
+    platformRankSub: "not ranked against gateways",
     onRequest: "On request",
     estFee: "Est. fee per RM100 sale",
     noRates: "No comparable published rates",
@@ -147,6 +149,8 @@ const T = tr(locale, {
     rankOf: (n: number) => `paling murah daripada ${n} gateway`,
     notRanked: "Tiada ranking",
     notFull: "harga tak disiarkan penuh",
+    platformRank: "Platform",
+    platformRankSub: "tidak disusun bersama gateway",
     onRequest: "Hubungi jualan",
     estFee: "Anggaran caj bagi jualan RM100",
     noRates: "Tiada harga rasmi untuk dibanding",
@@ -216,6 +220,10 @@ const features = [
 ];
 
 const access = accessInfo(d.category, locale);
+// platform entries name the gateway that really processes their payments
+const builtOn = d.category === "platform" && d.built_on
+  ? (await getCollection("gateways")).find((g) => g.id === d.built_on)
+  : undefined;
 // on a Bank Negara Malaysia regulatee list under its own legal name (src/lib/bnm.ts)
 const bnm = d.bnm ? bnmBadge(d.bnm, locale) : null;
 // Blended estimated fee on a RM100 transaction (matches the directory ranking).
@@ -251,7 +259,7 @@ const hasAlternativesPage = alternativesTargets(allApi).some((g) => g.slug === e
 
 // ranking context, same order as the directory and homepage (cheapest first)
 const ranked = allApi
-  .filter((g) => g.rankable && g.est_fee_rm100 != null)
+  .filter((g) => g.rankable && g.est_fee_rm100 != null && g.category !== "platform")
   .sort((a, b) => a.est_fee_rm100! - b.est_fee_rm100!);
 const rank = ranked.findIndex((g) => g.slug === entry.id) + 1;
 // "compare with": the cheapest ranked gateways other than this one
@@ -333,6 +341,11 @@ const detailLd = [
               {T.ewallet}
             </span>
           )}
+          {d.category === "platform" && (
+            <span class="rounded-full border border-line px-2 py-0.5 text-xs font-medium uppercase tracking-wide text-muted">
+              Platform
+            </span>
+          )}
           {bnm && (
             <a
               data-l10n="off"
@@ -378,11 +391,28 @@ const detailLd = [
     {access.hint}
   </p>
 
+  {builtOn && (
+    <p class="mt-3 rounded-md border border-line bg-panel px-4 py-3 text-sm text-fg">
+      {locale === "ms" ? (
+        <>{d.name} ialah platform jualan, bukan payment gateway. Bayaran diproses oleh{" "}
+          <a class="font-medium text-accent hover:underline" href={localizePath(`/gateway/${builtOn.id}/`, locale)}>{builtOn.data.name}</a>.</>
+      ) : (
+        <>{d.name} is a selling platform, not a payment gateway. Payments are processed by{" "}
+          <a class="font-medium text-accent hover:underline" href={localizePath(`/gateway/${builtOn.id}/`, locale)}>{builtOn.data.name}</a>.</>
+      )}
+    </p>
+  )}
+
   <!-- at a glance: where it ranks + the four numbers people check first -->
   <div class="mt-8 flex flex-col gap-4 sm:flex-row sm:items-stretch">
     <div class="flex shrink-0 flex-col justify-center rounded-lg border border-line bg-panel px-5 py-3">
       {
-        rank > 0 ? (
+        d.category === "platform" ? (
+          <>
+            <p class="text-sm font-medium text-white">{T.platformRank}</p>
+            <p class="text-xs text-muted">{T.platformRankSub}</p>
+          </>
+        ) : rank > 0 ? (
           <>
             <p class="text-2xl font-bold text-white">#{rank}</p>
             <p class="text-xs text-muted">{T.rankOf(ranked.length)}</p>

@@ -2,7 +2,9 @@
 name: BCL.my
 website: https://bcl.my
 dev_docs: https://docs.bcl.my/
-tagline: "No-code payment forms, links & DuitNow QR (Bayarcash-powered)"
+tagline: "No-code selling platform on Bayarcash: forms, links & DuitNow QR"
+category: platform
+built_on: bayarcash
 logo: /logos/bcl.svg
 fees:
   fpx: "RM1.00"
@@ -64,7 +66,9 @@ source: "https://main.bcl.my/pricing/"
 notes: "BCL now publishes a full per-method rate card (pricing page, 2026-10-20), all settled T+2 working days by Bayarcash, with no payout on Saturday or Sunday. FPX B2C RM1.00 (RM0.70 on Package Niaga Pro), FPX B2B RM2.00, FPX Line of Credit RM1.00 + 1.00%. Direct Debit RM1.00 per enrolment, maintenance or termination and RM1.50 per deduction. Malaysian credit card 1.50%, overseas credit card 3.50%, MyDebit 1.00%. DuitNow QR and cross-border QR 1.60%. TNG, GrabPay, Boost and ShopeePay 1.50% each. Boost PayFlex, PayLater by Grab and SPayLater 1.50% each. FPX and DuitNow QR are ready as standard; cards, e-wallets and BNPL need a separate application. Packages are billed yearly (Niaga RM888, Niaga Pro RM1,888); the early-bird label is gone. No setup or monthly fee; fees apply only to successful payments. No-code platform built on top of Bayarcash."
 ---
 
-BCL.my is a **no-code payment platform** built on top of Bayarcash. Instead of an
+BCL.my is a **no-code selling platform** (a commerce layer), not a payment gateway.
+It is built on top of Bayarcash: BCL builds the pages and records the sales, while
+Bayarcash collects the payments and pays them out. Instead of an
 API-first integration, you create payment forms, payment links, landing pages and
 **dynamic DuitNow QR** terminals, ideal for sellers without a website.
 

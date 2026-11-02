@@ -27,8 +27,11 @@ const gateways = defineCollection({
     settlement: z.string(), // e.g. "T+1"
     min_txn: z.string(),
     // "gateway" (default), "bank" (bank-run gateway), "ewallet" (e-wallet merchant
-    // acceptance), "bnpl", or "infrastructure" (national rails operator, not a merchant gateway)
-    category: z.enum(["gateway", "bank", "ewallet", "bnpl", "infrastructure"]).default("gateway"),
+    // acceptance), "bnpl", "infrastructure" (national rails operator, not a merchant gateway), or
+    // "platform" (no-code selling platform / commerce layer; another gateway collects and settles the money)
+    category: z.enum(["gateway", "bank", "ewallet", "bnpl", "infrastructure", "platform"]).default("gateway"),
+    // platform only: slug of the gateway that actually processes the payments (e.g. "bayarcash")
+    built_on: z.string().optional(),
     channels: z.array(z.enum(["fpx", "card", "ewallet", "duitnowqr", "bnpl"])),
     // online-banking banks supported beyond the standard FPX set (FPX banks come from src/lib/fpx-banks.ts)
     banks: z.array(z.string()).optional(),

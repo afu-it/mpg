@@ -15,7 +15,7 @@ export interface AccessInfo {
 
 type Text = { short: string; hint: string };
 
-const TEXT: Record<"bank" | "ewallet" | "infrastructure" | "bnpl" | "default", { en: Text; ms: Text }> = {
+const TEXT: Record<"bank" | "ewallet" | "infrastructure" | "bnpl" | "platform" | "default", { en: Text; ms: Text }> = {
   bank: {
     en: {
       short: "Merchant account",
@@ -56,6 +56,16 @@ const TEXT: Record<"bank" | "ewallet" | "infrastructure" | "bnpl" | "default", {
       hint: "Pasang di checkout (halaman bayar) melalui integrasi peniaga mereka sendiri, atau guna payment gateway yang sudah ada BNPL ini.",
     },
   },
+  platform: {
+    en: {
+      short: "Platform",
+      hint: "A no-code selling platform, not a payment gateway. Sign up and build forms, links and pages; the payments are processed and paid out by its gateway.",
+    },
+    ms: {
+      short: "Platform",
+      hint: "Platform jualan tanpa kod, bukan payment gateway. Daftar dan bina borang, link dan halaman; bayaran diproses dan dimasukkan ke akaun anda oleh gateway di belakangnya.",
+    },
+  },
   default: {
     en: {
       short: "Integrate",
@@ -73,6 +83,7 @@ const KEY: Record<keyof typeof TEXT, AccessKey> = {
   ewallet: "account",
   infrastructure: "infrastructure",
   bnpl: "integrate",
+  platform: "integrate",
   default: "integrate",
 };
 

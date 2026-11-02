@@ -3,7 +3,7 @@
 import { getLocale, tr } from "../i18n/locale";
 const T = tr(getLocale(Astro), {
   en: {
-    gateway: "Gateways", bank: "Banks", ewallet: "E-wallet", infrastructure: "Infrastructure", all: "All",
+    gateway: "Gateways", bank: "Banks", ewallet: "E-wallet", infrastructure: "Infrastructure", platform: "Platforms", all: "All",
     card: "Card", no_code: "No-code", recurring: "Recurring", mcp: "MCP server",
     category: "Category", channels: "Channels", features: "Features", developer: "Developer",
     reset: "Reset filters",
@@ -11,7 +11,7 @@ const T = tr(getLocale(Astro), {
     signup: "Sign-up & payout", no_ssm: "No SSM needed", instant: "Same-day payout",
   },
   ms: {
-    gateway: "Gateway", bank: "Bank", ewallet: "E-wallet", infrastructure: "Infrastruktur", all: "Semua",
+    gateway: "Gateway", bank: "Bank", ewallet: "E-wallet", infrastructure: "Infrastruktur", platform: "Platform", all: "Semua",
     card: "Kad", no_code: "Tanpa kod", recurring: "Recurring", mcp: "Server MCP",
     category: "Kategori", channels: "Cara bayar", features: "Ciri", developer: "Developer",
     reset: "Set semula penapis",
@@ -24,6 +24,7 @@ const categories = [
   { key: "bank", label: T.bank },
   { key: "ewallet", label: T.ewallet },
   { key: "bnpl", label: "BNPL" },
+  { key: "platform", label: T.platform },
   { key: "infrastructure", label: T.infrastructure },
   { key: "all", label: T.all },
 ];

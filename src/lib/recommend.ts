@@ -43,7 +43,8 @@ function accessMatches(g: ApiGateway, access: NonNullable<Needs["access"]>): boo
 }
 
 function matchesNeeds(g: ApiGateway, n: Needs): boolean {
-  if (g.category === "infrastructure") return false;
+  // national rails and selling platforms (which run on another gateway) are not gateway picks
+  if (g.category === "infrastructure" || g.category === "platform") return false;
   if (n.channels) for (const c of n.channels) if (!g.channels.includes(c)) return false;
   if (n.recurring && !g.features.recurring) return false;
   if (n.noCode && !g.features.no_code) return false;
