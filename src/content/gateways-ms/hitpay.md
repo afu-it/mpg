@@ -13,7 +13,7 @@ ikut transaksi, tiada fee bulanan**. Satu akaun dah cukup untuk checkout (langka
 berulang automatik**.
 
 Kadar online Malaysia: kad tempatan **1.2% + RM1.00**, FPX (bayar terus dari akaun bank
-online) **1.8% + RM0.40**, DuitNow **1.2%**, Touch 'n Go 1.9%, GrabPay 2%, ShopeePay 2.2%, dan kad luar negara **3% + RM1.00** (tambah
+online) caj tetap **RM2.50**, DuitNow **1.2%**, Touch 'n Go 1.9%, GrabPay 2%, ShopeePay 2.2%, dan kad luar negara **3% + RM1.00** (tambah
 2% untuk transaksi mata wang asing). Tiada fee setup atau langganan; anda hanya bayar
 untuk bayaran yang berjaya.
 

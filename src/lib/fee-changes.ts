@@ -21,6 +21,14 @@ export interface FeeChange {
 
 export const FEE_CHANGES: FeeChange[] = [
   {
+    observed: "2026-11-22",
+    slug: "hitpay",
+    name: "HitPay",
+    kind: "published",
+    what: "FPX is now a flat RM2.50 per transaction, replacing 1.8% + RM0.40; it costs more below about RM117 and less above it.",
+    whatMs: "FPX kini caj tetap RM2.50 setiap transaksi, menggantikan 1.8% + RM0.40; lebih mahal untuk jualan bawah lebih kurang RM117 dan lebih murah di atasnya.",
+  },
+  {
     observed: "2026-10-21",
     slug: "luminarix",
     name: "Luminarix",

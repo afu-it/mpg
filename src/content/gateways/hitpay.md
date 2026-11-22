@@ -5,7 +5,7 @@ logo_round: true
 tagline: "No setup or monthly fee, with built-in recurring billing"
 logo: /logos/hitpay.svg
 fees:
-  fpx: "1.8% + RM0.40"
+  fpx: "RM2.50"
   card: "1.2% + RM1.00"
   card_intl: "3% + RM1.00"
   ewallet: "1.9% - 2.2%"
@@ -47,7 +47,7 @@ plugins:
   - EasyStore
 dev_docs: "https://docs.hitpayapp.com/apis/overview"
 popularity: 70
-verified_date: "2026-11-02"
+verified_date: "2026-11-22"
 source: "https://www.hitpayapp.com/my/pricing"
 bnm:
   roles: [merchant-acquirer]
@@ -66,7 +66,7 @@ Payments Malaysia (also BNM-registered) for regulated activities. It uses a
 into one account: checkout, payment links, invoicing, online store, POS and
 **recurring billing**.
 
-Malaysia online rates: domestic cards **1.2% + RM1.00**, FPX **1.8% + RM0.40**,
+Malaysia online rates: domestic cards **1.2% + RM1.00**, FPX a flat **RM2.50**,
 DuitNow **1.2%**, Touch 'n Go 1.9%, GrabPay 2%, ShopeePay 2.2%, and international cards **3% + RM1.00** (plus 2% on
 foreign-currency transactions). There are no setup or subscription fees; you only
 pay on successful payments.

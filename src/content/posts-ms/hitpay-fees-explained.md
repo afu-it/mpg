@@ -1,6 +1,6 @@
 ---
 title: "Caj HitPay di Malaysia: semua kadar, termasuk caj tambahan"
-description: "Kadar HitPay di Malaysia: 1.2% + RM1 kad tempatan, 1.8% + RM0.40 FPX, kadar ikut e-wallet dan caj platform 0.2% hingga 0.5% pada sesetengah produk."
+description: "Kadar HitPay di Malaysia: 1.2% + RM1 kad tempatan, FPX caj tetap RM2.50, kadar ikut e-wallet dan caj platform 0.2% hingga 0.5% pada sesetengah produk."
 imageAlt: "Kad caj HitPay di MPG yang menunjukkan kadar kad, FPX dan e-wallet"
 faq:
   - q: "Adakah HitPay kenakan fee bulanan?"
@@ -26,7 +26,7 @@ Dari halaman harga rasmi Malaysia:
 
 - **Kad tempatan**: 1.2% + RM1.00. Ini antara kadar kad paling rendah yang
   disiarkan dalam direktori.
-- **FPX**: 1.8% + RM0.40.
+- **FPX**: caj tetap RM2.50 setiap transaksi.
 - **DuitNow QR**: 1.2%.
 - **Kad luar negara**: 3% + RM1.00, campur 2% lagi kalau bayar dalam mata wang
   asing.
@@ -59,8 +59,8 @@ bisnes langganan (contohnya yuran kelas bulanan) selalunya terpaksa naik ke
 pakej enterprise yang jauh lebih mahal. HitPay isi jurang itu, bersama
 [gateway lain yang sokong bayaran berulang](/best/payment-gateway-recurring/).
 
-Kelemahannya pada FPX. Untuk jualan besar, 1.8% + RM0.40 kalah dengan gateway
-caj rata. Caj rata RM1.00 jadi lebih murah bila jualan lebih kurang RM34 ke
-atas. Perbandingan itu ada dalam
+FPX kini caj tetap RM2.50, jadi cajnya tak naik walaupun jualan besar.
+Tapi ia masih lebih mahal daripada gateway yang caj FPX rata RM1.00.
+Perbandingan itu ada dalam
 [HitPay vs toyyibPay](/vs/hitpay-vs-toyyibpay/). Profil penuh:
 [HitPay](/gateway/hitpay/).

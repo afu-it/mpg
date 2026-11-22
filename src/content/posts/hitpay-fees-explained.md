@@ -1,6 +1,6 @@
 ---
 title: "HitPay fees in Malaysia: every rate, including add-ons"
-description: "HitPay's Malaysian rates explained: 1.2% + RM1 local cards, 1.8% + RM0.40 FPX, per-wallet rates and the 0.2% to 0.5% platform add-on some products carry."
+description: "HitPay's Malaysian rates explained: 1.2% + RM1 local cards, a flat RM2.50 FPX, per-wallet rates and the 0.2% to 0.5% platform add-on some products carry."
 pubDate: "2026-07-17"
 cluster: "fees-pricing"
 image: "/blog/hitpay-fees-rates-malaysia.webp"
@@ -33,7 +33,7 @@ From the official Malaysian pricing page:
 
 - **Local cards**: 1.2% + RM1.00, one of the lowest published card rates in the
   directory.
-- **FPX**: 1.8% + RM0.40.
+- **FPX**: RM2.50 flat per transaction.
 - **DuitNow QR**: 1.2%.
 - **International cards**: 3% + RM1.00, plus 2% on foreign-currency
   transactions.
@@ -63,7 +63,7 @@ skip card-on-file charging entirely, so subscription businesses usually face a
 jump to enterprise pricing. HitPay sits in that gap, alongside the other
 [recurring-capable gateways](/best/payment-gateway-recurring/).
 
-The trade-off is FPX: 1.8% + RM0.40 loses to flat-fee providers on bigger
-tickets. RM1.00 flat beats it from about RM34 upward, which is exactly the
-comparison in [HitPay vs toyyibPay](/vs/hitpay-vs-toyyibpay/). Full profile:
+FPX is now a flat RM2.50, so the fee no longer grows with the ticket size.
+It still costs more than the RM1.00 flat FPX some gateways charge, which is
+the comparison in [HitPay vs toyyibPay](/vs/hitpay-vs-toyyibpay/). Full profile:
 [HitPay](/gateway/hitpay/).
