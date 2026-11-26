@@ -1,5 +1,5 @@
 ---
-name: Curlec (by Razorpay)
+name: Razorpay Curlec
 website: https://curlec.com
 tagline: "Razorpay-backed gateway with a full payments suite"
 logo: /logos/curlec.svg
@@ -10,7 +10,7 @@ fees:
   ewallet: "1.50%"
   duitnowqr: "Contact sales"
   bnpl: "6.00%"
-  setup: "RM0–RM999"
+  setup: "RM0"
   monthly: "RM0"
 settlement: "T+2"
 min_txn: "—"
@@ -38,9 +38,8 @@ plans:
       - { label: "Local cards", value: "2.40%" }
       - { label: "Foreign cards", value: "3.30%" }
       - { label: "E-wallets", value: "1.50%" }
-      - { label: "DuitNow Pay (early access)", value: "1.20% or RM0.30, whichever is greater" }
+      - { label: "DuitNow Pay", value: "1.20% or RM0.30, whichever is greater" }
       - { label: "Alipay+", value: "2.70%" }
-      - { label: "UPI", value: "2.00%" }
       - { label: "BNPL", value: "6.00%" }
     source: "https://curlec.com/pricing/"
   - name: "Premium"
@@ -50,9 +49,8 @@ plans:
       - { label: "Local cards", value: "2.00%" }
       - { label: "Foreign cards", value: "3.10%" }
       - { label: "E-wallets", value: "1.30% (GrabPay 1.50%)" }
-      - { label: "DuitNow Pay (early access)", value: "1.00% or RM0.30, whichever is greater" }
+      - { label: "DuitNow Pay", value: "1.00% or RM0.30, whichever is greater" }
       - { label: "Alipay+", value: "2.50%" }
-      - { label: "UPI", value: "1.80%" }
       - { label: "BNPL", value: "5.00%" }
     source: "https://curlec.com/pricing/"
   - name: "Enterprise"
@@ -60,25 +58,27 @@ plans:
     rows:
       - { label: "All rates", value: "Personalised pricing, contact sales" }
     source: "https://curlec.com/pricing/"
-verified_date: "2026-10-20"
+verified_date: "2026-11-26"
 source: "https://curlec.com/pricing/"
 bnm:
   roles: [merchant-acquirer]
   entity: "Razorpay Curlec Sdn. Bhd."
   checked: "2026-10-21"
   evidence: "https://curlec.com"
-notes: "Basic-plan rates shown: FPX 1.50% (or RM1, whichever greater), credit/debit card 2.40%, foreign card 3.30%, e-wallet 1.50%, BNPL 6.00%. Premium plan lowers card to 2.00% / FPX to 1.00%. A one-time setup fee applies; Enterprise (>RM1M/month) is personalised. Applicable taxes extra. Re-verified 2026-10-20: rates unchanged; the pricing table now also lists DuitNow Pay (PayNet account-to-account, early access for limited businesses; not DuitNow QR) at 1.20% or RM0.30 (Basic) / 1.00% or RM0.30 (Premium), Alipay+ 2.70% / 2.50%, UPI 2.00% / 1.80%, and Apple Pay at standard card pricing. Setup on the table is RM0 Basic / RM999 Premium, but the page FAQ still says RM99 for Basic (inconsistent on the official page). The tax line reads 18% GST, which looks like a template leftover from Razorpay India. DuitNow QR rate is not published."
+notes: "Basic-plan rates shown, including RM0 setup and no annual fee. Premium has a separate RM999 one-time setup fee and no annual fee; local cards are 2.00%, FPX is 1.00% or RM1 (whichever is greater), TNG/Boost 1.30% and GrabPay 1.50%. Enterprise pricing is personalised. Checked 2026-11-26 against the rendered Payment Gateway and Subscriptions tabs: card subscriptions use standard domestic/international card pricing per transaction; Direct Debit pricing requires a quote. DuitNow Pay is distinct from DuitNow QR. The checked pricing table does not list UPI rates or a DuitNow QR rate. Confirm settlement timing and applicable taxes with sales."
 ---
 
-Curlec is the Malaysian arm of **Razorpay**, offering a full payments suite:
-hosted checkout, payment links, payment pages/buttons, subscriptions and a
-developer-friendly API.
+Razorpay Curlec is the Malaysian arm of **Razorpay**, offering hosted checkout,
+payment links, payment pages/buttons, subscriptions and a developer API.
 
-On the Basic plan: **FPX 1.50%** (or RM1, whichever is greater), credit/debit
-cards **2.40%**, foreign cards **3.30%**, e-wallets **1.50%** and BNPL **6.00%**.
-The Premium plan lowers card to 2.00% and FPX to 1.00%, and Enterprise (over
-RM1M/month) is personalised. A one-time setup fee applies.
+The Basic payment gateway plan has **RM0 setup and no annual fee**: **FPX 1.50%**
+(or RM1, whichever is greater), local cards **2.40%**, foreign cards **3.30%**,
+e-wallets **1.50%** and BNPL **6.00%**. Premium has a separate **RM999 one-time
+setup fee and no annual fee**, with local cards at 2.00% and FPX at 1.00%
+(or RM1, whichever is greater). Enterprise pricing is personalised.
 
-Because it inherits Razorpay's platform, recurring billing and no-code tools are
-strong. Exact setup fee, settlement timing and DuitNow QR rate aren't published
-on the pricing page, so confirm with Curlec sales.
+The official pricing page also lists subscriptions via **cards and Direct Debit**.
+Card subscriptions use standard domestic/international card pricing per transaction.
+Direct Debit pricing requires a quote; the payment gateway setup fees above should
+not be treated as a Direct Debit quote. Confirm settlement timing, applicable taxes
+and any unpublished DuitNow QR rate with Razorpay Curlec sales.
